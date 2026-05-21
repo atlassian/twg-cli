@@ -41,6 +41,7 @@ The public agent surfaces for this repo are:
 
 - `docs/` - maintainer notes for public release synchronization.
 - `plugins/` - public marketplace packaging notes for Codex and Claude.
+- `AGENTS.md` and `llms.txt` - compact guidance for agents and LLM crawlers.
 - GitHub Issues - public bug reports, docs gaps, command requests, and
   skill/plugin requests.
 
@@ -67,6 +68,11 @@ generated catalogs from internal build profiles.
 
 The release process that updates this repo is described in
 [`docs/release-integration.md`](docs/release-integration.md).
+
+## Agent Guidance
+
+Agents working in this repo should start with [`AGENTS.md`](AGENTS.md). LLM
+crawlers and tools can use [`llms.txt`](llms.txt) for a compact repo map.
 
 ## Community
 

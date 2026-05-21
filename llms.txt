@@ -1,0 +1,32 @@
+# Teamwork Graph CLI
+
+> Public home for Atlassian Teamwork Graph CLI users, release notes, issue
+> tracking, and agent marketplace integration notes.
+
+TWG CLI (`twg`) is an agent-first command line interface for Atlassian work
+context across Jira, Confluence, Bitbucket, Atlas, Jira Service Management,
+Assets, people, teams, and the Atlassian Teamwork Graph.
+
+## Primary Links
+
+- Repository: https://github.com/pmandloi-atlas/twg-cli
+- Stable installer: https://teamwork-graph.atlassian.com/cli/install
+- Stable manifest: https://teamwork-graph.atlassian.com/cli/manifest.json
+- Changelog: https://teamwork-graph.atlassian.com/cli/CHANGELOG.md
+- Homebrew tap: https://github.com/atlassian/homebrew-twg
+
+## Key Files
+
+- `/README.md` - install, scope, and issue-tracking entrypoints.
+- `/AGENTS.md` - instructions for agents working in this repo.
+- `/docs/release-integration.md` - how private TWG CLI releases should sync back
+  to this public repo.
+- `/plugins/codex/README.md` - Codex plugin packaging notes.
+- `/plugins/claude/README.md` - Claude plugin packaging notes.
+- `/.github/ISSUE_TEMPLATE/` - public issue intake forms.
+
+## Public Safety
+
+This repo is public-facing. Do not include tokens, credentials, internal links,
+customer data, local paths, private build outputs, or internal-only command docs.
+

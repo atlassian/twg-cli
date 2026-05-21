@@ -37,13 +37,12 @@ The export stage should generate a clean directory, for example
 Exported content:
 
 - `README.md`, `SUPPORT.md`, `SECURITY.md`, `CONTRIBUTING.md`,
-  `CODE_OF_CONDUCT.md`, `ROADMAP.md`, and `CHANGELOG.md`.
+  `CODE_OF_CONDUCT.md`, `AGENTS.md`, `llms.txt`, and `CHANGELOG.md`.
 - Public DAC docs and generated public command reference.
 - Public skill bundles from the release build profile.
 - Codex plugin zip and manifest metadata.
 - Claude/Cowork plugin zip and manifest metadata.
-- Safe examples, recipes, prompts, and output-shape docs.
-- GitHub issue and discussion templates.
+- GitHub issue templates and PR template.
 - Release metadata linking to the stable CDN manifest, installers, checksums,
   Homebrew formula, and marketplace artifacts.
 
@@ -81,7 +80,7 @@ Do not copy the private repo wholesale. Every exported path should be allowliste
 DAC documentation changes should also refresh GitHub, even when no binary
 release is cut. In that case:
 
-- Export only docs, examples, issue templates, and public metadata.
+- Export only docs, issue templates, and public metadata.
 - Do not create a GitHub Release.
 - Do not move installer, manifest, plugin, or Homebrew stable pointers.
 
@@ -114,5 +113,4 @@ rewritten for adoption:
 - Checksums and manifest links.
 - Plugin package links for Codex and Claude.
 - Known issues or migration notes.
-- Links to docs and a release discussion.
-
+- Links to docs and the relevant public issue tracker entry when applicable.
