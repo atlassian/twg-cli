@@ -21,6 +21,27 @@ The private `twg-cli` repo already has these release responsibilities:
 - `npm run build:plugin:codex` and `npm run build:plugin:claude-cowork` already
   build plugin zip artifacts under `release/plugins`.
 
+## Future GitHub Pages Migration
+
+Today, GitHub Pages for TWG CLI docs is attached to `atlassian/homebrew-twg`.
+That should move to the dedicated public TWG CLI repo once the Atlassian-owned
+GitHub workspace/repo is available.
+
+When that migration happens, update the private `twg-cli` publishing flow in the
+same change:
+
+- Change the GitHub Pages publish target from `atlassian/homebrew-twg` to the
+  Atlassian-owned TWG CLI public repo.
+- Keep `atlassian/homebrew-twg` focused on the Homebrew formula only.
+- Update `GITHUB_PAGES_REPO`, default Pages base path, and any generated docs
+  links that currently assume `/homebrew-twg/`.
+- Verify the GitHub Pages source branch and repo settings before switching the
+  private release pipeline.
+- Keep the existing token-safe publish pattern: token-free remote plus
+  `GIT_ASKPASS` or equivalent environment-backed auth.
+- After the switch, DAC docs updates and release docs updates should publish to
+  the dedicated TWG CLI repo, not the Homebrew tap.
+
 ## Proposed Public Repo Sync
 
 Add one explicit public export stage to the private repo:

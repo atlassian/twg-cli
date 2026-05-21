@@ -51,6 +51,10 @@ release sync should update only public-safe artifacts:
 - Codex and Claude plugin metadata or release attachments.
 - issue templates or PR template changes.
 
+Future Pages migration: GitHub Pages currently lives on
+`atlassian/homebrew-twg`. When the Atlassian-owned public TWG CLI repo is
+available, move Pages publishing here and update the private `twg-cli` release
+publishing defaults in the same change.
+
 Run leak checks before publishing public changes. GitHub auth for automation must
 avoid token-bearing remote URLs.
-
