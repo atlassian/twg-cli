@@ -5,10 +5,10 @@ work context. It helps AI agents and developer tools discover, summarize, and ac
 across Jira, Confluence, Bitbucket, Atlas projects and goals, Jira Service
 Management, Assets, people, teams, and the Atlassian Teamwork Graph.
 
-This repository is the public home for TWG CLI users, agent integrations, docs,
-examples, release notes, and community feedback. The private engineering source
-of truth remains Atlassian's internal TWG CLI repository; this repo is a
-sanitized public projection of release-ready artifacts.
+This repository is the public home for TWG CLI users, agent integrations,
+release notes, and issue tracking. The private engineering source of truth
+remains Atlassian's internal TWG CLI repository; this repo is a sanitized public
+projection of release-ready artifacts.
 
 ## Install
 
@@ -39,10 +39,10 @@ instead of memorizing command syntax:
 
 The public agent surfaces for this repo are:
 
-- `docs/` - user documentation and recipes.
-- `skills/` - public agent skills exported from release builds.
+- `docs/` - maintainer notes for public release synchronization.
 - `plugins/` - public marketplace packaging notes for Codex and Claude.
-- `examples/` - safe prompts, scripts, and example output shapes.
+- GitHub Issues - public bug reports, docs gaps, command requests, and
+  skill/plugin requests.
 
 ## Public Repo Scope
 
@@ -52,7 +52,7 @@ This repo should contain only public-safe artifacts:
 - Public command examples generated from the release build profile.
 - Public skills and plugin packages for supported agent marketplaces.
 - Changelog and human-readable release notes.
-- GitHub Issues and Discussions for public feedback and workflow requests.
+- GitHub Issues for public feedback and workflow requests.
 
 It must not contain internal-only command docs, private Jira or Confluence URLs,
 customer data, internal runbooks, private benchmark data, tokens, auth files, or
@@ -71,8 +71,7 @@ The release process that updates this repo is described in
 ## Community
 
 Use GitHub Issues for bugs, docs gaps, command requests, and skill/plugin
-requests. Use Discussions for recipes, workflow questions, and agent usage ideas.
+requests.
 
 Before filing anything, remove tokens, private URLs, customer data, internal
 Jira/Confluence links, and proprietary content from logs or examples.
-
