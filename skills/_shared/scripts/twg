@@ -1,0 +1,186 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+resolve_twg() {
+  echo "Error: skill was not installed via 'twg skills install'." >&2
+  return 127
+}
+
+is_discovery_command() {
+  local top=""
+  local has_discovery_marker=0
+  local has_focused_action=0
+  local token
+
+  for token in "$@"; do
+    case "${token}" in
+      -*) continue ;;
+    esac
+
+    if [ -z "${top}" ]; then
+      case "${token}" in
+        assets|bb|bitbucket|collaborators|confluence|context|docs|focus-areas|goals|jira|jsm|meetings|notifications|org-tree|projects|recently-viewed|resolve|spaces|teams|user|videos|work)
+          top="${token}"
+          ;;
+      esac
+    fi
+
+    case "${token}" in
+      query|search|context|resolve)
+        has_discovery_marker=1
+        ;;
+      get|create|update|delete|archive|restore|link|unlink|approve|unapprove|merge|decline|start|complete|reopen|move|restrict|unrestrict|transition|reply|comment|patch|diff|diffstat|history|version)
+        has_focused_action=1
+        ;;
+    esac
+  done
+
+  if [ "${has_discovery_marker}" -eq 1 ]; then
+    return 0
+  fi
+
+  case "${top}" in
+    org-tree|recently-viewed|collaborators)
+      return 0
+      ;;
+    work|docs|meetings|videos|spaces|goals|projects|focus-areas|notifications)
+      if [ "${has_focused_action}" -eq 0 ]; then
+        return 0
+      fi
+      ;;
+  esac
+
+  return 1
+}
+
+main() {
+  local twg_bin
+  twg_bin="$(resolve_twg)" || exit $?
+
+  # Tag all invocations from this skill wrapper so analytics can segment traffic by source.
+  export TWG_METRICS_SOURCE="agent-skill"
+
+  local has_output=0
+  local output_value=""
+  local has_summary=0
+  local has_agent_fields=0
+  local wants_help=0
+  local -a cmd args
+  args=("$@")
+
+  if [ "$#" -eq 0 ]; then
+    wants_help=1
+  else
+    local i arg next_arg
+    for ((i = 0; i < ${#args[@]}; i++)); do
+      arg="${args[i]}"
+      case "${arg}" in
+        -o|--output)
+          has_output=1
+          next_arg="${args[i+1]:-}"
+          if [ -z "${next_arg}" ] || [[ "${next_arg}" == -* ]] || [[ -z "${next_arg//[[:space:]]/}" ]]; then
+            echo "Error: ${arg} requires a value." >&2
+            exit 2
+          fi
+          output_value="${next_arg}"
+          ;;
+        --output=*)
+          has_output=1
+          next_arg="${arg#--output=}"
+          if [ -z "${next_arg}" ] || [[ -z "${next_arg//[[:space:]]/}" ]]; then
+            echo "Error: --output requires a value." >&2
+            exit 2
+          fi
+          output_value="${next_arg}"
+          ;;
+        --output-summary)
+          # Optional value: --output-summary [stats|auto|inline]. Treat
+          # both bare `--output-summary` and `--output-summary <level>`
+          # as "user picked it".
+          has_summary=1
+          ;;
+        --output-summary=*)
+          has_summary=1
+          next_arg="${arg#--output-summary=}"
+          if [ -z "${next_arg}" ] || [[ -z "${next_arg//[[:space:]]/}" ]]; then
+            echo "Error: --output-summary requires a value when using --output-summary=<level>." >&2
+            exit 2
+          fi
+          ;;
+        --agent-fields)
+          has_agent_fields=1
+          next_arg="${args[i+1]:-}"
+          if [ -z "${next_arg}" ] || [[ "${next_arg}" == -* ]] || [[ -z "${next_arg//[[:space:]]/}" ]]; then
+            echo "Error: --agent-fields requires a value." >&2
+            exit 2
+          fi
+          ;;
+        --agent-fields=*)
+          has_agent_fields=1
+          next_arg="${arg#--agent-fields=}"
+          if [ -z "${next_arg}" ] || [[ -z "${next_arg//[[:space:]]/}" ]]; then
+            echo "Error: --agent-fields requires a value." >&2
+            exit 2
+          fi
+          ;;
+        -h|--help|help)
+          wants_help=1
+          ;;
+      esac
+    done
+
+  fi
+
+  cmd=("${twg_bin}" "--mode" "agent")
+
+  if [ "$#" -eq 0 ]; then
+    cmd+=("help")
+    exec "${cmd[@]}"
+  fi
+
+  cmd+=("$@")
+
+  # Default output format: when the caller did not pick one, opt into
+  # `--output json` so the data round-trips as machine-readable JSON.
+  local effective_output="${output_value}"
+  if [ "${wants_help}" -eq 0 ] && [ "${has_output}" -eq 0 ]; then
+    cmd+=("--output" "json")
+    effective_output="json"
+  fi
+
+  # Envelope policy:
+  # - For broad discovery commands (query/search/context/resolve/rollups)
+  #   default to `--output-summary stats` so the first hop returns just
+  #   file metadata + structural stats; the agent reads the side file for
+  #   full data. Keeps initial agent stdout small.
+  # - Otherwise default to `--output-summary auto` so small payloads
+  #   inline directly while large payloads still fall back to a summary.
+  # - When the caller passes `--agent-fields` without `--output-summary`,
+  #   still inject `--output-summary auto` — `--agent-fields` is only
+  #   consumed by the envelope path, so without a summary the fields
+  #   would silently do nothing and the caller would get unscoped JSON.
+  # The injection only fires when:
+  #   - the caller didn't pick `--output-summary` themselves, and
+  #   - the effective --output is structured (json or jsonl). For
+  #     `--output text` we leave the user's text-mode invocation alone.
+  if [ "${wants_help}" -eq 0 ] && [ "${has_summary}" -eq 0 ]; then
+    case "${effective_output}" in
+      json|jsonl)
+        if [ "${has_agent_fields}" -eq 1 ]; then
+          # Fields supplied → use `auto` so small results still inline
+          # directly (with fields narrowing), large results still get a
+          # shape envelope narrowed to the requested fields.
+          cmd+=("--output-summary" "auto")
+        elif is_discovery_command "${args[@]}"; then
+          cmd+=("--output-summary" "stats")
+        else
+          cmd+=("--output-summary" "auto")
+        fi
+        ;;
+    esac
+  fi
+
+  exec "${cmd[@]}"
+}
+
+main "$@"

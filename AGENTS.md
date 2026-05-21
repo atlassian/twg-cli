@@ -19,6 +19,7 @@ It is not the private implementation source tree.
 - `docs/release-integration.md` - how the private release process should update
   this public repo.
 - `plugins/` - Codex and Claude marketplace packaging notes.
+- `skills/` - public TWG agent skills and shared `twg` wrapper.
 - `.github/ISSUE_TEMPLATE/` - public issue intake forms.
 - `.github/pull_request_template.md` - public-safety checklist for changes.
 

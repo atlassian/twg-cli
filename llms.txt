@@ -21,6 +21,7 @@ Assets, people, teams, and the Atlassian Teamwork Graph.
 - `/AGENTS.md` - instructions for agents working in this repo.
 - `/docs/release-integration.md` - how private TWG CLI releases should sync back
   to this public repo.
+- `/skills/` - public TWG agent skills.
 - `/plugins/codex/README.md` - Codex plugin packaging notes.
 - `/plugins/claude/README.md` - Claude plugin packaging notes.
 - `/.github/ISSUE_TEMPLATE/` - public issue intake forms.
@@ -29,4 +30,3 @@ Assets, people, teams, and the Atlassian Teamwork Graph.
 
 This repo is public-facing. Do not include tokens, credentials, internal links,
 customer data, local paths, private build outputs, or internal-only command docs.
-

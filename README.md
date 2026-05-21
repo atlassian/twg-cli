@@ -41,6 +41,7 @@ The public agent surfaces for this repo are:
 
 - `docs/` - maintainer notes for public release synchronization.
 - `plugins/` - public marketplace packaging notes for Codex and Claude.
+- `skills/` - public TWG agent skills for Codex-style skill installers.
 - `AGENTS.md` and `llms.txt` - compact guidance for agents and LLM crawlers.
 - GitHub Issues - public bug reports, docs gaps, command requests, and
   skill/plugin requests.
