@@ -1,0 +1,6 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://www.atlassian.com/trust/security/vulnerability-disclosure-policy
+    about: Do not file public issues for vulnerabilities or secrets.
+

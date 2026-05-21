@@ -1,0 +1,18 @@
+title: "[Recipe]: "
+labels: ["recipe"]
+body:
+  - type: textarea
+    id: workflow
+    attributes:
+      label: Workflow
+      description: What did you ask your agent to do with TWG CLI?
+    validations:
+      required: true
+  - type: textarea
+    id: prompt
+    attributes:
+      label: Prompt or approach
+      description: Keep it public-safe and redact private data.
+    validations:
+      required: true
+

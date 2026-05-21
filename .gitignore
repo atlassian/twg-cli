@@ -1,0 +1,15 @@
+# Local files
+.DS_Store
+.env
+.env.*
+*.log
+
+# Generated public export staging
+release/
+dist/
+node_modules/
+
+# Secrets and local auth
+auth.conf
+.twg/
+

@@ -1,0 +1,31 @@
+name: Skill or plugin request
+description: Request an agent skill, Codex plugin, or Claude plugin improvement.
+title: "[Skill/plugin]: "
+labels: ["skill-request", "plugin-request", "needs-triage"]
+body:
+  - type: dropdown
+    id: target
+    attributes:
+      label: Target
+      options:
+        - Agent skill
+        - Codex plugin
+        - Claude plugin
+        - Other agent host
+    validations:
+      required: true
+  - type: textarea
+    id: workflow
+    attributes:
+      label: Workflow goal
+      description: What should the agent be able to do?
+    validations:
+      required: true
+  - type: textarea
+    id: friction
+    attributes:
+      label: Current friction
+      description: What is hard today?
+    validations:
+      required: true
+

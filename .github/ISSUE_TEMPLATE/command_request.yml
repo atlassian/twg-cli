@@ -1,0 +1,30 @@
+name: Command request
+description: Request a TWG CLI command or output shape.
+title: "[Command request]: "
+labels: ["command-request", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: Do not include private URLs, customer data, internal links, or proprietary content.
+  - type: textarea
+    id: workflow
+    attributes:
+      label: Workflow
+      description: What are you trying to get done?
+    validations:
+      required: true
+  - type: input
+    id: product
+    attributes:
+      label: Atlassian product or surface
+      placeholder: Jira, Confluence, Bitbucket, Atlas, JSM, Assets, people, teams
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Desired output
+      description: Describe the data or format your agent needs.
+    validations:
+      required: true
+

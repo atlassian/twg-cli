@@ -1,0 +1,44 @@
+name: Bug report
+description: Report a public TWG CLI bug with redacted details.
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include tokens, private URLs, customer data, internal links, or proprietary content.
+  - type: input
+    id: version
+    attributes:
+      label: TWG CLI version
+      description: Run `twg --version`.
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: macOS 15, Windows 11, Ubuntu 24.04
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command or agent request
+      description: Include the command or natural-language agent request. Redact private details.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Paste redacted output only.
+    validations:
+      required: true
+
