@@ -1,0 +1,47 @@
+name: Validate public repo
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Validate issue template YAML
+        run: |
+          ruby -e 'require "yaml"; Dir[".github/ISSUE_TEMPLATE/*.yml"].each { |f| YAML.load_file(f); puts "ok #{f}" }'
+
+      - name: Check for public-safety sensitive patterns
+        run: |
+          if grep -RInE \
+            'bitbucket.org/|hello\.atlassian|statlas|/Users/|Workspaces|auth\.conf|AKIA|ghp_|x-access-token|BEGIN .*PRIVATE|TWG_TOKEN=|token=|password=|secret=' \
+            --exclude-dir=.git \
+            --exclude=.gitignore \
+            --exclude=validate.yml \
+            .; then
+            echo "Sensitive or internal-only pattern found. Review before publishing." >&2
+            exit 1
+          fi
+
+      - name: Verify required public files
+        run: |
+          test -f README.md
+          test -f LICENSE
+          test -f CODE_OF_CONDUCT.md
+          test -f CONTRIBUTING.md
+          test -f SECURITY.md
+          test -f SUPPORT.md
+          test -f CODEOWNERS
+          test -f AGENTS.md
+          test -f llms.txt
