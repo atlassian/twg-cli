@@ -45,3 +45,4 @@ jobs:
           test -f CODEOWNERS
           test -f AGENTS.md
           test -f llms.txt
+          test -f docs/public-repo-governance.md

@@ -1,31 +1,31 @@
 # Release Integration
 
-This repo is updated from the private TWG CLI release process. Bitbucket remains
-the source of truth for implementation, release scripts, tests, and internal
-builds. GitHub is the public engagement and distribution surface.
+This repo is updated through reviewed public changes that originate from the TWG
+CLI release process. Bitbucket remains the source of truth for implementation,
+release scripts, tests, and internal builds. GitHub is the public engagement and
+distribution surface.
 
-## Current Private Release Shape
+Automation is not approved by this document. Any automated sync from the private
+repo needs a separate decision record, leak-check design, permission review, and
+implementation PR.
 
-The private `twg-cli` repo already has these release responsibilities:
+## Private Release Boundary
 
-- `bash bin/release/prepare.sh` prepares the release version, `src/version.ts`,
-  lockfile, and `CHANGELOG.md`.
-- The `main` pipeline builds internal and external binaries after a version bump.
-- Step C publishes the external public release candidate under
-  `https://teamwork-graph.atlassian.com/cli/candidates/<version>/`.
-- The `promote-public-rc` pipeline promotes the already-tested candidate to the
-  stable public manifest and installers.
-- `GITHUB_TAP_TOKEN`, when present, updates `atlassian/homebrew-twg`.
-- `npm run docs:github-pages:publish` publishes the generated GitHub Pages docs
-  mirror for the Homebrew tap.
-- `npm run build:plugin:codex` and `npm run build:plugin:claude-cowork` already
-  build plugin zip artifacts under `release/plugins`.
+The private release process is responsible for versioning, building, signing,
+validating, and publishing TWG CLI artifacts. This public repo should only show
+release-ready information that is safe for users:
+
+- public install and update instructions
+- public changelog and GitHub Release notes
+- public CDN, manifest, checksum, and Homebrew links
+- public skills and plugin package notes
+- public issue and support links
 
 ## Future GitHub Pages Migration
 
 Today, GitHub Pages for TWG CLI docs is attached to `atlassian/homebrew-twg`.
-That should move to the dedicated public TWG CLI repo once the Atlassian-owned
-GitHub workspace/repo is available.
+Moving Pages publishing to this repo is a future migration and requires explicit
+approval.
 
 When that migration happens, update the private `twg-cli` publishing flow in the
 same change:
@@ -33,73 +33,44 @@ same change:
 - Change the GitHub Pages publish target from `atlassian/homebrew-twg` to the
   Atlassian-owned TWG CLI public repo.
 - Keep `atlassian/homebrew-twg` focused on the Homebrew formula only.
-- Update `GITHUB_PAGES_REPO`, default Pages base path, and any generated docs
-  links that currently assume `/homebrew-twg/`.
+- Update public docs links that currently assume `/homebrew-twg/`.
 - Verify the GitHub Pages source branch and repo settings before switching the
   private release pipeline.
-- Keep the existing token-safe publish pattern: token-free remote plus
-  `GIT_ASKPASS` or equivalent environment-backed auth.
+- Keep the publish path token-safe and avoid token-bearing remote URLs.
 - After the switch, DAC docs updates and release docs updates should publish to
   the dedicated TWG CLI repo, not the Homebrew tap.
 
-## Proposed Public Repo Sync
+## Manual Public Repo Update Checklist
 
-Add one explicit public export stage to the private repo:
+Until automation is approved, public repo updates should be made through reviewed
+PRs. For each release or docs update:
 
-```bash
-npm run public:export
-npm run public:leak-check
-npm run public:sync-github
-```
-
-The export stage should generate a clean directory, for example
-`release/public-github/twg-cli`, from allowlisted sources only.
-
-Exported content:
-
-- `README.md`, `SUPPORT.md`, `SECURITY.md`, `CONTRIBUTING.md`,
-  `CODE_OF_CONDUCT.md`, `AGENTS.md`, `llms.txt`, and `CHANGELOG.md`.
-- Public DAC docs and generated public command reference.
-- Public skill bundles from the release build profile.
-- Codex plugin zip and manifest metadata.
-- Claude/Cowork plugin zip and manifest metadata.
-- GitHub issue templates and PR template.
-- Release metadata linking to the stable CDN manifest, installers, checksums,
-  Homebrew formula, and marketplace artifacts.
-
-Do not copy the private repo wholesale. Every exported path should be allowlisted.
+- Update only public-safe docs, skills, plugin notes, changelog, issue
+  templates, or release metadata.
+- Confirm every copied path is allowlisted.
+- Review the diff for private links, customer data, internal command docs,
+  private build output, local paths, and credentials.
+- Keep GitHub Release content human-readable and adoption-focused.
+- Do not add scripts, scheduled jobs, publish credentials, or private-system
+  access as part of a manual update.
 
 ## Release Flow
 
-1. Prepare release in the private repo with `bash bin/release/prepare.sh`.
-2. Merge the release commit to private `main`.
-3. Private pipeline tags the release, builds binaries, signs macOS artifacts, and
-   publishes the hidden public candidate.
-4. Build marketplace artifacts:
-
-   ```bash
-   npm run build:plugin:codex
-   npm run build:plugin:claude-cowork
-   ```
-
-5. Generate the public GitHub export from the same release commit:
-
-   ```bash
-   npm run public:export
-   npm run public:leak-check
-   ```
-
-6. Open a bot PR to this GitHub repo with docs, skills, plugins, changelog, and
+1. Prepare and validate the release in the private source-of-truth workflow.
+2. Prepare public changelog text and GitHub Release notes from release-ready
+   information only.
+3. Prepare a reviewed public PR with docs, skills, plugins, changelog, and
    release metadata for the candidate version.
-7. Validate the candidate installer and plugin packages.
-8. Promote the public candidate with `promote-public-rc`.
-9. Merge the GitHub public repo PR and create/update the GitHub Release for the
+4. Validate the public installer, manifest, checksums, Homebrew link, and plugin
+   package references.
+5. Promote the public release through the approved private release workflow.
+6. Merge the GitHub public repo PR and create/update the GitHub Release for the
    same version.
 
-## Non-Release Docs Sync
+## Non-Release Docs Updates
 
-DAC documentation changes should also refresh GitHub, even when no binary
-release is cut. In that case:
+DAC documentation changes should also be reflected in GitHub, even when no
+binary release is cut. In that case:
 
 - Export only docs, issue templates, and public metadata.
 - Do not create a GitHub Release.
@@ -107,20 +78,33 @@ release is cut. In that case:
 
 ## Leak Checks
 
-The private export pipeline should fail before pushing GitHub changes if it finds:
+Manual review and any future approved automation should block GitHub changes if
+they find:
 
 - Tokens, API keys, cookies, `.env` files, auth stores, or session logs.
-- Internal Bitbucket, Jira, Confluence, Statlas, or pipeline URLs not explicitly
-  approved for public docs.
+- Internal Bitbucket, Jira, Confluence, private infrastructure, or pipeline URLs
+  not explicitly approved for public docs.
 - Internal build-profile command catalogs.
 - Internal-only commands, dev-only commands, or private graph/debug surfaces.
 - Customer data, private cloud IDs, ARIs, or site-specific examples.
 - Private benchmark/eval artifacts.
 - Generated files that reference local developer paths.
 
-Authentication for GitHub sync must use a token-free remote plus `GIT_ASKPASS` or
-an equivalent environment-backed credential helper. Do not put GitHub tokens in
-clone URLs, process arguments, logs, or stored remotes.
+Authentication for any future GitHub sync must avoid putting tokens in clone
+URLs, process arguments, logs, or stored remotes.
+
+## Future Public Repo Sync Design
+
+A later design may introduce an export, leak-check, and GitHub update workflow,
+but that workflow is intentionally not part of this repo today. Before
+implementation, the design must define:
+
+- allowlisted source paths
+- public/private denylist and review ownership
+- release and non-release sync behavior
+- GitHub permissions and token handling
+- failure and rollback behavior
+- evidence required before public publishing
 
 ## GitHub Release Content
 

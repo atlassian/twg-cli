@@ -3,12 +3,6 @@
 The Claude/Cowork plugin packages TWG command docs, a TWG skill, and a runtime
 wrapper for Claude-hosted usage.
 
-Current private build command:
-
-```bash
-npm run build:plugin:claude-cowork
-```
-
 Expected generated bundle:
 
 - `.claude-plugin/plugin.json`
@@ -27,4 +21,3 @@ Before release, verify:
 - auth instructions do not ask users to paste secrets into GitHub issues
 - no internal commands, local paths, or private URLs are present
 - marketplace metadata matches the latest Claude marketplace requirements
-

@@ -16,8 +16,9 @@ It is not the private implementation source tree.
 
 - `README.md` - public overview, install commands, and support entrypoints.
 - `CHANGELOG.md` - public release notes synced from the private release process.
-- `docs/release-integration.md` - how the private release process should update
-  this public repo.
+- `docs/public-repo-governance.md` - public repo intent, boundaries, and
+  pre-automation operating model.
+- `docs/release-integration.md` - release and changelog integration notes.
 - `plugins/` - Codex and Claude marketplace packaging notes.
 - `skills/` - public TWG agent skills and shared `twg` wrapper.
 - `.github/ISSUE_TEMPLATE/` - public issue intake forms.
@@ -29,6 +30,7 @@ Use labels consistently:
 
 - `bug` - reported behavior defect.
 - `docs` - public documentation issue.
+- `feature-request` - public workflow or capability request.
 - `command-request` - request for a command or output shape.
 - `skill-request` - request for agent skill behavior.
 - `plugin-request` - request for Codex or Claude plugin behavior.
@@ -41,10 +43,11 @@ Use labels consistently:
 If an issue needs internal engineering work, keep the public issue free of
 internal Jira keys or private links. Summarize public-safe status back to GitHub.
 
-## Release Sync Expectations
+## Release Update Expectations
 
-Public updates should come from the private release/export pipeline. A proper
-release sync should update only public-safe artifacts:
+Public updates should come through reviewed public PRs until an explicit
+automation decision record is approved. A release update should change only
+public-safe artifacts:
 
 - README/support/security/contributing docs when changed.
 - `CHANGELOG.md` and GitHub Release notes.
@@ -52,10 +55,9 @@ release sync should update only public-safe artifacts:
 - Codex and Claude plugin metadata or release attachments.
 - issue templates or PR template changes.
 
-Future Pages migration: GitHub Pages currently lives on
-`atlassian/homebrew-twg`. When the Atlassian-owned public TWG CLI repo is
-available, move Pages publishing here and update the private `twg-cli` release
-publishing defaults in the same change.
+Future automation and Pages migration require a separate approved design. Do not
+add scheduled jobs, private-system credentials, release publishing, or automatic
+sync wiring from this repo alone.
 
 Run leak checks before publishing public changes. GitHub auth for automation must
 avoid token-bearing remote URLs.

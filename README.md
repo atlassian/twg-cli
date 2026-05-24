@@ -7,8 +7,8 @@ Management, Assets, people, teams, and the Atlassian Teamwork Graph.
 
 This repository is the public home for TWG CLI users, agent integrations,
 release notes, and issue tracking. The private engineering source of truth
-remains Atlassian's internal TWG CLI repository; this repo is a sanitized public
-projection of release-ready artifacts.
+remains Atlassian's internal TWG CLI repository; this repo is a curated public
+front door for release-ready artifacts and community feedback.
 
 ## Install
 
@@ -39,7 +39,7 @@ instead of memorizing command syntax:
 
 The public agent surfaces for this repo are:
 
-- `docs/` - maintainer notes for public release synchronization.
+- `docs/` - public repo governance and release-integration notes.
 - `plugins/` - public marketplace packaging notes for Codex and Claude.
 - `skills/` - public TWG agent skills for Codex-style skill installers.
 - `AGENTS.md` and `llms.txt` - compact guidance for agents and LLM crawlers.
@@ -80,5 +80,11 @@ crawlers and tools can use [`llms.txt`](llms.txt) for a compact repo map.
 Use GitHub Issues for bugs, docs gaps, command requests, and skill/plugin
 requests.
 
+Use Discussions only if they are enabled for this repo. Until then, open an
+issue with the closest matching template.
+
 Before filing anything, remove tokens, private URLs, customer data, internal
 Jira/Confluence links, and proprietary content from logs or examples.
+
+For repo intent, public/private boundaries, and the pre-automation operating
+model, see [`docs/public-repo-governance.md`](docs/public-repo-governance.md).

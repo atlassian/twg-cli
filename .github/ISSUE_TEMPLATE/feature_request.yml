@@ -1,0 +1,43 @@
+name: Feature request
+description: Suggest a public TWG CLI workflow or capability.
+title: "[Feature]: "
+labels: ["feature-request", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include tokens, private URLs, customer data, internal links, or proprietary content.
+        Public issues are intake and discussion, not roadmap commitments.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or opportunity
+      description: What user or agent workflow should be better?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed outcome
+      description: What should TWG CLI, a public doc, or an agent workflow make possible?
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - CLI command behavior
+        - Public documentation
+        - Agent workflow
+        - Install, update, or setup
+        - Public skills or plugins
+        - Release communication
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Current workaround
+      description: What do you do today, if anything?

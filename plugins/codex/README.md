@@ -3,12 +3,6 @@
 The Codex plugin packages the public TWG agent skills plus a runtime launcher for
 the local `twg` CLI.
 
-Current private build command:
-
-```bash
-npm run build:plugin:codex
-```
-
 Expected generated bundle:
 
 - `.codex-plugin/plugin.json`
@@ -29,4 +23,3 @@ Before release, verify:
 - skills are generated from the release/public profile
 - no internal commands, local paths, or private URLs are present
 - marketplace metadata matches the latest Codex marketplace requirements
-

@@ -9,7 +9,7 @@ Assets, people, teams, and the Atlassian Teamwork Graph.
 
 ## Primary Links
 
-- Repository: https://github.com/pmandloi-atlas/twg-cli
+- Repository: https://github.com/atlassian/twg-cli
 - Stable installer: https://teamwork-graph.atlassian.com/cli/install
 - Stable manifest: https://teamwork-graph.atlassian.com/cli/manifest.json
 - Changelog: https://teamwork-graph.atlassian.com/cli/CHANGELOG.md
@@ -19,8 +19,9 @@ Assets, people, teams, and the Atlassian Teamwork Graph.
 
 - `/README.md` - install, scope, and issue-tracking entrypoints.
 - `/AGENTS.md` - instructions for agents working in this repo.
-- `/docs/release-integration.md` - how private TWG CLI releases should sync back
-  to this public repo.
+- `/docs/public-repo-governance.md` - repo intent, public/private boundary, and
+  pre-automation operating model.
+- `/docs/release-integration.md` - release and changelog integration notes.
 - `/skills/` - public TWG agent skills.
 - `/plugins/codex/README.md` - Codex plugin packaging notes.
 - `/plugins/claude/README.md` - Claude plugin packaging notes.
