@@ -88,3 +88,8 @@ Jira/Confluence links, and proprietary content from logs or examples.
 
 For repo intent, public/private boundaries, and the pre-automation operating
 model, see [`docs/public-repo-governance.md`](docs/public-repo-governance.md).
+
+## License
+
+This repository is licensed under the Apache License 2.0. See
+[`LICENSE`](LICENSE).
