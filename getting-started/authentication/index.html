@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Authentication | TWG CLI</title>
+  <meta name="description" content="Manage TWG CLI credentials, API tokens, and environment variables.">
+  <style>
+    :root { color-scheme: light; --ink: #172b4d; --muted: #44546f; --line: #dcdfe4; --panel: #f7f8f9; --accent: #0c66e4; --warning: #fff7d6; --note: #e9f2ff; --tip: #dcfff1; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; background: #fff; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 16px 24px; border-bottom: 1px solid var(--line); }
+    .brand { color: var(--ink); font-weight: 700; }
+    .topbar-links { display: flex; gap: 16px; font-size: 14px; }
+    .layout { display: grid; grid-template-columns: minmax(220px, 280px) minmax(0, 1fr); min-height: calc(100vh - 58px); }
+    .sidebar { border-right: 1px solid var(--line); padding: 24px; background: var(--panel); }
+    .site-nav ul { list-style: none; margin: 0; padding: 0; }
+    .site-nav li { padding-left: calc(var(--depth, 0) * 12px); }
+    .site-nav li + li { margin-top: 10px; }
+    .nav-heading { color: var(--ink); font-size: 13px; font-weight: 700; letter-spacing: 0; margin-top: 18px; text-transform: uppercase; }
+    .site-nav li:first-child { margin-top: 0; }
+    .site-nav a { color: var(--muted); font-size: 14px; }
+    .site-nav a[aria-current="page"] { color: var(--ink); font-weight: 700; }
+    main { max-width: 920px; padding: 32px 40px 56px; }
+    h1, h2, h3 { line-height: 1.25; margin: 1.6em 0 0.6em; }
+    h1 { margin-top: 0; font-size: 34px; }
+    h2 { font-size: 24px; border-top: 1px solid var(--line); padding-top: 24px; }
+    h3 { font-size: 18px; }
+    table { width: 100%; border-collapse: collapse; display: block; overflow-x: auto; }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: var(--panel); }
+    code { background: #f1f2f4; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 0.92em; }
+    pre { overflow-x: auto; background: #0b1020; color: #f7f8f9; border-radius: 6px; padding: 14px 16px; }
+    pre code { background: transparent; color: inherit; padding: 0; }
+    .dac-panel { border: 1px solid var(--line); border-left-width: 4px; border-radius: 6px; margin: 18px 0; padding: 14px 16px; }
+    .dac-panel-warning { background: var(--warning); border-left-color: #f5c84b; }
+    .dac-panel-note { background: var(--note); border-left-color: #579dff; }
+    .dac-panel-tip { background: var(--tip); border-left-color: #36b37e; }
+    .dac-panel-label { font-weight: 700; margin-bottom: 4px; }
+    .prompt-copy-card pre { margin: 8px 0 12px; white-space: pre-wrap; }
+    .prompt-copy-card button { background: var(--accent); border: 0; border-radius: 4px; color: #fff; cursor: pointer; font: inherit; font-size: 13px; font-weight: 700; padding: 5px 9px; }
+    .prompt-copy-card button:hover { background: #0055cc; }
+    .source-footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; margin-top: 48px; padding-top: 16px; }
+    @media (max-width: 760px) {
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .layout { display: block; }
+      .sidebar { border-right: 0; border-bottom: 1px solid var(--line); }
+      main { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/twg-cli/">TWG CLI</a>
+    <div class="topbar-links">
+      <a href="/twg-cli/getting-started/installation/">Install</a>
+      <a href="https://developer.atlassian.com/cloud/twg-cli/">DAC source</a>
+      <a href="https://github.com/atlassian/twg-cli">GitHub repo</a>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar">
+      <nav class="site-nav" aria-label="TWG CLI docs">
+<ul>
+<li class="nav-heading" style="--depth:0">Guides</li>
+<li class="nav-heading" style="--depth:1">Getting started</li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/">Overview</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/installation/">Set up TWG CLI</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/authentication/" aria-current="page">Authentication</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/faq/">FAQ</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/changelog/">Changelog</a></li>
+<li class="nav-heading" style="--depth:1">Agent integration</li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/agents/skills/">Agent skills</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/agents/examples/">Agent examples</a></li>
+</ul>
+</nav>
+    </aside>
+    <main>
+      <h1 id="authentication">Authentication</h1>
+<aside class="dac-panel dac-panel-warning">
+<div class="dac-panel-label">Teamwork Graph CLI (TWG CLI) is in beta</div>
+<p>TWG CLI is currently in beta. Commands and documentation may change between releases.</p>
+</aside>
+<p>TWG CLI stores credentials in <code>~/.config/twg/auth.conf</code> and reuses them across sessions. Use this page to manage tokens, re-authenticate, or configure credentials for CI/CD.</p>
+<h2 id="re-authenticate">Re-authenticate</h2>
+<p>To update your credentials at any time:</p>
+<pre><code class="language-bash">twg login
+</code></pre>
+<p>To force a full re-entry of all credentials:</p>
+<pre><code class="language-bash">twg login --force
+</code></pre>
+<h2 id="create-a-twg-api-token">Create a TWG API token</h2>
+<p>TWG CLI uses a single API token for TWG commands across Jira, Confluence, Rovo Search, and more. The token page is selected by the binary's default token mode: classic-token binaries open the standard Atlassian API-token page, while scoped-token binaries open the TWG-scoped token page.</p>
+<p>Bitbucket-specific commands require a separate Bitbucket token. To configure or refresh it without rerunning core TWG authentication, run:</p>
+<pre><code class="language-bash">twg setup bitbucket
+</code></pre>
+<p><code>twg login</code> preserves an existing Bitbucket token unless you run <code>twg login --force</code>.</p>
+<p><code>twg login</code> opens your browser automatically to the token creation page. If you need to create a TWG-scoped token manually:</p>
+<ol>
+<li>Go to <a href="https://id.atlassian.com/manage-profile/security/api-tokens?autofillToken=&amp;appId=twg&amp;selectedScopes=all&amp;expiryDays=30">https://id.atlassian.com/manage-profile/security/api-tokens</a>.</li>
+<li>Click <strong>Create API token with scopes</strong> and accept the pre-filled settings.</li>
+<li>Copy the token value and paste it when <code>twg login</code> prompts you.</li>
+</ol>
+<h2 id="use-environment-variables">Use environment variables</h2>
+<p>For CI/CD and scripted use, set the following variables instead of running <code>twg login</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TWG_USER</code></td>
+<td>Atlassian account email</td>
+</tr>
+<tr>
+<td><code>TWG_SITE</code></td>
+<td>Default site prefix</td>
+</tr>
+<tr>
+<td><code>TWG_TOKEN</code></td>
+<td>API token generated by the login token page</td>
+</tr>
+<tr>
+<td><code>TWG_BBC_TOKEN</code></td>
+<td>Bitbucket token for Bitbucket-specific commands</td>
+</tr>
+</tbody>
+</table>
+<aside class="dac-panel dac-panel-note">
+<div class="dac-panel-label">Note</div>
+<p>Never pass tokens as CLI flags. TWG CLI only accepts credentials interactively or via environment variables.</p>
+</aside>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li><a href="/twg-cli/agents/skills/">Agent skills</a></li>
+<li><a href="/twg-cli/agents/examples/">Agent examples</a></li>
+</ul>
+
+      <footer class="source-footer">
+        Generated from atlassian/twg-cli 10d433aa029a (2026-05-29T08:06:13+00:00).
+      </footer>
+    </main>
+  </div>
+  <script>
+    for (const button of document.querySelectorAll("[data-copy-text]")) {
+      button.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(button.getAttribute("data-copy-text") || "");
+        const previous = button.textContent;
+        button.textContent = "Copied";
+        setTimeout(() => {
+          button.textContent = previous;
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent examples | TWG CLI</title>
+  <meta name="description" content="Example natural language prompts for querying Atlassian data across multiple apps with TWG CLI.">
+  <style>
+    :root { color-scheme: light; --ink: #172b4d; --muted: #44546f; --line: #dcdfe4; --panel: #f7f8f9; --accent: #0c66e4; --warning: #fff7d6; --note: #e9f2ff; --tip: #dcfff1; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; background: #fff; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 16px 24px; border-bottom: 1px solid var(--line); }
+    .brand { color: var(--ink); font-weight: 700; }
+    .topbar-links { display: flex; gap: 16px; font-size: 14px; }
+    .layout { display: grid; grid-template-columns: minmax(220px, 280px) minmax(0, 1fr); min-height: calc(100vh - 58px); }
+    .sidebar { border-right: 1px solid var(--line); padding: 24px; background: var(--panel); }
+    .site-nav ul { list-style: none; margin: 0; padding: 0; }
+    .site-nav li { padding-left: calc(var(--depth, 0) * 12px); }
+    .site-nav li + li { margin-top: 10px; }
+    .nav-heading { color: var(--ink); font-size: 13px; font-weight: 700; letter-spacing: 0; margin-top: 18px; text-transform: uppercase; }
+    .site-nav li:first-child { margin-top: 0; }
+    .site-nav a { color: var(--muted); font-size: 14px; }
+    .site-nav a[aria-current="page"] { color: var(--ink); font-weight: 700; }
+    main { max-width: 920px; padding: 32px 40px 56px; }
+    h1, h2, h3 { line-height: 1.25; margin: 1.6em 0 0.6em; }
+    h1 { margin-top: 0; font-size: 34px; }
+    h2 { font-size: 24px; border-top: 1px solid var(--line); padding-top: 24px; }
+    h3 { font-size: 18px; }
+    table { width: 100%; border-collapse: collapse; display: block; overflow-x: auto; }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: var(--panel); }
+    code { background: #f1f2f4; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 0.92em; }
+    pre { overflow-x: auto; background: #0b1020; color: #f7f8f9; border-radius: 6px; padding: 14px 16px; }
+    pre code { background: transparent; color: inherit; padding: 0; }
+    .dac-panel { border: 1px solid var(--line); border-left-width: 4px; border-radius: 6px; margin: 18px 0; padding: 14px 16px; }
+    .dac-panel-warning { background: var(--warning); border-left-color: #f5c84b; }
+    .dac-panel-note { background: var(--note); border-left-color: #579dff; }
+    .dac-panel-tip { background: var(--tip); border-left-color: #36b37e; }
+    .dac-panel-label { font-weight: 700; margin-bottom: 4px; }
+    .prompt-copy-card pre { margin: 8px 0 12px; white-space: pre-wrap; }
+    .prompt-copy-card button { background: var(--accent); border: 0; border-radius: 4px; color: #fff; cursor: pointer; font: inherit; font-size: 13px; font-weight: 700; padding: 5px 9px; }
+    .prompt-copy-card button:hover { background: #0055cc; }
+    .source-footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; margin-top: 48px; padding-top: 16px; }
+    @media (max-width: 760px) {
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .layout { display: block; }
+      .sidebar { border-right: 0; border-bottom: 1px solid var(--line); }
+      main { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/twg-cli/">TWG CLI</a>
+    <div class="topbar-links">
+      <a href="/twg-cli/getting-started/installation/">Install</a>
+      <a href="https://developer.atlassian.com/cloud/twg-cli/">DAC source</a>
+      <a href="https://github.com/atlassian/twg-cli">GitHub repo</a>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar">
+      <nav class="site-nav" aria-label="TWG CLI docs">
+<ul>
+<li class="nav-heading" style="--depth:0">Guides</li>
+<li class="nav-heading" style="--depth:1">Getting started</li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/">Overview</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/installation/">Set up TWG CLI</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/authentication/">Authentication</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/faq/">FAQ</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/changelog/">Changelog</a></li>
+<li class="nav-heading" style="--depth:1">Agent integration</li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/agents/skills/">Agent skills</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/agents/examples/" aria-current="page">Agent examples</a></li>
+</ul>
+</nav>
+    </aside>
+    <main>
+      <h1 id="agent-examples">Agent examples</h1>
+<aside class="dac-panel dac-panel-warning">
+<div class="dac-panel-label">Teamwork Graph CLI (TWG CLI) is in beta</div>
+<p>TWG CLI is currently in beta. Commands and documentation may change between releases.</p>
+</aside>
+<h2 id="ask-your-agent-across-multiple-apps">Ask your agent across multiple apps</h2>
+<p>TWG CLI lets your agent pull context from multiple Atlassian apps in a single prompt, so you can get a complete picture without querying each app separately.</p>
+<table>
+<thead>
+<tr>
+<th>Use case</th>
+<th>Example prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Summarise your recent work</strong> — Get a combined view of your Jira, Confluence, and Bitbucket activity, so you can quickly recap your week.</td>
+<td><em>&quot;Summarise everything I worked on this week.&quot;</em></td>
+</tr>
+<tr>
+<td><strong>Get context for your current focus</strong> — See your open issues, upcoming deadlines, and recent activity, so you can prioritise your day.</td>
+<td><em>&quot;What should I focus on today?&quot;</em></td>
+</tr>
+<tr>
+<td><strong>Look up a person</strong> — Find out who someone is and what they're working on across products.</td>
+<td><em>&quot;Who is [name] and what are they working on?&quot;</em></td>
+</tr>
+<tr>
+<td><strong>Onboard to a new team</strong> — Get a summary of a team's people, projects, docs, and current sprint.</td>
+<td><em>&quot;I just joined the Platform Engineering team. Help me get up to speed.&quot;</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="multi-step-workflow-examples">Multi-step workflow examples</h2>
+<p>These examples show how your agent chains multiple queries from a single prompt.</p>
+<h3 id="example-1-weekly-work-summary">Example 1: Weekly work summary</h3>
+<p><strong>What you say:</strong></p>
+<blockquote>
+<p><em>&quot;Summarise everything I worked on this week.&quot;</em></p>
+</blockquote>
+<p><strong>What your agent does:</strong></p>
+<ol>
+<li>Looks up your recent Jira activity — issues updated, commented on, or transitioned.</li>
+<li>Finds Confluence pages you've created or edited.</li>
+<li>Checks pull requests you've opened or reviewed in Bitbucket.</li>
+<li>Produces a plain-English summary you can share in a standup or check-in.</li>
+</ol>
+<h3 id="example-2-onboard-to-a-new-project">Example 2: Onboard to a new project</h3>
+<p><strong>What you say:</strong></p>
+<blockquote>
+<p><em>&quot;I just joined the Platform Engineering team. Help me get up to speed.&quot;</em></p>
+</blockquote>
+<p><strong>What your agent does:</strong></p>
+<ol>
+<li>Finds the team structure and key people.</li>
+<li>Looks up the current active sprint and open issues.</li>
+<li>Finds relevant Confluence docs and onboarding pages.</li>
+<li>Lists recent pull requests in the team's repos.</li>
+<li>Summarises what the team is currently focused on.</li>
+</ol>
+<h3 id="example-3-explore-a-jira-issue-in-depth">Example 3: Explore a Jira issue in depth</h3>
+<p><strong>What you say:</strong></p>
+<blockquote>
+<p><em>&quot;Tell me everything about PROJ-123.&quot;</em></p>
+</blockquote>
+<p><strong>What your agent does:</strong></p>
+<ol>
+<li>Fetches the issue details, current status, and assignee.</li>
+<li>Looks up linked issues and dependencies.</li>
+<li>Finds related pull requests and any linked Confluence pages.</li>
+<li>Gives you a full picture of the issue and what needs to happen next.</li>
+</ol>
+<h3 id="example-4-prepare-for-a-sprint-review">Example 4: Prepare for a sprint review</h3>
+<p><strong>What you say:</strong></p>
+<blockquote>
+<p><em>&quot;Help me prepare for our sprint review. The sprint ends Friday.&quot;</em></p>
+</blockquote>
+<p><strong>What your agent does:</strong></p>
+<ol>
+<li>Lists all issues in the current sprint, grouped by status.</li>
+<li>Flags anything overdue or not started.</li>
+<li>Summarises completed work in a format you can share.</li>
+<li>Identifies any blockers or at-risk items.</li>
+</ol>
+<h2 id="example-prompts-quick-reference">Example prompts quick reference</h2>
+<p>Use these prompts as starting points. Your agent understands natural language, so you don't need the exact wording.</p>
+<table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>Example prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>My work</td>
+<td><em>&quot;What are my open Jira issues?&quot;</em></td>
+</tr>
+<tr>
+<td>My work</td>
+<td><em>&quot;Summarise everything I worked on this week.&quot;</em></td>
+</tr>
+<tr>
+<td>Sprint</td>
+<td><em>&quot;Show me the current sprint for the Platform team.&quot;</em></td>
+</tr>
+<tr>
+<td>Issues</td>
+<td><em>&quot;Tell me everything about PROJ-123.&quot;</em></td>
+</tr>
+<tr>
+<td>Confluence</td>
+<td><em>&quot;Find pages about onboarding in Confluence.&quot;</em></td>
+</tr>
+<tr>
+<td>Code</td>
+<td><em>&quot;Show PRs I authored this month.&quot;</em></td>
+</tr>
+<tr>
+<td>People</td>
+<td><em>&quot;Who are the key people in the Platform Engineering team?&quot;</em></td>
+</tr>
+<tr>
+<td>Goals</td>
+<td><em>&quot;What goals is my team tracking?&quot;</em></td>
+</tr>
+<tr>
+<td>Context</td>
+<td><em>&quot;I just joined the Platform Engineering team. Help me get up to speed.&quot;</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li><a href="/twg-cli/agents/skills/">Install skills</a></li>
+</ul>
+
+      <footer class="source-footer">
+        Generated from atlassian/twg-cli 10d433aa029a (2026-05-29T08:06:13+00:00).
+      </footer>
+    </main>
+  </div>
+  <script>
+    for (const button of document.querySelectorAll("[data-copy-text]")) {
+      button.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(button.getAttribute("data-copy-text") || "");
+        const previous = button.textContent;
+        button.textContent = "Copied";
+        setTimeout(() => {
+          button.textContent = previous;
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

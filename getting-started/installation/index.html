@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Set up TWG CLI | TWG CLI</title>
+  <meta name="description" content="Install, authenticate, and verify TWG CLI on macOS, Linux, or Windows.">
+  <style>
+    :root { color-scheme: light; --ink: #172b4d; --muted: #44546f; --line: #dcdfe4; --panel: #f7f8f9; --accent: #0c66e4; --warning: #fff7d6; --note: #e9f2ff; --tip: #dcfff1; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; background: #fff; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 16px 24px; border-bottom: 1px solid var(--line); }
+    .brand { color: var(--ink); font-weight: 700; }
+    .topbar-links { display: flex; gap: 16px; font-size: 14px; }
+    .layout { display: grid; grid-template-columns: minmax(220px, 280px) minmax(0, 1fr); min-height: calc(100vh - 58px); }
+    .sidebar { border-right: 1px solid var(--line); padding: 24px; background: var(--panel); }
+    .site-nav ul { list-style: none; margin: 0; padding: 0; }
+    .site-nav li { padding-left: calc(var(--depth, 0) * 12px); }
+    .site-nav li + li { margin-top: 10px; }
+    .nav-heading { color: var(--ink); font-size: 13px; font-weight: 700; letter-spacing: 0; margin-top: 18px; text-transform: uppercase; }
+    .site-nav li:first-child { margin-top: 0; }
+    .site-nav a { color: var(--muted); font-size: 14px; }
+    .site-nav a[aria-current="page"] { color: var(--ink); font-weight: 700; }
+    main { max-width: 920px; padding: 32px 40px 56px; }
+    h1, h2, h3 { line-height: 1.25; margin: 1.6em 0 0.6em; }
+    h1 { margin-top: 0; font-size: 34px; }
+    h2 { font-size: 24px; border-top: 1px solid var(--line); padding-top: 24px; }
+    h3 { font-size: 18px; }
+    table { width: 100%; border-collapse: collapse; display: block; overflow-x: auto; }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: var(--panel); }
+    code { background: #f1f2f4; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 0.92em; }
+    pre { overflow-x: auto; background: #0b1020; color: #f7f8f9; border-radius: 6px; padding: 14px 16px; }
+    pre code { background: transparent; color: inherit; padding: 0; }
+    .dac-panel { border: 1px solid var(--line); border-left-width: 4px; border-radius: 6px; margin: 18px 0; padding: 14px 16px; }
+    .dac-panel-warning { background: var(--warning); border-left-color: #f5c84b; }
+    .dac-panel-note { background: var(--note); border-left-color: #579dff; }
+    .dac-panel-tip { background: var(--tip); border-left-color: #36b37e; }
+    .dac-panel-label { font-weight: 700; margin-bottom: 4px; }
+    .prompt-copy-card pre { margin: 8px 0 12px; white-space: pre-wrap; }
+    .prompt-copy-card button { background: var(--accent); border: 0; border-radius: 4px; color: #fff; cursor: pointer; font: inherit; font-size: 13px; font-weight: 700; padding: 5px 9px; }
+    .prompt-copy-card button:hover { background: #0055cc; }
+    .source-footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; margin-top: 48px; padding-top: 16px; }
+    @media (max-width: 760px) {
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .layout { display: block; }
+      .sidebar { border-right: 0; border-bottom: 1px solid var(--line); }
+      main { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/twg-cli/">TWG CLI</a>
+    <div class="topbar-links">
+      <a href="/twg-cli/getting-started/installation/">Install</a>
+      <a href="https://developer.atlassian.com/cloud/twg-cli/">DAC source</a>
+      <a href="https://github.com/atlassian/twg-cli">GitHub repo</a>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar">
+      <nav class="site-nav" aria-label="TWG CLI docs">
+<ul>
+<li class="nav-heading" style="--depth:0">Guides</li>
+<li class="nav-heading" style="--depth:1">Getting started</li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/">Overview</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/installation/" aria-current="page">Set up TWG CLI</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/authentication/">Authentication</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/faq/">FAQ</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/changelog/">Changelog</a></li>
+<li class="nav-heading" style="--depth:1">Agent integration</li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/agents/skills/">Agent skills</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/agents/examples/">Agent examples</a></li>
+</ul>
+</nav>
+    </aside>
+    <main>
+      <h1 id="set-up-twg-cli">Set up TWG CLI</h1>
+<aside class="dac-panel dac-panel-warning">
+<div class="dac-panel-label">Teamwork Graph CLI (TWG CLI) is in beta</div>
+<p>TWG CLI is currently in beta. Commands and documentation may change between releases.</p>
+</aside>
+<h2 id="1-cli-installation-mode">1. CLI installation mode</h2>
+<p>Use this mode when you want to install and authenticate TWG CLI directly from your terminal.</p>
+<h3 id="before-you-begin">Before you begin</h3>
+<ul>
+<li>You need macOS (arm64 or x64), Linux (x64), or Windows (arm64 or x64).</li>
+<li>You need an Atlassian account with access to the products you want to use.</li>
+<li>To use TWG CLI through an agent after CLI setup, you need an AI coding agent installed on your computer.</li>
+</ul>
+<p>The TWG CLI binary does not require a separate runtime (for example, no Node.js).</p>
+<h3 id="step-1-install-twg-cli">Step 1: Install TWG CLI</h3>
+<h4 id="macos-and-linux">macOS and Linux</h4>
+<p>Recommended:</p>
+<pre><code class="language-bash">curl -fsSL https://teamwork-graph.atlassian.com/cli/install -o twg-install.sh
+bash twg-install.sh
+</code></pre>
+<p>If you use Bash or zsh and want a compact shortcut, you can also run:</p>
+<pre><code class="language-bash">bash &lt;(curl -fsSL https://teamwork-graph.atlassian.com/cli/install)
+</code></pre>
+<p>During setup:</p>
+<ul>
+<li>When consent is required, answer <code>yes</code>, <code>continue</code>, or <code>no</code>.</li>
+<li>After consent, enter your Atlassian account email and default site prefix or domain, for example <code>example</code> or <code>example.atlassian.net</code>.</li>
+<li>The installer saves email and site before token setup.</li>
+<li>Setup installs and refreshes TWG agent skills.</li>
+<li>The installer opens the token page. Generate a token in the browser, copy it, then press Enter — the installer reads it from the OS clipboard. If clipboard access is unavailable, it falls back to a masked paste prompt.</li>
+<li>After core setup and <code>twg doctor</code> pass, setup may offer the same clipboard-confirmed flow for the optional Bitbucket token. If you skip it, TWG CLI is still ready for non-Bitbucket commands.</li>
+<li>If you use a clipboard history manager, clear it after setup.</li>
+</ul>
+<p>The installer completes setup and runs <code>twg doctor</code> automatically. To repair setup later:</p>
+<pre><code class="language-bash">twg setup
+</code></pre>
+<p>To install a specific version:</p>
+<pre><code class="language-bash">bash twg-install.sh --version 0.9.1
+</code></pre>
+<p>If <code>~/.local/bin</code> is not in your <code>PATH</code>, the installer prints the exact line to add to your shell profile.</p>
+<h4 id="homebrew-macos">Homebrew (macOS)</h4>
+<pre><code class="language-bash">brew tap atlassian/twg
+brew install twg
+twg setup
+</code></pre>
+<h4 id="windows">Windows</h4>
+<aside class="dac-panel dac-panel-note">
+<div class="dac-panel-label">Note</div>
+<p><strong>Windows:</strong> SmartScreen may warn about the installer — choose <strong>More info → Run anyway</strong>. Pre-release builds may not yet use a production code signature; that is expected until generally available signed binaries ship.</p>
+</aside>
+<h5 id="install-powershell">Install — PowerShell</h5>
+<pre><code class="language-powershell">curl.exe -fsSL https://teamwork-graph.atlassian.com/cli/install.ps1 -o twg-install.ps1
+powershell -ExecutionPolicy Bypass -File .\twg-install.ps1
+</code></pre>
+<h5 id="install-command-prompt-cmd">Install — Command Prompt (cmd)</h5>
+<aside class="dac-panel dac-panel-note">
+<div class="dac-panel-label">Note</div>
+<p><code>curl</code> is built into Windows 10 1803 and later. If you're on an older version, use the PowerShell method above instead.</p>
+</aside>
+<pre><code class="language-cmd">curl.exe -fsSL https://teamwork-graph.atlassian.com/cli/install.ps1 -o twg-install.ps1
+powershell -ExecutionPolicy Bypass -File twg-install.ps1
+</code></pre>
+<p>The Windows installer performs the same setup as macOS and Linux: binary install, checksum verification, consent, email and site save, skill install, token login, and doctor verification.</p>
+<p>Setup asks for:</p>
+<table>
+<thead>
+<tr>
+<th>Prompt</th>
+<th>What to enter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Email</strong></td>
+<td>Your Atlassian account email.</td>
+</tr>
+<tr>
+<td><strong>Site</strong></td>
+<td>Your Atlassian site name (for example, <code>example</code> for <code>example.atlassian.net</code>).</td>
+</tr>
+<tr>
+<td><strong>Token</strong></td>
+<td>The token from the page that <code>twg login</code> opens automatically.</td>
+</tr>
+<tr>
+<td><strong>Bitbucket token</strong></td>
+<td>Optional post-setup step. Required only for Bitbucket-specific commands.</td>
+</tr>
+</tbody>
+</table>
+<p>Credentials are saved to <code>~/.config/twg/auth.conf</code> and reused across sessions. For re-authentication, token management, and CI/CD environment variables, see <a href="/twg-cli/getting-started/authentication/">Authentication</a>.</p>
+<h2 id="2-agent-installation-mode">2. Agent installation mode</h2>
+<p>Use this mode when you want an AI coding agent to install TWG CLI, authenticate, and set up agent skills for you.</p>
+<p>Copy the following prompt and paste it into your agent:</p>
+<pre><code class="language-text">Install/setup TWG using https://teamwork-graph.atlassian.com/cli/AGENTS.md
+</code></pre>
+<p>The agent should use that hosted <code>AGENTS.md</code> directly. There are no separate agent-specific install URLs.</p>
+<h2 id="verify-setup">Verify setup</h2>
+<p>Run:</p>
+<pre><code class="language-bash">twg doctor
+</code></pre>
+<p>This checks authentication, connectivity, and build info. It works the same on macOS, Linux, PowerShell, and cmd.</p>
+<h2 id="try-it">Try it</h2>
+<p>Your AI coding agent can now access your Atlassian data across Jira, Confluence, Bitbucket, and more. Describe what you want in plain language and your agent handles the rest:</p>
+<ul>
+<li><em>&quot;Summarize the work I did this week&quot;</em></li>
+<li><em>&quot;What are my open Jira issues?&quot;</em></li>
+<li><em>&quot;Create a Confluence page about our Q2 goals&quot;</em></li>
+<li><em>&quot;Show the current sprint for my team&quot;</em></li>
+</ul>
+<p>See <a href="/twg-cli/agents/examples/">Agent examples</a> for more prompts to try.</p>
+<h2 id="quick-start-video">Quick start video</h2>
+<p><a href="https://www.loom.com/share/6df5e927900c487fb92a51b318a2e8a8">Introduction to Teamwork Graph CLI</a> — walks through installation, authentication, and using the agent skill to query work across Atlassian products.</p>
+<h2 id="update">Update</h2>
+<p><strong>macOS/Linux</strong> — use the built-in updater:</p>
+<pre><code class="language-bash">twg update
+</code></pre>
+<p><strong>macOS (Homebrew):</strong></p>
+<pre><code class="language-bash">brew update &amp;&amp; brew upgrade twg
+</code></pre>
+<p><strong>Windows (PowerShell or cmd)</strong> — re-run the install command from the Windows section above.</p>
+<p><code>twg update</code> and the installers refresh installed skill files automatically when they can detect existing TWG skill installs.</p>
+<h2 id="feedback">Feedback</h2>
+<p>To share feedback or report an issue, use the CLI:</p>
+<pre><code class="language-bash">twg feedback --summary &quot;&lt;short title&gt;&quot;
+</code></pre>
+<p>Or submit feedback using the <a href="https://ecosystem.atlassian.net/servicedesk/customer/portal/3664/group/3822/create/19140">TWG CLI feedback form</a>.</p>
+<h2 id="admin-opt-out">Admin opt-out</h2>
+<p>Organization admins can request to opt their organization out of Teamwork Graph CLI access. Submit a request using the <a href="https://ecosystem.atlassian.net/servicedesk/customer/portal/3664/create/19138">TWG CLI admin opt-out form</a>. The team will process your request within 24 hours.</p>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li><a href="/twg-cli/getting-started/authentication/">Authentication</a></li>
+<li><a href="/twg-cli/agents/skills/">Agent skills</a></li>
+<li><a href="/twg-cli/agents/examples/">Agent examples</a></li>
+</ul>
+
+      <footer class="source-footer">
+        Generated from atlassian/twg-cli 10d433aa029a (2026-05-29T08:06:13+00:00).
+      </footer>
+    </main>
+  </div>
+  <script>
+    for (const button of document.querySelectorAll("[data-copy-text]")) {
+      button.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(button.getAttribute("data-copy-text") || "");
+        const previous = button.textContent;
+        button.textContent = "Copied";
+        setTimeout(() => {
+          button.textContent = previous;
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
