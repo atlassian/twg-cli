@@ -62,6 +62,7 @@ generated catalogs from internal build profiles.
 
 ## Release Channels
 
+- Documentation mirror: `https://atlassian.github.io/twg-cli/`
 - Stable installer: `https://teamwork-graph.atlassian.com/cli/install`
 - Stable manifest: `https://teamwork-graph.atlassian.com/cli/manifest.json`
 - Release notes: `https://teamwork-graph.atlassian.com/cli/CHANGELOG.md`
