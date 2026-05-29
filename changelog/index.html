@@ -83,12 +83,271 @@
 <div class="dac-panel-label">Teamwork Graph CLI (TWG CLI) is in beta</div>
 <p>TWG CLI is currently in beta. Commands and documentation may change between releases.</p>
 </aside>
-<p>The public Teamwork Graph CLI changelog is published at:</p>
+<p>The public Teamwork Graph CLI changelog endpoint is:</p>
 <p><a href="https://teamwork-graph.atlassian.com/cli/CHANGELOG.md">https://teamwork-graph.atlassian.com/cli/CHANGELOG.md</a></p>
-<p>This endpoint is updated from the <code>CHANGELOG.md</code> file in the private Bitbucket source repository during the changelog publish pipeline. Use it for release notes, version changes, and public-facing upgrade details.</p>
+<p>This page mirrors the same release notes so the version headings appear in the page navigation.</p>
+<h2 id="1-0-1">1.0.1</h2>
+<h3 id="highlights">Highlights</h3>
+<ul>
+<li>Adds <code>twg api</code> to every build profile, so signed-in users can make
+authenticated Atlassian REST and GraphQL calls with the CLI's saved
+credentials, product shortcuts, and structured JSON/JSONL output.</li>
+<li>Makes <code>twg admin</code> available in the external CLI with Admin API key onboarding,
+org switching, user lifecycle commands, and lifecycle capability checks.</li>
+<li>Improves command discoverability across Jira, Confluence, JSM, Bitbucket,
+Trello, Loom, Talent, Atlas Goals, and Atlas Projects with clearer help,
+examples, guards, synonyms, and safety guidance.</li>
+<li>Adds <code>twg confluence ... --help-body-format</code> so rich-body commands can show
+supported plain text, Markdown, and HTML input formats directly from the CLI.</li>
+<li>Hardens day-to-day workflows, including JSM service search, Confluence tiny
+URL reads, Jira goal/project links, Ctrl+C cancellation during long fetches,
+OAuth refresh timing, and final analytics delivery before exit.</li>
+</ul>
+<h2 id="1-0-0">1.0.0</h2>
+<p>TWG CLI 1.0.0 brings the 0.9.x release line together as a stable baseline for
+agent-oriented Atlassian workflows, with broader Jira and Confluence coverage,
+more reliable installs and updates, improved authentication, and better command
+discoverability.</p>
+<h3 id="highlights-2">Highlights</h3>
+<ul>
+<li>Establishes the agent-friendly command model as the stable 1.0 baseline, with
+richer Jira, Confluence, Bitbucket, Loom, and Feedback workflows.</li>
+<li>Adds a large Confluence <code>content</code> surface that lets agents work with pages,
+blog posts, whiteboards, databases, folders, comments, labels, permissions,
+tasks, versions, history, attachments, and reactions through a more uniform
+command shape.</li>
+<li>Expands Jira REST parity across work items, attachments, worklogs, comments,
+properties, changelog, votes, filters, dashboards, boards, sprints, project
+components, versions, and bulk operations.</li>
+<li>Improves install, update, and OAuth behaviour so the binary is safer to
+distribute and easier for agents to diagnose.</li>
+</ul>
+<h3 id="breaking-changes">Breaking changes</h3>
+<ul>
+<li>No intentional command removals are included in this release. Some Confluence
+and install flows now prefer normalized command shapes and clearer guarded
+behaviours, while compatibility aliases remain where required.</li>
+</ul>
+<h3 id="confluence">Confluence</h3>
+<ul>
+<li>Adds the new <code>twg confluence content</code> surface as the preferred agent-friendly
+entry point for content lifecycle operations.</li>
+<li>Wires page, blog post, whiteboard, database, and folder lifecycle parity where
+underlying services exist, including page create/update/archive/restore/delete
+and move, blog post create/update/delete, whiteboard/database list/get/create/delete,
+and folder get/create/delete.</li>
+<li>Adds content subresources for:
+<ul>
+<li><code>attachments</code> upload/download.</li>
+<li><code>comments</code> list/get/create/reply/update/resolve/reopen/delete.</li>
+<li><code>labels</code> list/add/remove.</li>
+<li><code>permissions</code> list/add/remove.</li>
+<li><code>tasks</code> list/get/complete/reopen.</li>
+<li><code>versions</code> and <code>history</code> list/get/restore.</li>
+<li><code>reactions</code> get/add/remove.</li>
+</ul>
+</li>
+<li>Makes <code>--type</code> optional for many ID-only <code>confluence content</code> commands by
+adding dispatcher probes and structured unsupported-operation errors.</li>
+<li>Adds <code>confluence content create</code> over the agentic content API for pages,
+live docs, blog posts, whiteboards, databases, embeds, smart links, folders,
+and slides.</li>
+<li>Normalizes <code>twg confluence space</code> verbs to align with the new content surface,
+while preserving compatibility aliases where needed.</li>
+</ul>
+<h3 id="jira">Jira</h3>
+<ul>
+<li>Adds REST-backed Jira work item subresource commands for attachments,
+comments, watchers, issue links, properties, changelog, votes, and worklogs.</li>
+<li>Adds <code>twg jira workitem bulk-get</code> and <code>twg jira workitem bulk-transition</code>,
+including a safe dry-run default for bulk transitions.</li>
+<li>Speeds up repeated <code>twg jira workitem get</code> reads by using REST search batching
+when possible and falling back to per-issue reads when needed.</li>
+<li>Adds rich description/comment/worklog input formats for plain text, Markdown,
+HTML, and ADF, with HTML as the safer default for rich-text authoring.</li>
+<li>Adds REST-backed Jira filter and dashboard commands, including saved filter
+lifecycle, sharing/subscriptions, dashboard lifecycle, and gadget administration.</li>
+<li>Adds Jira Agile board and sprint parity commands, sprint snapshots, board and
+sprint discovery from project URLs or issue keys, and project component/version
+lifecycle commands under <code>jira space</code>.</li>
+</ul>
+<h3 id="bitbucket-loom-and-feedback">Bitbucket, Loom, and Feedback</h3>
+<ul>
+<li>Adds <code>twg bb inbox</code> for a bounded current-user PR inbox with reviewer
+and author filters plus compact task, comment, and check signals.</li>
+<li>Adds <code>twg bb pipeline latest-failure</code> to locate the newest failed
+pipeline and hydrate failed step log tails in one bounded flow.</li>
+<li>Normalizes Bitbucket PR descriptions that contain escaped newlines so
+agent-generated Markdown renders correctly.</li>
+<li>Adds Loom transcript preview and file-backed full transcript support to
+<code>twg loom get</code>.</li>
+<li>Routes <code>twg feedback</code> Jira issue creation through the Jira REST gateway with
+clearer authentication and timeout guidance.</li>
+</ul>
+<h3 id="agent-and-workflow-experience">Agent and workflow experience</h3>
+<ul>
+<li>Adds agent-friendly command repairs and aliases for common lookups, including
+positional user search, pull-request status aliases, project/goal shortcuts,
+Confluence page positional get, and Loom/video/meeting URL hydration.</li>
+<li>Splits bundled TWG workflow guidance into outcome-specific skills for better
+agent discovery.</li>
+<li>Restores and refreshes generated CLI catalog discoverability for the new
+Confluence content and space surfaces.</li>
+</ul>
+<h3 id="auth-install-and-update-hardening">Auth, install, and update hardening</h3>
+<ul>
+<li>Ships and fixes the OAuth device-code login path, including refresh behaviour
+and a corrected scope allowlist for the TWG CLI OAuth client.</li>
+<li>Adds low-frequency update checks from <code>doctor</code>/version commands and reports
+installed TWG skill freshness with repair guidance.</li>
+<li>Fixes Windows <code>twg update</code> replacement flows, records install metadata, and
+preserves logs when background replacement fails.</li>
+<li>Warns about duplicate Homebrew/direct installs and prevents accidental direct
+installs over active Homebrew-managed installs.</li>
+<li>Simplifies direct installers by requiring setup finalization and sharing the
+POSIX installer template across shell installs.</li>
+<li>Fixes shell installer checksum parsing for CRLF <code>SHA256SUMS</code> manifests.</li>
+<li>Improves command compatibility coverage so supported aliases resolve more
+reliably.</li>
+</ul>
+<h2 id="0-9-8">0.9.8</h2>
+<h3 id="minor-changes">Minor Changes</h3>
+<ul>
+<li>
+<p>b48bdbd: Add <code>twg access</code> for product, site, org, test-like, configured-site, Bitbucket, and Rovo access inventory checks.</p>
+</li>
+<li>
+<p>91c25e2: Add a <code>BUILD_ENABLE_CONFLUENCE_CONTENT_TOOLS</code> build flag so release-style setups
+can opt into the agentic Confluence content tools bundle. The bundle currently
+exposes a <code>confluence content get</code> preview backed by Confluence's
+<code>/wiki/api/v2/agentic/content/{id}</code> (and <code>?content_url=</code>) endpoint, with
+summary, outline, and full detail levels; future agentic create/update/delete
+commands will land behind the same flag so the surface graduates as a unit.</p>
+<p>The flag defaults to on in dev/internal builds and off in release/external
+builds; invalid values warn and fall back to the build-profile default. Set
+<code>BUILD_ENABLE_CONFLUENCE_CONTENT_TOOLS=1</code> at build time (e.g.
+<code>BUILD_ENABLE_CONFLUENCE_CONTENT_TOOLS=1 npm run setup</code>) to opt a release-style
+build into the surface.</p>
+<p>Coordinate the default flip with the monolith's <code>agentic_content_tools</code> Statsig
+gate so client-side availability tracks server-side availability.</p>
+</li>
+<li>
+<p>2f94fe9: Help discovery: typed <code>Guards:</code> and <code>Synonyms:</code> sections, plus ranking fixes</p>
+<p>Adds a <code>Guards:</code> heading and an inline <code>Synonyms:</code> line that authors can drop into any
+command's <code>addHelpText(&quot;after&quot;, …)</code> block. The catalog parses both into typed
+<code>HelpCommandRecord.guards</code> and <code>HelpCommandRecord.synonyms</code> fields, the index persists
+them, and flexsearch slots them into the existing weight ladder
+(<code>path: 12, cmd: 10, synonyms: 9, alias: 8, meta: 5, desc: 3, guards: 2, args: 2, opts: 2, input: 2</code>):</p>
+<ul>
+<li><code>synonyms</code> — weight 9, just <strong>above</strong> <code>alias: 8</code>, so curated semantic neighbours such
+as <code>cmdb</code> → <code>assets</code> or <code>calendar</code> → <code>meetings</code> win against incidental description
+prose and even against legacy aliases when the alias is the wrong target.</li>
+<li><code>guards</code> — weight 2, low enough to act as a tie-breaker for sibling-overlap commands
+without inventing matches on unrelated commands.</li>
+</ul>
+<p>As part of the content rollout, <code>pr-tree</code> and <code>workitem-tree</code> had their existing
+free-form prose footers converted to typed <code>Guards:</code> blocks. Those footers were
+previously not indexed at all (the catalog only captured <code>Examples:</code> blocks), so the
+conversion is also a strict gain in search coverage for those two commands.</p>
+<p>Two complementary ranking fixes ship in the same change so existing commands benefit even
+without authored content:</p>
+<ul>
+<li>Drop single-character query tokens (<code>a</code>, <code>i</code>, <code>o</code>, …) at the tokenize boundary so
+noise tokens stop prefix-matching every <code>assets *</code> / <code>auth *</code> path.</li>
+<li>Damp the path-prefix bonus by the ratio of query-token length to path-token length so
+short prefixes no longer dominate ranking against full-word matches.</li>
+</ul>
+<p><code>guards</code> and <code>synonyms</code> are additive optional fields, so the help-record and help-index
+schema versions stay at <code>1</code>. Cache invalidation on upgrade is carried by
+<code>programSignature()</code>, which now hashes per-command rendered help-text length and so
+changes whenever a Guards/Synonyms block is added or removed.</p>
+<p>Authored content covers the full multi-surface ambiguity surface: <code>meetings</code>, <code>docs</code>,
+<code>videos</code>, <code>spaces</code>, <code>org-tree</code>, <code>pr-tree</code> (existing prose footer converted),
+<code>workitem-tree</code> (converted), <code>assets</code>, <code>collaborators</code>, <code>recently-viewed</code>,
+<code>notifications</code>, <code>pull-requests</code>, <code>context jira workitem</code>, <code>context user</code>,
+<code>context confluence</code> (page/space/blogpost/whiteboard), <code>goals</code>, <code>projects</code>,
+<code>focus-areas</code>, <code>talent</code>, <code>teams</code>, <code>jsm incident query</code>, <code>jsm alert query</code>,
+<code>jsm post-incident-review query</code>, <code>confluence blog</code>, <code>confluence database</code>,
+<code>confluence whiteboard</code>, <code>bitbucket search prs</code>, and <code>bitbucket default-reviewer</code>.</p>
+<p>Examples of fixed rankings (<code>twg help &lt;freeform&gt;</code> → top result):</p>
+<ul>
+<li><code>find a persons meetings</code> → <code>meetings</code> (was assets subtree)</li>
+<li><code>okr</code> → <code>goals</code></li>
+<li><code>postmortem</code> → <code>jsm post-incident-review query</code></li>
+<li><code>outage incident</code> → <code>jsm incident query</code></li>
+<li><code>monitoring page alert</code> → <code>jsm alert query</code></li>
+<li><code>issue context</code> → <code>context jira workitem</code></li>
+<li><code>user perimeter</code> → <code>context user</code></li>
+<li><code>team membership</code> → <code>teams</code></li>
+<li><code>open positions</code> → <code>talent</code></li>
+<li><code>blog post announcement</code> → <code>confluence blog</code></li>
+<li><code>whiteboard diagram</code> → <code>confluence whiteboard</code></li>
+<li><code>default reviewer</code> → <code>bitbucket pull-requests default-reviewer</code></li>
+<li><code>find pr by text</code> → <code>bitbucket search prs</code></li>
+<li><code>atlas project</code> → <code>projects</code></li>
+<li><code>focus area initiative</code> → <code>focus-areas</code></li>
+<li><code>cmdb</code> → <code>assets</code></li>
+<li><code>who reports to whom</code> → <code>org-tree</code></li>
+</ul>
+</li>
+<li>
+<p>15a40ce: Make <code>twg work query</code> count-first by default, add distinct entity counts for
+validated sections, require <code>--fetch items</code> when callers need hydrated work item
+rows, and guard unbounded item fetches with a 2000-relationship preflight limit.</p>
+</li>
+</ul>
+<h3 id="patch-changes">Patch Changes</h3>
+<ul>
+<li>3b0a2d7: Add a <code>--body-output-file</code> option to Confluence page reads so body content can be saved to a file while JSON output stays metadata-focused.</li>
+<li>e3c4f17: Stop user search from calling the admin users GraphQL lookup.</li>
+<li>ab03591: Document agent-facing help search behavior changes that de-rank advanced raw graph/debug commands unless the query names them directly, and tighten high-fanout agent output contracts for org, goal, and project hydration commands.</li>
+<li>7f69e9e: Add project-aware Jira field discovery and generic custom field support for workitem create and update.</li>
+<li>ba5649a: Stop publishing the duplicate Windows <code>setup.ps1</code> installer; <code>install.ps1</code> is now the canonical PowerShell installer URL for both public Bifrost and internal Statlas releases.</li>
+<li>7f2d4f9: Skip the optional Bitbucket token prompt during login when accessible product discovery confirms the account has no Bitbucket access.</li>
+<li>b437a97: Add <code>twg workitem-tree</code> with an <code>issue-tree</code> alias to summarize Jira work item activity by reporting tree with fast GraphStore Cypher-backed counts by default and guarded <code>--full-fetch</code> issue sample fetching.</li>
+</ul>
+<h2 id="0-9-7">0.9.7</h2>
+<h3 id="patch-changes-2">Patch Changes</h3>
+<ul>
+<li>
+<p>5087758: context: gracefully handle partial GraphQL responses; search snippet formatting</p>
+<p><code>twg context user</code>, <code>twg context confluence &lt;type&gt;</code>, and <code>twg context jira workitem</code>
+now return whatever data the graph store <em>did</em> manage to fetch when one or
+more relationship branches fail to load. The dropped branches are surfaced as
+a brief warning on the v2 envelope's <code>warnings</code> field (and to stderr in text
+mode) instead of throwing a hard
+<code>Unable to retrieve data: cannot route the request</code> error.</p>
+<p><code>twg search</code> results no longer show multi-line raw content in snippet previews —
+descriptions are now collapsed to a single readable line and dimmed for visual
+consistency with other result metadata.</p>
+</li>
+<li>
+<p>7f0e519: test(coverage): use real fixtures for <code>confluence labels attachment</code> and <code>confluence labels custom-content</code></p>
+<p>The static read coverage harness was passing a Confluence page ID to <code>confluence labels attachment</code> and a placeholder <code>0</code> to <code>confluence labels custom-content</code>. Both produced HTTP 404s, which the harness mis-classified as &quot;token lacks Confluence scope&quot; — masking the fact that both commands work correctly. The harness now discovers a real attachment and custom-content ID via CQL on each run, and the Confluence skip-matchers are reordered so genuine 404s can no longer be reported as scope failures.</p>
+</li>
+<li>
+<p>142758c: fix(search): recover full results when AGG returns partial success with downstream errors</p>
+<p><code>twg search query --assignee &lt;user&gt;</code> (and other filtered searches) previously showed a warning that results were limited to Confluence and Jira. This was caused by two issues:</p>
+<ol>
+<li><strong>Partial AGG responses were discarded</strong>: When AGG fanout to a downstream connector returned a 403, AGG still returned HTTP 200 with valid search results alongside a <code>DOWNSTREAM_ERROR</code> GraphQL error. <code>graphql-request</code>'s default error policy treated this as a failure and threw away the usable data, triggering the Confluence/Jira-only fallback. Fixed by catching the <code>ClientError</code> directly in <code>runAggSearch</code> and recovering the data when <code>response.data.search.results.edges</code> is non-null, scoped strictly to the Rovo search path so other GraphQL callers are unaffected.</li>
+<li><strong>Default search fanned out to all connected apps implicitly</strong>: Searches without <code>--app</code> were fetching entity types from all 55+ connected third-party apps and including them in the search, causing AGG to fan out to connectors that may fail. Third-party entities are now only included when explicitly requested via <code>--app</code>.</li>
+</ol>
+</li>
+<li>
+<p>5f2273e: Remove <code>jsm conversation by-container query</code>, <code>jsm conversation workspace experience-config get</code>, <code>jsm conversation workspace related-experience-config get</code>, and <code>jsm automation task-agent query</code> from the public CLI surface at the request of the upstream <code>jsmChannels</code> owners. Also hide <code>jsm incident get</code> from <code>--help</code>, the generated catalog, and the command-policy schema until the required <code>read:incident:jira-service-management</code> scope is available in the <code>twg login</code> granular-scope flow; the runner remains wired so existing scripts continue to work.</p>
+</li>
+<li>
+<p>e189268: Add <code>twg pr-tree</code> with a <code>pull-requests-tree</code> alias to summarize pull request activity by reporting tree with fast GraphStore Cypher-backed counts, guarded full-fetch samples, and per-person direct examples.</p>
+</li>
+</ul>
+<h2 id="earlier-releases">Earlier Releases</h2>
+<p>This public changelog starts at 0.9.7. Earlier internal and pre-stable entries
+are omitted to keep release notes focused on currently relevant TWG CLI
+behavior.</p>
+<p>Please use the latest stable installer for supported setup and update flows.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 7afc957e8f8b (2026-05-29T16:50:00+00:00).
+        Generated from atlassian/twg-cli 367916688833 (2026-05-29T17:19:33+00:00).
       </footer>
     </main>
   </div>
