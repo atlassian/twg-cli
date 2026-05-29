@@ -21,24 +21,21 @@ release-ready information that is safe for users:
 - public skills and plugin package notes
 - public issue and support links
 
-## Future GitHub Pages Migration
+## GitHub Pages Mirror
 
-Today, GitHub Pages for TWG CLI docs is attached to `atlassian/homebrew-twg`.
-Moving Pages publishing to this repo is a future migration and requires explicit
-approval.
+GitHub Pages for TWG CLI docs is published from this repo:
 
-When that migration happens, update the private `twg-cli` publishing flow in the
-same change:
+- Pages URL: `https://atlassian.github.io/twg-cli/`
+- Source repo: `atlassian/twg-cli`
+- Source branch: `gh-pages`
 
-- Change the GitHub Pages publish target from `atlassian/homebrew-twg` to the
-  Atlassian-owned TWG CLI public repo.
-- Keep `atlassian/homebrew-twg` focused on the Homebrew formula only.
-- Update public docs links that currently assume `/homebrew-twg/`.
-- Verify the GitHub Pages source branch and repo settings before switching the
-  private release pipeline.
-- Keep the publish path token-safe and avoid token-bearing remote URLs.
-- After the switch, DAC docs updates and release docs updates should publish to
-  the dedicated TWG CLI repo, not the Homebrew tap.
+The Homebrew tap repo, `atlassian/homebrew-twg`, owns only the generated
+Homebrew formula. It is not the documentation mirror.
+
+The private `twg-cli` publishing flow should keep the GitHub Pages publish
+target pointed at `atlassian/twg-cli`, use a dedicated `GITHUB_PAGES_TOKEN`, and
+avoid token-bearing remote URLs. That token needs **Contents: read and write**
+and **Pages: read-only** on `atlassian/twg-cli`.
 
 ## Manual Public Repo Update Checklist
 
