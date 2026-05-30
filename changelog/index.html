@@ -82,8 +82,23 @@
 <p>The public Teamwork Graph CLI changelog source is:</p>
 <p><a href="https://developer.atlassian.com/cloud/twg-cli/changelog.md">https://developer.atlassian.com/cloud/twg-cli/changelog.md</a></p>
 <p>This page mirrors the same release notes so the version headings appear in the page navigation.</p>
-<h2 id="1-0-1">1.0.1</h2>
+<h2 id="1-0-2">1.0.2</h2>
 <h3 id="highlights">Highlights</h3>
+<ul>
+<li><strong>OAuth-first login and clearer auth recovery.</strong> <code>twg login</code> now uses OAuth by default, <code>--force</code> consistently starts a fresh auth flow, <code>--no-browser</code> works across login prompts, and 401/403 failures now show mode-aware remediation with a stable <code>AUTH_EXPIRED</code> agent envelope and exit code 77. Bitbucket token setup remains token-based and is prompted when needed.</li>
+<li><strong>New and expanded Atlassian work surfaces.</strong> This release adds Assets write lifecycle commands with dry-run/delete guards, Confluence content update/body-format guidance/move/label improvements, JSM customer request creation and request-type field metadata, Loom video comments, Bitbucket deployment variable mutations, repository/branch/pipeline/PR parity commands, and external Code Intelligence access.</li>
+<li><strong>Better query, context, and agent behavior.</strong> Generic query contracts now distinguish natural language from query-language inputs, agent summaries and compact/evidence output are more predictable, <code>TWG_AGENT_DEFAULTS=1</code> lets installed skills call <code>twg</code> directly with agent-friendly defaults, and <code>twg doctor</code> now highlights duplicate <code>twg</code> binaries on <code>PATH</code>.</li>
+<li><strong>Safer defaults and richer object handling.</strong> <code>pr-tree</code> is now count-only by default, supports <code>--limited-fetch</code>, and bounds zero-flag merged rollups to the last 30 days. Jira issue-key resolution, Jira rich-text validation, Talent position lookup/rendering, JSM linked repositories, and Teams ARI lookups were also improved.</li>
+<li><strong>Release and packaging updates.</strong> Codex plugin packaging is now available with public-safe bundled guidance, the benchmark latest-release pipeline can run non-interactively, and release builds hide or remove unfinished/unsupported Jira Align, Trello, Talent proposal, and JSM channel/request-location commands.</li>
+</ul>
+<h3 id="upgrade-notes">Upgrade Notes</h3>
+<ul>
+<li><code>twg login</code> is OAuth-first. The old <code>--oauth</code> flag has been removed because OAuth is now the default path. Existing classic token auth still works for installer, clipboard, non-TTY, environment-token, and existing <code>auth.conf</code> flows.</li>
+<li>Stale OAuth environment overrides (<code>TWG_OAUTH_CLIENT_ID</code>, <code>TWG_OAUTH_AUTH_BASE_URL</code>, <code>TWG_OAUTH_SCOPE</code>) were removed; endpoints and client ID now come from environment config.</li>
+<li>Some in-development or unsupported commands are intentionally absent from release builds, including Jira Align, JSM channel mutations, JSM request-location query, Trello bulk list deletion, and Talent focus-area proposal commands.</li>
+</ul>
+<h2 id="1-0-1">1.0.1</h2>
+<h3 id="highlights-2">Highlights</h3>
 <ul>
 <li>Adds <code>twg api</code> to every build profile, so signed-in users can make
 authenticated Atlassian REST and GraphQL calls with the CLI's saved
@@ -104,7 +119,7 @@ OAuth refresh timing, and final analytics delivery before exit.</li>
 agent-oriented Atlassian workflows, with broader Jira and Confluence coverage,
 more reliable installs and updates, improved authentication, and better command
 discoverability.</p>
-<h3 id="highlights-2">Highlights</h3>
+<h3 id="highlights-3">Highlights</h3>
 <ul>
 <li>Establishes the agent-friendly command model as the stable 1.0 baseline, with
 richer Jira, Confluence, Bitbucket, Loom, and Feedback workflows.</li>
@@ -343,7 +358,7 @@ behavior.</p>
 <p>Please use the latest stable installer for supported setup and update flows.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 3ceaa91e1de8 (2026-05-30T00:31:44+00:00).
+        Generated from atlassian/twg-cli 9a162f29128c (2026-05-30T00:31:57+00:00).
       </footer>
     </main>
   </div>
