@@ -82,6 +82,20 @@
 <p>The public Teamwork Graph CLI changelog source is:</p>
 <p><a href="https://developer.atlassian.com/cloud/twg-cli/changelog.md">https://developer.atlassian.com/cloud/twg-cli/changelog.md</a></p>
 <p>This page mirrors the same release notes so the version headings appear in the page navigation.</p>
+<h2 id="1-0-3">1.0.3</h2>
+<h3 id="patch-changes">Patch Changes</h3>
+<ul>
+<li>5f21300: <code>twg login</code> now uses OAuth by default in installer paths too. The public curl
+installer (<code>bin/install-template.sh</code>) and Windows installer
+(<code>bin/install-template.ps1</code>) no longer forward <code>--from-clipboard</code> to the
+post-install login step. PAT remains available as a hidden dev escape hatch via
+<code>twg login --pat</code>. <code>--force</code> always re-authenticates with the default flow
+(OAuth) unless <code>--pat</code> is also passed. Non-OAuth-capable contexts (non-TTY, the
+<code>TWG_TOKEN</code>+<code>TWG_USER</code> env shortcut, <code>twg env auth</code>, and existing PAT
+<code>auth.conf</code> users not passing <code>--force</code>) continue to use token flow.</li>
+<li>3ceaa91: Remove beta labels from version output, top-level help, DAC navigation and pages, and consent copy for GA readiness.</li>
+<li>c31202b: Do not ask for email or site during <code>twg setup</code> OAuth login; keep the setup profile prompt only for the hidden PAT setup flow.</li>
+</ul>
 <h2 id="1-0-2">1.0.2</h2>
 <h3 id="highlights">Highlights</h3>
 <ul>
@@ -307,7 +321,7 @@ validated sections, require <code>--fetch items</code> when callers need hydrate
 rows, and guard unbounded item fetches with a 2000-relationship preflight limit.</p>
 </li>
 </ul>
-<h3 id="patch-changes">Patch Changes</h3>
+<h3 id="patch-changes-2">Patch Changes</h3>
 <ul>
 <li>3b0a2d7: Add a <code>--body-output-file</code> option to Confluence page reads so body content can be saved to a file while JSON output stays metadata-focused.</li>
 <li>e3c4f17: Stop user search from calling the admin users GraphQL lookup.</li>
@@ -318,7 +332,7 @@ rows, and guard unbounded item fetches with a 2000-relationship preflight limit.
 <li>b437a97: Add <code>twg workitem-tree</code> with an <code>issue-tree</code> alias to summarize Jira work item activity by reporting tree with fast GraphStore Cypher-backed counts by default and guarded <code>--full-fetch</code> issue sample fetching.</li>
 </ul>
 <h2 id="0-9-7">0.9.7</h2>
-<h3 id="patch-changes-2">Patch Changes</h3>
+<h3 id="patch-changes-3">Patch Changes</h3>
 <ul>
 <li>
 <p>5087758: context: gracefully handle partial GraphQL responses; search snippet formatting</p>
@@ -358,7 +372,7 @@ behavior.</p>
 <p>Please use the latest stable installer for supported setup and update flows.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 8ee91dd5c30c (2026-05-31T04:26:22+00:00).
+        Generated from atlassian/twg-cli 54a34af2f7cc (2026-05-31T04:43:55+00:00).
       </footer>
     </main>
   </div>
