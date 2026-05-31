@@ -82,8 +82,13 @@
 <p>The public Teamwork Graph CLI changelog source is:</p>
 <p><a href="https://developer.atlassian.com/cloud/twg-cli/changelog.md">https://developer.atlassian.com/cloud/twg-cli/changelog.md</a></p>
 <p>This page mirrors the same release notes so the version headings appear in the page navigation.</p>
-<h2 id="1-0-3">1.0.3</h2>
+<h2 id="1-0-4">1.0.4</h2>
 <h3 id="patch-changes">Patch Changes</h3>
+<ul>
+<li>Version-only release prepared for 1.0.4 without pending changesets.</li>
+</ul>
+<h2 id="1-0-3">1.0.3</h2>
+<h3 id="patch-changes-2">Patch Changes</h3>
 <ul>
 <li>5f21300: <code>twg login</code> now uses OAuth by default in installer paths too. The public curl
 installer (<code>bin/install-template.sh</code>) and Windows installer
@@ -321,7 +326,7 @@ validated sections, require <code>--fetch items</code> when callers need hydrate
 rows, and guard unbounded item fetches with a 2000-relationship preflight limit.</p>
 </li>
 </ul>
-<h3 id="patch-changes-2">Patch Changes</h3>
+<h3 id="patch-changes-3">Patch Changes</h3>
 <ul>
 <li>3b0a2d7: Add a <code>--body-output-file</code> option to Confluence page reads so body content can be saved to a file while JSON output stays metadata-focused.</li>
 <li>e3c4f17: Stop user search from calling the admin users GraphQL lookup.</li>
@@ -332,7 +337,7 @@ rows, and guard unbounded item fetches with a 2000-relationship preflight limit.
 <li>b437a97: Add <code>twg workitem-tree</code> with an <code>issue-tree</code> alias to summarize Jira work item activity by reporting tree with fast GraphStore Cypher-backed counts by default and guarded <code>--full-fetch</code> issue sample fetching.</li>
 </ul>
 <h2 id="0-9-7">0.9.7</h2>
-<h3 id="patch-changes-3">Patch Changes</h3>
+<h3 id="patch-changes-4">Patch Changes</h3>
 <ul>
 <li>
 <p>5087758: context: gracefully handle partial GraphQL responses; search snippet formatting</p>
@@ -372,7 +377,7 @@ behavior.</p>
 <p>Please use the latest stable installer for supported setup and update flows.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli d6bc99e5bfad (2026-05-31T05:35:32+00:00).
+        Generated from atlassian/twg-cli 5de458b99ff1 (2026-05-31T06:18:40+00:00).
       </footer>
     </main>
   </div>
