@@ -86,6 +86,18 @@
 <p>The public Teamwork Graph CLI changelog source is:</p>
 <p><a href="https://developer.atlassian.com/cloud/twg-cli/changelog.md">https://developer.atlassian.com/cloud/twg-cli/changelog.md</a></p>
 <p>This page mirrors the same release notes so the version headings appear in the page navigation.</p>
+<h2 id="1-0-5">1.0.5</h2>
+<h3 id="highlights">Highlights</h3>
+<ul>
+<li><strong>Confluence legacy command deprecation.</strong> The <code>twg confluence whiteboard</code> and <code>twg confluence database</code> command groups are deprecated. Use <code>twg confluence content create|update|get --content-type=whiteboard|database</code> instead.</li>
+<li><strong><code>twg logout</code> now fully revokes tokens.</strong> Signing out revokes both the OAuth access and refresh tokens server-side, not just clears local credentials.</li>
+<li><strong>New command: <code>twg confluence space me</code>.</strong> Resolves the authenticated user's personal Confluence space directly.</li>
+</ul>
+<h3 id="breaking-changes">Breaking Changes</h3>
+<ul>
+<li><strong>Confluence body format <code>plain</code> removed.</strong> Page, blog, and content write commands no longer accept <code>plain</code> or <code>text</code> as a body format. Use <code>markdown</code>, <code>md</code>, or <code>html</code>.</li>
+<li><strong>Jira workitem create now uses ADF for <code>--description</code>.</strong> The <code>twg jira workitem create --description</code> flag now accepts Markdown or HTML and converts to Atlassian Document Format, consistent with <code>workitem update</code>.</li>
+</ul>
 <h2 id="1-0-4">1.0.4</h2>
 <h3 id="patch-changes">Patch Changes</h3>
 <ul>
@@ -106,7 +118,7 @@ post-install login step. PAT remains available as a hidden dev escape hatch via
 <li>c31202b: Do not ask for email or site during <code>twg setup</code> OAuth login; keep the setup profile prompt only for the hidden PAT setup flow.</li>
 </ul>
 <h2 id="1-0-2">1.0.2</h2>
-<h3 id="highlights">Highlights</h3>
+<h3 id="highlights-2">Highlights</h3>
 <ul>
 <li><strong>OAuth-first login and clearer auth recovery.</strong> <code>twg login</code> now uses OAuth by default, <code>--force</code> consistently starts a fresh auth flow, <code>--no-browser</code> works across login prompts, and 401/403 failures now show mode-aware remediation with a stable <code>AUTH_EXPIRED</code> agent envelope and exit code 77. Bitbucket token setup remains token-based and is prompted when needed.</li>
 <li><strong>New and expanded Atlassian work surfaces.</strong> This release adds Assets write lifecycle commands with dry-run/delete guards, Confluence content update/body-format guidance/move/label improvements, JSM customer request creation and request-type field metadata, Loom video comments, Bitbucket deployment variable mutations, repository/branch/pipeline/PR parity commands, and external Code Intelligence access.</li>
@@ -121,7 +133,7 @@ post-install login step. PAT remains available as a hidden dev escape hatch via
 <li>Some in-development or unsupported commands are intentionally absent from release builds, including Jira Align, JSM channel mutations, JSM request-location query, Trello bulk list deletion, and Talent focus-area proposal commands.</li>
 </ul>
 <h2 id="1-0-1">1.0.1</h2>
-<h3 id="highlights-2">Highlights</h3>
+<h3 id="highlights-3">Highlights</h3>
 <ul>
 <li>Adds <code>twg api</code> to every build profile, so signed-in users can make
 authenticated Atlassian REST and GraphQL calls with the CLI's saved
@@ -142,7 +154,7 @@ OAuth refresh timing, and final analytics delivery before exit.</li>
 agent-oriented Atlassian workflows, with broader Jira and Confluence coverage,
 more reliable installs and updates, improved authentication, and better command
 discoverability.</p>
-<h3 id="highlights-3">Highlights</h3>
+<h3 id="highlights-4">Highlights</h3>
 <ul>
 <li>Establishes the agent-friendly command model as the stable 1.0 baseline, with
 richer Jira, Confluence, Bitbucket, Loom, and Feedback workflows.</li>
@@ -156,7 +168,7 @@ components, versions, and bulk operations.</li>
 <li>Improves install, update, and OAuth behaviour so the binary is safer to
 distribute and easier for agents to diagnose.</li>
 </ul>
-<h3 id="breaking-changes">Breaking changes</h3>
+<h3 id="breaking-changes-2">Breaking changes</h3>
 <ul>
 <li>No intentional command removals are included in this release. Some Confluence
 and install flows now prefer normalized command shapes and clearer guarded
@@ -381,7 +393,7 @@ behavior.</p>
 <p>Please use the latest stable installer for supported setup and update flows.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli abcdff99aaa4 (2026-06-06T19:23:37+00:00).
+        Generated from atlassian/twg-cli 247d1283c271 (2026-06-07T21:25:14+00:00).
       </footer>
     </main>
   </div>
