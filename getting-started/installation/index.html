@@ -200,6 +200,18 @@ powershell -ExecutionPolicy Bypass -File twg-install.ps1
 </code></pre>
 <p><strong>Windows (PowerShell or cmd)</strong> — re-run the install command from the Windows section above.</p>
 <p><code>twg update</code> and the installers refresh installed skill files automatically when they can detect existing TWG skill installs.</p>
+<h2 id="beta-updates">Beta updates</h2>
+<p>To receive pre-release updates before they reach the stable channel, use the beta channel.</p>
+<h3 id="first-install-via-beta">First install via beta</h3>
+<pre><code class="language-bash">bash &lt;(curl -fsSL https://teamwork-graph.atlassian.com/cli/beta/install)
+</code></pre>
+<p>Installs from the beta channel record the channel preference automatically — future <code>twg update</code> calls continue to check the beta channel.</p>
+<h3 id="switch-an-existing-install-to-beta">Switch an existing install to beta</h3>
+<pre><code class="language-bash">twg update --channel beta
+</code></pre>
+<h3 id="switch-back-to-stable">Switch back to stable</h3>
+<pre><code class="language-bash">twg update --channel stable
+</code></pre>
 <h2 id="feedback">Feedback</h2>
 <p>To share feedback or report an issue, use the CLI:</p>
 <pre><code class="language-bash">twg feedback --summary &quot;&lt;short title&gt;&quot;
@@ -215,7 +227,7 @@ powershell -ExecutionPolicy Bypass -File twg-install.ps1
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli fd9730c5a60c (2026-06-12T14:29:54+00:00).
+        Generated from atlassian/twg-cli 598e96ecc329 (2026-06-12T14:36:28+00:00).
       </footer>
     </main>
   </div>
