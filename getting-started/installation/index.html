@@ -118,11 +118,6 @@ bash twg-install.sh
 <pre><code class="language-bash">bash twg-install.sh --version 0.9.1
 </code></pre>
 <p>If <code>~/.local/bin</code> is not in your <code>PATH</code>, the installer prints the exact line to add to your shell profile.</p>
-<h4 id="homebrew-macos">Homebrew (macOS)</h4>
-<pre><code class="language-bash">brew tap atlassian/twg
-brew install twg
-twg setup
-</code></pre>
 <h4 id="windows">Windows</h4>
 <aside class="dac-panel dac-panel-note">
 <div class="dac-panel-label">Note</div>
@@ -195,11 +190,18 @@ powershell -ExecutionPolicy Bypass -File twg-install.ps1
 <p><strong>macOS/Linux</strong> — use the built-in updater:</p>
 <pre><code class="language-bash">twg update
 </code></pre>
-<p><strong>macOS (Homebrew):</strong></p>
-<pre><code class="language-bash">brew update &amp;&amp; brew upgrade twg
-</code></pre>
 <p><strong>Windows (PowerShell or cmd)</strong> — re-run the install command from the Windows section above.</p>
 <p><code>twg update</code> and the installers refresh installed skill files automatically when they can detect existing TWG skill installs.</p>
+<h2 id="uninstall">Uninstall</h2>
+<p>Preview the files and state that would be removed:</p>
+<pre><code class="language-bash">twg uninstall --dry-run
+</code></pre>
+<p>The default uninstall removes the binary, installer-owned skill bundles, PATH changes, and caches. It preserves credentials, consent, and user configuration so reinstalling can restore the CLI without repeating setup:</p>
+<pre><code class="language-bash">twg uninstall
+</code></pre>
+<p>To revoke credentials and remove all TWG configuration and state:</p>
+<pre><code class="language-bash">twg uninstall --purge
+</code></pre>
 <h2 id="beta-updates">Beta updates</h2>
 <p>To receive pre-release updates before they reach the stable channel, use the beta channel.</p>
 <h3 id="first-install-via-beta">First install via beta</h3>
@@ -227,7 +229,7 @@ powershell -ExecutionPolicy Bypass -File twg-install.ps1
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 1a84b3b45dc4 (2026-06-12T15:17:51+00:00).
+        Generated from atlassian/twg-cli 86c3c3616c89 (2026-06-13T07:05:17+00:00).
       </footer>
     </main>
   </div>
