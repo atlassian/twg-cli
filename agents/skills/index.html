@@ -117,8 +117,8 @@
 <h2 id="other-agents">Other agents</h2>
 <p>The installer also supports <strong>Cursor</strong>, <strong>GitHub Copilot</strong>, <strong>Rovo Dev</strong>, <strong>Augment</strong>, <strong>Kiro CLI</strong>, <strong>OpenCode</strong>, and any agent that supports a skills or context directory. The universal <code>.agents/skills/</code> location works out of the box for most agents. Additional-agent copies are installed only when that agent is detected locally or when you request it with <code>--agent</code>.</p>
 <h2 id="what-gets-installed">What gets installed</h2>
-<p>Skills are placed under <code>.agents/skills/</code> (and detected or requested agent-specific locations)
-as two sibling skill directories:</p>
+<p>Skills are placed under <code>.agents/skills/</code> and detected or requested
+agent-specific locations as focused sibling skill directories:</p>
 <table>
 <thead>
 <tr>
@@ -129,23 +129,38 @@ as two sibling skill directories:</p>
 <tbody>
 <tr>
 <td><code>.agents/skills/twg/SKILL.md</code></td>
-<td>Root TWG operating contract, command discovery, output handling, product caveats, and the <code>scripts/twg</code> wrapper</td>
+<td>Root TWG operating contract, discovery, output handling, and shared safety</td>
 </tr>
 <tr>
-<td><code>.agents/skills/twg-workflows/SKILL.md</code></td>
-<td>Outcome-oriented recipes for status rollups, context discovery, engineering work, and operations</td>
+<td><code>.agents/skills/twg-jira/</code> and <code>.agents/skills/twg-confluence/</code></td>
+<td>Product semantics and write safety</td>
+</tr>
+<tr>
+<td><code>.agents/skills/twg-&lt;workflow&gt;/</code></td>
+<td>Focused workflows such as status rollups, context discovery, engineering work, and operational health</td>
 </tr>
 <tr>
 <td><code>.agents/skills/&lt;skill&gt;/references/</code></td>
-<td>Reference docs loaded on demand, including output handling and workflow recipes</td>
+<td>Detailed guidance loaded on demand</td>
 </tr>
 </tbody>
 </table>
 <p>Your agent reads these automatically. No special prompt prefix is needed.</p>
-<h2 id="command-discovery">Command discovery</h2>
+<h2 id="skill-and-command-discovery">Skill and command discovery</h2>
+<p>Agents already receive the installed top-level skill metadata. When the detailed
+guidance inside a product or workflow skill is unclear, they can search the
+unloaded reference catalog locally:</p>
+<pre><code class="language-bash">twg help discover-skills &quot;snapshot token editing&quot;
+twg help discover-skills &quot;JQL sprint prioritization&quot; --skill twg-jira
+</code></pre>
+<p>Skill discovery returns one primary match and at most two close alternatives.
+Each match identifies the owning skill and exact reference to load. Search uses
+curated reference titles and descriptions rather than arbitrary reference prose.
+After loading that guidance, agents use command help instead of repeating
+discovery.</p>
 <p>Agents should use <code>twg help</code> directly for command discovery:</p>
 <pre><code class="language-bash">twg help
-twg help page get
+twg help confluence content get
 twg help jira workitem
 twg help describe &quot;jira&quot;
 twg help describe &quot;jira workitem get&quot;
@@ -163,7 +178,7 @@ needed.</p>
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli e4456c12fa1f (2026-06-15T16:59:42+00:00).
+        Generated from atlassian/twg-cli 1760b15925f2 (2026-06-15T17:15:14+00:00).
       </footer>
     </main>
   </div>
