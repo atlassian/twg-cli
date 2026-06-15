@@ -86,8 +86,37 @@
 <p>The public Teamwork Graph CLI changelog source is:</p>
 <p><a href="https://developer.atlassian.com/cloud/twg-cli/changelog.md">https://developer.atlassian.com/cloud/twg-cli/changelog.md</a></p>
 <p>This page mirrors the same release notes so the version headings appear in the page navigation.</p>
-<h2 id="1-0-9">1.0.9</h2>
+<h2 id="1-0-10">1.0.10</h2>
 <h3 id="highlights">Highlights</h3>
+<ul>
+<li><strong>Safer OAuth maintenance.</strong> Adds non-interactive <code>twg auth refresh</code> with
+persistence checks and cross-process coordination so sandboxed agents cannot
+lose rotated refresh tokens. New <code>twg upkeep</code> schedules near-expiry refreshes
+and update reminders; setup enables it automatically and uninstall removes it.</li>
+<li><strong>Richer Confluence content workflows.</strong> Adds Word export alongside PDF,
+routes content listing through the unified endpoint, and improves SVG and CSV
+handling for whiteboards and databases.</li>
+<li><strong>Better Bitbucket CI diagnostics.</strong> Adds pipeline test report and test case
+retrieval, while <code>twg doctor</code> now verifies live Bitbucket connectivity instead
+of only checking whether a token exists.</li>
+<li><strong>Faster agent discovery and more tolerant reads.</strong> <code>twg help</code> can discover
+bundled skill references and <code>skill:</code> targets, Jira and Confluence guidance is
+split into focused skills, and common PR, Assets, media, user, meeting, and JSM
+reads accept more natural command shapes with structured fallback guidance.</li>
+<li><strong>Broader scoped access and steadier output.</strong> Expands OAuth scope mappings for
+Confluence templates, drafts, properties, and Jira administration, while
+improving row output, cloud ID resolution, and degraded GraphStore handling.</li>
+</ul>
+<h3 id="upgrade-notes">Upgrade Notes</h3>
+<ul>
+<li><code>twg confluence content export &lt;id&gt;</code> now requires <code>--format word</code> or
+<code>--format pdf</code>; the bare command no longer defaults to PDF.</li>
+<li><code>twg setup</code> now attempts to enable scheduled upkeep. If the OS scheduler is
+unavailable, setup still completes and prints <code>twg upkeep enable</code> as the
+repair command.</li>
+</ul>
+<h2 id="1-0-9">1.0.9</h2>
+<h3 id="highlights-2">Highlights</h3>
 <ul>
 <li>Adds <code>twg compass</code> for operational component data and <code>twg responsibility</code>
 (<code>twg ownership</code>) for ranked ownership, expertise, review, and escalation
@@ -131,7 +160,7 @@ availability remains build-gated.</li>
 <li>Updated pnpm to 11.5.2 and ensured <code>corepack enable pnpm</code> is present in all release pipeline steps.</li>
 </ul>
 <h2 id="1-0-5">1.0.5</h2>
-<h3 id="highlights-2">Highlights</h3>
+<h3 id="highlights-3">Highlights</h3>
 <ul>
 <li><strong>Confluence legacy command deprecation.</strong> The <code>twg confluence whiteboard</code> and <code>twg confluence database</code> command groups are deprecated. Use <code>twg confluence content create|update|get --content-type=whiteboard|database</code> instead.</li>
 <li><strong><code>twg logout</code> now fully revokes tokens.</strong> Signing out revokes both the OAuth access and refresh tokens server-side, not just clears local credentials.</li>
@@ -162,7 +191,7 @@ post-install login step. PAT remains available as a hidden dev escape hatch via
 <li>c31202b: Do not ask for email or site during <code>twg setup</code> OAuth login; keep the setup profile prompt only for the hidden PAT setup flow.</li>
 </ul>
 <h2 id="1-0-2">1.0.2</h2>
-<h3 id="highlights-3">Highlights</h3>
+<h3 id="highlights-4">Highlights</h3>
 <ul>
 <li><strong>OAuth-first login and clearer auth recovery.</strong> <code>twg login</code> now uses OAuth by default, <code>--force</code> consistently starts a fresh auth flow, <code>--no-browser</code> works across login prompts, and 401/403 failures now show mode-aware remediation with a stable <code>AUTH_EXPIRED</code> agent envelope and exit code 77. Bitbucket token setup remains token-based and is prompted when needed.</li>
 <li><strong>New and expanded Atlassian work surfaces.</strong> This release adds Assets write lifecycle commands with dry-run/delete guards, Confluence content update/body-format guidance/move/label improvements, JSM customer request creation and request-type field metadata, Loom video comments, Bitbucket deployment variable mutations, repository/branch/pipeline/PR parity commands, and external Code Intelligence access.</li>
@@ -170,14 +199,14 @@ post-install login step. PAT remains available as a hidden dev escape hatch via
 <li><strong>Safer defaults and richer object handling.</strong> <code>pr-tree</code> is now count-only by default, supports <code>--limited-fetch</code>, and bounds zero-flag merged rollups to the last 30 days. Jira issue-key resolution, Jira rich-text validation, Talent position lookup/rendering, JSM linked repositories, and Teams ARI lookups were also improved.</li>
 <li><strong>Release and packaging updates.</strong> Codex plugin packaging is now available with public-safe bundled guidance, the benchmark latest-release pipeline can run non-interactively, and release builds hide or remove unfinished/unsupported Jira Align, Trello, Talent proposal, and JSM channel/request-location commands.</li>
 </ul>
-<h3 id="upgrade-notes">Upgrade Notes</h3>
+<h3 id="upgrade-notes-2">Upgrade Notes</h3>
 <ul>
 <li><code>twg login</code> is OAuth-first. The old <code>--oauth</code> flag has been removed because OAuth is now the default path. Existing classic token auth still works for installer, clipboard, non-TTY, environment-token, and existing <code>auth.conf</code> flows.</li>
 <li>Stale OAuth environment overrides (<code>TWG_OAUTH_CLIENT_ID</code>, <code>TWG_OAUTH_AUTH_BASE_URL</code>, <code>TWG_OAUTH_SCOPE</code>) were removed; endpoints and client ID now come from environment config.</li>
 <li>Some in-development or unsupported commands are intentionally absent from release builds, including Jira Align, JSM channel mutations, JSM request-location query, Trello bulk list deletion, and Talent focus-area proposal commands.</li>
 </ul>
 <h2 id="1-0-1">1.0.1</h2>
-<h3 id="highlights-4">Highlights</h3>
+<h3 id="highlights-5">Highlights</h3>
 <ul>
 <li>Adds <code>twg api</code> to every build profile, so signed-in users can make
 authenticated Atlassian REST and GraphQL calls with the CLI's saved
@@ -198,7 +227,7 @@ OAuth refresh timing, and final analytics delivery before exit.</li>
 agent-oriented Atlassian workflows, with broader Jira and Confluence coverage,
 more reliable installs and updates, improved authentication, and better command
 discoverability.</p>
-<h3 id="highlights-5">Highlights</h3>
+<h3 id="highlights-6">Highlights</h3>
 <ul>
 <li>Establishes the agent-friendly command model as the stable 1.0 baseline, with
 richer Jira, Confluence, Bitbucket, Loom, and Feedback workflows.</li>
@@ -437,7 +466,7 @@ behavior.</p>
 <p>Please use the latest stable installer for supported setup and update flows.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 50b4dd011bd5 (2026-06-15T19:22:20+00:00).
+        Generated from atlassian/twg-cli 448b34946484 (2026-06-15T20:55:04+00:00).
       </footer>
     </main>
   </div>
