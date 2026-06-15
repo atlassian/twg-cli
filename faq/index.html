@@ -100,7 +100,7 @@
 <h3 id="what-data-does-teamwork-graph-cli-access-and-who-can-see-it">What data does Teamwork Graph CLI access and who can see it?</h3>
 <p>Teamwork Graph CLI respects your existing Atlassian permissions. It only surfaces data that the authenticated user is already authorised to see. No new access is granted by installing or using the CLI.</p>
 <h3 id="does-teamwork-graph-cli-support-oauth">Does Teamwork Graph CLI support OAuth?</h3>
-<p>Not yet. Teamwork Graph CLI currently supports API tokens for secure, targeted access. OAuth support is on the roadmap.</p>
+<p>Yes. Interactive <code>twg login</code> uses OAuth by default. TWG also supports API tokens for CI/CD and compatibility workflows, plus delegated OAuth for embedding applications that own the credential lifecycle.</p>
 <h3 id="does-teamwork-graph-cli-only-work-with-agent-terminals">Does Teamwork Graph CLI only work with agent terminals?</h3>
 <p>No. Teamwork Graph CLI can be used by any AI agent or tool that can invoke a CLI. For example, agents that run commands behind the scenes — not just agent terminals — can use Teamwork Graph CLI.</p>
 <h3 id="should-i-use-teamwork-graph-cli-or-rovo-mcp">Should I use Teamwork Graph CLI or Rovo MCP?</h3>
@@ -112,7 +112,7 @@
 <p>For a detailed comparison and decision guide, see <a href="https://support.atlassian.com/organization-administration/docs/choosing-between-twg-cli-and-rovo-mcp/">Choosing between Teamwork Graph CLI and Rovo MCP</a>.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 293d6e4f9b89 (2026-06-15T01:30:30+00:00).
+        Generated from atlassian/twg-cli ab9a04b9b07e (2026-06-15T02:28:17+00:00).
       </footer>
     </main>
   </div>
