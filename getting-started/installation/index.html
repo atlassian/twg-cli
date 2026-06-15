@@ -192,11 +192,17 @@ powershell -ExecutionPolicy Bypass -File twg-install.ps1
 </code></pre>
 <p><strong>Windows (PowerShell or cmd)</strong> — re-run the install command from the Windows section above.</p>
 <p><code>twg update</code> and the installers refresh installed skill files automatically when they can detect existing TWG skill installs.</p>
+<p>Setup enables scheduled OAuth refresh and update notifications automatically. To repair or
+re-enable the schedule manually:</p>
+<pre><code class="language-bash">twg upkeep enable
+</code></pre>
+<p>This installs a per-user native schedule that runs every 12 minutes. It never installs CLI updates automatically. Use <code>twg upkeep status</code> to inspect it and <code>twg upkeep disable</code> to remove it. Linux scheduling requires a systemd user instance and an active user D-Bus session. If setup cannot install the schedule, it completes with repair guidance; a manual retry reports the underlying <code>systemctl --user</code> error.</p>
+<p>If upkeep is disabled, normal CLI use performs at most one best-effort detached update check per day. <code>twg -v</code> only prints the installed version, and <code>twg doctor</code> does not perform a release check.</p>
 <h2 id="uninstall">Uninstall</h2>
 <p>Preview the files and state that would be removed:</p>
 <pre><code class="language-bash">twg uninstall --dry-run
 </code></pre>
-<p>The default uninstall removes the binary, installer-owned skill bundles, PATH changes, and caches. It preserves credentials, consent, and user configuration so reinstalling can restore the CLI without repeating setup:</p>
+<p>The default uninstall disables scheduled upkeep, then removes the binary, installer-owned skill bundles, upkeep state, PATH changes, and caches. It preserves credentials, consent, and user configuration so reinstalling can restore the CLI without repeating setup:</p>
 <pre><code class="language-bash">twg uninstall
 </code></pre>
 <p>To revoke credentials and remove all TWG configuration and state:</p>
@@ -229,7 +235,7 @@ powershell -ExecutionPolicy Bypass -File twg-install.ps1
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 9b2faeee0e64 (2026-06-15T08:06:24+00:00).
+        Generated from atlassian/twg-cli 090ab2b05f1c (2026-06-15T15:32:01+00:00).
       </footer>
     </main>
   </div>

@@ -138,6 +138,19 @@ extends = &quot;:workspace&quot;
 <div class="dac-panel-label">Warning</div>
 <p>Granting write access to the TWG config directory allows the coding agent to modify your TWG credentials. Keep the permission limited to that directory.</p>
 </aside>
+<h2 id="scheduled-oauth-upkeep">Scheduled OAuth upkeep</h2>
+<p><code>twg setup</code> enables the per-user scheduler automatically to maintain OAuth outside coding-agent sandboxes. To repair or re-enable it manually:</p>
+<pre><code class="language-bash">twg upkeep enable
+</code></pre>
+<p>The scheduler runs every 12 minutes. It refreshes OAuth only when the normal refresh threshold is within 15 minutes and checks for CLI updates at most daily with jitter. When an update is available, it sends an initial native notification, up to three daily reminders, then up to three weekly reminders until you update. Each notification tells you to run <code>twg update</code>; upkeep never downloads or installs updates automatically.</p>
+<p>Use these commands to inspect, run, or remove it:</p>
+<pre><code class="language-bash">twg upkeep status
+twg upkeep run
+twg upkeep disable
+</code></pre>
+<p>TWG uses a macOS LaunchAgent, Linux systemd user timer, or Windows Scheduled Task. The schedule invokes the stable TWG launcher so normal updates can replace the runtime safely. OAuth refresh still uses the same persistence preflight, cross-process lock, and atomic credential save as foreground commands.</p>
+<p>On Linux, scheduling requires a systemd user instance and an active user D-Bus session. If setup cannot install the schedule, it completes with repair guidance. Retrying <code>twg upkeep enable</code> reports the underlying <code>systemctl --user</code> error and leaves upkeep disabled.</p>
+<p>The scheduler stores only non-secret maintenance state in <code>upkeep.json</code> under the active TWG config directory. <code>twg logout</code> leaves the schedule enabled but silently skips auth work until OAuth is configured again. <code>twg uninstall</code> disables the schedule and removes its state before deleting the CLI.</p>
 <h2 id="create-a-twg-api-token">Create a TWG API token</h2>
 <p>API tokens remain available for scripted environments and compatibility flows. A single API token supports TWG commands across Jira, Confluence, Rovo Search, and more. The token page is selected by the binary's configured token mode: classic-token binaries open the standard Atlassian API-token page, while scoped-token binaries open the TWG-scoped token page.</p>
 <p>Bitbucket-specific commands require a separate Bitbucket token. To configure or refresh it without rerunning core TWG authentication, run:</p>
@@ -189,7 +202,7 @@ extends = &quot;:workspace&quot;
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 9b2faeee0e64 (2026-06-15T08:06:24+00:00).
+        Generated from atlassian/twg-cli 090ab2b05f1c (2026-06-15T15:32:01+00:00).
       </footer>
     </main>
   </div>
