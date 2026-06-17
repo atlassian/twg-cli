@@ -199,14 +199,11 @@ re-enable the schedule manually:</p>
 <p>This installs a per-user native schedule that runs every 12 minutes. It never installs CLI updates automatically. Use <code>twg upkeep status</code> to inspect it and <code>twg upkeep disable</code> to remove it. Linux scheduling requires a systemd user instance and an active user D-Bus session. If setup cannot install the schedule, it completes with repair guidance; a manual retry reports the underlying <code>systemctl --user</code> error.</p>
 <p>If upkeep is disabled, normal CLI use performs at most one best-effort detached update check per day. <code>twg -v</code> only prints the installed version, and <code>twg doctor</code> does not perform a release check.</p>
 <h2 id="uninstall">Uninstall</h2>
-<p>Preview the files and state that would be removed:</p>
+<p>Preview the files and configs that would be removed:</p>
 <pre><code class="language-bash">twg uninstall --dry-run
 </code></pre>
-<p>The default uninstall disables scheduled upkeep, then removes the binary, installer-owned skill bundles, upkeep state, PATH changes, and caches. It preserves credentials, consent, and user configuration so reinstalling can restore the CLI without repeating setup:</p>
+<p>Uninstall asks for confirmation, disables scheduled upkeep, revokes stored credentials, and removes the binary, installer-owned skill bundles, PATH changes, caches, consent, and all local TWG configs:</p>
 <pre><code class="language-bash">twg uninstall
-</code></pre>
-<p>To revoke credentials and remove all TWG configuration and state:</p>
-<pre><code class="language-bash">twg uninstall --purge
 </code></pre>
 <h2 id="beta-updates">Beta updates</h2>
 <p>To receive pre-release updates before they reach the stable channel, use the beta channel.</p>
@@ -235,7 +232,7 @@ re-enable the schedule manually:</p>
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 73355ea21944 (2026-06-16T23:32:46+00:00).
+        Generated from atlassian/twg-cli 41f76f072a30 (2026-06-17T05:07:49+00:00).
       </footer>
     </main>
   </div>

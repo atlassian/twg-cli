@@ -150,7 +150,7 @@ twg upkeep disable
 </code></pre>
 <p>TWG uses a macOS LaunchAgent, Linux systemd user timer, or Windows Scheduled Task. The schedule invokes the stable TWG launcher so normal updates can replace the runtime safely. OAuth refresh still uses the same persistence preflight, cross-process lock, and atomic credential save as foreground commands.</p>
 <p>On Linux, scheduling requires a systemd user instance and an active user D-Bus session. If setup cannot install the schedule, it completes with repair guidance. Retrying <code>twg upkeep enable</code> reports the underlying <code>systemctl --user</code> error and leaves upkeep disabled.</p>
-<p>The scheduler stores only non-secret maintenance state in <code>upkeep.json</code> under the active TWG config directory. <code>twg logout</code> leaves the schedule enabled but silently skips auth work until OAuth is configured again. <code>twg uninstall</code> disables the schedule and removes its state before deleting the CLI.</p>
+<p>The scheduler stores only non-secret maintenance state in <code>upkeep.json</code> under the active TWG config directory. <code>twg logout</code> leaves the schedule enabled but silently skips auth work until OAuth is configured again. <code>twg uninstall</code> disables the schedule, revokes stored credentials, and removes the CLI and all local TWG configs.</p>
 <h2 id="create-a-twg-api-token">Create a TWG API token</h2>
 <p>API tokens remain available for scripted environments and compatibility flows. A single API token supports TWG commands across Jira, Confluence, Rovo Search, and more. The token page is selected by the binary's configured token mode: classic-token binaries open the standard Atlassian API-token page, while scoped-token binaries open the TWG-scoped token page.</p>
 <p>Bitbucket-specific commands require a separate Bitbucket token. To configure or refresh it without rerunning core TWG authentication, run:</p>
@@ -202,7 +202,7 @@ twg upkeep disable
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 73355ea21944 (2026-06-16T23:32:46+00:00).
+        Generated from atlassian/twg-cli 41f76f072a30 (2026-06-17T05:07:49+00:00).
       </footer>
     </main>
   </div>
