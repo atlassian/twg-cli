@@ -86,8 +86,21 @@
 <p>The public Teamwork Graph CLI changelog source is:</p>
 <p><a href="https://developer.atlassian.com/cloud/twg-cli/changelog.md">https://developer.atlassian.com/cloud/twg-cli/changelog.md</a></p>
 <p>This page mirrors the same release notes so the version headings appear in the page navigation.</p>
-<h2 id="1-0-12">1.0.12</h2>
+<h2 id="1-0-13">1.0.13</h2>
 <h3 id="highlights">Highlights</h3>
+<ul>
+<li><strong>Goals type discovery:</strong> Add <code>twg goals types</code> and let <code>twg goals create</code> resolve <code>--goal-type &lt;name&gt;</code> safely. Ambiguous names list matching IDs, pagination fails closed instead of returning partial results, and invalid selectors fail before authentication or network calls.</li>
+<li><strong>Confluence drafts and browser URLs:</strong> Add publish and delete workflows for page and blog-post drafts. <code>twg confluence content get</code> now accepts browser URLs for folders, whiteboards, databases, and dated blog posts, while command-local <code>--site</code> reliably controls lifecycle operations.</li>
+<li><strong>Safer Confluence permissions:</strong> <code>twg confluence content permissions add</code> now previews the target, operations, and grantees before applying restrictions and requires <code>--yes</code> for non-interactive use.</li>
+<li><strong>Bitbucket authentication repair:</strong> <code>twg setup bitbucket --force</code> now reliably starts re-authentication. The command also supports <code>--no-browser</code>, including clipboard-based token setup.</li>
+<li><strong>Actionable diagnostics:</strong> Fatal backend errors now provide a ready-to-run, redacted <code>twg feedback</code> command with trace context, making reports easier to submit without copying user-provided arguments.</li>
+</ul>
+<h3 id="compatibility-notes">Compatibility notes</h3>
+<ul>
+<li>Compass commands and Loom workspace query are now hidden from public builds. <code>twg loom get</code> examples now correctly use positional IDs.</li>
+</ul>
+<h2 id="1-0-12">1.0.12</h2>
+<h3 id="highlights-2">Highlights</h3>
 <ul>
 <li><strong>Bitbucket pipeline diagnostics:</strong> Add <code>twg bitbucket pipeline tail</code> for live step-log streaming with WebSocket notifications and polling fallback, plus <code>pipeline grep</code> for literal or regex matching with case, context, match-limit, and step filters. <code>pipeline get --logs</code> also accepts step UUIDs and <code>--full</code>; streaming output is available as JSON and JSONL for agents.</li>
 <li><strong>Work and document discovery:</strong> Redesign <code>twg work query</code> as an authored-by-default relationship summary with full-window counts, bounded previews, activity selectors, and separate document and calendar sections. Add <code>twg work search</code>, source-balanced broad Rovo and document search, and Rovo-backed Trello board and card search.</li>
@@ -96,7 +109,7 @@
 <li><strong>Resilient partial results:</strong> Confluence tree reads now retain accessible descendants when another descendant is inaccessible or untitled. <code>twg pull-requests query</code> independently hydrates author and reviewer relationships, keeps valid deduplicated pull requests when individual relationships fail, reports partial omissions, and calculates aggregate counts independently of <code>--limit</code>.</li>
 <li><strong>Bitbucket credential repair:</strong> <code>twg setup bitbucket --force</code> now re-persists an unchanged token, repairing stale or partially stored credentials instead of silently leaving authentication broken.</li>
 </ul>
-<h3 id="compatibility-notes">Compatibility notes</h3>
+<h3 id="compatibility-notes-2">Compatibility notes</h3>
 <ul>
 <li><code>twg jira workitem types query --id</code> remains available as a deprecated compatibility path; use <code>twg jira workitem types get --id</code>. Issue-type queries without an ID now require a project-scoped selector rather than enumerating every visible Jira issue type.</li>
 </ul>
@@ -105,7 +118,7 @@
 <ul>
 <li><code>twg code-intelligence</code> is now <code>twg search-code</code>, with no compatibility alias. Update scripts and agent skills that use the old command; its subcommands, flags, and behavior are unchanged. Confluence version listing also removes <code>--sort</code> and <code>--content-type</code> because history is always newest-first and content type is resolved automatically.</li>
 </ul>
-<h3 id="highlights-2">Highlights</h3>
+<h3 id="highlights-3">Highlights</h3>
 <ul>
 <li><strong>Rovo connectors:</strong> <code>twg rovo list-apps</code> gains the <code>list-connectors</code> alias, compact readiness and remediation output, structured JSON failures, <code>twg rovo auth &lt;app&gt;</code>, and authentication preflight for explicit connector searches. Salesforce search is now available through <code>--app salesforce</code> or <code>--app sfdc</code>, including <code>--type</code> narrowing.</li>
 <li><strong>Confluence history:</strong> <code>twg confluence content versions|history</code> now supports pages, live docs, and blog posts, accepts Confluence URLs, renders historical bodies as Markdown or HTML, and adds server-computed <code>diff</code> plus version restore workflows.</li>
@@ -114,7 +127,7 @@
 <li><strong>Reliability and cleanup:</strong> transient upstream failures are retried and surfaced with stable error codes and trace IDs instead of empty results. <code>twg uninstall</code> now removes scheduled upkeep, installer-owned skills, credentials, and local TWG configuration without leaving update checks behind.</li>
 </ul>
 <h2 id="1-0-10">1.0.10</h2>
-<h3 id="highlights-3">Highlights</h3>
+<h3 id="highlights-4">Highlights</h3>
 <ul>
 <li><strong>Safer OAuth maintenance.</strong> Adds non-interactive <code>twg auth refresh</code> with
 persistence checks and cross-process coordination so sandboxed agents cannot
@@ -143,7 +156,7 @@ unavailable, setup still completes and prints <code>twg upkeep enable</code> as 
 repair command.</li>
 </ul>
 <h2 id="1-0-9">1.0.9</h2>
-<h3 id="highlights-4">Highlights</h3>
+<h3 id="highlights-5">Highlights</h3>
 <ul>
 <li>Adds <code>twg compass</code> for operational component data and <code>twg responsibility</code>
 (<code>twg ownership</code>) for ranked ownership, expertise, review, and escalation
@@ -164,7 +177,7 @@ retires the beta custom Homebrew distribution path.</li>
 reliable inline comment defaults, and warnings for local image references that
 cannot be uploaded automatically.</li>
 </ul>
-<h3 id="compatibility-notes-2">Compatibility Notes</h3>
+<h3 id="compatibility-notes-3">Compatibility Notes</h3>
 <ul>
 <li>Removes deprecated JSM request-location and priority-group commands, plus the
 legacy <code>twg confluence whiteboard</code> and <code>twg confluence database</code> groups. Use
@@ -187,7 +200,7 @@ availability remains build-gated.</li>
 <li>Updated pnpm to 11.5.2 and ensured <code>corepack enable pnpm</code> is present in all release pipeline steps.</li>
 </ul>
 <h2 id="1-0-5">1.0.5</h2>
-<h3 id="highlights-5">Highlights</h3>
+<h3 id="highlights-6">Highlights</h3>
 <ul>
 <li><strong>Confluence legacy command deprecation.</strong> The <code>twg confluence whiteboard</code> and <code>twg confluence database</code> command groups are deprecated. Use <code>twg confluence content create|update|get --content-type=whiteboard|database</code> instead.</li>
 <li><strong><code>twg logout</code> now fully revokes tokens.</strong> Signing out revokes both the OAuth access and refresh tokens server-side, not just clears local credentials.</li>
@@ -218,7 +231,7 @@ post-install login step. PAT remains available as a hidden dev escape hatch via
 <li>c31202b: Do not ask for email or site during <code>twg setup</code> OAuth login; keep the setup profile prompt only for the hidden PAT setup flow.</li>
 </ul>
 <h2 id="1-0-2">1.0.2</h2>
-<h3 id="highlights-6">Highlights</h3>
+<h3 id="highlights-7">Highlights</h3>
 <ul>
 <li><strong>OAuth-first login and clearer auth recovery.</strong> <code>twg login</code> now uses OAuth by default, <code>--force</code> consistently starts a fresh auth flow, <code>--no-browser</code> works across login prompts, and 401/403 failures now show mode-aware remediation with a stable <code>AUTH_EXPIRED</code> agent envelope and exit code 77. Bitbucket token setup remains token-based and is prompted when needed.</li>
 <li><strong>New and expanded Atlassian work surfaces.</strong> This release adds Assets write lifecycle commands with dry-run/delete guards, Confluence content update/body-format guidance/move/label improvements, JSM customer request creation and request-type field metadata, Loom video comments, Bitbucket deployment variable mutations, repository/branch/pipeline/PR parity commands, and external Code Intelligence access.</li>
@@ -233,7 +246,7 @@ post-install login step. PAT remains available as a hidden dev escape hatch via
 <li>Some in-development or unsupported commands are intentionally absent from release builds, including Jira Align, JSM channel mutations, JSM request-location query, Trello bulk list deletion, and Talent focus-area proposal commands.</li>
 </ul>
 <h2 id="1-0-1">1.0.1</h2>
-<h3 id="highlights-7">Highlights</h3>
+<h3 id="highlights-8">Highlights</h3>
 <ul>
 <li>Adds <code>twg api</code> to every build profile, so signed-in users can make
 authenticated Atlassian REST and GraphQL calls with the CLI's saved
@@ -254,7 +267,7 @@ OAuth refresh timing, and final analytics delivery before exit.</li>
 agent-oriented Atlassian workflows, with broader Jira and Confluence coverage,
 more reliable installs and updates, improved authentication, and better command
 discoverability.</p>
-<h3 id="highlights-8">Highlights</h3>
+<h3 id="highlights-9">Highlights</h3>
 <ul>
 <li>Establishes the agent-friendly command model as the stable 1.0 baseline, with
 richer Jira, Confluence, Bitbucket, Loom, and Feedback workflows.</li>
@@ -493,7 +506,7 @@ behavior.</p>
 <p>Please use the latest stable installer for supported setup and update flows.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 63c333fdff11 (2026-06-23T03:07:16+00:00).
+        Generated from atlassian/twg-cli 155ab01012f9 (2026-06-23T03:26:43+00:00).
       </footer>
     </main>
   </div>
