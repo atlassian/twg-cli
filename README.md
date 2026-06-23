@@ -66,7 +66,6 @@ generated catalogs from internal build profiles.
 - Stable installer: `https://teamwork-graph.atlassian.com/cli/install`
 - Stable manifest: `https://teamwork-graph.atlassian.com/cli/manifest.json`
 - Release notes: `https://teamwork-graph.atlassian.com/cli/CHANGELOG.md`
-- Homebrew tap: `atlassian/homebrew-twg`
 
 The release process that updates this repo is described in
 [`docs/release-integration.md`](docs/release-integration.md).

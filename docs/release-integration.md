@@ -17,7 +17,7 @@ release-ready information that is safe for users:
 
 - public install and update instructions
 - public changelog and GitHub Release notes
-- public CDN, manifest, checksum, and Homebrew links
+- public CDN, manifest, and checksum links
 - public skills and plugin package notes
 - public issue and support links
 
@@ -28,9 +28,6 @@ GitHub Pages for TWG CLI docs is published from this repo:
 - Pages URL: `https://atlassian.github.io/twg-cli/`
 - Source repo: `atlassian/twg-cli`
 - Source branch: `gh-pages`
-
-The Homebrew tap repo, `atlassian/homebrew-twg`, owns only the generated
-Homebrew formula. It is not the documentation mirror.
 
 The private `twg-cli` publishing flow should keep the GitHub Pages publish
 target pointed at `atlassian/twg-cli`, use a dedicated `GITHUB_PAGES_TOKEN`, and
@@ -58,8 +55,8 @@ PRs. For each release or docs update:
    information only.
 3. Prepare a reviewed public PR with docs, skills, plugins, changelog, and
    release metadata for the candidate version.
-4. Validate the public installer, manifest, checksums, Homebrew link, and plugin
-   package references.
+4. Validate the public installer, manifest, checksums, and plugin package
+   references.
 5. Promote the public release through the approved private release workflow.
 6. Merge the GitHub public repo PR and create/update the GitHub Release for the
    same version.
@@ -71,7 +68,7 @@ binary release is cut. In that case:
 
 - Export only docs, issue templates, and public metadata.
 - Do not create a GitHub Release.
-- Do not move installer, manifest, plugin, or Homebrew stable pointers.
+- Do not move installer, manifest, plugin, or stable release pointers.
 
 ## Leak Checks
 

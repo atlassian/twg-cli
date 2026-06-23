@@ -13,7 +13,6 @@ Assets, people, teams, and the Atlassian Teamwork Graph.
 - Stable installer: https://teamwork-graph.atlassian.com/cli/install
 - Stable manifest: https://teamwork-graph.atlassian.com/cli/manifest.json
 - Changelog: https://teamwork-graph.atlassian.com/cli/CHANGELOG.md
-- Homebrew tap: https://github.com/atlassian/homebrew-twg
 
 ## Key Files
 
