@@ -79,10 +79,6 @@
     </aside>
     <main>
       <h1 id="set-up-twg-cli">Set up TWG CLI</h1>
-<aside class="dac-panel dac-panel-warning">
-<div class="dac-panel-label">Teamwork Graph CLI (TWG CLI) is in beta</div>
-<p>TWG CLI is currently in beta. Commands and documentation may change between releases.</p>
-</aside>
 <h2 id="1-cli-installation-mode">1. CLI installation mode</h2>
 <p>Use this mode when you want to install and authenticate TWG CLI directly from your terminal.</p>
 <h3 id="before-you-begin">Before you begin</h3>
@@ -187,22 +183,15 @@ powershell -ExecutionPolicy Bypass -File twg-install.ps1
 <h2 id="quick-start-video">Quick start video</h2>
 <p><a href="https://www.loom.com/share/6df5e927900c487fb92a51b318a2e8a8">Introduction to Teamwork Graph CLI</a> — walks through installation, authentication, and using the agent skill to query work across Atlassian products.</p>
 <h2 id="update">Update</h2>
-<p><strong>macOS/Linux</strong> — use the built-in updater:</p>
+<p>Run the built-in updater:</p>
 <pre><code class="language-bash">twg update
 </code></pre>
-<p><strong>Windows (PowerShell or cmd)</strong> — re-run the install command from the Windows section above.</p>
-<p><code>twg update</code> and the installers refresh installed skill files automatically when they can detect existing TWG skill installs.</p>
-<p>Setup enables scheduled OAuth refresh and update notifications automatically. To repair or
-re-enable the schedule manually:</p>
-<pre><code class="language-bash">twg upkeep enable
-</code></pre>
-<p>This installs a per-user native schedule that runs every 12 minutes. It never installs CLI updates automatically. Use <code>twg upkeep status</code> to inspect it and <code>twg upkeep disable</code> to remove it. Linux scheduling requires a systemd user instance and an active user D-Bus session. If setup cannot install the schedule, it completes with repair guidance; a manual retry reports the underlying <code>systemctl --user</code> error.</p>
-<p>If upkeep is disabled, normal CLI use performs at most one best-effort detached update check per day. <code>twg -v</code> only prints the installed version, and <code>twg doctor</code> does not perform a release check.</p>
+<p>TWG CLI checks for updates during normal use and notifies you when a new version is available.</p>
 <h2 id="uninstall">Uninstall</h2>
 <p>Preview the files and configs that would be removed:</p>
 <pre><code class="language-bash">twg uninstall --dry-run
 </code></pre>
-<p>Uninstall asks for confirmation, disables scheduled upkeep, revokes stored credentials, and removes the binary, installer-owned skill bundles, PATH changes, caches, consent, and all local TWG configs:</p>
+<p>Uninstall asks for confirmation, revokes stored credentials, and removes the binary, installer-owned skill bundles, PATH changes, caches, consent, and all local TWG configs:</p>
 <pre><code class="language-bash">twg uninstall
 </code></pre>
 <h2 id="beta-updates">Beta updates</h2>
@@ -232,7 +221,7 @@ re-enable the schedule manually:</p>
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 90a828a71493 (2026-06-23T21:18:56+00:00).
+        Generated from atlassian/twg-cli b8a3fe50585e (2026-06-23T23:08:06+00:00).
       </footer>
     </main>
   </div>
