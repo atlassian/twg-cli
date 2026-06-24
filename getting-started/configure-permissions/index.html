@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Teamwork Graph CLI | TWG CLI</title>
-  <meta name="description" content="Developer documentation for Teamwork Graph CLI (TWG CLI), a command-line tool for querying Atlassian's work graph.">
+  <title>Configure TWG CLI permissions | TWG CLI</title>
+  <meta name="description" content="Set read, write, and delete permission scopes for TWG CLI to control access across your connected tools.">
   <style>
     :root { color-scheme: light; --ink: #172b4d; --muted: #44546f; --line: #dcdfe4; --panel: #f7f8f9; --accent: #0c66e4; --warning: #fff7d6; --note: #e9f2ff; --tip: #dcfff1; }
     * { box-sizing: border-box; }
@@ -66,12 +66,12 @@
 <ul>
 <li class="nav-heading" style="--depth:0">Guides</li>
 <li class="nav-heading" style="--depth:1">Getting started</li>
-<li class="nav-link" style="--depth:2"><a href="/twg-cli/" aria-current="page">Overview</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/">Overview</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/installation/">Set up TWG CLI</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/how-authentication-works/">How authentication works</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/manage-settings/">Manage TWG CLI settings</a></li>
-<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/configure-permissions/">Configure TWG CLI permissions</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/configure-permissions/" aria-current="page">Configure TWG CLI permissions</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/troubleshooting/">Troubleshoot TWG CLI</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/faq/">FAQ</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/changelog/">Changelog</a></li>
@@ -82,44 +82,54 @@
 </nav>
     </aside>
     <main>
-      <h1 id="teamwork-graph-cli">Teamwork Graph CLI</h1>
-<p>TWG CLI is a command line interface to the Atlassian Teamwork Graph and Cloud services. The <a href="https://teamworkgraph.com/">Teamwork Graph</a> (TWG) is Atlassian's enterprise knowledge &amp; context graph that continuously maps people, content, activities, and relationships across many work tools (Jira, Confluence, Google Drive, Slack, GitHub, Salesforce, etc.) in a compliant, permission aware fashion.</p>
-<p>Install TWG CLI and your agent — Claude Code, Codex, Gemini, Cursor, and others — can query and act across all your Atlassian products and the Teamwork Graph on your behalf. Describe what you want in plain language; the agent handles the rest.</p>
-<h2 id="how-it-works">How it works</h2>
-<p>Install TWG CLI, authenticate, and set up agent skills. After that, just describe what you want:</p>
+      <h1 id="configure-twg-cli-permissions">Configure TWG CLI permissions</h1>
+<p>Permission scopes control what the Teamwork Graph CLI (TWG CLI) can do across your connected tools — essentially what it can read, write, and delete. Configuring permissions correctly lets you give teams the access they need for automation and integrations while protecting sensitive data in your organization.</p>
+<p>For an overview of all CLI settings, see <a href="/twg-cli/getting-started/manage-settings/">Manage TWG CLI settings for your organization</a>.</p>
+<h2 id="permission-types-and-default-state">Permission types and default state</h2>
+<p>TWG CLI uses three permission types. You can configure each one independently across your connected toolsets:</p>
 <ul>
-<li><em>&quot;Summarize the work I did this week&quot;</em></li>
-<li><em>&quot;What are my open Jira issues?&quot;</em></li>
-<li><em>&quot;Show the current sprint for my team&quot;</em></li>
-<li><em>&quot;Who do I collaborate with most?&quot;</em></li>
+<li><strong>Read</strong></li>
+<li><strong>Write</strong></li>
+<li><strong>Delete</strong></li>
 </ul>
-<p>No commands to memorize. Your agent picks the right actions and runs them.</p>
-<h2 id="products-covered">Products covered</h2>
+<p>Permission scopes apply to OAuth 2.1, which is the only authentication method TWG CLI supports.</p>
+<aside class="dac-panel dac-panel-warning">
+<div class="dac-panel-label">Warning</div>
+<p><strong>Use write and delete access with caution.</strong> When write and delete access is enabled, users can create, edit, or delete objects in your Atlassian apps — such as Jira work items and Confluence pages — using the CLI. Only enable write and delete access for the toolsets your organization genuinely needs.</p>
+</aside>
+<h2 id="change-permission-scopes">Change permission scopes</h2>
+<p>For each permission type, you can set the scope to:</p>
 <ul>
-<li><strong>Teamwork Graph</strong> — A context graph that connects everything your agents need</li>
-<li><strong>Jira</strong> — Work items, boards, sprints, dashboards, filters, transitions, links</li>
-<li><strong>Confluence</strong> — Pages, blogs, spaces, databases, whiteboards, search</li>
-<li><strong>Bitbucket</strong> — Repos, PRs, branches, commits, pipelines, deployments</li>
-<li><strong>Jira Service Management</strong> — Service desk, incidents, request types, queues, knowledge base</li>
-<li><strong>Assets</strong> — CMDB objects, schemas, and queries</li>
-<li><strong>Loom</strong> — Videos, spaces, and comments</li>
-<li><strong>Trello</strong> — Boards, lists, cards, and workspaces</li>
-<li><strong>Rovo</strong> — AI-powered search across your Atlassian site</li>
-<li><strong>Goals</strong> — Atlas goals with status updates and health tracking</li>
-<li><strong>Projects</strong> — Atlas projects with lifecycle management</li>
-<li><strong>Focus Areas</strong> — Strategic planning with hierarchy trees</li>
-<li><strong>Teams</strong> — Team discovery, membership, and org structure</li>
-<li><strong>Customer Service Management</strong> — External-facing customer support</li>
-<li><strong>Jira Align</strong> — Portfolio strategy and enterprise planning</li>
-<li><strong>Talent</strong> — Workforce planning and skills tracking</li>
+<li><strong>Allow all</strong> — The CLI can use this permission with all current and future toolsets.</li>
+<li><strong>Allow selected</strong> — The CLI can use this permission only with the toolsets you choose.</li>
+<li><strong>Allow none</strong> — The CLI is blocked from using this permission with any toolset.</li>
 </ul>
-<h2 id="get-started">Get started</h2>
+<p>To change permission scopes:</p>
 <ol>
-<li><a href="/twg-cli/getting-started/installation/">Set up TWG CLI</a></li>
-<li><a href="/twg-cli/agents/skills/">Set up agent skills</a></li>
-<li><a href="/twg-cli/agents/examples/">Browse agent examples</a></li>
-<li><a href="/twg-cli/changelog/">Read the changelog</a></li>
+<li>Go to <a href="https://admin.atlassian.com/">Atlassian Administration</a>. Select your organization if you have more than one.</li>
+<li>In the sidebar, select <strong>Rovo</strong>, then select <strong>Teamwork Graph CLI</strong>.</li>
+<li>Under <strong>Permissions</strong>, find the permission type you want to configure.</li>
+<li>In the <strong>Scope</strong> column, select <strong>Allow all</strong>, <strong>Allow selected</strong>, or <strong>Allow none</strong>.</li>
+<li>If you selected <strong>Allow selected</strong>, choose the individual toolsets to allow.</li>
+<li>Repeat for any other permission types.</li>
+<li>Select <strong>Save</strong>.</li>
 </ol>
+<p>After you save a scope change, new and existing CLI sessions immediately follow the updated permissions. Commands that no longer match an allowed scope are blocked.</p>
+<h2 id="server-side-enforcement">Server-side enforcement</h2>
+<p>Permission scopes are enforced server-side by Atlassian. This means they can't be bypassed by modifying the CLI binary or local config. When a command is sent, Atlassian checks the permission scopes configured for your organization before returning any data or performing any action. If the scope doesn't allow the request, the command is rejected.</p>
+<h2 id="ip-and-location-allowlists">IP and location allowlists</h2>
+<p>IP and location allowlists configured in your Atlassian organization also apply to CLI requests. If a request originates from a blocked IP address, it's rejected regardless of the user's permission scopes.</p>
+<h2 id="diagnose-a-blocked-command">Diagnose a blocked command</h2>
+<p>A blocked command appears as restricted, and you'll need to re-authenticate. If a command is unexpectedly blocked, check that:</p>
+<ul>
+<li>The permission type the command needs (read, write, or delete) is allowed for the relevant toolset.</li>
+<li>The request isn't originating from an IP address outside your organization's allowlist.</li>
+</ul>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li><a href="/twg-cli/getting-started/manage-settings/">Manage TWG CLI settings for your organization</a></li>
+<li><a href="/twg-cli/getting-started/troubleshooting/">Troubleshoot TWG CLI</a></li>
+</ul>
 
       <footer class="source-footer">
         Generated from atlassian/twg-cli 9c8e38fcb584 (2026-06-24T23:14:18+00:00).

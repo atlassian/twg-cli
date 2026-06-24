@@ -68,7 +68,11 @@
 <li class="nav-heading" style="--depth:1">Getting started</li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/">Overview</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/installation/">Set up TWG CLI</a></li>
-<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/authentication/">Authentication</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/how-authentication-works/">How authentication works</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/manage-settings/">Manage TWG CLI settings</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/configure-permissions/">Configure TWG CLI permissions</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/troubleshooting/">Troubleshoot TWG CLI</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/faq/" aria-current="page">FAQ</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/changelog/">Changelog</a></li>
 <li class="nav-heading" style="--depth:1">Agent integration</li>
@@ -86,6 +90,7 @@
 <p>In the future, installing the CLI will remain free, but certain forms of usage will be billed. With 90 days advance notice, certain enriched, value-added commands will be billed with at least 1 Rovo credit per call. Certain complex queries will cost more than 1 credit per call.</p>
 <p>These enriched commands require Teamwork Graph CLI to aggregate responses from multiple Atlassian and non-Atlassian apps and run AI inferencing to generate insights. For example, <code>twg collaborators</code> provides insights on collaborators by analyzing common artifacts and interactions between users in an organization. Similarly, <code>twg context</code> aggregates information across multiple Atlassian and non-Atlassian systems to deliver the best context around a work item, Confluence page, or user.</p>
 <p>The detailed rate card will be published with 90 days advance notice before billing begins.</p>
+<p>Rovo credit consumption from Teamwork Graph CLI is included in your Rovo credits dashboard in the Atlassian Admin hub. To view it, go to <a href="https://admin.atlassian.com/">Atlassian Administration</a>, then select <strong>Insights</strong> &gt; <strong>Platform Usage</strong> &gt; <strong>Rovo Credits</strong>.</p>
 <h3 id="how-is-teamwork-graph-cli-different-from-atlassian-cli">How is Teamwork Graph CLI different from Atlassian CLI?</h3>
 <p>Atlassian CLI was built for human-driven administration before agentic usage was common. Teamwork Graph CLI is purpose-built as an agent-first CLI that standardizes commands and outputs for how agents actually work.</p>
 <p>Teamwork Graph CLI also offers capabilities beyond Atlassian CLI, including access to cross-product data from the Teamwork Graph and additional Atlassian tools such as Bitbucket, Teams, Customer Service Management, Jira Service Management, Jira Align, and Talent.</p>
@@ -96,7 +101,7 @@
 <h3 id="what-data-does-teamwork-graph-cli-access-and-who-can-see-it">What data does Teamwork Graph CLI access and who can see it?</h3>
 <p>Teamwork Graph CLI respects your existing Atlassian permissions. It only surfaces data that the authenticated user is already authorised to see. No new access is granted by installing or using the CLI.</p>
 <h3 id="does-teamwork-graph-cli-support-oauth">Does Teamwork Graph CLI support OAuth?</h3>
-<p>Yes. Interactive <code>twg login</code> uses OAuth by default. TWG also supports API tokens for CI/CD and compatibility workflows, plus delegated OAuth for embedding applications that own the credential lifecycle.</p>
+<p>Yes. OAuth 2.1 is the only supported authentication method, and interactive <code>twg login</code> uses OAuth by default. TWG CLI also supports delegated OAuth for embedding applications that own the credential lifecycle. Bitbucket is the one exception: it isn't covered by OAuth yet and requires a separate Bitbucket token.</p>
 <h3 id="does-teamwork-graph-cli-only-work-with-agent-terminals">Does Teamwork Graph CLI only work with agent terminals?</h3>
 <p>No. Teamwork Graph CLI can be used by any AI agent or tool that can invoke a CLI. For example, agents that run commands behind the scenes — not just agent terminals — can use Teamwork Graph CLI.</p>
 <h3 id="should-i-use-teamwork-graph-cli-or-rovo-mcp">Should I use Teamwork Graph CLI or Rovo MCP?</h3>
@@ -108,7 +113,7 @@
 <p>For a detailed comparison and decision guide, see <a href="https://support.atlassian.com/organization-administration/docs/choosing-between-twg-cli-and-rovo-mcp/">Choosing between Teamwork Graph CLI and Rovo MCP</a>.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli cfc6d024c03a (2026-06-24T21:46:08+00:00).
+        Generated from atlassian/twg-cli 9c8e38fcb584 (2026-06-24T23:14:18+00:00).
       </footer>
     </main>
   </div>

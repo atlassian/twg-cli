@@ -68,7 +68,11 @@
 <li class="nav-heading" style="--depth:1">Getting started</li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/">Overview</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/installation/" aria-current="page">Set up TWG CLI</a></li>
-<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/authentication/">Authentication</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/how-authentication-works/">How authentication works</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/manage-settings/">Manage TWG CLI settings</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/configure-permissions/">Configure TWG CLI permissions</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/troubleshooting/">Troubleshoot TWG CLI</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/faq/">FAQ</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/changelog/">Changelog</a></li>
 <li class="nav-heading" style="--depth:1">Agent integration</li>
@@ -100,12 +104,9 @@ bash twg-install.sh
 <p>During setup:</p>
 <ul>
 <li>When consent is required, answer <code>yes</code>, <code>continue</code>, or <code>no</code>.</li>
-<li>After consent, enter your Atlassian account email and default site prefix or domain, for example <code>example</code> or <code>example.atlassian.net</code>.</li>
-<li>The installer saves email and site before token setup.</li>
 <li>Setup installs and refreshes TWG agent skills.</li>
-<li>The installer opens the token page. Generate a token in the browser, copy it, then press Enter — the installer reads it from the OS clipboard. If clipboard access is unavailable, it falls back to a masked paste prompt.</li>
-<li>After core setup and <code>twg doctor</code> pass, setup may offer the same clipboard-confirmed flow for the optional Bitbucket token. If you skip it, TWG CLI is still ready for non-Bitbucket commands.</li>
-<li>If you use a clipboard history manager, clear it after setup.</li>
+<li>The installer opens your browser to sign in with OAuth. Sign in to Atlassian, select the site you want to authorize (auto-selected if you have access to only one), review the requested permissions, and select <strong>Accept</strong>.</li>
+<li>After core setup and <code>twg doctor</code> pass, setup may offer to configure the optional Bitbucket token. If you skip it, TWG CLI is still ready for non-Bitbucket commands.</li>
 </ul>
 <p>The installer completes setup and runs <code>twg doctor</code> automatically. To repair setup later:</p>
 <pre><code class="language-bash">twg setup
@@ -131,35 +132,13 @@ powershell -ExecutionPolicy Bypass -File .\twg-install.ps1
 <pre><code class="language-cmd">curl.exe -fsSL https://teamwork-graph.atlassian.com/cli/install.ps1 -o twg-install.ps1
 powershell -ExecutionPolicy Bypass -File twg-install.ps1
 </code></pre>
-<p>The Windows installer performs the same setup as macOS and Linux: binary install, checksum verification, consent, email and site save, skill install, token login, and doctor verification.</p>
-<p>Setup asks for:</p>
-<table>
-<thead>
-<tr>
-<th>Prompt</th>
-<th>What to enter</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Email</strong></td>
-<td>Your Atlassian account email.</td>
-</tr>
-<tr>
-<td><strong>Site</strong></td>
-<td>Your Atlassian site name (for example, <code>example</code> for <code>example.atlassian.net</code>).</td>
-</tr>
-<tr>
-<td><strong>Token</strong></td>
-<td>The token from the page that <code>twg login</code> opens automatically.</td>
-</tr>
-<tr>
-<td><strong>Bitbucket token</strong></td>
-<td>Optional post-setup step. Required only for Bitbucket-specific commands.</td>
-</tr>
-</tbody>
-</table>
-<p>Credentials are saved to <code>~/.config/twg/auth.conf</code> and reused across sessions. For re-authentication, token management, and CI/CD environment variables, see <a href="/twg-cli/getting-started/authentication/">Authentication</a>.</p>
+<p>The Windows installer performs the same setup as macOS and Linux: binary install, checksum verification, consent, skill install, OAuth login, and doctor verification.</p>
+<p>During setup, the installer:</p>
+<ul>
+<li>Opens your browser to sign in with OAuth. In the browser, select the site you want to authorize (auto-selected if you have access to only one), review the requested permissions, and select <strong>Accept</strong>.</li>
+<li>Offers the optional Bitbucket token step, which is required only for Bitbucket-specific commands.</li>
+</ul>
+<p>Credentials are saved to <code>~/.config/twg/auth.conf</code> and reused across sessions. For re-authentication and the Bitbucket token, see <a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a>.</p>
 <h2 id="2-agent-installation-mode">2. Agent installation mode</h2>
 <p>Use this mode when you want an AI coding agent to install TWG CLI, authenticate, and set up agent skills for you.</p>
 <p>Copy the following prompt and paste it into your agent:</p>
@@ -180,8 +159,6 @@ powershell -ExecutionPolicy Bypass -File twg-install.ps1
 <li><em>&quot;Show the current sprint for my team&quot;</em></li>
 </ul>
 <p>See <a href="/twg-cli/agents/examples/">Agent examples</a> for more prompts to try.</p>
-<h2 id="quick-start-video">Quick start video</h2>
-<p><a href="https://www.loom.com/share/6df5e927900c487fb92a51b318a2e8a8">Introduction to Teamwork Graph CLI</a> — walks through installation, authentication, and using the agent skill to query work across Atlassian products.</p>
 <h2 id="update">Update</h2>
 <p>Run the built-in updater:</p>
 <pre><code class="language-bash">twg update
@@ -216,13 +193,14 @@ powershell -ExecutionPolicy Bypass -File twg-install.ps1
 <p>Organization admins can request to opt their organization out of Teamwork Graph CLI access. Submit a request using the <a href="https://ecosystem.atlassian.net/servicedesk/customer/portal/3664/create/19138">TWG CLI admin opt-out form</a>. The team will process your request within 24 hours.</p>
 <h2 id="next-steps">Next steps</h2>
 <ul>
-<li><a href="/twg-cli/getting-started/authentication/">Authentication</a></li>
+<li><a href="/twg-cli/getting-started/how-authentication-works/">How authentication works</a></li>
+<li><a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a></li>
 <li><a href="/twg-cli/agents/skills/">Agent skills</a></li>
 <li><a href="/twg-cli/agents/examples/">Agent examples</a></li>
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli cfc6d024c03a (2026-06-24T21:46:08+00:00).
+        Generated from atlassian/twg-cli 9c8e38fcb584 (2026-06-24T23:14:18+00:00).
       </footer>
     </main>
   </div>

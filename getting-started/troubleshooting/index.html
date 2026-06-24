@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Teamwork Graph CLI | TWG CLI</title>
-  <meta name="description" content="Developer documentation for Teamwork Graph CLI (TWG CLI), a command-line tool for querying Atlassian's work graph.">
+  <title>Troubleshoot TWG CLI | TWG CLI</title>
+  <meta name="description" content="Diagnose common problems, update the CLI, and repair your setup when TWG CLI isn't working as expected.">
   <style>
     :root { color-scheme: light; --ink: #172b4d; --muted: #44546f; --line: #dcdfe4; --panel: #f7f8f9; --accent: #0c66e4; --warning: #fff7d6; --note: #e9f2ff; --tip: #dcfff1; }
     * { box-sizing: border-box; }
@@ -66,13 +66,13 @@
 <ul>
 <li class="nav-heading" style="--depth:0">Guides</li>
 <li class="nav-heading" style="--depth:1">Getting started</li>
-<li class="nav-link" style="--depth:2"><a href="/twg-cli/" aria-current="page">Overview</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/">Overview</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/installation/">Set up TWG CLI</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/how-authentication-works/">How authentication works</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/manage-settings/">Manage TWG CLI settings</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/configure-permissions/">Configure TWG CLI permissions</a></li>
-<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/troubleshooting/">Troubleshoot TWG CLI</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/troubleshooting/" aria-current="page">Troubleshoot TWG CLI</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/faq/">FAQ</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/changelog/">Changelog</a></li>
 <li class="nav-heading" style="--depth:1">Agent integration</li>
@@ -82,44 +82,39 @@
 </nav>
     </aside>
     <main>
-      <h1 id="teamwork-graph-cli">Teamwork Graph CLI</h1>
-<p>TWG CLI is a command line interface to the Atlassian Teamwork Graph and Cloud services. The <a href="https://teamworkgraph.com/">Teamwork Graph</a> (TWG) is Atlassian's enterprise knowledge &amp; context graph that continuously maps people, content, activities, and relationships across many work tools (Jira, Confluence, Google Drive, Slack, GitHub, Salesforce, etc.) in a compliant, permission aware fashion.</p>
-<p>Install TWG CLI and your agent — Claude Code, Codex, Gemini, Cursor, and others — can query and act across all your Atlassian products and the Teamwork Graph on your behalf. Describe what you want in plain language; the agent handles the rest.</p>
-<h2 id="how-it-works">How it works</h2>
-<p>Install TWG CLI, authenticate, and set up agent skills. After that, just describe what you want:</p>
-<ul>
-<li><em>&quot;Summarize the work I did this week&quot;</em></li>
-<li><em>&quot;What are my open Jira issues?&quot;</em></li>
-<li><em>&quot;Show the current sprint for my team&quot;</em></li>
-<li><em>&quot;Who do I collaborate with most?&quot;</em></li>
-</ul>
-<p>No commands to memorize. Your agent picks the right actions and runs them.</p>
-<h2 id="products-covered">Products covered</h2>
-<ul>
-<li><strong>Teamwork Graph</strong> — A context graph that connects everything your agents need</li>
-<li><strong>Jira</strong> — Work items, boards, sprints, dashboards, filters, transitions, links</li>
-<li><strong>Confluence</strong> — Pages, blogs, spaces, databases, whiteboards, search</li>
-<li><strong>Bitbucket</strong> — Repos, PRs, branches, commits, pipelines, deployments</li>
-<li><strong>Jira Service Management</strong> — Service desk, incidents, request types, queues, knowledge base</li>
-<li><strong>Assets</strong> — CMDB objects, schemas, and queries</li>
-<li><strong>Loom</strong> — Videos, spaces, and comments</li>
-<li><strong>Trello</strong> — Boards, lists, cards, and workspaces</li>
-<li><strong>Rovo</strong> — AI-powered search across your Atlassian site</li>
-<li><strong>Goals</strong> — Atlas goals with status updates and health tracking</li>
-<li><strong>Projects</strong> — Atlas projects with lifecycle management</li>
-<li><strong>Focus Areas</strong> — Strategic planning with hierarchy trees</li>
-<li><strong>Teams</strong> — Team discovery, membership, and org structure</li>
-<li><strong>Customer Service Management</strong> — External-facing customer support</li>
-<li><strong>Jira Align</strong> — Portfolio strategy and enterprise planning</li>
-<li><strong>Talent</strong> — Workforce planning and skills tracking</li>
-</ul>
-<h2 id="get-started">Get started</h2>
-<ol>
-<li><a href="/twg-cli/getting-started/installation/">Set up TWG CLI</a></li>
-<li><a href="/twg-cli/agents/skills/">Set up agent skills</a></li>
-<li><a href="/twg-cli/agents/examples/">Browse agent examples</a></li>
-<li><a href="/twg-cli/changelog/">Read the changelog</a></li>
-</ol>
+      <h1 id="troubleshoot-twg-cli">Troubleshoot TWG CLI</h1>
+<p>If you run into issues with Teamwork Graph CLI (TWG CLI), use this page to diagnose common problems, keep the CLI up to date, and get help.</p>
+<h2 id="run-a-health-check">Run a health check</h2>
+<p>To check your authentication, connectivity, and build info, run:</p>
+<pre><code class="language-bash">twg doctor
+</code></pre>
+<p>This is always the best first step — it tells you what's working and what isn't.</p>
+<h2 id="repair-your-setup">Repair your setup</h2>
+<p>If <code>twg doctor</code> reports issues with your configuration or agent skills, run:</p>
+<pre><code class="language-bash">twg setup
+</code></pre>
+<p>This re-runs the setup process and refreshes your agent skill files without reinstalling the binary.</p>
+<h2 id="update-twg-cli">Update TWG CLI</h2>
+<p>If you're on version 0.9.6 or earlier, <code>twg update</code> may not work correctly. Use the manual update steps below instead.</p>
+<h3 id="macos-and-linux-curl-installer-recommended-for-older-versions">macOS and Linux (curl installer, recommended for older versions)</h3>
+<pre><code class="language-bash">curl -fsSL https://teamwork-graph.atlassian.com/cli/install -o twg-install.sh
+bash twg-install.sh
+</code></pre>
+<h3 id="windows-powershell">Windows (PowerShell)</h3>
+<pre><code class="language-powershell">curl.exe -fsSL https://teamwork-graph.atlassian.com/cli/install.ps1 -o twg-install.ps1
+powershell -ExecutionPolicy Bypass -File .\twg-install.ps1
+</code></pre>
+<h3 id="windows-command-prompt">Windows (Command Prompt)</h3>
+<pre><code class="language-cmd">curl.exe -fsSL https://teamwork-graph.atlassian.com/cli/install.ps1 -o twg-install.ps1
+powershell -ExecutionPolicy Bypass -File twg-install.ps1
+</code></pre>
+<p>If you're on version 0.9.7 or later and want to use the built-in updater, run:</p>
+<pre><code class="language-bash">twg update
+</code></pre>
+<p>For full installation options, see <a href="/twg-cli/getting-started/installation/">Set up TWG CLI</a>.</p>
+<h2 id="get-help-and-give-feedback">Get help and give feedback</h2>
+<p>To see what's changed in recent versions, view the <a href="/twg-cli/changelog/">changelog</a>.</p>
+<p>To give feedback or report a bug, open an issue in the <a href="https://github.com/atlassian/twg-cli">TWG CLI GitHub repository</a> and include &quot;TWG feedback&quot; so the team can find it.</p>
 
       <footer class="source-footer">
         Generated from atlassian/twg-cli 9c8e38fcb584 (2026-06-24T23:14:18+00:00).
