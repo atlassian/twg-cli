@@ -1,9 +1,9 @@
 ---
 name: twg-engineering-work
 description: >
-  Use with the root `twg` skill for pull-request queues, stale reviews, repo
-  contributors, repo hot areas, PR-based status, issue-to-PR lookups, and
-  engineering review bottleneck analysis.
+  Use with root `twg` for PR/PRs-only status, PR status for a person, pull
+  request summaries, review queues, stale reviews, review bottlenecks, repo
+  contributors, hot areas, and issue-to-PR lookups.
 ---
 
 # twg-engineering-work
@@ -20,6 +20,11 @@ live `twg help`, `twg help <terms>`, or `twg help describe <path>`.
 - "Stale reviews"
 - "Review flow or bottlenecks"
 - "PR-only leadership readout"
+- "PR-only status for a user, team, or repo"
+- "PR status for Alice" or "this person's PRs"
+- "My PRs this week"
+- "My pull requests this week"
+- "Summarize my pull requests for a time window"
 - "Open bugs/tasks with PRs in flight"
 
 ## First Move
@@ -32,9 +37,10 @@ Resolve the engineering anchor:
   commits, branches, and repos.
 - Topic prompt: resolve/search once, then find linked repos, PRs, and workitems.
 
-Use typed Bitbucket, Jira, context, and search command families when they clearly
-match the prompt. Use focused help only when the route or exact contract is
-unclear.
+Use typed pull-request, Bitbucket, Jira, context, and search command families
+when they clearly match the prompt. Use provider-native PR commands only for the
+matching host; Bitbucket activity/comment/task commands do not apply to GitHub
+PRs. Use focused help only when the route or exact contract is unclear.
 
 ## Route Selection
 
@@ -46,18 +52,30 @@ unclear.
   ownership and review evidence.
 - For PR-based status, resolve org/team first, then collect merged or open PRs
   for the relevant members, repos, and time window.
+- For person-scoped summaries that include Jira, docs, meetings, planning, or
+  notifications, route to `twg-status-rollups` and load
+  `references/personal-work-summary.md`. Keep this skill authoritative for
+  PR-only queues, stale reviews, review bottlenecks, repo contributors, hot
+  areas, and PR-only status.
 
 ## Evidence Policy
 
 - Hydrate PR details, comments, tasks, pipeline status, and diff only for stale,
   blocked, central, or high-impact PRs.
+- For PR rollups, stop after the evidence set identifies the main themes,
+  repos/services, owners, and recency. Do not keep searching for more PRs when
+  the next batch would only add more examples of the same theme.
 - For review status, include age, requested reviewers, comments/tasks, approval
-  state, CI/pipeline state, and last activity.
+  state, CI/check or pipeline state, and last activity when the provider surface
+  exposes them.
 - For repo/team reports, group by repo, service, or workstream rather than only
   person counts.
 - Inspect PR titles/descriptions and linked issues to infer themes; do not rank
   solely by PR count.
-- Keep Bitbucket auth failures separate from Atlassian auth failures.
+- Keep Bitbucket, GitHub connector/tool, and Atlassian auth failures separate.
+- If PR graph or repo-wide query calls repeatedly fail, make one narrower
+  fallback using known repos, people, workitems, or search anchors. If that also
+  fails, answer from the successful evidence and call out the PR coverage gap.
 
 ## Recipe Cards
 
@@ -89,6 +107,8 @@ ownership signals.
 Resolve org/team first, then collect PRs for members or repos in the time window.
 Group into themes and repos/services. Call out gaps where PR-only evidence omits
 Jira, docs, planning, or customer context.
+For a single person where the prompt is broader than PRs, switch to
+`twg-status-rollups` and load `references/personal-work-summary.md`.
 
 ## Output Shape
 
@@ -103,4 +123,4 @@ Jira, docs, planning, or customer context.
 - Do not guess Bitbucket workspace or repo.
 - Do not fetch every PR body, diff, or comment in a large queue.
 - Do not treat PR counts as impact.
-- Do not mix Bitbucket auth failures with Atlassian auth failures.
+- Do not mix Bitbucket, GitHub connector/tool, and Atlassian auth failures.

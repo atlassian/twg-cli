@@ -1,10 +1,9 @@
 ---
 name: twg-context-discovery
 description: >
-  Use with the root `twg` skill for topic deep dives, dependency maps, graph
-  explanations, workitem/page/user context, project-to-repo discovery, experts,
-  and "catch me up" prompts. Hydrate anchors and relationship evidence before
-  synthesis.
+  Use with root `twg` for deep context, dependency maps, responsibility,
+  related entities, experts, project-to-repo discovery, and "catch me up"
+  requests around a concrete anchor.
 ---
 
 # twg-context-discovery
@@ -21,6 +20,7 @@ live `twg help`, `twg help <terms>`, or `twg help describe <path>`.
 - "Which people/repos/projects are related?"
 - "Draw the graph" / "visualize" / "open the graph"
 - "Who's involved" / "experts on X"
+- "Who owns/maintains/knows/reviews this?" or "who should I ask/escalate to?"
 
 ## First Move
 
@@ -35,6 +35,9 @@ Resolve the anchor before widening:
 If a context command is not advertised for an anchor type, treat that as a
 coverage gap. Use product-native hydration and search evidence instead of
 inventing unsupported command paths.
+
+For ownership, maintainer, expert, reviewer, or escalation questions, follow
+`references/responsibility.md`.
 
 ## Route Selection
 
@@ -78,6 +81,12 @@ relationship direction.
 - Fetch known older links directly by URL, key, ID, or ARI instead of widening
   the whole graph blindly.
 - Use strong query variants rather than many synonyms.
+- After the first source fetch plus context/search pass, pause and compare the
+  evidence against the requested output. If owner, status, relation, recency,
+  and evidence URL/key are present, synthesize instead of widening.
+- If a context or graph-backed command returns the same backend/coverage error
+  twice, do not keep probing adjacent graph paths. Record the coverage gap and
+  continue with product-native hydrated evidence.
 - Stop when the next candidate would not add new entities, links, contributors,
   teams, decisions, ownership, risk, or next action.
 
@@ -109,3 +118,7 @@ do not change direction, ownership, risk, or next action.
   "Done".
 - Do not dismiss a 1-hop candidate by title alone.
 - Do not hand-roll graph HTML.
+
+## References
+
+- `references/responsibility.md` - declared and inferred responsibility evidence

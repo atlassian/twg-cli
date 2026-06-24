@@ -1,8 +1,21 @@
+---
+description: Handle agent JSON envelopes, compact summaries, output files, and large TWG payloads.
+---
+
 # Agent Output
 
-The `twg` command is optimized for agents. For non-help commands it adds
-`--mode agent`, defaults missing output to `--output json`, and writes large
-payloads to files while keeping stdout compact.
+Agent invocations should call the installed `twg` binary directly:
+
+```bash
+twg <command>
+```
+
+When the host sets `TWG_AGENT_DEFAULTS=1` in the process environment, the CLI
+treats non-help commands as agent-mode calls, defaults missing output to JSON,
+and writes large payloads to files while keeping stdout compact. Do not prefix
+individual commands with `TWG_AGENT_DEFAULTS=1` unless the host explicitly asks
+for that shape; env-prefixed shell commands can bypass command-specific
+authorization in some agent runtimes.
 
 The CLI core applies the same file-backed protection for direct structured
 agent calls such as `twg --mode agent --output json work query`. It only applies
@@ -11,7 +24,7 @@ when the caller has not explicitly chosen `--output-summary`, `--output-file`, o
 
 ## Envelope Shape
 
-The wrapper usually prints a YAML summary like:
+Large direct agent invocations usually print a YAML summary like:
 
 ```yaml
 output_files:
@@ -73,6 +86,13 @@ twg <cmd> --agent-fields data.items.key,data.items.status
 - `--output-summary inline` - force inline selected data; in agent mode very
   large inline payloads are capped and fall back to file-backed summary output.
 - `--agent-fields` - narrow the summary while preserving the full JSON file.
+  Presets such as `@rows`, `@compact`, and `@evidence` are command-scoped when
+  advertised by help; on commands without a preset contract they safely fall
+  back to the normal summary envelope. Literal field paths remain supported for
+  custom projections.
+
+Use `@rows` or `@compact` before writing custom JSON filters for broad scans.
+Use `@evidence` after narrowing to the few artifacts that need fuller detail.
 
 If `output_files.compact` is present, use it instead of probing the raw JSON.
 If field paths are unknown, run `twg help describe "<exact command>"` and use
@@ -83,14 +103,24 @@ projection. Do not retry multiple incompatible `.data.*`, `.result.*`, or
 array-vs-object guesses. Combine related facts in one `jq` projection per output
 file instead of running repeated `jq .` or one-field probes.
 
-When comparing many compact files, avoid a sequence of one-file wrappers such as
+If a local `jq` command fails, stop probing nearby paths. Re-read the compact
+file or the command's help-described view, then use at most one exact projection.
+Missing collections usually mean "no rows returned", not a new output contract.
+
+Before opening another large output file, run a sufficiency check: do you already
+have the names/keys, owners, statuses, dates, risks/blockers, and evidence URLs
+needed for the requested answer? If yes, synthesize. Only inspect another raw
+file when it will change a ranking, owner, risk, blocker, relationship, or next
+action.
+
+When comparing many compact files, avoid a sequence of one-file filters such as
 `jq '{Alice:.}' file`. Use one combined projection with `jq -n`/slurp inputs, or
 read the compact summaries directly and only filter the few raw files that will
 change the answer.
 
 ## When To Pass `--output-file`
 
-Default: do not pass it. The wrapper already writes a full JSON payload and reports
+Default: do not pass it. Agent defaults already write a full JSON payload and report
 the path in `output_files.stdout`.
 
 Pass `--output-file` only when stable filenames make a recipe easier, for example

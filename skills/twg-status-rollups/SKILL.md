@@ -1,10 +1,9 @@
 ---
 name: twg-status-rollups
 description: >
-  Use with the root `twg` skill for personal, team, org, project, goal,
-  focus-area, executive, quarterly, appraisal, and leadership status rollups.
-  Resolve scope first, collect bounded evidence, and synthesize a readout with
-  confidence and gaps.
+  Use with root `twg` for personal work summaries for any person, weekly personal
+  updates, performance review/appraisal evidence, and
+  team/org/project/goal/executive/annual/cycle status rollups.
 ---
 
 # twg-status-rollups
@@ -15,10 +14,13 @@ live `twg help`, `twg help <terms>`, or `twg help describe <path>`.
 ## Use When
 
 - "What did I/person/team/org work on?"
+- "Personal work summary for this person"
+- "What did I/person/team/org work on this week?"
+- "Weekly personal update"
 - "Status of project/goal/topic/focus area"
 - "Leadership readout"
-- "Weekly/monthly/quarterly review"
-- "APEX/performance appraisal evidence"
+- "Weekly/monthly/annual/cycle review"
+- "Performance appraisal evidence"
 - "Goal alignment audit"
 - "Org bottlenecks, priorities, stale goals, project risks"
 
@@ -33,7 +35,8 @@ Resolve the reporting scope before broad retrieval:
 - Topic: resolve/search once, then select concrete project, goal, page, or workitem anchors.
 
 Establish the time window from the prompt. If absent, ask when precision matters;
-otherwise use a small recent window such as 7d or 30d and state that choice.
+otherwise use a recent bounded window and state that choice. Keep personal work
+summary windows to 1 year or less.
 
 ## Route Selection
 
@@ -44,18 +47,26 @@ otherwise use a small recent window such as 7d or 30d and state that choice.
   updates, status, target dates, linked goals, and linked projects.
 - For engineering output, use pull-request or work-activity surfaces before broad
   text search.
+- For personal/person work summaries, load `references/personal-work-summary.md`.
 - For large orgs, use aggregate team/project/goal/work signals first, then
   hydrate representative people, leaders, or outliers.
 - Use `context user` only for the manager, explicit review subject, or another
   central collaborator whose graph changes the answer.
 - Do not apply projection flags to every evidence surface. Native/federated
   commands should use only flags advertised by their own help contracts.
+- For importance-ordered rollups, use
+  `twg work query --ranked --since <window> --items-per-section <N>`. Ranking is
+  heuristic; omit it for chronological questions.
 
 ## Evidence Policy
 
 - Balance quantitative activity signals with representative qualitative
   evidence: docs, comments, blockers, project/goal updates, PRs, and stakeholder
   interactions.
+- Default to a bounded rollup set: resolve scope, collect planning/activity
+  signals, hydrate only the few artifacts that change the summary, then answer.
+  More evidence is useful only when it changes owner, status, risk, priority,
+  or confidence.
 - Distinguish authored delivery from review, coordination, and influence.
 - Sample when the scope is broad. State the sample boundary instead of trying to
   exhaust every person and every product surface.
@@ -63,6 +74,9 @@ otherwise use a small recent window such as 7d or 30d and state that choice.
   before using them as evidence.
 - For PR load, start count-first. If a rollup warns that full fetch is too broad,
   narrow once or switch to count-only.
+- If org/context/PR graph calls fail twice with the same backend or coverage
+  error, stop that path. Use available planning, work, search, and native
+  evidence, and list the failed graph path as a gap.
 
 ## Recipe Cards
 
@@ -70,7 +84,8 @@ otherwise use a small recent window such as 7d or 30d and state that choice.
 
 Resolve the person, then pull recent authored/assigned Jira work,
 authored/reviewed PRs, docs/pages, meetings, and project/goal involvement.
-Separate delivery, review, docs/strategy, coordination, and influence.
+Load `references/personal-work-summary.md` for the exact subject selector,
+notification boundary, PR activity hydration, and outcome-first synthesis rules.
 
 ### Team Or Org Leadership Readout
 
