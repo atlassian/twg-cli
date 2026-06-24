@@ -35,8 +35,12 @@ Resolve the subject and time window before querying:
 - For another person, resolve their account ID first, use exact command flags
   `--scope user --account-id <id>`, and set `SUBJECT_IS_ME=false`.
 - If the prompt gives a relative window, use `--since <duration>`.
-- If it gives a start date, convert it to the nearest supported `--since`
-  duration or date form accepted by live help. Do not invent `--to` support.
+- If it gives an explicit calendar window, use `--from <YYYY-MM-DD>` and
+  `--to <YYYY-MM-DD>` when live `twg work query` help advertises those flags.
+  Treat `--from` as inclusive and `--to` as exclusive.
+- If it gives only a start date, use `--from <YYYY-MM-DD>` when supported;
+  otherwise convert it to the nearest supported `--since` duration or date form
+  accepted by live help.
 - Keep the requested window bounded to 1 year or less. If the user asks for a
   broader range, narrow to 1 year and state the boundary.
 - Repeat the exact subject flags in each supported command. Do not put them in a
@@ -53,15 +57,19 @@ Start broad, then hydrate only what changes the answer:
 
 1. Baseline activity:
    for self, run
-   `twg work query --scope me --activity all --ranked --since <window> --items-per-section <n> -o json`.
+   `twg work query --scope me --activity all --ranked --since <window> --items-per-section <n> -o json`,
+   or use `--from <YYYY-MM-DD> --to <YYYY-MM-DD>` for explicit calendar windows.
    For another person, run
-   `twg work query --scope user --account-id <id> --activity all --ranked --since <window> --items-per-section <n> -o json`.
+   `twg work query --scope user --account-id <id> --activity all --ranked --since <window> --items-per-section <n> -o json`,
+   or use `--from <YYYY-MM-DD> --to <YYYY-MM-DD>` for explicit calendar windows.
 2. PR state:
    use `twg pull-requests query --scope me ...` or
    `twg pull-requests query --scope user --account-id <id> ...` for authored,
    reviewed, participant, open, merged, or updated PRs when the baseline needs
    more PR coverage. Do not fall back to the current operator's PRs for another
-   person.
+   person. When the baseline uses `--from <YYYY-MM-DD> --to <YYYY-MM-DD>`,
+   propagate the same exclusive calendar window to PR follow-ups as
+   `--updated-since <from> --updated-before <to>`.
 3. PR activity:
    for selected central PRs only, hydrate provider-native details when a
    supported route exists. Use Bitbucket PR detail/activity/comment/task commands
