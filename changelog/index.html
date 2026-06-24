@@ -102,7 +102,7 @@
 <li><strong>Confluence drafts and browser URLs:</strong> Add publish and delete workflows for page and blog-post drafts. <code>twg confluence content get</code> now accepts browser URLs for folders, whiteboards, databases, and dated blog posts, while command-local <code>--site</code> reliably controls lifecycle operations.</li>
 <li><strong>Safer Confluence permissions:</strong> <code>twg confluence content permissions add</code> now previews the target, operations, and grantees before applying restrictions and requires <code>--yes</code> for non-interactive use.</li>
 <li><strong>Bitbucket authentication repair:</strong> <code>twg setup bitbucket --force</code> now reliably starts re-authentication. The command also supports <code>--no-browser</code>, including clipboard-based token setup.</li>
-<li><strong>Actionable diagnostics:</strong> Fatal backend errors now provide a ready-to-run, redacted <code>twg feedback</code> command with trace context, making reports easier to submit without copying user-provided arguments.</li>
+<li><strong>Actionable diagnostics:</strong> Fatal backend errors now provide a clickable, prefilled public feedback form link with safe command and trace context, so users can report failures without running another command or copying user-provided arguments.</li>
 </ul>
 <h3 id="compatibility-notes">Compatibility notes</h3>
 <ul>
@@ -516,7 +516,7 @@ behavior.</p>
 <p>Please use the latest stable installer for supported setup and update flows.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 6c6a771b907d (2026-06-24T05:50:25+00:00).
+        Generated from atlassian/twg-cli 3d039328fb96 (2026-06-24T05:53:48+00:00).
       </footer>
     </main>
   </div>
