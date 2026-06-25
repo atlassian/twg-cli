@@ -131,49 +131,17 @@
 <p>Before contacting the OAuth token endpoint, TWG CLI verifies that it can atomically update the active credential backend. This prevents a sandboxed coding agent from spending a one-time refresh token and then losing the rotated replacement.</p>
 <p>If the config directory isn't writable, TWG CLI sends no refresh request and asks you to run <code>twg auth refresh</code> in a normal terminal. It also detects common coding agents and prints the relevant configuration.</p>
 <h2 id="keep-oauth-working-inside-coding-agents">Keep OAuth working inside coding agents</h2>
-<p>When a coding agent runs TWG CLI in a sandbox, give the agent write access to the TWG config directory so background OAuth refresh can persist rotated credentials. For the default macOS and Linux config root, use the following settings:</p>
-<h3 id="codex">Codex</h3>
-<p>Add or merge this in <code>~/.codex/config.toml</code>:</p>
-<pre><code class="language-toml">default_permissions = &quot;twg-workspace&quot;
-
-[permissions.twg-workspace]
-extends = &quot;:workspace&quot;
-
-[permissions.twg-workspace.filesystem]
-&quot;~/.config/twg&quot; = &quot;write&quot;
-</code></pre>
-<p>Codex permission profiles replace the legacy <code>sandbox_mode</code> and <code>sandbox_workspace_write</code> settings. Don't configure both forms together.</p>
-<h3 id="claude-code">Claude Code</h3>
-<p>Add or merge this in <code>~/.claude/settings.json</code>:</p>
-<pre><code class="language-json">{
-  &quot;sandbox&quot;: {
-    &quot;enabled&quot;: true,
-    &quot;filesystem&quot;: {
-      &quot;allowWrite&quot;: [&quot;~/.config/twg&quot;]
-    }
-  }
-}
-</code></pre>
-<h3 id="cursor">Cursor</h3>
-<p>Add or merge this in <code>~/.cursor/sandbox.json</code>:</p>
-<pre><code class="language-json">{
-  &quot;type&quot;: &quot;workspace_readwrite&quot;,
-  &quot;additionalReadwritePaths&quot;: [&quot;/Users/your-user/.config/twg&quot;]
-}
-</code></pre>
-<h3 id="gemini-cli-macos-and-linux">Gemini CLI (macOS and Linux)</h3>
-<p>For container sandboxing, add the config directory as a read-write mount:</p>
-<pre><code class="language-text">SANDBOX_MOUNTS=/Users/your-user/.config/twg:/Users/your-user/.config/twg:rw
-</code></pre>
-<p>For Windows, custom <code>TWG_CONFIG_DIR</code>, XDG, WSL, and other layouts, use the exact path printed by TWG CLI. Gemini CLI doesn't document a portable Windows <code>SANDBOX_MOUNTS</code> form for this path, so run <code>twg auth refresh</code> outside the agent unless you have explicitly configured an equivalent sandbox mount. For agents without a verified persistent directory rule, use the terminal fallback.</p>
-<aside class="dac-panel dac-panel-warning">
-<div class="dac-panel-label">Warning</div>
-<p>Granting write access to the TWG config directory allows the coding agent to modify your TWG credentials. Keep the permission limited to that directory.</p>
-</aside>
-<h2 id="scheduled-oauth-upkeep">Scheduled OAuth upkeep</h2>
-<p><code>twg setup</code> enables the per-user scheduler automatically to maintain OAuth outside coding-agent sandboxes. To repair or re-enable it manually:</p>
+<p>Coding agents often run commands in sandboxes that can't reliably update credentials outside the workspace. TWG CLI handles this by installing a small per-user upkeep helper during setup. The helper runs outside the agent sandbox, keeps OAuth credentials fresh, and sends update notifications when a new CLI version is available.</p>
+<p>Keep upkeep enabled so agents can continue using TWG CLI without spending a one-time refresh token from inside a sandbox.</p>
+<h2 id="oauth-upkeep-background-helper">OAuth upkeep background helper</h2>
+<p><code>twg setup</code> enables upkeep automatically. To repair or re-enable it manually:</p>
 <pre><code class="language-bash">twg upkeep enable
 </code></pre>
+<aside class="dac-panel dac-panel-note">
+<div class="dac-panel-label">Note</div>
+<p>On macOS, you may see a system notification that software from <strong>Atlassian Pty Ltd</strong> or <strong>twg</strong> can run in the background. This is expected after <code>twg setup</code> enables the upkeep helper.</p>
+<p>The helper keeps OAuth credentials fresh for coding agents and checks for CLI updates. It doesn't install updates automatically. You can manage it in <strong>System Settings &gt; General &gt; Login Items &amp; Extensions</strong>.</p>
+</aside>
 <p>The scheduler runs every 12 minutes. It refreshes OAuth only when the normal refresh threshold is within 15 minutes and checks for CLI updates at most daily with jitter. When an update is available, it sends an initial native notification, up to three daily reminders, then up to three weekly reminders until you update. Each notification tells you to run <code>twg update</code>; upkeep never downloads or installs updates automatically.</p>
 <p>Use these commands to inspect, run, or remove it:</p>
 <pre><code class="language-bash">twg upkeep status
@@ -183,6 +151,8 @@ twg upkeep disable
 <p>TWG CLI uses a macOS LaunchAgent, Linux systemd user timer, or Windows Scheduled Task. The schedule invokes the stable TWG launcher so normal updates can replace the runtime safely. OAuth refresh still uses the same persistence preflight, cross-process lock, and atomic credential save as foreground commands.</p>
 <p>On Linux, scheduling requires a systemd user instance and an active user D-Bus session. If setup can't install the schedule, it completes with repair guidance. Retrying <code>twg upkeep enable</code> reports the underlying <code>systemctl --user</code> error and leaves upkeep disabled.</p>
 <p>The scheduler stores only non-secret maintenance state in <code>upkeep.json</code> under the active TWG config directory. <code>twg logout</code> leaves the schedule enabled but silently skips auth work until OAuth is configured again. <code>twg uninstall</code> disables the schedule, revokes stored credentials, and removes the CLI and all local TWG configs.</p>
+<p>If you disable the background item, TWG CLI still works, but OAuth refresh and update notifications may not run in the background. Run <code>twg auth refresh</code> or <code>twg update</code> manually if needed.</p>
+<p>If a command says the TWG config directory isn't writable, run <code>twg auth refresh</code> or <code>twg login</code> in a normal terminal outside the coding agent.</p>
 <h2 id="bitbucket-authentication">Bitbucket authentication</h2>
 <p>Bitbucket is the only exception to OAuth support: Bitbucket commands aren't covered by OAuth yet and require a separate Bitbucket token. When you run <code>twg login</code>, you're prompted for your Bitbucket token. <code>twg login</code> preserves an existing Bitbucket token unless you run <code>twg login --force</code>.</p>
 <p>To set or refresh the Bitbucket token later without rerunning core authentication, run:</p>
@@ -196,7 +166,7 @@ twg upkeep disable
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli ecf8bc25ac67 (2026-06-25T06:01:21+00:00).
+        Generated from atlassian/twg-cli 85296fcd5e34 (2026-06-25T08:02:28+00:00).
       </footer>
     </main>
   </div>

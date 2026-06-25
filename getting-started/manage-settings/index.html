@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Manage TWG CLI settings for your organization | TWG CLI</title>
-  <meta name="description" content="Control how people in your organization use TWG CLI, set permission scopes, and review audit logs from Atlassian Administration.">
+  <meta name="description" content="Control the OAuth permissions Teamwork Graph CLI can request for your organization and review audit logs from Atlassian Administration.">
   <style>
     :root { color-scheme: light; --ink: #172b4d; --muted: #44546f; --line: #dcdfe4; --panel: #f7f8f9; --accent: #0c66e4; --warning: #fff7d6; --note: #e9f2ff; --tip: #dcfff1; }
     * { box-sizing: border-box; }
@@ -83,7 +83,7 @@
     </aside>
     <main>
       <h1 id="manage-twg-cli-settings-for-your-organization">Manage TWG CLI settings for your organization</h1>
-<p>You can control how people in your organization use the Teamwork Graph CLI (TWG CLI) to access Atlassian data, and define what the CLI is allowed to do. These settings don't install or remove <code>twg</code> on anyone's device — they only govern how CLI access is permitted and under what rules.</p>
+<p>You can control which OAuth permissions Teamwork Graph CLI (TWG CLI) can request for your organization. These settings don't install or remove <code>twg</code> on anyone's device - they only govern what TWG CLI can do when users authenticate with OAuth.</p>
 <p>To learn how authentication works, see <a href="/twg-cli/getting-started/how-authentication-works/">How authentication works</a>.</p>
 <h2 id="open-teamwork-graph-cli-settings">Open Teamwork Graph CLI settings</h2>
 <ol>
@@ -91,25 +91,28 @@
 <li>Select your organization if you have more than one.</li>
 <li>In the sidebar, select <strong>Rovo</strong>, then select <strong>Teamwork Graph CLI</strong>.</li>
 </ol>
-<p>The page displays the <strong>Enable Teamwork Graph CLI</strong> control and the <strong>Permissions</strong> section.</p>
-<h2 id="check-or-change-the-cli-toggle">Check or change the CLI toggle</h2>
-<p>Teamwork Graph CLI is enabled by default. If you need to turn it off — or confirm it's on — follow these steps:</p>
-<ol>
-<li>Open <strong>Teamwork Graph CLI</strong> settings.</li>
-<li>Find the <strong>Enable Teamwork Graph CLI</strong> card. The toggle is <strong>On</strong> by default.</li>
-<li>To disable CLI access for your organization, set the toggle to <strong>Off</strong>.</li>
-<li>Save your changes.</li>
-</ol>
-<p>When you disable Teamwork Graph CLI, new CLI activity is blocked immediately. TWG CLI invalidates existing sessions and tokens, and users must re-authenticate once you re-enable CLI access.</p>
-<h2 id="configure-permission-scopes">Configure permission scopes</h2>
+<p>The page displays the <strong>Permissions</strong> section for Teamwork Graph CLI.</p>
+<h2 id="choose-the-default-permission-mode">Choose the default permission mode</h2>
+<p>By default, <strong>Allow all permissions by default</strong> is on. In this mode, TWG CLI can request all current OAuth permissions in the settings page, and new TWG CLI permissions added later are allowed automatically.</p>
+<p>To review and manage permissions individually, turn <strong>Allow all permissions by default</strong> off. You can then configure permissions in the <strong>Read</strong>, <strong>Write and manage</strong>, and <strong>Delete</strong> categories.</p>
+<p>There isn't a separate organization-level enable or disable toggle in the current OAuth settings. To block TWG CLI OAuth access, turn off <strong>Allow all permissions by default</strong>, clear the permissions in each category, save your changes, and choose <strong>Save and revoke sessions</strong>.</p>
+<h2 id="configure-permissions">Configure permissions</h2>
 <aside class="dac-panel dac-panel-warning">
 <div class="dac-panel-label">Warning</div>
-<p><strong>Use write and delete access with caution.</strong> When write and delete access is enabled, users can create, edit, or delete objects in your Atlassian apps — such as Jira work items and Confluence pages — using the CLI. Only enable write and delete access for the toolsets your organization genuinely needs.</p>
+<p><strong>Use write and delete access with caution.</strong> When write and delete permissions are enabled, users can create, edit, manage, or delete objects in your connected apps - such as Jira work items and Confluence pages - using the CLI. Only enable the permissions your organization genuinely needs.</p>
 </aside>
-<p>Use permission scopes to control what the CLI can do across your connected apps and tools. These permissions apply to OAuth 2.1, which is the only authentication method TWG CLI supports. For each permission type — <strong>Read</strong>, <strong>Write</strong>, and <strong>Delete</strong> — you can set the scope to <strong>Allow all</strong>, <strong>Allow selected</strong>, or <strong>Allow none</strong>.</p>
+<p>Use permissions to control what TWG CLI can do across your connected apps and tools. These permissions apply to OAuth 2.1, which is the only authentication method TWG CLI supports, except for Bitbucket commands.</p>
 <p>For the full procedure and how enforcement works, see <a href="/twg-cli/getting-started/configure-permissions/">Configure TWG CLI permissions</a>.</p>
+<h2 id="revoke-active-sessions-after-changes">Revoke active sessions after changes</h2>
+<p>When you save permission changes, Atlassian Administration asks whether to revoke active TWG CLI sessions:</p>
+<ul>
+<li><strong>Save without revoking</strong> saves the new settings, but users may continue using existing sessions until they need to re-authenticate.</li>
+<li><strong>Save and revoke sessions</strong> saves the new settings and requires users to authenticate again before TWG CLI can use the updated permissions.</li>
+</ul>
+<p>Revoking sessions is the fastest way to make permission reductions take effect for active users.</p>
 <h2 id="authentication-posture">Authentication posture</h2>
-<p>Each user authenticates with OAuth 2.1 during setup. Authentication happens at the user level and isn't controlled by organization settings.</p>
+<p>Each user authenticates with OAuth 2.1 during setup. Authentication happens at the user level, while organization settings control the OAuth permissions TWG CLI is allowed to request.</p>
+<p>Bitbucket is the only exception to OAuth support. Bitbucket commands require a separate Bitbucket token and aren't controlled by these OAuth permission settings.</p>
 <h2 id="how-twg-cli-shows-up-in-audit-logs">How TWG CLI shows up in audit logs</h2>
 <p>TWG CLI actions are visible in Atlassian audit logs. Go to <strong>Atlassian Administration</strong>, then <strong>Insights</strong>, then <strong>Audit log</strong>. The captured event details include the following fields:</p>
 <ul>
@@ -118,7 +121,7 @@
 <li>Type of command (read, write, or delete)</li>
 <li>Status code of the command call</li>
 <li>Invocation source (user or agent)</li>
-<li>Scopes used to make the command call</li>
+<li>Permissions used to make the command call</li>
 <li>TWG CLI version used in the command call</li>
 <li>Trace ID for debugging</li>
 </ul>
@@ -134,11 +137,12 @@
 <h2 id="next-steps">Next steps</h2>
 <ul>
 <li><a href="/twg-cli/getting-started/configure-permissions/">Configure TWG CLI permissions</a></li>
+<li><a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a></li>
 <li><a href="/twg-cli/getting-started/troubleshooting/">Troubleshoot TWG CLI</a></li>
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli ecf8bc25ac67 (2026-06-25T06:01:21+00:00).
+        Generated from atlassian/twg-cli 85296fcd5e34 (2026-06-25T08:02:28+00:00).
       </footer>
     </main>
   </div>

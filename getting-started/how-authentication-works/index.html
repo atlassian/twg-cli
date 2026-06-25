@@ -89,7 +89,7 @@
 <p>When you run <code>twg login</code> in your terminal, TWG CLI opens a browser window where you sign in to Atlassian and grant access. Your credentials are then stored locally and refreshed automatically, so you don't need to sign in again for day-to-day use.</p>
 <p>To set up OAuth 2.1, see <a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a>.</p>
 <h3 id="admin-authentication">Admin authentication</h3>
-<p>Site admin and organization admin authentication works differently. It uses an <strong>Atlassian Admin API key</strong> scoped to your organization. This API key is stored in its own config file, so it never interacts with your personal <code>auth.conf</code>.</p>
+<p>Site admin and organization admin authentication works differently. It uses an <strong>Atlassian Admin API key</strong> limited to your organization. This API key is stored in its own config file, so it never interacts with your personal <code>auth.conf</code>.</p>
 <p>To authenticate as an admin, run:</p>
 <pre><code class="language-bash">twg admin auth login --email &lt;your-email&gt; --org &lt;your-org-id&gt;
 </code></pre>
@@ -102,13 +102,14 @@
 <h2 id="permissions-are-always-respected">Permissions are always respected</h2>
 <p>TWG CLI always acts within the bounds of your existing Atlassian permissions. It can only read or modify the data you already have access to — authentication doesn't grant any elevated access beyond what your account allows.</p>
 <h2 id="token-lifecycle">Token lifecycle</h2>
-<p>OAuth access tokens expire after one hour, but TWG CLI refreshes them silently in the background using a refresh token, so you typically won't notice. After 30 days of inactivity, the refresh token itself expires, and TWG CLI prompts you to sign in again.</p>
+<p>OAuth access tokens expire after their server-issued lifetime, but TWG CLI refreshes them using a refresh token, so you typically won't notice. TWG CLI schedules refresh before the access token expires and also installs a per-user upkeep helper during setup so coding agents don't need to rotate credentials from inside their sandboxes. After 30 days of inactivity, the refresh token itself expires, and TWG CLI prompts you to sign in again.</p>
 <p>You can re-authenticate at any time by running:</p>
 <pre><code class="language-bash">twg login --force
 </code></pre>
 <p>To revoke your OAuth token, run:</p>
 <pre><code class="language-bash">twg logout
 </code></pre>
+<p>Organization admins can also revoke active TWG CLI sessions after changing OAuth permission settings in Atlassian Administration. When that happens, users must authenticate again before TWG CLI can use the updated permissions.</p>
 <h2 id="next-steps">Next steps</h2>
 <ul>
 <li><a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a></li>
@@ -117,7 +118,7 @@
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli ecf8bc25ac67 (2026-06-25T06:01:21+00:00).
+        Generated from atlassian/twg-cli 85296fcd5e34 (2026-06-25T08:02:28+00:00).
       </footer>
     </main>
   </div>

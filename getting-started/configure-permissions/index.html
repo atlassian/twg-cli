@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Configure TWG CLI permissions | TWG CLI</title>
-  <meta name="description" content="Set read, write, and delete permission scopes for TWG CLI to control access across your connected tools.">
+  <meta name="description" content="Configure the OAuth permissions TWG CLI can request for your organization.">
   <style>
     :root { color-scheme: light; --ink: #172b4d; --muted: #44546f; --line: #dcdfe4; --panel: #f7f8f9; --accent: #0c66e4; --warning: #fff7d6; --note: #e9f2ff; --tip: #dcfff1; }
     * { box-sizing: border-box; }
@@ -83,47 +83,52 @@
     </aside>
     <main>
       <h1 id="configure-twg-cli-permissions">Configure TWG CLI permissions</h1>
-<p>Permission scopes control what the Teamwork Graph CLI (TWG CLI) can do across your connected tools — essentially what it can read, write, and delete. Configuring permissions correctly lets you give teams the access they need for automation and integrations while protecting sensitive data in your organization.</p>
+<p>Permissions control what the Teamwork Graph CLI (TWG CLI) can do across your connected tools - essentially what it can read, write, manage, and delete. Configuring permissions correctly lets you give teams the access they need while protecting sensitive data in your organization.</p>
 <p>For an overview of all CLI settings, see <a href="/twg-cli/getting-started/manage-settings/">Manage TWG CLI settings for your organization</a>.</p>
-<h2 id="permission-types-and-default-state">Permission types and default state</h2>
-<p>TWG CLI uses three permission types. You can configure each one independently across your connected toolsets:</p>
+<h2 id="permission-categories-and-default-state">Permission categories and default state</h2>
+<p>TWG CLI groups OAuth permissions into three categories:</p>
 <ul>
 <li><strong>Read</strong></li>
-<li><strong>Write</strong></li>
+<li><strong>Write and manage</strong></li>
 <li><strong>Delete</strong></li>
 </ul>
-<p>Permission scopes apply to OAuth 2.1, which is the only authentication method TWG CLI supports.</p>
+<p>By default, <strong>Allow all permissions by default</strong> is on. In this mode, TWG CLI can request all current OAuth permissions shown in Atlassian Administration, and new TWG CLI permissions added later are allowed automatically.</p>
+<p>To manage permissions individually, turn <strong>Allow all permissions by default</strong> off. Each category then opens a side panel where you can select all permissions in that category, clear all permissions, or choose individual permissions.</p>
+<p>Permissions apply to OAuth 2.1, which is the only authentication method TWG CLI supports, except for Bitbucket commands.</p>
 <aside class="dac-panel dac-panel-warning">
 <div class="dac-panel-label">Warning</div>
-<p><strong>Use write and delete access with caution.</strong> When write and delete access is enabled, users can create, edit, or delete objects in your Atlassian apps — such as Jira work items and Confluence pages — using the CLI. Only enable write and delete access for the toolsets your organization genuinely needs.</p>
+<p><strong>Use write and delete access with caution.</strong> When write and delete permissions are enabled, users can create, edit, manage, or delete objects in your connected apps - such as Jira work items and Confluence pages - using the CLI. Only enable the permissions your organization genuinely needs.</p>
 </aside>
-<h2 id="change-permission-scopes">Change permission scopes</h2>
-<p>For each permission type, you can set the scope to:</p>
-<ul>
-<li><strong>Allow all</strong> — The CLI can use this permission with all current and future toolsets.</li>
-<li><strong>Allow selected</strong> — The CLI can use this permission only with the toolsets you choose.</li>
-<li><strong>Allow none</strong> — The CLI is blocked from using this permission with any toolset.</li>
-</ul>
-<p>To change permission scopes:</p>
+<h2 id="change-permissions">Change permissions</h2>
+<p>To change permissions:</p>
 <ol>
 <li>Go to <a href="https://admin.atlassian.com/">Atlassian Administration</a>. Select your organization if you have more than one.</li>
 <li>In the sidebar, select <strong>Rovo</strong>, then select <strong>Teamwork Graph CLI</strong>.</li>
-<li>Under <strong>Permissions</strong>, find the permission type you want to configure.</li>
-<li>In the <strong>Scope</strong> column, select <strong>Allow all</strong>, <strong>Allow selected</strong>, or <strong>Allow none</strong>.</li>
-<li>If you selected <strong>Allow selected</strong>, choose the individual toolsets to allow.</li>
-<li>Repeat for any other permission types.</li>
+<li>In <strong>Permissions</strong>, turn off <strong>Allow all permissions by default</strong> if you want to customize permissions.</li>
+<li>Select a permission category: <strong>Read</strong>, <strong>Write and manage</strong>, or <strong>Delete</strong>.</li>
+<li>In the side panel, use <strong>Select all</strong> or the individual permission toggles to choose which OAuth permissions TWG CLI can request.</li>
 <li>Select <strong>Save</strong>.</li>
+<li>Choose whether to <strong>Save without revoking</strong> or <strong>Save and revoke sessions</strong>.</li>
+<li>Repeat for any other permission categories.</li>
 </ol>
-<p>After you save a scope change, new and existing CLI sessions immediately follow the updated permissions. Commands that no longer match an allowed scope are blocked.</p>
+<p>To block TWG CLI OAuth access for your organization, turn off <strong>Allow all permissions by default</strong>, clear the permissions in each category, save your changes, and choose <strong>Save and revoke sessions</strong>.</p>
+<h2 id="revoke-active-sessions">Revoke active sessions</h2>
+<p>When you save permission changes, Atlassian Administration asks whether to revoke active TWG CLI sessions.</p>
+<ul>
+<li><strong>Save without revoking</strong> saves the new settings, but users may continue using existing sessions until they need to re-authenticate.</li>
+<li><strong>Save and revoke sessions</strong> saves the new settings and requires users to authenticate again before TWG CLI can use the updated permissions.</li>
+</ul>
+<p>Revoking sessions is recommended when you remove permissions or clear a permission category.</p>
 <h2 id="server-side-enforcement">Server-side enforcement</h2>
-<p>Permission scopes are enforced server-side by Atlassian. This means they can't be bypassed by modifying the CLI binary or local config. When a command is sent, Atlassian checks the permission scopes configured for your organization before returning any data or performing any action. If the scope doesn't allow the request, the command is rejected.</p>
+<p>Permissions are enforced server-side by Atlassian. This means they can't be bypassed by modifying the CLI binary or local config. When a command is sent, Atlassian checks the permissions configured for your organization before returning any data or performing any action. If TWG CLI isn't allowed to request the required permission, the command is rejected.</p>
 <h2 id="ip-and-location-allowlists">IP and location allowlists</h2>
-<p>IP and location allowlists configured in your Atlassian organization also apply to CLI requests. If a request originates from a blocked IP address, it's rejected regardless of the user's permission scopes.</p>
+<p>IP and location allowlists configured in your Atlassian organization also apply to CLI requests. If a request originates from a blocked IP address, it's rejected regardless of the user's permissions.</p>
 <h2 id="diagnose-a-blocked-command">Diagnose a blocked command</h2>
 <p>A blocked command appears as restricted, and you'll need to re-authenticate. If a command is unexpectedly blocked, check that:</p>
 <ul>
-<li>The permission type the command needs (read, write, or delete) is allowed for the relevant toolset.</li>
+<li>The OAuth permission the command needs is allowed in the relevant permission category.</li>
 <li>The request isn't originating from an IP address outside your organization's allowlist.</li>
+<li>The user has re-authenticated after recent permission changes or session revocation.</li>
 </ul>
 <h2 id="next-steps">Next steps</h2>
 <ul>
@@ -132,7 +137,7 @@
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli ecf8bc25ac67 (2026-06-25T06:01:21+00:00).
+        Generated from atlassian/twg-cli 85296fcd5e34 (2026-06-25T08:02:28+00:00).
       </footer>
     </main>
   </div>

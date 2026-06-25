@@ -111,6 +111,7 @@ bash twg-install.sh
 <p>The installer completes setup and runs <code>twg doctor</code> automatically. To repair setup later:</p>
 <pre><code class="language-bash">twg setup
 </code></pre>
+<p>On macOS, setup may enable a background helper and show a system notification for <strong>Atlassian Pty Ltd</strong> or <strong>twg</strong>. This is expected; see <a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a> for details.</p>
 <p>To install a specific version:</p>
 <pre><code class="language-bash">bash twg-install.sh --version 0.9.1
 </code></pre>
@@ -120,6 +121,7 @@ bash twg-install.sh
 <div class="dac-panel-label">Note</div>
 <p><strong>Windows:</strong> SmartScreen may warn about the installer — choose <strong>More info → Run anyway</strong>. Pre-release builds may not yet use a production code signature; that is expected until generally available signed binaries ship.</p>
 </aside>
+<p>Use Windows PowerShell or Command Prompt for Windows installation. Don't run the Windows installer from Git Bash, MINGW, WSL, or another bash-like shell.</p>
 <h5 id="install-powershell">Install — PowerShell</h5>
 <pre><code class="language-powershell">curl.exe -fsSL https://teamwork-graph.atlassian.com/cli/install.ps1 -o twg-install.ps1
 powershell -ExecutionPolicy Bypass -File .\twg-install.ps1
@@ -136,9 +138,13 @@ powershell -ExecutionPolicy Bypass -File twg-install.ps1
 <p>During setup, the installer:</p>
 <ul>
 <li>Opens your browser to sign in with OAuth. In the browser, select the site you want to authorize (auto-selected if you have access to only one), review the requested permissions, and select <strong>Accept</strong>.</li>
-<li>Offers the optional Bitbucket token step, which is required only for Bitbucket-specific commands.</li>
+<li>Offers the optional Bitbucket token step. You can skip this unless you plan to use Bitbucket-specific commands.</li>
 </ul>
-<p>Credentials are saved to <code>~/.config/twg/auth.conf</code> and reused across sessions. For re-authentication and the Bitbucket token, see <a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a>.</p>
+<p>Credentials are saved in the TWG config directory and reused across sessions. For re-authentication and the Bitbucket token, see <a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a>.</p>
+<p>After installation, open a new PowerShell or Command Prompt window and run:</p>
+<pre><code class="language-powershell">twg doctor
+</code></pre>
+<p>If Windows doesn't recognize <code>twg</code>, close and reopen the terminal so PATH changes are loaded, then try again.</p>
 <h2 id="2-agent-installation-mode">2. Agent installation mode</h2>
 <p>Use this mode when you want an AI coding agent to install TWG CLI, authenticate, and set up agent skills for you.</p>
 <p>Copy the following prompt and paste it into your agent:</p>
@@ -159,6 +165,11 @@ powershell -ExecutionPolicy Bypass -File twg-install.ps1
 <li><em>&quot;Show the current sprint for my team&quot;</em></li>
 </ul>
 <p>See <a href="/twg-cli/agents/examples/">Agent examples</a> for more prompts to try.</p>
+<p>To discover command syntax directly in the terminal, run:</p>
+<pre><code class="language-bash">twg --help
+twg confluence --help
+twg jira --help
+</code></pre>
 <h2 id="update">Update</h2>
 <p>Run the built-in updater:</p>
 <pre><code class="language-bash">twg update
@@ -189,18 +200,17 @@ powershell -ExecutionPolicy Bypass -File twg-install.ps1
 </code></pre>
 <p>The command opens a prefilled public form in interactive terminals. In agent, structured-output, or non-interactive runs, it prints the form URL instead. Your configured TWG account email is prefilled when available. Review the details, provide an email if needed, complete reCAPTCHA, and submit the form. TWG authentication is not required.</p>
 <p>You can also open the <a href="https://customerfeedback.atlassian.net/servicedesk/customer/portal/4922/create/5988">TWG CLI feedback form</a> directly.</p>
-<h2 id="admin-opt-out">Admin opt-out</h2>
-<p>Organization admins can request to opt their organization out of Teamwork Graph CLI access. Submit a request using the <a href="https://ecosystem.atlassian.net/servicedesk/customer/portal/3664/create/19138">TWG CLI admin opt-out form</a>. The team will process your request within 24 hours.</p>
 <h2 id="next-steps">Next steps</h2>
 <ul>
 <li><a href="/twg-cli/getting-started/how-authentication-works/">How authentication works</a></li>
 <li><a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a></li>
+<li><a href="/twg-cli/getting-started/manage-settings/">Manage TWG CLI settings</a></li>
 <li><a href="/twg-cli/agents/skills/">Agent skills</a></li>
 <li><a href="/twg-cli/agents/examples/">Agent examples</a></li>
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli ecf8bc25ac67 (2026-06-25T06:01:21+00:00).
+        Generated from atlassian/twg-cli 85296fcd5e34 (2026-06-25T08:02:28+00:00).
       </footer>
     </main>
   </div>
