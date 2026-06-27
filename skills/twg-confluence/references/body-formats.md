@@ -9,13 +9,23 @@ Use only formats advertised by the exact command and content type.
 ## HTML
 
 HTML is the preferred lossless editing format for existing page-like content.
-Use real structural tags such as `<p>`, `<h2>`, `<ul>`, `<code>`, and links.
+Use real structural tags such as `<p>`, `<h2>`, `<ul>`, `<code>`, and links. For the full compact schema, run `twg confluence content body-formats html`.
 
 For mentions, resolve the person and use a real Atlassian account ID:
 
 ```html
 <span data-type="mention" data-user-id="AAID">@Display Name</span>
 ```
+
+For arbitrary macros, use extension HTML — never storage XML like `<ac:structured-macro>`. Native Confluence macros use `data-extension-type="com.atlassian.confluence.macro.core"`; third-party/app macros use the same pattern with the exact type/key/params captured from an existing page. Omit `macroId`; Confluence generates it.
+
+```html
+<div data-type="extension" data-extension-key="toc" data-extension-type="com.atlassian.confluence.macro.core" data-parameters='{"macroParams":{"maxLevel":{"value":"3"}},"macroMetadata":{"schemaVersion":{"value":"1"},"title":"Table of Contents"}}'></div>
+```
+
+Use `bodied-extension` for body macros (`excerpt`, `details`) and `inline-extension` inside `<p>` for inline macros (`anchor`, `pagetree`). Popular native `macroParams`: `toc` `{minLevel,maxLevel}`, `children` `{all,depth}`, `include` `{"":"Page title"}`, `excerpt` `{name}`, `details` `{label}`, `detailssummary` `{cql,headings}`, `contentbylabel` `{cql,max}`, `attachments` `{patterns,labels}`, `jira` `{jqlQuery,showSummary}`, `viewpdf` `{name}`.
+
+Do not invent opaque IDs for media, sync blocks, mentions, or embedded resources. Copy `data-id`, `data-collection`, `data-media-id`, `data-media-collection`, `data-resource-id`, and `data-local-id` only from existing content or tool output; omit `data-local-id` on new nodes.
 
 ## Markdown
 
