@@ -121,8 +121,11 @@
 <li>Type of command (read, write, or delete)</li>
 <li>Status code of the command call</li>
 <li>Invocation source (user or agent)</li>
+<li>Agent runtime when the command was run by a coding agent (for example, <code>rovodev</code> or <code>claude-code</code>)</li>
 <li>Permissions used to make the command call</li>
 <li>TWG CLI version used in the command call</li>
+<li>Command duration in milliseconds</li>
+<li>Whether the command was manually interrupted (for example, with Ctrl-C)</li>
 <li>Trace ID for debugging</li>
 </ul>
 <p>Any command run by a user who's logged in sends an event to the audit log. Audit logs are organized in Atlassian Administration by the user's org ID. You can filter logs by:</p>
@@ -142,7 +145,7 @@
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 51297c6fdf4a (2026-06-30T13:18:38+00:00).
+        Generated from atlassian/twg-cli 09ed21844282 (2026-06-30T13:55:25+00:00).
       </footer>
     </main>
   </div>
