@@ -9,10 +9,8 @@ description: >
 # twg
 
 First TWG routing step: use typed commands for stable keys, URLs, ARIs, and
-familiar families. When grammar or output is uncertain, inspect
-`twg help <terms>` or `twg help describe <path>` first. Do not reread installed
-skill markdown for discovery. For specialized guidance, run
-`twg help discover-skills "<intent>"` once and follow its load instructions.
+familiar families. If unsure, inspect `twg help <terms>` or
+`twg help describe <path>` first.
 
 ## Overview
 
@@ -41,9 +39,8 @@ twg <command>
 Agent hosts may set `TWG_AGENT_DEFAULTS=1`. Do not add per-command environment
 prefixes unless requested; runtimes may authorize `twg ...` differently.
 
-For large outputs, inspect `output_files.compact` first when present, then read
-or filter `output_files.stdout` only when the compact view lacks evidence. See
-`references/OUTPUT.md`.
+For large outputs, inspect `output_files.compact` first; read full stdout only
+when compact output lacks evidence. See `references/OUTPUT.md`.
 
 ## Bounded Evidence Loop
 
@@ -69,43 +66,38 @@ For synthesized answers:
 - For fuzzy Trello board/card discovery, use
   `twg trello search "<query>" --limit 20`; it is backed by Rovo Search and
   does not support workspace/location scoping.
-- For Rovo connector searches, use `twg rovo list-apps -o json`
-  (`list-connectors` is an alias) to discover site-visible `--app` filters and
-  readiness. Built-in app filters such as Trello do not need connector
-  authentication. Explicit `twg rovo search ... --app <connector>` searches
-  preflight connector authentication and fail when blocked; follow the returned
+- For Rovo connector searches, use `twg rovo list-apps -o json` to discover
+  site-visible `--app` filters and readiness. Explicit
+  `twg rovo search ... --app <connector>` preflights auth; follow the returned
   action or run `twg rovo auth <app>`, then retry.
 - Keep document relationship history and fuzzy discovery separate:
-  - Use `twg docs query --since <duration> [--account-id <id>] [--first <n>]`
-    to list documents related to a user through authored, updated, owned,
-    viewed, or other Teamwork Graph activity relationships. It does not search
-    document titles or content.
-  - Use `twg docs search "<topic>" [--limit <n>]` for fuzzy Rovo search across
-    Confluence and ready third-party document connectors. Document result types
-    are fixed automatically; `--limit` is global across ready sources and
-    defaults to 20. Unavailable optional connectors do not block ready sources.
-  - Never pass topic text to `docs query`; route that intent to `docs search`.
+  - `twg docs query --since <duration>` lists documents related to a user; it
+    does not search titles or content.
+  - `twg docs search "<topic>" [--limit <n>]` does fuzzy Rovo search across
+    Confluence and ready document connectors.
+  - Never pass topic text to `docs query`; use `docs search`.
 - Keep user activity and fuzzy work discovery separate:
   - `twg work query` defaults to seven days of authored work, full-window counts,
     and five summary items per section. `--counts-only` omits items.
   - Other activity is opt-in through `--activity` / `--include-viewed`.
   - `twg work search "<topic>"` is tenant-wide work-artifact discovery. It
     excludes documents; use `docs search` for those.
-- Use `twg help <terms>` before guessing unfamiliar grammar and
-  `twg help describe <path>` for exact contracts. Load skills/references through
-  `twg help describe "skill:<name>[/references/<file>.md]"`.
+- Use `twg help <terms>` before guessing grammar and
+  `twg help describe <path>` for exact contracts.
 - Namespace help is not an executable contract. Follow advertised child commands
   before adding flags.
-- Resolve URLs, keys, ARIs, names, and people first. Treat search results as
-  candidates; hydrate stable IDs with product-native commands.
+- Resolve URLs, keys, ARIs, names, and people first; hydrate stable IDs with
+  product-native commands.
 - For Jira discovery, keep the three search modes distinct: use
   `jira workitem search <text...>` for Jira-only fuzzy text backed by JQL,
   `jira workitem query --jql <jql>` for explicit structured filters, and
   `search <text...> --app jira` for semantic Rovo discovery.
 - Keep projection commands and product-native commands separate. Do not borrow
   flags across surfaces unless live help advertises them.
-- Use `search-code` for indexed GitHub/Bitbucket code discovery; it needs a
-  Bitbucket token plus `--workspace`/`--repo`.
+- Use `search-code` for indexed code across Bitbucket Cloud, GitHub, and
+  GitLab. `--app` selects Code Search apps (`bbc`, `github`, `gitlab`);
+  `--workspace` means Bitbucket workspace, GitHub org, or GitLab group. Code
+  Search still needs the BBC-scoped token as transport auth today.
 
 ## Load The Narrowest Companion
 
@@ -146,9 +138,8 @@ Load companion skills for detailed semantics:
 
 - `references/HELP.md` - help discovery and exact-command schemas
 - `references/OUTPUT.md` - output envelopes and large payload handling
-- `../twg-status-rollups/SKILL.md` - status, leadership, project/goal, appraisal, and personal summary readouts
-- `../twg-status-rollups/references/personal-work-summary.md` - bounded personal work summaries for any person
-- `../twg-context-discovery/SKILL.md` - deep context, dependency maps, and graph visualization
-- `../twg-engineering-work/SKILL.md` - PR, review, repo, and engineering work recipes
-- `../twg-operational-health/SKILL.md` - handoff, reliability, assets, staffing, and operational health recipes
+- `../twg-status-rollups/SKILL.md` - status and rollup recipes
+- `../twg-context-discovery/SKILL.md` - context and dependency recipes
+- `../twg-engineering-work/SKILL.md` - PR and engineering recipes
+- `../twg-operational-health/SKILL.md` - operational health recipes
 
