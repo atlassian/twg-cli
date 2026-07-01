@@ -94,13 +94,13 @@
 <li><strong>Multi-provider code search:</strong> <code>twg search-code</code> can filter readiness and results across Bitbucket Cloud, GitHub, and GitLab with repeatable <code>--app</code>, includes authentication URLs in text and JSON output, and adds <code>twg cache clear --code-search-auth-status</code>.</li>
 <li><strong>Richer Atlas and access data:</strong> Atlas goals now read and write descriptions, Atlas projects can include their &quot;about&quot; details with <code>--include-description</code>, and <code>twg access --bitbucket</code> discovers workspaces through the supported Bitbucket workspace endpoint.</li>
 <li><strong>Better automation and setup UX:</strong> JSON and agent-mode failures no longer emit duplicate error objects, <code>twg logout</code> returns a structured result in JSON/agent mode, Windows success-path progress is no longer rendered as PowerShell errors, and the Codex and Claude Code plugin bundles now reuse the public TWG installer.</li>
-<li><strong>SDK and agent tooling:</strong> Add the runtime-first <code>@atlassian/twg-tools</code> and <code>@atlassian/twg-tools-def</code> packages, add shorter <code>@atlassian/twg-just-bash</code> browser export names, and bundle the <code>twg benchmark lite</code> single-prompt comparison workflow.</li>
+<li><strong>SDK and agent tooling:</strong> Add the runtime-first <code>@atlassian/twg-tools</code> package with command definitions exposed from <code>@atlassian/twg-tools/defs</code>, add shorter <code>@atlassian/twg-just-bash</code> browser export names, and bundle the <code>twg benchmark lite</code> single-prompt comparison workflow.</li>
 </ul>
 <h3 id="compatibility-notes">Compatibility notes</h3>
 <ul>
 <li><code>twg confluence space instructions get|set</code> replaces the visible <code>agents-context</code> wording. The old surface remains as a hidden deprecated alias.</li>
 <li><code>twg loom settings get</code> is hidden from external builds because the backing Loom settings field is internal-only.</li>
-<li><code>@atlassian/twg-just-bash</code> is independently versioned and moves to <code>1.1.0</code>; <code>@atlassian/twg-tools</code> and <code>@atlassian/twg-tools-def</code> move to <code>0.2.0</code>.</li>
+<li><code>@atlassian/twg-just-bash</code> is independently versioned and moves to <code>1.1.0</code>; <code>@atlassian/twg-tools</code> moves to <code>0.2.0</code>.</li>
 </ul>
 <h2 id="1-0-18">1.0.18</h2>
 <h3 id="highlights-2">Highlights</h3>
@@ -576,7 +576,7 @@ behavior.</p>
 <p>Please use the latest stable installer for supported setup and update flows.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli e03301f07131 (2026-07-01T14:22:33+00:00).
+        Generated from atlassian/twg-cli 2fde12341985 (2026-07-01T15:11:49+00:00).
       </footer>
     </main>
   </div>
