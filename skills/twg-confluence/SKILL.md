@@ -62,7 +62,8 @@ mutation.
   file, then update with the snapshot token.
 - Use the lossless HTML round trip when macros or exact storage representation
   matter.
-- Use `--dry-run` when advertised for risky edits.
+- Use `--dry-run` only for explicit preview or validation requests, or for
+  unusually risky edits where direct execution was not requested.
 - Read back the content or space after mutation and report its URL.
 
 ## Handoffs

@@ -1,5 +1,5 @@
 ---
-description: Safely edit Confluence content with body files, snapshot tokens, dry runs, lossless HTML, and read-back verification.
+description: Safely edit Confluence content with body files, snapshot tokens, lossless HTML, and read-back verification.
 ---
 
 # Confluence Editing
@@ -16,9 +16,10 @@ read -> save to file -> edit locally -> update from file -> verify
 2. Save `data.body.value` to a local file.
 3. Capture the response's snapshot token.
 4. Modify the file without reconstructing unrelated content.
-5. Run a dry run when supported and risk warrants it.
-6. Update with the body file, matching format, and snapshot token.
-7. Read back the result.
+5. Update with the body file, matching format, and snapshot token; use
+   `--dry-run` first only for explicit preview or validation requests, or for
+   unusually risky edits where direct execution was not requested.
+6. Read back the result.
 
 HTML is the safest round-trip format for macros and exact storage content.
 Markdown is easier for prose but may not preserve every Confluence construct.
