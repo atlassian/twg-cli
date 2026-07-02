@@ -97,8 +97,7 @@
 <h2 id="update-twg-cli">Update TWG CLI</h2>
 <p>If you're on version 0.9.6 or earlier, <code>twg update</code> may not work correctly. Use the manual update steps below instead.</p>
 <h3 id="macos-and-linux-curl-installer-recommended-for-older-versions">macOS and Linux (curl installer, recommended for older versions)</h3>
-<pre><code class="language-bash">curl -fsSL https://teamwork-graph.atlassian.com/cli/install -o twg-install.sh
-bash twg-install.sh
+<pre><code class="language-bash">curl -fsSL --retry 2 https://teamwork-graph.atlassian.com/cli/install | bash
 </code></pre>
 <h3 id="windows-powershell">Windows (PowerShell)</h3>
 <pre><code class="language-powershell">curl.exe -fsSL https://teamwork-graph.atlassian.com/cli/install.ps1 -o twg-install.ps1
@@ -118,7 +117,7 @@ powershell -ExecutionPolicy Bypass -File twg-install.ps1
 <p>Review the details, provide an email if needed, complete reCAPTCHA, and submit the form.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 011b169d8031 (2026-07-02T15:30:41+00:00).
+        Generated from atlassian/twg-cli 600b6d76ec90 (2026-07-02T21:13:50+00:00).
       </footer>
     </main>
   </div>

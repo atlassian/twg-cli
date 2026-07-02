@@ -95,11 +95,7 @@
 <h3 id="step-1-install-twg-cli">Step 1: Install TWG CLI</h3>
 <h4 id="macos-and-linux">macOS and Linux</h4>
 <p>Recommended:</p>
-<pre><code class="language-bash">curl -fsSL https://teamwork-graph.atlassian.com/cli/install -o twg-install.sh
-bash twg-install.sh
-</code></pre>
-<p>If you use Bash or zsh and want a compact shortcut, you can also run:</p>
-<pre><code class="language-bash">bash &lt;(curl -fsSL https://teamwork-graph.atlassian.com/cli/install)
+<pre><code class="language-bash">curl -fsSL --retry 2 https://teamwork-graph.atlassian.com/cli/install | bash
 </code></pre>
 <p>During setup:</p>
 <ul>
@@ -113,7 +109,7 @@ bash twg-install.sh
 </code></pre>
 <p>On macOS, setup may enable a background helper and show a system notification for <strong>Atlassian Pty Ltd</strong> or <strong>twg</strong>. This is expected; see <a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a> for details.</p>
 <p>To install a specific version:</p>
-<pre><code class="language-bash">bash twg-install.sh --version 0.9.1
+<pre><code class="language-bash">curl -fsSL --retry 2 https://teamwork-graph.atlassian.com/cli/install | bash -s -- --version 0.9.1
 </code></pre>
 <p>If <code>~/.local/bin</code> is not in your <code>PATH</code>, the installer prints the exact line to add to your shell profile.</p>
 <h4 id="windows">Windows</h4>
@@ -210,7 +206,7 @@ twg jira --help
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 011b169d8031 (2026-07-02T15:30:41+00:00).
+        Generated from atlassian/twg-cli 600b6d76ec90 (2026-07-02T21:13:50+00:00).
       </footer>
     </main>
   </div>
