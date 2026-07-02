@@ -88,10 +88,10 @@
 <p>The TWG installer installs skills automatically. It always writes the canonical skill bundle to <code>~/.agents/skills</code>, which is used by Codex, Cursor, Gemini CLI, GitHub Copilot, Rovo Dev, and other agents that support the universal <code>.agents/skills</code> layout.</p>
 <p>If it detects an agent that needs its own skill directory, it also copies the bundle there. For example, Claude Code receives a copy under <code>~/.claude/skills</code> when Claude Code is already installed.</p>
 <p>To repair or refresh skills manually, run:</p>
-<pre><code class="language-bash">twg skills install --global
+<pre><code class="language-bash">twg skills install
 </code></pre>
 <p>Manual installs can also target a specific additional agent:</p>
-<pre><code class="language-bash">twg skills install --global --agent claude
+<pre><code class="language-bash">twg skills install --agent claude
 </code></pre>
 <h2 id="claude">Claude</h2>
 <p><strong>Claude Code</strong> stores skills in <code>.claude/skills/</code>. If Claude Code is detected during TWG install, the TWG skill is placed there automatically. After that, open Claude Code in your project and start asking:</p>
@@ -178,7 +178,7 @@ needed.</p>
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 600b6d76ec90 (2026-07-02T21:13:50+00:00).
+        Generated from atlassian/twg-cli ea2475252361 (2026-07-02T22:00:26+00:00).
       </footer>
     </main>
   </div>
