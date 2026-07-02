@@ -44,6 +44,11 @@ mutation.
 - Use the unified content surface for pages, blog posts, live docs,
   whiteboards, databases, folders, comments, versions, history, permissions,
   tasks, labels, and attachments when advertised.
+- For Confluence Share dialog access changes, treat General access as
+  `restriction-state` and Specific access rows as direct `permissions`:
+  `Open / Can edit` -> `OPEN`, `Open / Can view` -> `EDIT_RESTRICTED`,
+  `Restricted` -> `VIEW_RESTRICTED`; Specific `Can edit` -> `update`, and
+  Specific `Can view` -> `read`.
 - Use `confluence space` for spaces and `confluence tree` for hierarchy.
 - A stable URL may resolve directly, but exact help remains authoritative about
   accepted ID, URL, site, and content-type forms.

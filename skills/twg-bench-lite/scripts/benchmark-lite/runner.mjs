@@ -971,9 +971,11 @@ function summarizeProcessFailure(error, stderr, stdout) {
   return detail.length > 700 ? `${detail.slice(0, 697)}...` : detail;
 }
 
-function runCodexDoctor(timeoutMs = 20_000) {
+function runCodexDoctor(timeoutMs = 120_000) {
   return new Promise((resolvePromise, reject) => {
-    const child = spawn(codexExecutable(), ["doctor", "--summary", "--ascii"], {
+    const executable = codexExecutable();
+    const command = `${executable} doctor --summary --ascii`;
+    const child = spawn(executable, ["doctor", "--summary", "--ascii"], {
       env: { ...process.env, NO_COLOR: "1" },
       stdio: ["ignore", "pipe", "pipe"],
     });
@@ -998,7 +1000,7 @@ function runCodexDoctor(timeoutMs = 20_000) {
       reject(
         error?.code === "ENOENT"
           ? new Error(
-              "Codex runtime is not ready: the `codex` executable was not found. Install Codex or expose it on PATH before running benchmark-lite.",
+              `Codex runtime is not ready: the Codex executable was not found at ${executable}. Install Codex or expose it on PATH before running benchmark-lite.`,
             )
           : error,
       );
@@ -1008,7 +1010,7 @@ function runCodexDoctor(timeoutMs = 20_000) {
       if (timedOut) {
         reject(
           new Error(
-            "Codex runtime is not ready: `codex doctor --summary --ascii` timed out after 20 seconds. Run it directly and fix the reported config, auth, or network issue before running benchmark-lite.",
+            `Codex found at ${executable}, but runtime check timed out after ${Math.round(timeoutMs / 1000)} seconds while running \`${command}\`. Run \`time codex doctor --summary --ascii\` to inspect local runtime latency before running benchmark-lite.`,
           ),
         );
         return;
@@ -1020,7 +1022,7 @@ function runCodexDoctor(timeoutMs = 20_000) {
               undefined,
               stderr,
               stdout,
-            )}${signal ? ` (${signal})` : ""}. Run \`codex doctor --summary --ascii\` and fix the reported config, auth, or network issue before running benchmark-lite.`,
+            )}${signal ? ` (${signal})` : ""}. Command: \`${command}\`. Run \`time codex doctor --summary --ascii\` and fix the reported config, auth, or network issue before running benchmark-lite.`,
           ),
         );
         return;
