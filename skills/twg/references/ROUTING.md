@@ -22,6 +22,9 @@ syntax comes from live `twg help`.
   days of authored work with full-window counts and bounded summary items.
 - `work search` provides fuzzy tenant-wide discovery of work artifacts via Rovo;
   documents remain on `docs search`.
+- Exact Jira and Atlas keys should go to the product-native get command first:
+  `jira workitem get <key>`, `goals get <key>`, or `projects get <key>`.
+  Query surfaces are for discovery, filtering, or compatibility shortcuts.
 
 Use search results as candidates, not final facts. Hydrate the few selected
 anchors with native reads or typed context.

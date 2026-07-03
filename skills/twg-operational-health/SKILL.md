@@ -1,135 +1,122 @@
 ---
 name: twg-operational-health
 description: >
-  Use with the root `twg` skill for on-call handoffs, reliability reviews,
-  incident and post-incident analysis, Assets and asset refresh,
-  capacity/staffing views, meeting summaries, and operational risk readouts.
+  Use with the root `twg` skill for on-call handoffs, incident response and
+  investigation, post-incident reviews, reliability reviews, Assets refresh,
+  capacity views, meeting summaries, and operational risk readouts.
 ---
 
 # twg-operational-health
 
-Use together with the root `twg` skill. Exact command grammar must come from
-live `twg help`, `twg help <terms>`, or `twg help describe <path>`.
+Use together with the root `twg` skill. Exact command grammar comes from live
+`twg help` or `twg help describe <path>`.
 
 ## Use When
 
 - "I'm taking over on-call"
-- "Reliability, incident, or post-incident review readout"
-- "Asset refresh candidates"
-- "Windows or device assets for testing"
+- "Reliability, incident, SEV, or post-incident review readout"
+- "Investigate an active incident and find mitigation"
+- "Analyze root cause or draft postmortem/PIR learning/action items"
+- "Asset refresh or Windows/device asset candidates"
 - "Team capacity or staffing candidates"
 - "Meeting recordings weekly summary"
 - "Open risks, blockers, overloaded people, operational health"
 
 ## First Move
 
-Resolve the operational scope and time window:
-
-- Service, component, team, customer, project, person, org, or asset domain.
-- Canonical anchors such as service/component records, incident or
-  post-incident records, runbooks, projects/goals, meeting recordings, or Assets
-  object types.
-- Current owner, escalation path, status, recency, and known follow-up work.
-
-Do not start with a broad cross-product inventory. Find the operational anchor
-first, then join only surfaces that answer the question.
-
-## Route Selection
-
-- On-call handoff: incidents, post-incident records, recent Jira follow-up,
-  runbooks/docs, linked projects, owners, and escalation paths.
-- Reliability review: incident and post-incident records, linked follow-up,
-  service or component context, owners, comments, and current status.
-- Assets/asset refresh: build the contributor list from work evidence first,
-  then inspect Assets schema/type metadata before AQL.
-- Capacity/staffing: combine related recent work, ownership, review influence,
-  docs, project/goal involvement, assigned open work, review queue, blockers,
-  and current risks.
-- Meeting summaries: query recordings for the requested people/time scope, fetch
-  transcript preview first, and fetch full transcript only for central meetings.
+Resolve scope, time window, canonical anchors, owner/escalation path, status,
+recency, and known follow-up work. Do not start with a broad cross-product
+inventory — find the operational anchor first, then join only relevant surfaces.
 
 ## Evidence Policy
 
-- Rank by impact, urgency, owner clarity, recurrence risk, and actionability.
-- Group incidents, post-incident records, blockers, and follow-up work into
-  patterns rather than listing every artifact independently.
-- Separate live risks from historical mentions.
-- Prefer a compact operational evidence set: current incidents, post-incident
-  records, linked follow-up work, runbook/doc anchors, owner/escalation evidence,
-  and a small number of central assets or meetings. Stop once those support the
-  handoff, ranking, or recommendation.
-- For Assets, discover schema, object type, and user-like attributes first. Use
-  `--person` or the discovered `--person-field` for fields such as
-  `Calculated user` before broad display-name filters.
-- For staffing, do not recommend people solely from recent activity counts; blend
-  contribution centrality, ownership, expertise, availability/load signals, and
-  project risk.
+- Rank by impact, urgency, owner clarity, recurrence risk, and actionability;
+  keep live risks separate from historical mentions.
+- Prefer compact evidence: current incidents, PIRs, follow-up work, runbooks,
+  owner/escalation evidence, central assets or meetings. Cluster by service,
+  failure theme, owner, and recency; hydrate highest-risk clusters first and
+  summarize the rest. Stop once theme, owner signal, and confidence are clear.
+- Separate `working theory`, `confirmed problem`, `mitigation`, and `root
+  cause`. Do not call a mitigation the root cause, or a root cause confirmed,
+  unless the causal mechanism is established; a closed incident plus a matching
+  PIR is not enough. Mark each claim `confirmed`, `supported`, `candidate`, or
+  `missing evidence`. For the RCA signal families, matrix, and confidence
+  taxonomy, use the reference files.
 - If an operational surface repeats the same backend, auth, or schema error,
-  stop that path after one correction. Report the gap and use the remaining
-  evidence instead of trying nearby aliases or broader inventories.
+  stop after one correction, report the gap, and use remaining evidence rather
+  than trying nearby aliases or broader inventories.
 
 ## Recipe Cards
 
-### On-Call Handoff
+### On-Call Handoff / Reliability Review
 
-Resolve team/service/component. Pull incidents, post-incident records, recent
-Jira follow-up, runbooks/docs, linked projects, and owners. Cluster symptoms
-into patterns and produce a first-hour checklist plus escalation map.
+Pull incidents, PIRs, follow-up work, service/component context, owners,
+comments, and status. Cluster by failure theme; connect each to follow-up and
+missing ownership. Prefer pattern coverage over completeness — once each theme
+has an example, owner/follow-up signal, recency, and confidence, stop and
+synthesize. For handoffs, add a first-hour checklist plus escalation map.
 
-### Incident / Reliability Review
+### Incident Investigation / Mitigation
 
-Search/query incidents, post-incident records, linked follow-up work,
-service/component context, owners, comments, and status. Cluster by failure
-theme. Connect each theme to concrete follow-up and missing ownership.
+Use when the incident is active, newly mitigated, or pre-PIR. Anchor on the
+incident record, then pull responders, symptoms, impact, recent
+deploys/flags/config, topology, alert/log/metric pointers, ownership, runbooks,
+and similar incidents. If ticket fields are sparse, probe the four golden-signal
+families with bounded follow-ups. See `references/incident-investigation.md`.
+Output a four-signal matrix, hypotheses, confidence, next checks, and mitigation
+options; never call a mitigation the root cause without the causal mechanism.
 
-Prefer pattern coverage over artifact completeness. Once each recurring failure
-theme has an example, owner/follow-up signal, recency, and confidence, stop
-expanding and synthesize.
+### Post-Incident Root Cause / Learning
+
+Use after mitigation/recovery when drafting or evaluating a postmortem/PIR. Pair
+the incident with the PIR, linked docs, final comms, remediation PRs, and action
+items; cover confirmed mitigation, causal mechanism, 5-why chain, and
+detection/response gaps. See `references/pir-root-cause.md`. Output root cause,
+contributing factors, mitigation-versus-cause, and prioritized actions.
 
 ### Assets / Asset Refresh
 
-Build the contributor list from project/goal/Jira/PR/doc/activity evidence.
-Query Assets schema/type metadata before AQL. Join people to assets using
-discovered user-like attributes. Once a hit has owner/user, model, status,
-lifecycle, age, or refresh-risk fields, rank by contribution centrality plus asset
-risk from that hit and selected contributor evidence.
+Build contributors from project/goal/Jira/PR/doc/activity evidence. Inspect
+Assets schema/type metadata before AQL; join people via discovered user-like
+attributes such as `Calculated user`. Rank by contribution centrality plus asset
+risk, and report confidence and gaps. See `references/assets.md`.
 
-### Windows Asset Candidates
+### Capacity / Staffing / Meetings
 
-Use Assets schema-first discovery. Confirm site, schema, object type, and owner
-or contact fields. Report confidence and gaps for each candidate.
-
-### Capacity / Staffing Candidates
-
-Resolve project/topic/org. Identify people with related recent work, ownership,
-review influence, docs, and project/goal involvement. Check current load signals
-before recommending candidates.
-
-### Meeting Recording Summary
-
-Query meetings/videos for the requested time window and people scope. Fetch
-transcript preview first. Fetch full transcript only for central recordings and
-write it to a file when needed. Summarize decisions, action items, themes, and
-gaps.
+For staffing, resolve project/topic/org and identify people by related work,
+ownership, review influence, docs, and project/goal involvement; check load
+before recommending. For meetings, query recordings for the scope, preview
+transcripts first, fetch full transcripts only for central ones, then summarize
+decisions, action items, and gaps.
 
 ## Output Shape
 
-- Lead with severity, urgency, or recommendation summary.
-- Inventory table with owner, status, recency, impact, confidence, and evidence.
-- Patterns/themes grouped across artifacts.
-- Ranked next actions and suggested owner for each.
-- Data gaps: missing transcripts, no asset match, stale update, ACL/auth gaps, or
-  weak ownership evidence.
+- Lead with severity, urgency, or recommendation, then an inventory table with
+  owner, status, recency, impact, confidence, and evidence.
+- For active investigations, add a four-signal evidence matrix and an
+  incident-to-learning timeline with confirmed problem, mitigation, root-cause
+  status, and prevention action.
+- Group patterns across artifacts, give ranked next actions with a suggested
+  owner, and call out data gaps (missing transcripts, no asset match, stale
+  update, ACL/auth gaps, weak ownership).
 
 ## Anti-Patterns
 
-- Do not fetch every transcript or page body.
-- Do not treat every incident mention as a live risk.
-- Do not join Assets by display-name guesses before inspecting schema/type fields.
-- Do not repeat nearby AQL/name variants after the asset/person join is good
-  enough for a recommendation.
-- Do not recommend staffing solely from recent activity counts.
+- Do not fetch every transcript or page body, or treat every incident mention
+  as a live risk.
+- Do not wait for chat/comments to label RCA before surfacing directional
+  hypotheses for pre-PIR investigation.
+- Do not call a mitigation the root cause, or a root cause confirmed, without an
+  established causal mechanism (PIR, final comms, remediation, or 5-why). Do not
+  treat workflow panels, bot comments, or opaque `customfield_*` IDs as RCA
+  content unless the value itself is the narrative.
+- Do not use keyword matches alone as org ownership — cross-check assignee,
+  service owner, PIR participants, or org-tree membership.
+- Do not join Assets by display-name guesses before inspecting schema/type
+  fields, or recommend staffing from activity counts alone.
 
 ## References
 
 - `references/assets.md` - schema-first Assets queries and person/device joins
+- `references/incident-investigation.md` - active investigation and mitigation
+- `references/pir-root-cause.md` - post-mitigation root-cause and PIR workflow

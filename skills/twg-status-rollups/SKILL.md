@@ -1,72 +1,67 @@
 ---
 name: twg-status-rollups
 description: >
-  Use with root `twg` for personal work summaries for any person, weekly personal
-  updates, performance review/appraisal evidence, and
+  Use with root `twg` for personal updates, appraisal evidence, and
   team/org/project/goal/executive/annual/cycle status rollups.
 ---
 
 # twg-status-rollups
 
-Use together with the root `twg` skill. Exact command grammar must come from
-live `twg help`, `twg help <terms>`, or `twg help describe <path>`.
+Use with the root `twg` skill. Get exact command grammar from live `twg help`,
+`twg help <terms>`, or `twg help describe <path>`.
 
 ## Use When
 
-- "What did I/person/team/org work on?"
-- "Personal work summary for this person"
-- "What did I/person/team/org work on this week?"
-- "Weekly personal update"
+- "What did I/person/team/org work on?" or weekly personal update
 - "Status of project/goal/topic/focus area"
-- "Leadership readout"
-- "Weekly/monthly/annual/cycle review"
-- "Performance appraisal evidence"
-- "Goal alignment audit"
-- "Org bottlenecks, priorities, stale goals, project risks"
+- Leadership, monthly, annual, cycle, appraisal, or goal-alignment readout
+- Org bottlenecks, priorities, stale goals, or project risks
 
 ## First Move
 
-Resolve the reporting scope before broad retrieval:
+Resolve scope before retrieval:
 
-- Person: resolve email, name, or account ID, then user/activity/context as needed.
-- Team: resolve the team and member roster.
-- Org: use org-tree deep enough to reach useful manager or team groups.
-- Project, goal, or focus area: resolve the native key, ARI, URL, or name first.
-- Topic: resolve/search once, then select concrete project, goal, page, or workitem anchors.
+- Person/team/org: resolve identity, roster, or org-tree groups.
+- Project, goal, focus area, or topic: resolve native key, ARI, URL, name, or
+  central project/page/workitem anchors.
 
-Establish the time window from the prompt. If absent, ask when precision matters;
-otherwise use a recent bounded window and state that choice. Keep personal work
-summary windows to 1 year or less.
+Establish the time window. If absent, ask when precision matters; otherwise use
+a recent bounded window and state it. Keep personal summaries to 1 year or less.
 
 ## Route Selection
 
-- Start from typed command families named in the root `twg` skill: users,
-  org-tree, teams, projects, goals, focus areas, work activity, search, Jira,
-  Confluence/docs, meetings/videos, and Bitbucket.
-- Pull planning state first for project, goal, and org reports: owners, latest
-  updates, status, target dates, linked goals, and linked projects.
+- Start from typed command families named in the root `twg` skill.
+- Pull planning state first for project, goal, and org reports: owners, updates,
+  status, dates, linked goals, and linked projects.
 - For engineering output, use pull-request or work-activity surfaces before broad
   text search.
 - For personal/person work summaries, load `references/personal-work-summary.md`.
 - For large orgs, use aggregate team/project/goal/work signals first, then
   hydrate representative people, leaders, or outliers.
+- For broad team/org rollups, group first by manager, team, project, or
+  workstream. Hydrate representative leaders, people, or outliers unless the
+  prompt asks for a roster audit. If slow, use summary/count signals and state
+  the sample boundary.
 - Use `context user` only for the manager, explicit review subject, or another
   central collaborator whose graph changes the answer.
 - Do not apply projection flags to every evidence surface. Native/federated
   commands should use only flags advertised by their own help contracts.
 - For importance-ordered rollups, use
   `twg work query --ranked --since <window> --items-per-section <N>`. Ranking is
-  heuristic; omit it for chronological questions.
+  heuristic; omit `--ranked` for chronological timelines.
 
 ## Evidence Policy
 
-- Balance quantitative activity signals with representative qualitative
-  evidence: docs, comments, blockers, project/goal updates, PRs, and stakeholder
-  interactions.
-- Default to a bounded rollup set: resolve scope, collect planning/activity
-  signals, hydrate only the few artifacts that change the summary, then answer.
-  More evidence is useful only when it changes owner, status, risk, priority,
-  or confidence.
+- Balance activity signals with representative evidence: docs, comments,
+  blockers, project/goal updates, PRs, and stakeholder interactions.
+- Default to a bounded set: resolve scope, collect planning/activity signals,
+  hydrate only artifacts that change owner, status, risk, priority, or
+  confidence, then answer.
+- For broad doc, PR, repo, or person lists, rank first and hydrate only the few
+  examples needed. Use titles, summaries, counts, owners, and recency for the
+  rest.
+- Re-check sufficiency after each evidence family. Once planning, delivery, and
+  risk signals are covered, synthesize.
 - Distinguish authored delivery from review, coordination, and influence.
 - Sample when the scope is broad. State the sample boundary instead of trying to
   exhaust every person and every product surface.
@@ -75,29 +70,28 @@ summary windows to 1 year or less.
 - For PR load, start count-first. If a rollup warns that full fetch is too broad,
   narrow once or switch to count-only.
 - If org/context/PR graph calls fail twice with the same backend or coverage
-  error, stop that path. Use available planning, work, search, and native
-  evidence, and list the failed graph path as a gap.
+  error, stop that path. Use available evidence and list the failed path as a
+  gap.
 
 ## Recipe Cards
 
 ### Person Or Personal Update
 
-Resolve the person, then pull recent authored/assigned Jira work,
-authored/reviewed PRs, docs/pages, meetings, and project/goal involvement.
-Load `references/personal-work-summary.md` for the exact subject selector,
-notification boundary, PR activity hydration, and outcome-first synthesis rules.
+Resolve the person, then pull recent Jira work, PRs, docs/pages, meetings, and
+project/goal involvement. Load `references/personal-work-summary.md` for exact
+subject, notification, PR hydration, and outcome-first rules.
+Separate delivery, review, docs/strategy, coordination, and influence.
 
 ### Team Or Org Leadership Readout
 
-Resolve org-tree first. Group by manager, team, or workstream before per-person
-details. Use org-level PR/project/goal/work signals, then hydrate people or
-outliers that explain momentum, blockers, review load, or ownership.
+Resolve org-tree first. Group before per-person details. Use org-level signals,
+then hydrate only outliers that change momentum, blockers, review load, or
+ownership.
 
 ### Project Or Goal Status
 
-Fetch the native project or goal first. Include owner, state, latest update,
-linked goals/projects, target dates, and status recency. Hydrate only Jira,
-docs, PRs, or meetings that explain risk, progress, or dependency.
+Fetch the native project/goal first. Include owner, state, update,
+links, dates, and recency. Hydrate only risk, progress, or dependency evidence.
 
 ### Topic Status
 
@@ -106,10 +100,9 @@ then hydrate those before using broad work/activity queries.
 
 ### Appraisal / Performance Evidence
 
-Resolve the person and time horizon. Separate authored delivery, review,
-collaboration, docs/strategy, project/goal impact, and stakeholder signals.
-Avoid ranking solely by counts; add calibration caveats when evidence is weak or
-biased.
+Resolve person and horizon. Separate delivery, review, collaboration,
+docs/strategy, project/goal impact, and stakeholder signals. Avoid count-only
+ranking; add caveats when evidence is weak.
 
 ## Output Shape
 

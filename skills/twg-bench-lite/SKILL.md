@@ -55,7 +55,7 @@ The managed custom agents are only required for manual orchestration:
 If a manual run needs either agent and it is missing, tell the user to run:
 
 ```bash
-twg skills install --global --yes
+twg skills install --yes
 ```
 
 Then start a fresh Codex thread so agent discovery refreshes. Do not substitute

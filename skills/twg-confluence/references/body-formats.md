@@ -35,9 +35,28 @@ construct during round trips.
 
 ## Specialized Formats
 
-Whiteboards and databases may use specialized SVG or CSV edit envelopes and may
-be restricted by build profile. Use acknowledgement flags only after reading
-the exact help and understanding the format contract.
+Whiteboards and databases use their own specialized helper information. Do not
+reuse page/blog/live-doc HTML or markdown guidance for these content types.
+
+For whiteboards, load the whiteboard body-format helper before creating or
+editing SVG content:
+
+```bash
+twg confluence content body-formats --content-type whiteboard
+```
+
+For databases, load the database body-format helper before creating CSV payloads
+or edit envelopes:
+
+```bash
+twg confluence content body-formats --content-type database
+```
+
+Each helper returns an index and follow-up `--reference` paths for that content
+type. Use the whiteboard helper only for whiteboards and the database helper
+only for databases, then follow the referenced format contract exactly. Use
+acknowledgement flags only after reading the exact helper output and
+understanding the format contract.
 
 Keep title and body separate. Prefer body files over shell-inline multiline
 content. Verify rendered or returned content after consequential writes.

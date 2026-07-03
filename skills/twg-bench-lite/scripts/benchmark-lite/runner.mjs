@@ -3,15 +3,7 @@
 import { execFileSync, spawn } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
-import {
-  mkdir,
-  mkdtemp,
-  readFile,
-  readdir,
-  rm,
-  stat,
-  writeFile,
-} from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, readdir, rm, stat, writeFile } from "node:fs/promises";
 import { homedir, tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import contract from "./contract.json" with { type: "json" };
@@ -63,9 +55,7 @@ function sha256(value) {
 }
 
 function optionalString(value) {
-  return typeof value === "string" && value.trim().length > 0
-    ? value
-    : undefined;
+  return typeof value === "string" && value.trim().length > 0 ? value : undefined;
 }
 
 function optionalNumber(value) {
@@ -77,9 +67,7 @@ function optionalBoolean(value) {
 }
 
 function asRecord(value) {
-  return value && typeof value === "object" && !Array.isArray(value)
-    ? value
-    : undefined;
+  return value && typeof value === "object" && !Array.isArray(value) ? value : undefined;
 }
 
 function traceTitle(label) {
@@ -115,7 +103,7 @@ function hasArmArtifacts(options) {
     options.controlOutputFile ||
     options.testOutputFile ||
     options.controlResultFile ||
-    options.testResultFile,
+    options.testResultFile
   );
 }
 
@@ -139,8 +127,7 @@ async function readOptionalJsonObject(path) {
 function textFromUnknown(value, depth = 0) {
   if (depth > 3 || value === null || value === undefined) return "";
   if (typeof value === "string") return value;
-  if (typeof value === "number" || typeof value === "boolean")
-    return String(value);
+  if (typeof value === "number" || typeof value === "boolean") return String(value);
   if (Array.isArray(value)) {
     return value
       .map((item) => textFromUnknown(item, depth + 1))
@@ -175,14 +162,7 @@ function textFromUnknown(value, depth = 0) {
 
 function commandTextFromCall(call) {
   if (!call) return "";
-  return [
-    call.input_text,
-    call.arguments,
-    call.input,
-    call.command,
-    call.cmd,
-    call.tool_input,
-  ]
+  return [call.input_text, call.arguments, call.input, call.command, call.cmd, call.tool_input]
     .map((value) => textFromUnknown(value))
     .filter(Boolean)
     .join("\n");
@@ -202,21 +182,15 @@ function summarizeTwgCommand(text) {
 }
 
 function tokenUsageFromMetadata(metadata) {
-  const inputTokens = optionalNumber(
-    metadata?.input_tokens ?? metadata?.inputTokens,
-  );
+  const inputTokens = optionalNumber(metadata?.input_tokens ?? metadata?.inputTokens);
   const cachedInputTokens = optionalNumber(
-    metadata?.cached_input_tokens ?? metadata?.cachedInputTokens,
+    metadata?.cached_input_tokens ?? metadata?.cachedInputTokens
   );
   const cacheCreationInputTokens = optionalNumber(
-    metadata?.cache_creation_input_tokens ?? metadata?.cacheCreationInputTokens,
+    metadata?.cache_creation_input_tokens ?? metadata?.cacheCreationInputTokens
   );
-  const outputTokens = optionalNumber(
-    metadata?.output_tokens ?? metadata?.outputTokens,
-  );
-  const totalTokens = optionalNumber(
-    metadata?.total_tokens ?? metadata?.totalTokens,
-  );
+  const outputTokens = optionalNumber(metadata?.output_tokens ?? metadata?.outputTokens);
+  const totalTokens = optionalNumber(metadata?.total_tokens ?? metadata?.totalTokens);
   const uncachedInputTokens =
     inputTokens !== null || cachedInputTokens !== null || outputTokens !== null
       ? cacheCreationInputTokens !== null && cacheCreationInputTokens > 0
@@ -224,12 +198,8 @@ function tokenUsageFromMetadata(metadata) {
         : Math.max((inputTokens ?? 0) - (cachedInputTokens ?? 0), 0)
       : null;
   const displayTokens =
-    uncachedInputTokens !== null ||
-    cacheCreationInputTokens !== null ||
-    outputTokens !== null
-      ? (uncachedInputTokens ?? 0) +
-        (cacheCreationInputTokens ?? 0) +
-        (outputTokens ?? 0)
+    uncachedInputTokens !== null || cacheCreationInputTokens !== null || outputTokens !== null
+      ? (uncachedInputTokens ?? 0) + (cacheCreationInputTokens ?? 0) + (outputTokens ?? 0)
       : null;
   return {
     inputTokens,
@@ -238,9 +208,7 @@ function tokenUsageFromMetadata(metadata) {
     outputTokens,
     totalTokens:
       totalTokens ??
-      (inputTokens !== null ||
-      outputTokens !== null ||
-      cachedInputTokens !== null
+      (inputTokens !== null || outputTokens !== null || cachedInputTokens !== null
         ? (inputTokens ?? 0) +
           (cachedInputTokens ?? 0) +
           (cacheCreationInputTokens ?? 0) +
@@ -263,10 +231,9 @@ function summarizeToolName(name, inputText) {
   if (source.startsWith("mcp__")) return source;
 
   const commandMatch = combined.match(
-    /(?:^|[\s"'/\\])(?<command>jq|sed|rg|cat|node|npx|tsx|npm|pnpm|git|open|python3?|bash|zsh)(?=\s|$)/iu,
+    /(?:^|[\s"'/\\])(?<command>jq|sed|rg|cat|node|npx|tsx|npm|pnpm|git|open|python3?|bash|zsh)(?=\s|$)/iu
   );
-  if (commandMatch?.groups?.command)
-    return commandMatch.groups.command.toLowerCase();
+  if (commandMatch?.groups?.command) return commandMatch.groups.command.toLowerCase();
 
   return source.length > 120 ? `${source.slice(0, 117)}...` : source;
 }
@@ -276,9 +243,7 @@ function toolSurfaceFromName(name) {
   if (lower.startsWith("mcp__atlassian__")) return "atlassian-mcp";
   if (lower === "twg" || lower.startsWith("twg ")) return "twg-cli";
   if (/^(jq|sed|rg|cat)\b/u.test(lower)) return "local-processing";
-  if (
-    /^(node|npx|tsx|npm|pnpm|git|open|python|python3|bash|zsh)\b/u.test(lower)
-  ) {
+  if (/^(node|npx|tsx|npm|pnpm|git|open|python|python3|bash|zsh)\b/u.test(lower)) {
     return "shell";
   }
   return "agent-tool";
@@ -286,10 +251,7 @@ function toolSurfaceFromName(name) {
 
 function toolAreaFromName(name) {
   const lower = name.toLowerCase();
-  if (
-    lower.includes("confluence") ||
-    /\btwg\s+(?:docs|confluence)\b/u.test(lower)
-  ) {
+  if (lower.includes("confluence") || /\btwg\s+(?:docs|confluence)\b/u.test(lower)) {
     return "confluence/docs";
   }
   if (/\btwg\s+work\b/u.test(lower)) return "work graph";
@@ -319,59 +281,51 @@ function isForbiddenControlAtlassianMcpToolName(name) {
 
 function forbiddenControlAtlassianMcpTools(control) {
   if (!Array.isArray(control?.toolCallLog)) return [];
-  return control.toolCallLog.filter((tool) =>
-    isForbiddenControlAtlassianMcpToolName(tool?.name),
-  );
+  return control.toolCallLog.filter((tool) => isForbiddenControlAtlassianMcpToolName(tool?.name));
 }
 
 function extractToolCallLog(trace) {
   const rawCalls = Array.isArray(trace?.tool_calls) ? trace.tool_calls : [];
-  return rawCalls
-    .slice(0, MAX_TOOL_CALL_LOG_ENTRIES)
-    .flatMap((rawCall, offset) => {
-      const call = asRecord(rawCall);
-      if (!call) return [];
-      const rawName =
-        optionalString(call.tool_name) ??
-        optionalString(call.name) ??
-        optionalString(call.tool) ??
-        optionalString(call.tool_id) ??
-        "tool call";
-      const name = summarizeToolName(rawName, commandTextFromCall(call));
-      const surface = toolSurfaceFromName(name);
-      const explicitDurationMs = optionalNumber(call.duration_ms);
-      const startTime = optionalNumber(call.start_time);
-      const endTime = optionalNumber(call.end_time);
-      const durationMs =
-        explicitDurationMs !== null
-          ? explicitDurationMs
-          : startTime !== null && endTime !== null
-            ? endTime - startTime
-            : null;
-      return [
-        {
-          index: offset + 1,
-          name,
-          surface,
-          area: toolAreaFromName(name),
-          durationMs: durationMs === null ? null : Math.round(durationMs),
-          twg: surface === "twg-cli",
-          error: optionalBoolean(call.is_error) ?? false,
-        },
-      ];
-    });
+  return rawCalls.slice(0, MAX_TOOL_CALL_LOG_ENTRIES).flatMap((rawCall, offset) => {
+    const call = asRecord(rawCall);
+    if (!call) return [];
+    const rawName =
+      optionalString(call.tool_name) ??
+      optionalString(call.name) ??
+      optionalString(call.tool) ??
+      optionalString(call.tool_id) ??
+      "tool call";
+    const name = summarizeToolName(rawName, commandTextFromCall(call));
+    const surface = toolSurfaceFromName(name);
+    const explicitDurationMs = optionalNumber(call.duration_ms);
+    const startTime = optionalNumber(call.start_time);
+    const endTime = optionalNumber(call.end_time);
+    const durationMs =
+      explicitDurationMs !== null
+        ? explicitDurationMs
+        : startTime !== null && endTime !== null
+          ? endTime - startTime
+          : null;
+    return [
+      {
+        index: offset + 1,
+        name,
+        surface,
+        area: toolAreaFromName(name),
+        durationMs: durationMs === null ? null : Math.round(durationMs),
+        twg: surface === "twg-cli",
+        error: optionalBoolean(call.is_error) ?? false,
+      },
+    ];
+  });
 }
 
 function mergeTokenUsage(metadata, usage) {
   const record = asRecord(usage);
   if (!record) return false;
   const inputTokens = optionalNumber(record.input_tokens ?? record.inputTokens);
-  const cachedInputTokens = optionalNumber(
-    record.cached_input_tokens ?? record.cachedInputTokens,
-  );
-  const outputTokens = optionalNumber(
-    record.output_tokens ?? record.outputTokens,
-  );
+  const cachedInputTokens = optionalNumber(record.cached_input_tokens ?? record.cachedInputTokens);
+  const outputTokens = optionalNumber(record.output_tokens ?? record.outputTokens);
   const totalTokens = optionalNumber(record.total_tokens ?? record.totalTokens);
   let observed = false;
   if (inputTokens !== null) {
@@ -399,17 +353,16 @@ function mergeTokenUsage(metadata, usage) {
 function looksLikeError(value) {
   const text = String(value ?? "").toLowerCase();
   return /\b(error|exception|traceback|unauthorized|forbidden|permission denied|command failed)\b/u.test(
-    text,
+    text
   );
 }
 
 function mcpToolName(item) {
   const server = optionalString(item?.server) ?? "mcp";
-  const tool =
-    optionalString(item?.tool) ?? optionalString(item?.name) ?? "tool";
+  const tool = optionalString(item?.tool) ?? optionalString(item?.name) ?? "tool";
   return `mcp__${server.replaceAll(/[^a-z0-9_-]/giu, "_")}__${tool.replaceAll(
     /[^a-z0-9_-]/giu,
-    "_",
+    "_"
   )}`;
 }
 
@@ -466,9 +419,7 @@ function parseArmTimeoutMs(value) {
   if (!value) return DEFAULT_ARM_TIMEOUT_SECONDS * 1000;
   const seconds = Number(value);
   if (!Number.isFinite(seconds) || seconds <= 0 || seconds > 7200) {
-    throw new Error(
-      "--arm-timeout-seconds must be greater than 0 and no more than 7200.",
-    );
+    throw new Error("--arm-timeout-seconds must be greater than 0 and no more than 7200.");
   }
   return Math.round(seconds * 1000);
 }
@@ -497,7 +448,7 @@ function codexRunArgs(options, armDir, label) {
       "-c",
       'shell_environment_policy.inherit="core"',
       "-c",
-      `shell_environment_policy.set={ PATH = ${JSON.stringify(CONTROL_SAFE_PATH)}, ZDOTDIR = ${JSON.stringify(armDir)}, BASH_ENV = ${JSON.stringify(join(armDir, ".bench-lite-shell-env"))}, ENV = ${JSON.stringify(join(armDir, ".bench-lite-shell-env"))} }`,
+      `shell_environment_policy.set={ PATH = ${JSON.stringify(CONTROL_SAFE_PATH)}, ZDOTDIR = ${JSON.stringify(armDir)}, BASH_ENV = ${JSON.stringify(join(armDir, ".bench-lite-shell-env"))}, ENV = ${JSON.stringify(join(armDir, ".bench-lite-shell-env"))} }`
     );
   }
   if (options.model) args.push("-m", String(options.model));
@@ -597,7 +548,7 @@ function requireRovoBillingSiteUrl(env = process.env, homeDir = homedir()) {
   const siteUrl = resolveRovoBillingSiteUrl(env, homeDir);
   if (!siteUrl) {
     throw new Error(
-      "Rovo billing site is not configured. Set ROVO_BILLING_SITE_URL, ROVO_SITE_URL, TWG_SITE, or TWG_DOMAIN, or configure a TWG/Rovo site before running benchmark-lite with --agent rovo.",
+      "Rovo billing site is not configured. Set ROVO_BILLING_SITE_URL, ROVO_SITE_URL, TWG_SITE, or TWG_DOMAIN, or configure a TWG/Rovo site before running benchmark-lite with --agent rovo."
     );
   }
   return siteUrl;
@@ -629,9 +580,9 @@ function runRovoProbe(args, timeoutMs = 10_000) {
       reject(
         error?.code === "ENOENT"
           ? new Error(
-              "Rovo runtime is not ready: the `rovo` executable was not found. Install Rovo CLI or expose it on PATH before running benchmark-lite.",
+              "Rovo runtime is not ready: the `rovo` executable was not found. Install Rovo CLI or expose it on PATH before running benchmark-lite."
             )
-          : error,
+          : error
       );
     });
     child.on("close", (code, signal) => {
@@ -640,9 +591,9 @@ function runRovoProbe(args, timeoutMs = 10_000) {
         reject(
           new Error(
             `Rovo runtime is not ready: \`rovo ${args.join(" ")}\` timed out after ${Math.round(
-              timeoutMs / 1000,
-            )} seconds.`,
-          ),
+              timeoutMs / 1000
+            )} seconds.`
+          )
         );
         return;
       }
@@ -650,13 +601,13 @@ function runRovoProbe(args, timeoutMs = 10_000) {
         reject(
           new Error(
             `Rovo runtime is not ready: \`rovo ${args.join(
-              " ",
+              " "
             )}\` exited with code ${code}${signal ? ` (${signal})` : ""}: ${summarizeProcessFailure(
               undefined,
               stderr,
-              stdout,
-            )}`,
-          ),
+              stdout
+            )}`
+          )
         );
         return;
       }
@@ -672,7 +623,7 @@ async function runRovoDoctor() {
     await runRovoProbe(["oauth", "status"], 10_000);
   } catch (error) {
     throw new Error(
-      `${error instanceof Error ? error.message : String(error)}. Run \`rovo oauth login\` and retry benchmark-lite.`,
+      `${error instanceof Error ? error.message : String(error)}. Run \`rovo oauth login\` and retry benchmark-lite.`
     );
   }
 }
@@ -682,7 +633,7 @@ function rovoConfigForArm(label, options, armDir) {
     CONTROL_ATLASSIAN_MCP_DISABLED_TOOLS.flatMap((tool) => [
       [tool, "deny"],
       [`mcp__atlassian__${tool}`, "deny"],
-    ]),
+    ])
   );
   const controlAllowedTools = {
     mcp__gmail__invoke_tool: "allow",
@@ -774,7 +725,7 @@ async function writeRovoConfig(armDir, label, options) {
   await writeFile(
     configPath,
     `${JSON.stringify(rovoConfigForArm(label, options, armDir), null, 2)}\n`,
-    "utf8",
+    "utf8"
   );
   return configPath;
 }
@@ -806,12 +757,12 @@ async function latestRovoSessionContext(configPath) {
   const paths = await rovoSessionContextFiles(configPath);
   if (paths.length === 0) return undefined;
   const withStats = await Promise.all(
-    paths.map(async (path) => ({ path, stats: await stat(path) })),
+    paths.map(async (path) => ({ path, stats: await stat(path) }))
   );
   withStats.sort((a, b) =>
     a.stats.mtimeMs === b.stats.mtimeMs
       ? a.path.localeCompare(b.path)
-      : a.stats.mtimeMs - b.stats.mtimeMs,
+      : a.stats.mtimeMs - b.stats.mtimeMs
   );
   return withStats.at(-1)?.path;
 }
@@ -828,9 +779,7 @@ function stringifyRovoPartValue(value) {
 
 function parseRovoSessionToolCalls(session, observedAt = Date.now()) {
   const pending = new Map();
-  const messages = Array.isArray(session?.message_history)
-    ? session.message_history
-    : [];
+  const messages = Array.isArray(session?.message_history) ? session.message_history : [];
   for (const message of messages) {
     const parts = Array.isArray(message?.parts) ? message.parts : [];
     for (const part of parts) {
@@ -863,9 +812,7 @@ function rovoFinalTextFromSession(session) {
   const latestResult = optionalString(session?.latest_result);
   if (latestResult) return latestResult;
   let finalText = "";
-  const messages = Array.isArray(session?.message_history)
-    ? session.message_history
-    : [];
+  const messages = Array.isArray(session?.message_history) ? session.message_history : [];
   for (const message of messages) {
     const parts = Array.isArray(message?.parts) ? message.parts : [];
     for (const part of parts) {
@@ -879,9 +826,7 @@ function rovoFinalTextFromSession(session) {
 }
 
 function rovoModelFromSession(session) {
-  const messages = Array.isArray(session?.message_history)
-    ? session.message_history
-    : [];
+  const messages = Array.isArray(session?.message_history) ? session.message_history : [];
   for (const message of messages.toReversed()) {
     const model = optionalString(message?.model_name);
     if (model) return model;
@@ -891,9 +836,7 @@ function rovoModelFromSession(session) {
 
 function rovoUsageFromSession(metadata, session) {
   if (mergeTokenUsage(metadata, session?.usage)) return;
-  const messages = Array.isArray(session?.message_history)
-    ? session.message_history
-    : [];
+  const messages = Array.isArray(session?.message_history) ? session.message_history : [];
   for (const message of messages.toReversed()) {
     if (mergeTokenUsage(metadata, message?.usage)) return;
   }
@@ -921,11 +864,7 @@ function extractRovoFinalText(stdout) {
   }
   return cleaned
     .split(/\r\n|\r|\n/u)
-    .filter(
-      (line) =>
-        line.trim() &&
-        !/^\d{4}-\d{2}-\d{2} .* \| /u.test(line.trim()),
-    )
+    .filter((line) => line.trim() && !/^\d{4}-\d{2}-\d{2} .* \| /u.test(line.trim()))
     .slice(-20)
     .join("\n")
     .trim();
@@ -952,9 +891,7 @@ function terminateChildProcess(child) {
 }
 
 function recentProcessOutput(metadata) {
-  const lines = Array.isArray(metadata.non_json_output_lines)
-    ? metadata.non_json_output_lines
-    : [];
+  const lines = Array.isArray(metadata.non_json_output_lines) ? metadata.non_json_output_lines : [];
   return lines
     .slice(-3)
     .map((line) => String(line).trim())
@@ -1000,9 +937,9 @@ function runCodexDoctor(timeoutMs = 120_000) {
       reject(
         error?.code === "ENOENT"
           ? new Error(
-              `Codex runtime is not ready: the Codex executable was not found at ${executable}. Install Codex or expose it on PATH before running benchmark-lite.`,
+              `Codex runtime is not ready: the Codex executable was not found at ${executable}. Install Codex or expose it on PATH before running benchmark-lite.`
             )
-          : error,
+          : error
       );
     });
     child.on("close", (code, signal) => {
@@ -1010,8 +947,8 @@ function runCodexDoctor(timeoutMs = 120_000) {
       if (timedOut) {
         reject(
           new Error(
-            `Codex found at ${executable}, but runtime check timed out after ${Math.round(timeoutMs / 1000)} seconds while running \`${command}\`. Run \`time codex doctor --summary --ascii\` to inspect local runtime latency before running benchmark-lite.`,
-          ),
+            `Codex found at ${executable}, but runtime check timed out after ${Math.round(timeoutMs / 1000)} seconds while running \`${command}\`. Run \`time codex doctor --summary --ascii\` to inspect local runtime latency before running benchmark-lite.`
+          )
         );
         return;
       }
@@ -1021,9 +958,9 @@ function runCodexDoctor(timeoutMs = 120_000) {
             `Codex runtime is not ready: ${summarizeProcessFailure(
               undefined,
               stderr,
-              stdout,
-            )}${signal ? ` (${signal})` : ""}. Command: \`${command}\`. Run \`time codex doctor --summary --ascii\` and fix the reported config, auth, or network issue before running benchmark-lite.`,
-          ),
+              stdout
+            )}${signal ? ` (${signal})` : ""}. Command: \`${command}\`. Run \`time codex doctor --summary --ascii\` and fix the reported config, auth, or network issue before running benchmark-lite.`
+          )
         );
         return;
       }
@@ -1049,11 +986,7 @@ async function writeArmGuidance(armDir, label) {
           "Use `twg` CLI commands for Atlassian work-data evidence.",
           "Prefer product-native TWG surfaces such as `twg jira`, `twg confluence`, and `twg docs` when the prompt needs those artifacts.",
         ];
-  await writeFile(
-    join(armDir, "AGENTS.md"),
-    `${guidance.join("\n")}\n`,
-    "utf8",
-  );
+  await writeFile(join(armDir, "AGENTS.md"), `${guidance.join("\n")}\n`, "utf8");
   if (label === "control") {
     const shellEnv = [
       `PATH="${CONTROL_SAFE_PATH}"`,
@@ -1064,18 +997,11 @@ async function writeArmGuidance(armDir, label) {
       "unset -f twg 2>/dev/null || true",
     ].join("\n");
     await writeFile(join(armDir, ".zshenv"), `${shellEnv}\n`, "utf8");
-    await writeFile(
-      join(armDir, ".bench-lite-shell-env"),
-      `${shellEnv}\n`,
-      "utf8",
-    );
+    await writeFile(join(armDir, ".bench-lite-shell-env"), `${shellEnv}\n`, "utf8");
   }
 }
 
-async function runCodexLiveArm(
-  { label, prompt, options, outputDir, routePlan },
-  hooks,
-) {
+async function runCodexLiveArm({ label, prompt, options, outputDir, routePlan }, hooks) {
   const title = traceTitle(label);
   const armDir = resolve(outputDir, "arms", label);
   await mkdir(armDir, { recursive: true });
@@ -1123,23 +1049,15 @@ async function runCodexLiveArm(
       completedTools.push(tool);
       lifecycle(
         hooks,
-        `${title} tool call completed: ${summarizeToolName(tool.tool_name, tool.input_text)}${tool.is_error ? " (error)" : ""}`,
+        `${title} tool call completed: ${summarizeToolName(tool.tool_name, tool.input_text)}${tool.is_error ? " (error)" : ""}`
       );
     };
 
-    const addTool = ({
-      toolId,
-      rawName,
-      inputText,
-      outputText,
-      isError,
-      observedAt,
-    }) => {
+    const addTool = ({ toolId, rawName, inputText, outputText, isError, observedAt }) => {
       const name = summarizeToolName(rawName, inputText);
       const tool = {
         tool_name: rawName || name,
-        tool_id:
-          toolId || `tool-${completedTools.length + pendingTools.size + 1}`,
+        tool_id: toolId || `tool-${completedTools.length + pendingTools.size + 1}`,
         input_text: inputText || "",
         output_text: outputText || "",
         is_error: Boolean(isError),
@@ -1148,7 +1066,7 @@ async function runCodexLiveArm(
       };
       lifecycle(
         hooks,
-        `${title} tool call #${completedTools.length + pendingTools.size + 1}: ${name}`,
+        `${title} tool call #${completedTools.length + pendingTools.size + 1}: ${name}`
       );
       if (outputText !== undefined) {
         completedTools.push(tool);
@@ -1169,8 +1087,7 @@ async function runCodexLiveArm(
       } else if (eventType === "response_item") {
         if (payload.type === "function_call") {
           addTool({
-            toolId:
-              optionalString(payload.call_id) ?? optionalString(payload.id),
+            toolId: optionalString(payload.call_id) ?? optionalString(payload.id),
             rawName: optionalString(payload.name) ?? "tool call",
             inputText: textFromUnknown(payload.arguments),
             observedAt,
@@ -1179,16 +1096,14 @@ async function runCodexLiveArm(
           completeTool(
             optionalString(payload.call_id) ?? optionalString(payload.id),
             textFromUnknown(payload.output),
-            observedAt,
+            observedAt
           );
         } else if (payload.type === "message" && payload.role === "assistant") {
           const content = Array.isArray(payload.content) ? payload.content : [];
           const text = content
             .map((item) => {
               const record = asRecord(item);
-              return record?.type === "output_text"
-                ? optionalString(record.text)
-                : "";
+              return record?.type === "output_text" ? optionalString(record.text) : "";
             })
             .filter(Boolean)
             .join("");
@@ -1273,8 +1188,7 @@ async function runCodexLiveArm(
 
     const consumeChunk = (chunk, source) => {
       const text = chunk.toString("utf8");
-      let buffer =
-        source === "stderr" ? stderrBuffer + text : stdoutBuffer + text;
+      let buffer = source === "stderr" ? stderrBuffer + text : stdoutBuffer + text;
       const lines = buffer.split(/\r\n|\n|\r/u);
       buffer = lines.pop() ?? "";
       for (const line of lines) handleLine(line);
@@ -1288,7 +1202,7 @@ async function runCodexLiveArm(
       const elapsedSeconds = Math.round((Date.now() - startedAt) / 1000);
       lifecycle(
         hooks,
-        `${title} running: ${elapsedSeconds}s elapsed, ${completedTools.length} completed tool call(s), ${pendingTools.size} pending.`,
+        `${title} running: ${elapsedSeconds}s elapsed, ${completedTools.length} completed tool call(s), ${pendingTools.size} pending.`
       );
     }, ARM_PROGRESS_INTERVAL_MS);
     child.on("error", (error) => {
@@ -1296,10 +1210,8 @@ async function runCodexLiveArm(
       if (progressTimer) clearInterval(progressTimer);
       reject(
         error?.code === "ENOENT"
-          ? new Error(
-              "Could not run live Codex arms because the `codex` executable was not found.",
-            )
-          : error,
+          ? new Error("Could not run live Codex arms because the `codex` executable was not found.")
+          : error
       );
     });
     child.on("close", (code, signal) => {
@@ -1348,7 +1260,7 @@ async function runCodexLiveArm(
   await writeJsonFile(tracePath, trace);
   if (!finalResponse) {
     throw new Error(
-      `${title} arm did not produce a final answer${errorMessage ? `: ${errorMessage}` : "."}`,
+      `${title} arm did not produce a final answer${errorMessage ? `: ${errorMessage}` : "."}`
     );
   }
   const toolCallLog = extractToolCallLog(trace);
@@ -1363,7 +1275,7 @@ async function runCodexLiveArm(
   }
   lifecycle(
     hooks,
-    `${title} finished: ${completedTools.length} tool call(s), ${twgCalls} TWG call(s).`,
+    `${title} finished: ${completedTools.length} tool call(s), ${twgCalls} TWG call(s).`
   );
   return {
     output: finalResponse,
@@ -1380,16 +1292,12 @@ async function runCodexLiveArm(
     answerQualityStatus: errorMessage ? "partial" : "full",
     dataReturned: finalResponse.trim().length > 0,
     traceFile: tracePath,
-    toolSurface:
-      label === "control" ? ["atlassian-mcp", "local-mcp"] : ["twg-cli"],
+    toolSurface: label === "control" ? ["atlassian-mcp", "local-mcp"] : ["twg-cli"],
     status: errorMessage ? "failed" : "completed",
   };
 }
 
-async function runRovoLiveArm(
-  { label, prompt, options, outputDir, routePlan },
-  hooks,
-) {
+async function runRovoLiveArm({ label, prompt, options, outputDir, routePlan }, hooks) {
   const title = traceTitle(label);
   const armDir = resolve(outputDir, "arms", label);
   await mkdir(armDir, { recursive: true });
@@ -1441,8 +1349,8 @@ async function runRovoLiveArm(
           hooks,
           `${title} tool call #${observedToolIds.size}: ${summarizeToolName(
             tool.tool_name,
-            tool.input_text,
-          )}`,
+            tool.input_text
+          )}`
         );
       }
       if (tool.end_time && !completedToolIds.has(tool.tool_id)) {
@@ -1451,8 +1359,8 @@ async function runRovoLiveArm(
           hooks,
           `${title} tool call completed: ${summarizeToolName(
             tool.tool_name,
-            tool.input_text,
-          )}${tool.is_error ? " (error)" : ""}`,
+            tool.input_text
+          )}${tool.is_error ? " (error)" : ""}`
         );
       }
     }
@@ -1472,7 +1380,7 @@ async function runRovoLiveArm(
         cwd: armDir,
         env: rovoChildEnv(),
         stdio: ["pipe", "pipe", "pipe"],
-      },
+      }
     );
     const timer = setTimeout(() => {
       timedOut = true;
@@ -1493,7 +1401,7 @@ async function runRovoLiveArm(
         const pending = latestToolCalls.filter((tool) => !tool.end_time).length;
         lifecycle(
           hooks,
-          `${title} running: ${elapsedSeconds}s elapsed, ${completedToolIds.size} completed tool call(s), ${pending} pending.`,
+          `${title} running: ${elapsedSeconds}s elapsed, ${completedToolIds.size} completed tool call(s), ${pending} pending.`
         );
       });
     }, ARM_PROGRESS_INTERVAL_MS);
@@ -1502,10 +1410,8 @@ async function runRovoLiveArm(
       if (progressTimer) clearInterval(progressTimer);
       reject(
         error?.code === "ENOENT"
-          ? new Error(
-              "Could not run live Rovo arms because the `rovo` executable was not found.",
-            )
-          : error,
+          ? new Error("Could not run live Rovo arms because the `rovo` executable was not found.")
+          : error
       );
     });
     child.on("close", (code, signal) => {
@@ -1530,8 +1436,7 @@ async function runRovoLiveArm(
       signalCode ? ` (${signalCode})` : ""
     }: ${summarizeProcessFailure(undefined, stderr, stdout)}`;
   }
-  finalResponse =
-    rovoFinalTextFromSession(latestSessionPayload) || extractRovoFinalText(stdout);
+  finalResponse = rovoFinalTextFromSession(latestSessionPayload) || extractRovoFinalText(stdout);
   if (errorMessage) metadata.error = errorMessage;
 
   const completedTools = latestToolCalls.map((tool) => ({
@@ -1556,7 +1461,7 @@ async function runRovoLiveArm(
   await writeJsonFile(tracePath, trace);
   if (!finalResponse) {
     throw new Error(
-      `${title} arm did not produce a final answer${errorMessage ? `: ${errorMessage}` : "."}`,
+      `${title} arm did not produce a final answer${errorMessage ? `: ${errorMessage}` : "."}`
     );
   }
   const toolCallLog = extractToolCallLog(trace);
@@ -1571,7 +1476,7 @@ async function runRovoLiveArm(
   }
   lifecycle(
     hooks,
-    `${title} finished: ${completedTools.length} tool call(s), ${twgCalls} TWG call(s).`,
+    `${title} finished: ${completedTools.length} tool call(s), ${twgCalls} TWG call(s).`
   );
   return {
     output: finalResponse,
@@ -1588,16 +1493,13 @@ async function runRovoLiveArm(
     answerQualityStatus: errorMessage ? "partial" : "full",
     dataReturned: finalResponse.trim().length > 0,
     traceFile: tracePath,
-    toolSurface:
-      label === "control" ? ["atlassian-mcp", "local-mcp"] : ["twg-cli"],
+    toolSurface: label === "control" ? ["atlassian-mcp", "local-mcp"] : ["twg-cli"],
     status: errorMessage ? "failed" : "completed",
   };
 }
 
 function summarizePlannerError(error, stderr, stdout) {
-  const detail = [error?.message, stderr?.trim(), stdout?.trim()]
-    .filter(Boolean)
-    .join("\n");
+  const detail = [error?.message, stderr?.trim(), stdout?.trim()].filter(Boolean).join("\n");
   return detail.length > 500 ? `${detail.slice(0, 497)}...` : detail;
 }
 
@@ -1637,11 +1539,9 @@ async function runTwgRoutePlan({ prompt, outputDir }, hooks) {
     child.on("close", (code, signal) => {
       if (code !== 0) {
         errorMessage = summarizePlannerError(
-          new Error(
-            `TWG route planner exited with code ${code}${signal ? ` (${signal})` : ""}.`,
-          ),
+          new Error(`TWG route planner exited with code ${code}${signal ? ` (${signal})` : ""}.`),
           stderr,
-          stdout,
+          stdout
         );
       }
       resolvePromise();
@@ -1695,10 +1595,7 @@ async function runLiveArms(options, hooks, prompt, outputDir, agent) {
       ? options.twgRoutePlan
       : await runTwgRoutePlan({ prompt, outputDir }, hooks);
   if (options.twgRoutePlan && typeof options.twgRoutePlan === "object") {
-    lifecycle(
-      hooks,
-      `TWG route plan ready: ${twgRoutePlan.intent ?? "unknown"}.`,
-    );
+    lifecycle(hooks, `TWG route plan ready: ${twgRoutePlan.intent ?? "unknown"}.`);
   }
   lifecycle(hooks, "Sub agents started: control and test.");
   const runLiveArm = agent === "rovo" ? runRovoLiveArm : runCodexLiveArm;
@@ -1712,7 +1609,7 @@ async function runLiveArms(options, hooks, prompt, outputDir, agent) {
         outputDir,
         routePlan: twgRoutePlan?.status === "ready" ? twgRoutePlan : undefined,
       },
-      hooks,
+      hooks
     ),
   ]);
   lifecycle(hooks, "Reading live arm results.");
@@ -1728,13 +1625,9 @@ async function readBenchmarkArmResult(path, label) {
   const trace = tracePath ? await readOptionalJsonObject(tracePath) : undefined;
   const answerRef = optionalString(result.answer_file);
   const answerPath = answerRef ? resolve(resultDir, answerRef) : undefined;
-  const answer = answerPath
-    ? await readOptionalJsonObject(answerPath)
-    : undefined;
+  const answer = answerPath ? await readOptionalJsonObject(answerPath) : undefined;
   const traceMetadata =
-    trace?.metadata &&
-    typeof trace.metadata === "object" &&
-    !Array.isArray(trace.metadata)
+    trace?.metadata && typeof trace.metadata === "object" && !Array.isArray(trace.metadata)
       ? trace.metadata
       : undefined;
   const output =
@@ -1745,7 +1638,7 @@ async function readBenchmarkArmResult(path, label) {
     "";
   if (!output) {
     throw new Error(
-      `Could not find a final response in --${label}-result-file, its trace, or its answer artifact.`,
+      `Could not find a final response in --${label}-result-file, its trace, or its answer artifact.`
     );
   }
   const durationSeconds = optionalNumber(result.wall_clock_seconds);
@@ -1763,9 +1656,7 @@ async function readBenchmarkArmResult(path, label) {
   const toolCallLog = extractToolCallLog(trace);
   const twgCalls =
     optionalNumber(result.twg_call_count) ??
-    (Array.isArray(trace?.tool_calls)
-      ? toolCallLog.filter((tool) => tool.twg).length
-      : null);
+    (Array.isArray(trace?.tool_calls) ? toolCallLog.filter((tool) => tool.twg).length : null);
   const toolErrors =
     optionalNumber(result.tool_errors) ??
     optionalNumber(trace?.num_errors) ??
@@ -1803,21 +1694,17 @@ async function readBenchmarkArmResult(path, label) {
 }
 
 async function readArm(options, label) {
-  const outputFile =
-    label === "control" ? options.controlOutputFile : options.testOutputFile;
-  const resultFile =
-    label === "control" ? options.controlResultFile : options.testResultFile;
+  const outputFile = label === "control" ? options.controlOutputFile : options.testOutputFile;
+  const resultFile = label === "control" ? options.controlResultFile : options.testResultFile;
   if (outputFile && resultFile) {
-    throw new Error(
-      `Use either --${label}-output-file or --${label}-result-file, not both.`,
-    );
+    throw new Error(`Use either --${label}-output-file or --${label}-result-file, not both.`);
   }
   if (resultFile) {
     return readBenchmarkArmResult(resultFile, label);
   }
   if (!outputFile) {
     throw new Error(
-      `Pass --${label}-output-file with a completed answer or --${label}-result-file with a benchmark result artifact.`,
+      `Pass --${label}-output-file with a completed answer or --${label}-result-file with a benchmark result artifact.`
     );
   }
   return {
@@ -1839,8 +1726,8 @@ async function readArmWithLifecycle(options, hooks, label) {
     hooks,
     `${label === "control" ? "Control" : "Test"} arm finished: loaded ${arm.source.replaceAll(
       "-",
-      " ",
-    )}.`,
+      " "
+    )}.`
   );
   return arm;
 }
@@ -1850,7 +1737,7 @@ function resolvePrompt({ explicitPrompt, controlPrompt, testPrompt }) {
   const prompt = explicitPrompt ?? controlPrompt ?? testPrompt;
   if (!prompt) {
     throw new Error(
-      "Pass --prompt/--prompt-file, or provide benchmark result artifacts that include a prompt.",
+      "Pass --prompt/--prompt-file, or provide benchmark result artifacts that include a prompt."
     );
   }
   if (explicitPrompt) {
@@ -1859,9 +1746,7 @@ function resolvePrompt({ explicitPrompt, controlPrompt, testPrompt }) {
       ["test", testPrompt],
     ]) {
       if (value && value !== explicitPrompt) {
-        warnings.push(
-          `${label} result prompt differs from --prompt/--prompt-file.`,
-        );
+        warnings.push(`${label} result prompt differs from --prompt/--prompt-file.`);
       }
     }
   } else if (controlPrompt && testPrompt && controlPrompt !== testPrompt) {
@@ -1873,9 +1758,7 @@ function resolvePrompt({ explicitPrompt, controlPrompt, testPrompt }) {
 function parseAgent(value) {
   const agent = (value ?? "codex").trim().toLowerCase();
   if (!SUPPORTED_AGENTS.has(agent)) {
-    throw new Error(
-      `--agent must be one of: ${[...SUPPORTED_AGENTS].join(", ")}.`,
-    );
+    throw new Error(`--agent must be one of: ${[...SUPPORTED_AGENTS].join(", ")}.`);
   }
   return agent;
 }
@@ -1883,17 +1766,14 @@ function parseAgent(value) {
 function parseJudgeAgent(value, defaultAgent) {
   const judgeAgent = (value ?? defaultAgent ?? "codex").trim().toLowerCase();
   if (!SUPPORTED_JUDGE_AGENTS.has(judgeAgent)) {
-    throw new Error(
-      `--judge-agent must be one of: ${[...SUPPORTED_JUDGE_AGENTS].join(", ")}.`,
-    );
+    throw new Error(`--judge-agent must be one of: ${[...SUPPORTED_JUDGE_AGENTS].join(", ")}.`);
   }
   return judgeAgent;
 }
 
 function parseStatus(value, optionName) {
   const status = value ?? "completed";
-  if (status === "completed" || status === "blocked" || status === "failed")
-    return status;
+  if (status === "completed" || status === "blocked" || status === "failed") return status;
   throw new Error(`${optionName} must be completed, blocked, or failed.`);
 }
 
@@ -1908,50 +1788,42 @@ function parseTools(value) {
 function parseClassification(value, optionName = "--classification") {
   const classification = typeof value === "string" ? value.trim() : "";
   if (QUALITY_CLASSIFICATIONS.has(classification)) return classification;
-  throw new Error(
-    `${optionName} must be one of: ${[...QUALITY_CLASSIFICATIONS].join(", ")}.`,
-  );
+  throw new Error(`${optionName} must be one of: ${[...QUALITY_CLASSIFICATIONS].join(", ")}.`);
 }
 
 function parseQualityWinner(value, optionName) {
   const winner = typeof value === "string" ? value.trim() : "";
   if (QUALITY_WINNERS.has(winner)) return winner;
-  throw new Error(
-    `${optionName} winner must be control, test, tie, or not-comparable.`,
-  );
+  throw new Error(`${optionName} winner must be control, test, tie, or not-comparable.`);
 }
 
 function normalizeQualityEvaluation(raw, source, judge) {
   const classification = parseClassification(
     optionalString(raw.classification) ?? "",
-    source === "manual" ? "--classification" : "quality.classification",
+    source === "manual" ? "--classification" : "quality.classification"
   );
   const summary = optionalString(raw.summary);
   if (!summary) {
     throw new Error(
       source === "manual"
         ? "--summary is required when --classification is supplied."
-        : "quality.summary must be a non-empty string.",
+        : "quality.summary must be a non-empty string."
     );
   }
   const dimensions = Array.isArray(raw.dimensions)
     ? raw.dimensions.map((item, index) => {
         const record = asRecord(item);
-        if (!record)
-          throw new Error(`quality.dimensions[${index}] must be an object.`);
+        if (!record) throw new Error(`quality.dimensions[${index}] must be an object.`);
         const name = optionalString(record.name);
         const explanation = optionalString(record.explanation);
         if (!name || !explanation) {
           throw new Error(
-            `quality.dimensions[${index}] must include non-empty name and explanation fields.`,
+            `quality.dimensions[${index}] must include non-empty name and explanation fields.`
           );
         }
         return {
           name,
-          winner: parseQualityWinner(
-            record.winner,
-            `quality.dimensions[${index}]`,
-          ),
+          winner: parseQualityWinner(record.winner, `quality.dimensions[${index}]`),
           explanation,
         };
       })
@@ -1967,10 +1839,7 @@ function normalizeQualityEvaluation(raw, source, judge) {
 }
 
 async function readQualityEvaluationFile(path) {
-  return normalizeQualityEvaluation(
-    await readJsonObject(resolve(path)),
-    "file",
-  );
+  return normalizeQualityEvaluation(await readJsonObject(resolve(path)), "file");
 }
 
 function validateQualityOptions(options) {
@@ -1978,13 +1847,11 @@ function validateQualityOptions(options) {
   const sources = [hasManual, Boolean(options.qualityFile)].filter(Boolean);
   if (sources.length > 1) {
     throw new Error(
-      "Use only one quality source: --quality-file or --classification with --summary.",
+      "Use only one quality source: --quality-file or --classification with --summary."
     );
   }
   if (hasManual && (!options.classification || !options.summary)) {
-    throw new Error(
-      "Manual quality review requires both --classification and --summary.",
-    );
+    throw new Error("Manual quality review requires both --classification and --summary.");
   }
 }
 
@@ -1996,7 +1863,7 @@ function manualQualityEvaluation(options) {
       summary: options.summary,
       dimensions: [],
     },
-    "manual",
+    "manual"
   );
 }
 
@@ -2004,25 +1871,18 @@ function parseJudgeTimeoutMs(value) {
   if (!value) return DEFAULT_JUDGE_TIMEOUT_SECONDS * 1000;
   const seconds = Number(value);
   if (!Number.isFinite(seconds) || seconds <= 0 || seconds > 3600) {
-    throw new Error(
-      "--judge-timeout-seconds must be greater than 0 and no more than 3600.",
-    );
+    throw new Error("--judge-timeout-seconds must be greater than 0 and no more than 3600.");
   }
   return Math.round(seconds * 1000);
 }
 
 function buildIntegrity(options, promptWarnings, control, test) {
-  const sameModelWhenObservable =
-    control.model && test.model ? control.model === test.model : null;
+  const sameModelWhenObservable = control.model && test.model ? control.model === test.model : null;
   const controlDidNotUseTwg =
-    control.twgCalls !== null
-      ? control.twgCalls === 0
-      : options.controlUsedTwg !== true;
+    control.twgCalls !== null ? control.twgCalls === 0 : options.controlUsedTwg !== true;
   const forbiddenControlMcpTools = forbiddenControlAtlassianMcpTools(control);
-  const controlDidNotUseForbiddenAtlassianMcp =
-    forbiddenControlMcpTools.length === 0;
-  const testUsedTwg =
-    test.twgCalls !== null ? test.twgCalls > 0 : options.testUsedTwg === true;
+  const controlDidNotUseForbiddenAtlassianMcp = forbiddenControlMcpTools.length === 0;
+  const testUsedTwg = test.twgCalls !== null ? test.twgCalls > 0 : options.testUsedTwg === true;
   const checks = {
     samePrompt: promptWarnings.length === 0,
     sameParentSession: null,
@@ -2031,8 +1891,7 @@ function buildIntegrity(options, promptWarnings, control, test) {
     sameReasoningWhenObservable: null,
     controlDidNotUseTwg,
     controlDidNotUseForbiddenAtlassianMcp,
-    controlDidNotUsePaidGraphTools:
-      controlDidNotUseTwg && controlDidNotUseForbiddenAtlassianMcp,
+    controlDidNotUsePaidGraphTools: controlDidNotUseTwg && controlDidNotUseForbiddenAtlassianMcp,
     testUsedTwg,
     noParentTaskSolving: null,
     noCrossArmContext: null,
@@ -2045,28 +1904,28 @@ function buildIntegrity(options, promptWarnings, control, test) {
   }
   if (checks.sameModelWhenObservable === false) {
     warnings.push(
-      `Control and test models differ: control=${control.model ?? "unknown"}, test=${test.model ?? "unknown"}.`,
+      `Control and test models differ: control=${control.model ?? "unknown"}, test=${test.model ?? "unknown"}.`
     );
   }
   if (!checks.testUsedTwg) {
     warnings.push(
       test.twgCalls !== null
         ? "Test arm benchmark artifact recorded zero TWG calls."
-        : "Test arm TWG usage was not observed. Pass --test-used-twg after verifying it.",
+        : "Test arm TWG usage was not observed. Pass --test-used-twg after verifying it."
     );
   }
   if (!checks.controlDidNotUseTwg) {
     warnings.push(
       control.twgCalls !== null
         ? `Control arm benchmark artifact recorded ${control.twgCalls} TWG call(s).`
-        : "Control arm used TWG, so the comparison is invalid.",
+        : "Control arm used TWG, so the comparison is invalid."
     );
   }
   if (!checks.controlDidNotUseForbiddenAtlassianMcp) {
     warnings.push(
       `Control arm used forbidden broad Atlassian MCP tool(s): ${forbiddenControlMcpTools
         .map((tool) => tool.name)
-        .join(", ")}.`,
+        .join(", ")}.`
     );
   }
   return {
@@ -2193,32 +2052,24 @@ function runCodexExec(args, input, timeoutMs) {
       clearTimeout(timer);
       reject(
         error?.code === "ENOENT"
-          ? new Error(
-              "Could not run Codex judge because the `codex` executable was not found.",
-            )
-          : error,
+          ? new Error("Could not run Codex judge because the `codex` executable was not found.")
+          : error
       );
     });
     child.on("close", (code, signal) => {
       clearTimeout(timer);
       if (timedOut) {
-        reject(
-          new Error(
-            `Codex judge timed out after ${Math.round(timeoutMs / 1000)} seconds.`,
-          ),
-        );
+        reject(new Error(`Codex judge timed out after ${Math.round(timeoutMs / 1000)} seconds.`));
         return;
       }
       if (code !== 0) {
-        const detail = [stderr.trim(), stdout.trim()]
-          .filter(Boolean)
-          .join("\n");
+        const detail = [stderr.trim(), stdout.trim()].filter(Boolean).join("\n");
         reject(
           new Error(
             `Codex judge failed${signal ? ` with signal ${signal}` : ""}${
               detail ? `:\n${detail}` : "."
-            }`,
-          ),
+            }`
+          )
         );
         return;
       }
@@ -2281,7 +2132,7 @@ async function writeRovoJudgeConfig(judgeDir, options) {
   await writeFile(
     configPath,
     `${JSON.stringify(rovoJudgeConfig(options, judgeDir), null, 2)}\n`,
-    "utf8",
+    "utf8"
   );
   return configPath;
 }
@@ -2357,7 +2208,7 @@ function runRovoJudgeExec(configPath, input, timeoutMs) {
         cwd: judgeDir,
         env: rovoChildEnv(),
         stdio: ["pipe", "pipe", "pipe"],
-      },
+      }
     );
     let stdout = "";
     let stderr = "";
@@ -2379,32 +2230,24 @@ function runRovoJudgeExec(configPath, input, timeoutMs) {
       clearTimeout(timer);
       reject(
         error?.code === "ENOENT"
-          ? new Error(
-              "Could not run Rovo judge because the `rovo` executable was not found.",
-            )
-          : error,
+          ? new Error("Could not run Rovo judge because the `rovo` executable was not found.")
+          : error
       );
     });
     child.on("close", (code, signal) => {
       clearTimeout(timer);
       if (timedOut) {
-        reject(
-          new Error(
-            `Rovo judge timed out after ${Math.round(timeoutMs / 1000)} seconds.`,
-          ),
-        );
+        reject(new Error(`Rovo judge timed out after ${Math.round(timeoutMs / 1000)} seconds.`));
         return;
       }
       if (code !== 0) {
-        const detail = [stderr.trim(), stdout.trim()]
-          .filter(Boolean)
-          .join("\n");
+        const detail = [stderr.trim(), stdout.trim()].filter(Boolean).join("\n");
         reject(
           new Error(
             `Rovo judge failed${signal ? ` with signal ${signal}` : ""}${
               detail ? `:\n${detail}` : "."
-            }`,
-          ),
+            }`
+          )
         );
         return;
       }
@@ -2426,8 +2269,7 @@ async function runRovoQualityJudge(result, options, timeoutMs) {
     await writeFile(join(judgeDir, "judge-prompt.md"), prompt, "utf8");
     const { stdout } = await runRovoJudgeExec(configPath, prompt, timeoutMs);
     const session = await readRovoSession(configPath);
-    const response =
-      rovoFinalTextFromSession(session.payload) || extractRovoFinalText(stdout);
+    const response = rovoFinalTextFromSession(session.payload) || extractRovoFinalText(stdout);
     return normalizeQualityEvaluation(jsonObjectFromText(response), "judge", {
       agent: "rovo",
       ...(options.judgeModel ? { model: String(options.judgeModel) } : {}),
@@ -2468,17 +2310,13 @@ async function runCodexQualityJudge(result, options, timeoutMs) {
         "-",
       ],
       buildJudgePrompt(result),
-      timeoutMs,
+      timeoutMs
     );
-    return normalizeQualityEvaluation(
-      await readJsonObject(outputPath),
-      "judge",
-      {
-        agent: "codex",
-        model,
-        effort,
-      },
-    );
+    return normalizeQualityEvaluation(await readJsonObject(outputPath), "judge", {
+      agent: "codex",
+      model,
+      effort,
+    });
   } finally {
     await rm(judgeDir, { force: true, recursive: true });
   }
@@ -2495,23 +2333,14 @@ async function runQualityJudge(result, options) {
 
 async function resolveQuality(options, result) {
   validateQualityOptions(options);
-  if (options.qualityFile)
-    return readQualityEvaluationFile(options.qualityFile);
+  if (options.qualityFile) return readQualityEvaluationFile(options.qualityFile);
   const manualQuality = manualQualityEvaluation(options);
   if (manualQuality) return manualQuality;
   if (options.judge === false) return undefined;
   return runQualityJudge(result, options);
 }
 
-function buildResult({
-  prompt,
-  promptWarnings,
-  agent,
-  options,
-  control,
-  test,
-  twgRoutePlan,
-}) {
+function buildResult({ prompt, promptWarnings, agent, options, control, test, twgRoutePlan }) {
   const controlTools = parseTools(options.controlTools);
   const testTools = parseTools(options.testTools);
   return {
@@ -2535,9 +2364,7 @@ function buildResult({
     },
     control: {
       label: contract.defaultArms.control.label,
-      status:
-        control.status ??
-        parseStatus(options.controlStatus, "--control-status"),
+      status: control.status ?? parseStatus(options.controlStatus, "--control-status"),
       output: control.output,
       tokens: control.tokens,
       tokenUsage: control.tokenUsage,
@@ -2546,17 +2373,12 @@ function buildResult({
       durationMs: control.durationMs,
       toolErrors: control.toolErrors,
       ...outputMetrics(control.output),
-      toolSurface:
-        controlTools.length > 0 ? controlTools : (control.toolSurface ?? []),
+      toolSurface: controlTools.length > 0 ? controlTools : (control.toolSurface ?? []),
       toolCallLog: control.toolCallLog,
       source: control.source,
       ...(control.model ? { model: control.model } : {}),
-      ...(control.answerQualityStatus
-        ? { answerQualityStatus: control.answerQualityStatus }
-        : {}),
-      ...(control.dataReturned !== undefined
-        ? { dataReturned: control.dataReturned }
-        : {}),
+      ...(control.answerQualityStatus ? { answerQualityStatus: control.answerQualityStatus } : {}),
+      ...(control.dataReturned !== undefined ? { dataReturned: control.dataReturned } : {}),
       ...(control.traceFile ? { traceFile: control.traceFile } : {}),
     },
     test: {
@@ -2574,12 +2396,8 @@ function buildResult({
       toolCallLog: test.toolCallLog,
       source: test.source,
       ...(test.model ? { model: test.model } : {}),
-      ...(test.answerQualityStatus
-        ? { answerQualityStatus: test.answerQualityStatus }
-        : {}),
-      ...(test.dataReturned !== undefined
-        ? { dataReturned: test.dataReturned }
-        : {}),
+      ...(test.answerQualityStatus ? { answerQualityStatus: test.answerQualityStatus } : {}),
+      ...(test.dataReturned !== undefined ? { dataReturned: test.dataReturned } : {}),
       ...(test.traceFile ? { traceFile: test.traceFile } : {}),
     },
     integrity: buildIntegrity(options, promptWarnings, control, test),
@@ -2629,10 +2447,7 @@ async function writeRunArtifacts(outputDir, result) {
       lastActivity: "artifacts-written",
     },
   ];
-  await writeFile(
-    progressPath,
-    `${progress.map((entry) => JSON.stringify(entry)).join("\n")}\n`,
-  );
+  await writeFile(progressPath, `${progress.map((entry) => JSON.stringify(entry)).join("\n")}\n`);
   return { manifestPath, resultPath, reportPath, progressPath };
 }
 
@@ -2642,23 +2457,12 @@ export async function runBenchmarkLite(options, hooks = {}) {
   const outputDir = options.outputDir ?? resolve(DEFAULT_RUN_ROOT, nowRunId());
   const liveRun = !hasArmArtifacts(options);
   lifecycle(hooks, `Starting comparison for ${agent}.`);
-  lifecycle(
-    hooks,
-    `Control arm: ${contract.defaultArms.control.label}.`,
-  );
-  lifecycle(
-    hooks,
-    `Treatment arm: ${contract.defaultArms.test.label}.`,
-  );
-  lifecycle(
-    hooks,
-    liveRun ? "Reading prompt." : "Reading prompt and arm results.",
-  );
+  lifecycle(hooks, `Control arm: ${contract.defaultArms.control.label}.`);
+  lifecycle(hooks, `Treatment arm: ${contract.defaultArms.test.label}.`);
+  lifecycle(hooks, liveRun ? "Reading prompt." : "Reading prompt and arm results.");
   const explicitPrompt = await readPromptInput(options);
   if (liveRun && !explicitPrompt) {
-    throw new Error(
-      "Pass --prompt or --prompt-file for a live benchmark-lite run.",
-    );
+    throw new Error("Pass --prompt or --prompt-file for a live benchmark-lite run.");
   }
   const { control, test, twgRoutePlan } = liveRun
     ? await runLiveArms(options, hooks, explicitPrompt, outputDir, agent)
@@ -2691,7 +2495,7 @@ export async function runBenchmarkLite(options, hooks = {}) {
     const judgeAgent = parseJudgeAgent(options.judgeAgent, agent);
     lifecycle(
       hooks,
-      `Evaluating responses with ${judgeAgent === "rovo" ? "Rovo" : "Codex"} quality judge.`,
+      `Evaluating responses with ${judgeAgent === "rovo" ? "Rovo" : "Codex"} quality judge.`
     );
   }
   const quality = await resolveQuality(options, baseResult);
@@ -2721,7 +2525,7 @@ export async function reportBenchmarkLite(resultPath, options = {}) {
   const absoluteResultPath = resolve(resultPath);
   const result = await readJsonObject(absoluteResultPath);
   const reportPath = resolve(
-    options.reportFile ?? resolve(dirname(absoluteResultPath), "report.html"),
+    options.reportFile ?? resolve(dirname(absoluteResultPath), "report.html")
   );
   await mkdir(dirname(reportPath), { recursive: true });
   await writeFile(reportPath, renderBenchmarkLiteReport(result), "utf8");
@@ -2738,10 +2542,6 @@ export function doctorPayload() {
     integrityChecks: contract.integrityChecks,
     qualityJudge: contract.qualityJudge,
     publicSafety: contract.publicSafety,
-    commands: [
-      "twg benchmark lite doctor",
-      "twg benchmark lite run",
-      "twg benchmark lite report",
-    ],
+    commands: ["twg benchmark lite doctor", "twg benchmark lite run", "twg benchmark lite report"],
   };
 }
