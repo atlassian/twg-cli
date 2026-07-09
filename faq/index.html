@@ -104,6 +104,10 @@
 <p>Yes. OAuth 2.1 is the only supported authentication method, and interactive <code>twg login</code> uses OAuth by default. TWG CLI also supports delegated OAuth for embedding applications that own the credential lifecycle. Bitbucket is the one exception: it isn't covered by OAuth yet and requires a separate Bitbucket token.</p>
 <h3 id="does-teamwork-graph-cli-only-work-with-agent-terminals">Does Teamwork Graph CLI only work with agent terminals?</h3>
 <p>No. Teamwork Graph CLI can be used by any AI agent or tool that can invoke a CLI. For example, agents that run commands behind the scenes — not just agent terminals — can use Teamwork Graph CLI.</p>
+<h3 id="when-using-confluence-via-the-twg-cli-which-models-are-recommended-for-whiteboard-and-database-generation">When using Confluence via the TWG CLI, which models are recommended for whiteboard and database generation?</h3>
+<p>When using <code>twg confluence content create</code> through the TWG CLI, we recommend some models for better whiteboards and database generation.</p>
+<p>For whiteboards, Sonnet 4.6 is recommended. GPT 5.5 is compatible, but other models have not been tested for quality.</p>
+<p>For databases, Sonnet 4.6 and Opus 4.6 are recommended.</p>
 <h3 id="should-i-use-teamwork-graph-cli-or-rovo-mcp">Should I use Teamwork Graph CLI or Rovo MCP?</h3>
 <p>Teamwork Graph CLI and Rovo MCP are both official ways for AI agents to work with Atlassian data via the Teamwork Graph. They are complementary, not interchangeable:</p>
 <ul>
@@ -113,7 +117,7 @@
 <p>For a detailed comparison and decision guide, see <a href="https://support.atlassian.com/organization-administration/docs/choosing-between-twg-cli-and-rovo-mcp/">Choosing between Teamwork Graph CLI and Rovo MCP</a>.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli aa0e06d9226c (2026-07-09T06:10:16+00:00).
+        Generated from atlassian/twg-cli 21461a3d3cf8 (2026-07-09T06:47:36+00:00).
       </footer>
     </main>
   </div>
