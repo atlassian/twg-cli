@@ -33,6 +33,7 @@ inside a cross-product answer.
 | Exact Jira filtering           | Workitem `query` with JQL             |
 | Semantic Jira discovery        | Top-level `search --app jira` (Rovo)  |
 | Related artifacts or people    | Native read plus `context`            |
+| Link implementation artifacts  | `jira workitem link pr|repo|deployment|build|branch|commit|loom|meeting` |
 | Create or update               | Field metadata, then mutation         |
 | Change workflow state          | Discover transitions, then transition |
 | Board or sprint ordering       | Board/backlog/sprint command          |
@@ -62,6 +63,9 @@ consequential mutation.
 - Use returned `customfield_*` IDs rather than display names in writes.
 - Discover available transitions instead of guessing a transition name or ID.
 - Keep global Jira field administration separate from workitem field values.
+- Use typed workitem artifact links when the request is to add Jira remote links
+  to PRs, repos, deployments, builds, branches, commits, Loom videos, or meetings.
+  These are not Jira Software devinfo/provider writes.
 - Verify mutations with a native read and report the resulting key and URL.
 
 ## Handoffs

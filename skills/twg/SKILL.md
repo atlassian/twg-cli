@@ -21,6 +21,7 @@ For synthesis, load the narrowest workflow skill:
 - `twg-context-discovery` for topic deep dives, dependency maps, context graphs, repo discovery, and catch-ups.
 - `twg-engineering-work` for PR queues, stale reviews, repo contributors, hot
   areas, and PR status.
+- `twg-jira-resolve-merged-work` for dry-run-first Jira board/sprint/epic/space cleanup where merged PR evidence can safely resolve stale workitems.
 - `twg-operational-health` for handoffs, reliability/incidents, Assets,
   staffing, meeting summaries, and risk.
 - `twg-bench-lite` for read-only single-prompt A/B comparisons.
@@ -117,6 +118,7 @@ Load companion skills for detailed semantics:
 - `../twg-status-rollups/SKILL.md` for personal/team/org/project/goal/leadership status.
 - `../twg-context-discovery/SKILL.md` for context, dependencies, responsibility, and graphs.
 - `../twg-engineering-work/SKILL.md` for PRs, reviews, contributors, and bottlenecks.
+- `../twg-jira-resolve-merged-work/SKILL.md` for board/sprint/epic/space stale Jira workitems whose implementation appears complete from merged PR evidence.
 - `../twg-operational-health/SKILL.md` for handoffs, reliability, incidents, assets, staffing, and risk.
 
 
