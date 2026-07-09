@@ -116,6 +116,13 @@
 </blockquote>
 <h2 id="other-agents">Other agents</h2>
 <p>The installer also supports <strong>Cursor</strong>, <strong>GitHub Copilot</strong>, <strong>Rovo Dev</strong>, <strong>Augment</strong>, <strong>Kiro CLI</strong>, <strong>OpenCode</strong>, and any agent that supports a skills or context directory. The universal <code>.agents/skills/</code> location works out of the box for most agents. Additional-agent copies are installed only when that agent is detected locally or when you request it with <code>--agent</code>.</p>
+<h2 id="network-allowlist">Network allowlist</h2>
+<p>Some tools, like whiteboards and attachments, need your agent to reach additional Atlassian domains. If your agent runs in a sandboxed or network-restricted environment, you'll need to allowlist these domains for those tools to work:</p>
+<ul>
+<li><code>api.media.atlassian.com</code></li>
+<li><code>*.frontend.public.atl-paas.net</code></li>
+</ul>
+<p>For example: if you're using Claude Code, add these domains to the <code>network.allowedDomains</code> setting. See the <a href="https://code.claude.com/docs/en/settings#sandbox-settings">Claude Code sandbox settings</a> for details.</p>
 <h2 id="what-gets-installed">What gets installed</h2>
 <p>Skills are placed under <code>.agents/skills/</code> and detected or requested
 agent-specific locations as focused sibling skill directories:</p>
@@ -178,7 +185,7 @@ needed.</p>
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 1a44bef53a88 (2026-07-08T08:52:35+00:00).
+        Generated from atlassian/twg-cli ecaf11637b04 (2026-07-09T01:11:26+00:00).
       </footer>
     </main>
   </div>
