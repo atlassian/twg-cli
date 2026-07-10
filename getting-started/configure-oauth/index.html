@@ -154,9 +154,11 @@ twg upkeep disable
 <p>If you disable the background item, TWG CLI still works, but OAuth refresh and update notifications may not run in the background. Run <code>twg auth refresh</code> or <code>twg update</code> manually if needed.</p>
 <p>If a command says the TWG config directory isn't writable, run <code>twg auth refresh</code> or <code>twg login</code> in a normal terminal outside the coding agent.</p>
 <h2 id="bitbucket-authentication">Bitbucket authentication</h2>
-<p>Bitbucket is the only exception to OAuth support: Bitbucket commands aren't covered by OAuth yet and require a separate Bitbucket token. When you run <code>twg login</code>, you're prompted for your Bitbucket token. <code>twg login</code> preserves an existing Bitbucket token unless you run <code>twg login --force</code>.</p>
-<p>To set or refresh the Bitbucket token later without rerunning core authentication, run:</p>
+<p>Bitbucket is the only exception to OAuth support: Bitbucket commands aren't covered by OAuth yet and require a separate Bitbucket token. This token is set up separately from core login — <code>twg login</code> never prompts for it. Instead, run:</p>
 <pre><code class="language-bash">twg setup bitbucket
+</code></pre>
+<p>This is also offered automatically during <code>twg setup</code> (and the installer). An existing token is reused silently; pass <code>--force</code> to re-prompt and overwrite it:</p>
+<pre><code class="language-bash">twg setup bitbucket --force
 </code></pre>
 <p>For CI/CD, set the <code>TWG_BBC_TOKEN</code> environment variable to your Bitbucket token.</p>
 <h2 id="next-steps">Next steps</h2>
@@ -166,7 +168,7 @@ twg upkeep disable
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 7316fc83c314 (2026-07-10T13:58:39+00:00).
+        Generated from atlassian/twg-cli e03f586c9fc5 (2026-07-10T14:10:13+00:00).
       </footer>
     </main>
   </div>

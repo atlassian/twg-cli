@@ -94,7 +94,7 @@
 <pre><code class="language-bash">twg admin auth login --email &lt;your-email&gt; --org &lt;your-org-id&gt;
 </code></pre>
 <h2 id="bitbucket">Bitbucket</h2>
-<p>Bitbucket is the only exception to OAuth support: Bitbucket commands aren't covered by OAuth yet and require a separate Bitbucket token. When you run <code>twg login</code>, you're prompted for your Bitbucket token. To set or refresh it later, see <a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a>.</p>
+<p>Bitbucket is the only exception to OAuth support: Bitbucket commands aren't covered by OAuth yet and require a separate Bitbucket token, set up independently of <code>twg login</code> via <code>twg setup bitbucket</code>. To set or refresh it, see <a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a>.</p>
 <aside class="dac-panel dac-panel-warning">
 <div class="dac-panel-label">Warning</div>
 <p>TWG CLI never asks you to paste or share your authentication tokens in a prompt, chat, or conversation. Don't respond if an agent or tool asks you to share a token this way. Tokens are always entered through secure, interactive terminal prompts that aren't stored in shell history or visible to other processes.</p>
@@ -118,7 +118,7 @@
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 7316fc83c314 (2026-07-10T13:58:39+00:00).
+        Generated from atlassian/twg-cli e03f586c9fc5 (2026-07-10T14:10:13+00:00).
       </footer>
     </main>
   </div>
