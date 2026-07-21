@@ -11,6 +11,13 @@ description: >
 Use together with the root `twg` skill. Exact command grammar must come from
 live `twg help`, `twg help <terms>`, or `twg help describe <path>`.
 
+## CLI launcher fallback
+
+Run `twg <command>`. On shell `command not found`, use `$HOME/.local/bin/twg`
+(macOS/Linux) / `$env:LOCALAPPDATA\Programs\twg\bin\twg.exe` (PowerShell), then
+tell user to add that directory to PATH. Do not treat auth or command errors as
+PATH failures.
+
 ## Use When
 
 - "Which PRs are waiting for my review?"
@@ -19,11 +26,9 @@ live `twg help`, `twg help <terms>`, or `twg help describe <path>`.
 - "Repos I created PRs in"
 - "Stale reviews"
 - "Review flow or bottlenecks"
-- "PR-only leadership readout"
 - "PR-only status for a user, team, or repo"
 - "PR status for Alice" or "this person's PRs"
 - "My PRs this week"
-- "My pull requests this week"
 - "Summarize my pull requests for a time window"
 - "Open bugs/tasks with PRs in flight"
 
@@ -37,10 +42,10 @@ Resolve the engineering anchor:
   commits, branches, and repos.
 - Topic prompt: resolve/search once, then find linked repos, PRs, and workitems.
 
-Use typed pull-request, Bitbucket, Jira, context, and search command families
-when they clearly match the prompt. Use provider-native PR commands only for the
-matching host; Bitbucket activity/comment/task commands do not apply to GitHub
-PRs. Use focused help only when the route or exact contract is unclear.
+Use matching typed pull-request, Bitbucket, Jira, context, and search commands.
+Provider-native PR commands apply only to their host; Bitbucket
+activity/comment/task commands never apply to GitHub PRs. Use focused help for
+uncertain routes/contracts.
 
 ## Route Selection
 
@@ -50,13 +55,13 @@ PRs. Use focused help only when the route or exact contract is unclear.
 - For issue-to-PR lookup, use workitem context before broad PR text search.
 - For repo contributors and hot areas, combine PR/commit/file-area signals with
   ownership and review evidence.
-- For PR-based status, resolve org/team first, then collect merged or open PRs
-  for the relevant members, repos, and time window.
-- For person-scoped summaries that include Jira, docs, meetings, planning, or
-  notifications, route to `twg-status-rollups` and load
-  `references/personal-work-summary.md`. Keep this skill authoritative for
-  PR-only queues, stale reviews, review bottlenecks, repo contributors, hot
-  areas, and PR-only status.
+- For PR leadership/team/org rollups, use `twg-status-rollups`; this skill
+  supplements PR details.
+- For person/repo status, collect merged/open PRs for relevant people, repos,
+  and window.
+- For person-scoped summaries with Jira, docs, meetings, planning, or
+  notifications, use `twg-status-rollups` plus
+  `references/personal-work-summary.md`; this skill owns PR-only work.
 
 ## Evidence Policy
 

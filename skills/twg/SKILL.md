@@ -8,19 +8,21 @@ description: >
 
 # twg
 
-First TWG routing step: use typed commands for stable keys, URLs, ARIs, and
-familiar families. If uncertain, inspect `twg help <terms>` or
-`twg help describe <path>`. For specialized guidance, run
+First TWG routing step: use typed commands for stable anchors. If uncertain, inspect `twg help <terms>`
+or `twg help describe <path>`. For specialized guidance, run
 `twg help discover-skills "<intent>"`.
 
 ## Overview
 
 For synthesis, load the narrowest workflow skill:
 
-- `twg-status-rollups` for person, team, org, project, goal, leadership, and appraisal readouts.
-- `twg-context-discovery` for topic deep dives, dependency maps, context graphs, repo discovery, and catch-ups.
-- `twg-engineering-work` for PR queues, stale reviews, repo contributors, hot
-  areas, and PR status.
+- `twg-status-rollups` for person, team, org, project, goal, leadership, and
+  appraisal readouts. This includes PR-based leadership/team/org rollups; load
+  it before `twg-engineering-work` and start with `pr-tree` for those prompts.
+- `twg-context-discovery` for topic deep dives, dependency maps, context graphs,
+  repo discovery, and OOO catch-ups.
+- `twg-engineering-work` for person/repo PR queues and status, stale reviews,
+  repo contributors, and hot areas.
 - `twg-jira-resolve-merged-work` for dry-run-first Jira board/sprint/epic/space cleanup where merged PR evidence can safely resolve stale workitems.
 - `twg-operational-health` for handoffs, reliability/incidents, Assets,
   staffing, meeting summaries, and risk.
@@ -29,11 +31,10 @@ For synthesis, load the narrowest workflow skill:
 
 ## Invocation And Output
 
-Run TWG directly:
-
-```bash
-twg <command>
-```
+Run `twg <command>`. On shell `command not found`, use `$HOME/.local/bin/twg`
+(macOS/Linux) / `$env:LOCALAPPDATA\Programs\twg\bin\twg.exe` (PowerShell), then
+tell user to add that directory to PATH. Do not treat auth or command errors as
+PATH failures.
 
 Agent hosts may set `TWG_AGENT_DEFAULTS=1`; do not add per-command env prefixes unless requested.
 

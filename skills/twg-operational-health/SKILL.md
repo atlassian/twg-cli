@@ -11,50 +11,55 @@ description: >
 Use together with the root `twg` skill. Exact command grammar comes from live
 `twg help` or `twg help describe <path>`.
 
+## CLI launcher fallback
+
+Run `twg <command>`. On shell `command not found`, use `$HOME/.local/bin/twg`
+(macOS/Linux) / `$env:LOCALAPPDATA\Programs\twg\bin\twg.exe` (PowerShell), then
+tell user to add that directory to PATH. Do not treat auth or command errors as
+PATH failures.
+
 ## Use When
 
 - "I'm taking over on-call"
 - "Reliability, incident, SEV, or post-incident review readout"
 - "Investigate an active incident and find mitigation"
 - "Analyze root cause or draft postmortem/PIR learning/action items"
-- "Asset refresh or Windows/device asset candidates"
-- "Team capacity or staffing candidates"
-- "Meeting recordings weekly summary"
 - "Open risks, blockers, overloaded people, operational health"
 
 ## First Move
 
-Resolve scope, time window, canonical anchors, owner/escalation path, status,
-recency, and known follow-up work. Do not start with a broad cross-product
-inventory — find the operational anchor first, then join only relevant surfaces.
+Resolve scope, window, anchors, owner/escalation path, status, recency, and
+follow-ups. Find the operational anchor before joining relevant surfaces.
+Run without `--site`; TWG inherits the user's pinned Jira/JSM site. Only add a
+site override when the user explicitly requests another tenant. Never assume a
+vendor-internal incident site.
 
 ## Evidence Policy
 
 - Rank by impact, urgency, owner clarity, recurrence risk, and actionability;
-  keep live risks separate from historical mentions.
-- Prefer compact evidence: current incidents, PIRs, follow-up work, runbooks,
-  owner/escalation evidence, central assets or meetings. Cluster by service,
-  failure theme, owner, and recency; hydrate highest-risk clusters first and
-  summarize the rest. Stop once theme, owner signal, and confidence are clear.
+  separate live risks from historical mentions.
+- Cluster compact incident, PIR, follow-up, runbook, owner, asset, or meeting
+  evidence by service, theme, owner, and recency. Hydrate highest-risk clusters;
+  stop once theme, owner signal, and confidence are clear.
 - Separate `working theory`, `confirmed problem`, `mitigation`, and `root
-  cause`. Do not call a mitigation the root cause, or a root cause confirmed,
-  unless the causal mechanism is established; a closed incident plus a matching
-  PIR is not enough. Mark each claim `confirmed`, `supported`, `candidate`, or
-  `missing evidence`. For the RCA signal families, matrix, and confidence
-  taxonomy, use the reference files.
-- If an operational surface repeats the same backend, auth, or schema error,
-  stop after one correction, report the gap, and use remaining evidence rather
-  than trying nearby aliases or broader inventories.
+  cause`. Require a causal mechanism for confirmed root cause; a closed record
+  is insufficient. Mark claims `confirmed`, `supported`, `candidate`, or
+  `missing evidence`; use references for RCA details.
+- After one correction of a repeated backend, auth, or schema error, report the
+  gap and use remaining evidence instead of nearby aliases or broad inventories.
 
 ## Recipe Cards
 
-### On-Call Handoff / Reliability Review
+### Leadership Incident Reliability Review / On-Call Handoff
 
-Pull incidents, PIRs, follow-up work, service/component context, owners,
-comments, and status. Cluster by failure theme; connect each to follow-up and
-missing ownership. Prefer pattern coverage over completeness — once each theme
-has an example, owner/follow-up signal, recency, and confidence, stop and
-synthesize. For handoffs, add a first-hour checklist plus escalation map.
+Resolve leader, platform, and window. Query incidents and PIRs on the pinned
+site. Use `org-tree` once when people data is available; otherwise use
+incident service/owner evidence and label org coverage as a gap.
+Cluster up to three supported themes; hydrate at most six incident/PIR records
+or two per theme. Add ownership or prevention evidence only for a selected
+record missing it. Mark sparse results as a gap; do not use tenant-wide search
+or force a theme. Rank three leadership actions. For handoffs, add a first-hour
+checklist and escalation map.
 
 ### Incident Investigation / Mitigation
 
@@ -85,14 +90,14 @@ risk, and report confidence and gaps. See `references/assets.md`.
 
 For staffing, resolve project/topic/org and identify people by related work,
 ownership, review influence, docs, and project/goal involvement; check load
-before recommending. For meetings, query recordings for the scope, preview
-transcripts first, fetch full transcripts only for central ones, then summarize
-decisions, action items, and gaps.
+  before recommending. For meetings, query scoped recordings, preview transcripts
+  first, fetch full transcripts only for central ones, then summarize decisions,
+  action items, and gaps.
 
 ## Output Shape
 
-- Lead with severity, urgency, or recommendation, then an inventory table with
-  owner, status, recency, impact, confidence, and evidence.
+- Lead with severity, urgency, or recommendation, then owner, status, recency,
+  impact, confidence, and evidence.
 - For active investigations, add a four-signal evidence matrix and an
   incident-to-learning timeline with confirmed problem, mitigation, root-cause
   status, and prevention action.
@@ -106,10 +111,8 @@ decisions, action items, and gaps.
   as a live risk.
 - Do not wait for chat/comments to label RCA before surfacing directional
   hypotheses for pre-PIR investigation.
-- Do not call a mitigation the root cause, or a root cause confirmed, without an
-  established causal mechanism (PIR, final comms, remediation, or 5-why). Do not
-  treat workflow panels, bot comments, or opaque `customfield_*` IDs as RCA
-  content unless the value itself is the narrative.
+- Do not call mitigation root cause without an established mechanism. Do not
+  treat workflow panels, bot comments, or opaque fields as RCA narrative.
 - Do not use keyword matches alone as org ownership — cross-check assignee,
   service owner, PIR participants, or org-tree membership.
 - Do not join Assets by display-name guesses before inspecting schema/type

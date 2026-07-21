@@ -12,6 +12,13 @@ Use with the root `twg` skill whenever Confluence is the source of truth or a
 Confluence mutation is required. This skill owns content-type, hierarchy,
 format, and concurrency semantics; exact command grammar comes from live help.
 
+## CLI launcher fallback
+
+Run `twg <command>`. On shell `command not found`, use `$HOME/.local/bin/twg`
+(macOS/Linux) / `$env:LOCALAPPDATA\Programs\twg\bin\twg.exe` (PowerShell), then
+tell user to add that directory to PATH. Do not treat auth or command errors as
+PATH failures.
+
 ## Use When
 
 - A Confluence URL, content ID, space key, page title, or CQL expression is the
@@ -59,6 +66,10 @@ mutation.
 
 ## Safe Authoring And Editing
 
+- Before creating or editing content in a space, read that space's instructions
+  with `confluence space instructions get --key <spaceKey>` (or with
+  `confluence space instructions get --id <spaceId>`) and apply them while
+  authoring; see `references/spaces.md`. Absent or empty ⇒ author with defaults.
 - For an unspecified new internal "page," "doc," "write-up," "runbook," or
   notes artifact, prefer a live doc.
 - Prefer a classic page for knowledge bases, customer-facing help, established

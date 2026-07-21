@@ -12,6 +12,13 @@ once with paid Atlassian Teamwork Graph context through TWG CLI. This is a
 skill-first workflow with a thin `twg benchmark lite run` bridge. The benchmark
 repo owns reusable runner, judge, and report-template code.
 
+## CLI launcher fallback
+
+Run `twg <command>`. On shell `command not found`, use `$HOME/.local/bin/twg`
+(macOS/Linux) / `$env:LOCALAPPDATA\Programs\twg\bin\twg.exe` (PowerShell), then
+tell user to add that directory to PATH. Do not treat auth or command errors as
+PATH failures.
+
 ## Runtime Support
 
 V1 supports Codex and Rovo live runs. Claude is V2. Do not require users to

@@ -1,8 +1,8 @@
 ---
 description: >
-  Summarize cross-product work for any person across Jira, pull requests, docs,
-  meetings, planning, and notifications for performance reviews, appraisals,
-  annual/cycle summaries, and week-to-year windows up to 1 year.
+  Summarize work for any person across Jira, pull requests, docs, meetings, and
+  notifications for weekly personal updates, performance review evidence,
+  appraisals, and year-bounded summaries.
 ---
 
 # Personal Work Summary
@@ -11,6 +11,10 @@ Use this reference with `twg-status-rollups` for bounded personal or
 person-scoped work summaries. This is workflow guidance, not a `twg work
 summary` command. Compose the summary from existing surfaces, starting with
 bounded `work query` evidence.
+
+This reference is for person-scoped summaries. For org/team leadership readouts
+based primarily on merged/open PR evidence, use the `pr-tree` fast path in
+`twg-status-rollups` instead.
 
 ## Use When
 

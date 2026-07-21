@@ -20,6 +20,7 @@ Examples of suitable constraints:
 ```text
 project = PROJ AND statusCategory != Done ORDER BY priority DESC, rank ASC
 assignee = currentUser() AND updated >= -7d ORDER BY updated DESC
+assignee = currentUser() AND statusCategory = "In Progress" ORDER BY updated DESC
 sprint in openSprints() AND issuetype in (Bug, Story)
 ```
 
@@ -36,6 +37,9 @@ Guidance:
   hydrate selected Jira keys with `jira workitem get`.
 - Pair the query with context only for the few workitems whose relationships
   affect the answer.
+- Treat current assigned Jira work as an exact JQL query. If the query reports
+  a missing default site, relay its repair and stop; do not inspect auth files
+  or fall back to broad activity queries.
 - State truncation when a limit prevents exhaustive coverage.
 
 Do not borrow projection flags or org scopes unless the exact Jira command
