@@ -8,24 +8,21 @@ description: >
 
 # twg
 
-First TWG routing step: use typed commands for stable anchors. If uncertain, inspect `twg help <terms>`
-or `twg help describe <path>`. For specialized guidance, run
-`twg help discover-skills "<intent>"`.
+TWG routing: use typed commands for anchors. If uncertain, inspect `twg help <terms>`,
+`twg help describe <path>`, or `twg help discover-skills "<intent>"`.
 
 ## Overview
 
-For synthesis, load the narrowest workflow skill:
+Load the narrowest workflow skill:
 
-- `twg-status-rollups` for person, team, org, project, goal, leadership, and
-  appraisal readouts. This includes PR-based leadership/team/org rollups; load
-  it before `twg-engineering-work` and start with `pr-tree` for those prompts.
-- `twg-context-discovery` for topic deep dives, dependency maps, context graphs,
-  repo discovery, and OOO catch-ups.
-- `twg-engineering-work` for person/repo PR queues and status, stale reviews,
-  repo contributors, and hot areas.
-- `twg-jira-resolve-merged-work` for dry-run-first Jira board/sprint/epic/space cleanup where merged PR evidence can safely resolve stale workitems.
-- `twg-operational-health` for handoffs, reliability/incidents, Assets,
-  staffing, meeting summaries, and risk.
+- `twg-status-rollups` for status and leadership readouts; load it before
+  `twg-engineering-work` for PR-based team/org rollups.
+- `twg-context-discovery` for deep dives, dependencies, graphs, repos, and catch-ups.
+- `twg-agentic-search` for fuzzy cross-product Rovo/company-knowledge research.
+- `twg-responsibility-routing` for owners, experts, approvers, authorities, and escalation.
+- `twg-engineering-work` for PR status, reviews, contributors, and hot areas.
+- `twg-jira-resolve-merged-work` for stale Jira work backed by merged PRs.
+- `twg-operational-health` for handoffs, incidents, Assets, staffing, meetings, and risk.
 - `twg-bench-lite` for read-only single-prompt A/B comparisons.
 
 
@@ -36,102 +33,74 @@ Run `twg <command>`. On shell `command not found`, use `$HOME/.local/bin/twg`
 tell user to add that directory to PATH. Do not treat auth or command errors as
 PATH failures.
 
-Agent hosts may set `TWG_AGENT_DEFAULTS=1`; do not add per-command env prefixes unless requested.
+Do not add per-command env prefixes unless requested; hosts may set `TWG_AGENT_DEFAULTS=1`.
 
-For large outputs, inspect `output_files.compact` first when present. Read or
-filter `output_files.stdout` only when compact output lacks evidence.
+Use `stdout_inline` first when present. Outside benchmark lanes, inspect `output_files.compact`
+only when inline evidence is incomplete; full stdout is the last resort.
+
+In TWG-only benchmark lanes, run only `twg` commands. Never use shell utilities or pipelines
+(`jq`, `rg`, `date`) to transform evidence or calculate windows. Use compact/inline TWG output,
+the prompt's timezone and window, and report gaps. Match the intent to the narrowest companion
+skill before selecting a command. Let that skill determine the typed route; use at most one help
+call when command shape or output remains ambiguous.
 
 ## Auth/Setup Guard
 
-Do not run setup, login, logout, install, update, upkeep, or credential commands
-from ordinary TWG requests. Only run them for explicit setup/auth/repair
-asks or setup/auth skills. If missing, report remediation and wait for user direction.
+Do not run setup, login, install, update, upkeep, or credential commands unless
+explicitly requested for setup/auth/repair. Otherwise report remediation and wait for user direction.
 
 ## Bounded Evidence Loop
 
-For synthesized answers, converge instead of exhaustively hunting; prefer typed
-commands or product-native paths with stronger evidence.
+Converge; prefer typed or product-native evidence.
 
-1. Classify the anchor: person, team, project, goal, workitem, page, repo,
-   service, asset, or topic.
-2. Resolve IDs once, then fetch only evidence that can change owner, status,
-   risk, decision, relationship, priority, or next action.
-3. Group large candidate sets; hydrate representative top items.
-4. Prefer compact/evidence output. Inspect full stdout only for missing fields.
-5. After each batch, synthesize once evidence, recency, and confidence hold.
-6. Stop a path after the same auth, ACL, contract, or backend error twice.
+1. Classify the anchor: person, team, project, goal, workitem, page, repo, service, asset, or topic.
+2. Resolve once; fetch evidence that changes status, risk, decision, relationship, or action.
+3. Rank candidates, hydrate representative items, then synthesize.
+4. Stop after the first policy denial; stop after the same auth, ACL, contract, or backend error twice.
 
 ## Command Discovery
 
-- Use typed commands directly for familiar families: `resolve`, `search`,
+- Use typed commands for familiar families: `resolve`, `search`,
   `user`, `org-tree`, `work query`, `work search`, `pull-requests`, `jira`,
   `confluence`, `docs`, `context`, `responsibility`, `goals`, `projects`,
   `assets`, and `trello`.
-- Use `twg search "<topic>" [--limit <n>]` for relevance-ranked top-K discovery
-  across built-ins and ready connectors. Implicit unavailable connectors warn;
-  explicit `--app` preflights and fails.
-- For fuzzy Trello board/card discovery, use `twg trello search "<query>" --limit 20`; no workspace scoping.
-- For Rovo connector searches, use `twg rovo list-apps -o json`
-  (`list-connectors` is an alias) to discover site-visible `--app` filters.
-  Explicit `twg rovo search ... --app <connector>` preflights connector auth;
-  follow the returned action or run `twg rovo auth <app>`, then retry.
+- Use `twg search "<topic>" [--limit <n>]` for top-K discovery; explicit `--app` preflights.
+- For fuzzy Trello discovery, use `twg trello search "<query>" --limit 20`; no workspace scope.
+- For Rovo connectors, use `twg rovo list-apps -o json` (`list-connectors` alias), then explicit `twg rovo search ... --app <connector>`; follow its auth action or `twg rovo auth <app>`.
 - Keep document relationship history and fuzzy discovery separate:
-  - Use `twg docs query --since <duration> [--account-id <id>] [--first <n>]`
-    for documents related to a user through activity, not title/content search.
-  - Use `twg docs search "<topic>" [--limit <n>]` for fuzzy Rovo search across
-    Confluence and ready document connectors.
+  - `twg docs query --since <duration> [--account-id <id>] [--first <n>]` is user activity history, not title/content search.
+  - `twg docs search "<topic>" [--limit <n>]` is fuzzy Rovo discovery across Confluence and ready document connectors.
   - Never pass topic text to `docs query`; route that intent to `docs search`.
 - Keep user activity and fuzzy work discovery separate:
-  - `twg work query` defaults to seven days of authored work, full-window counts, and five summary items.
-  - Other activity is opt-in through `--activity` / `--include-viewed`.
-  - `twg work search "<topic>"` is tenant-wide work discovery; use `docs search` for documents.
-  - If fuzzy topic text reaches `work query`, the CLI redirects to `work search`; prefer direct calls.
-- Use `twg help <terms>` before guessing grammar and `twg help describe <path>` for contracts.
-- Namespace help is not an executable contract. Follow advertised child commands
-  before adding flags.
-- Resolve URLs, keys, ARIs, names, and people first; hydrate stable IDs with
-  product-native commands.
-- For Jira discovery, keep the three search modes distinct: use
-  `jira workitem search <text...>` for Jira-only fuzzy text backed by JQL,
-  `jira workitem query --jql <jql>` for explicit structured filters, and
-  `search <text...> --app jira` for semantic Rovo discovery.
+  - `twg work query` defaults to seven days of authored work; other activity requires `--activity` / `--include-viewed`.
+  - `twg work search "<topic>"` is tenant-wide; use `docs search` for documents. Prefer it directly when fuzzy text reaches `work query`.
+- Use live help—`twg help <terms>` then `twg help describe <path>`—before guessing grammar; namespace help is not executable.
+- Resolve URLs, keys, ARIs, names, and people, then hydrate stable IDs.
+- Jira: `jira workitem search <text...>` for Jira fuzzy text, `jira workitem query --jql <jql>` for structured JQL, and `search <text...> --app jira` for semantic discovery.
 - Command shape guardrails:
-  - Known Jira/Atlas keys are positional for `jira workitem get`, `goals get`,
-    and `projects get`; query `--key` forms are compatibility shortcuts.
-  - `work query` is user activity only (`--scope me|user`); use `work search`
-    for topic discovery and never use `--scope global`.
-  - `work search "<topic>"` is fuzzy work discovery. Use advertised filters such as `--types`.
-  - `assets search` is shallow. For device/person joins, inspect schemas/types,
-    shortlist owners, then batch `assets query`/`assets object query` with repeated `--account-id`.
-- Keep projection commands and product-native commands separate. Do not borrow
-  flags across surfaces unless live help advertises them.
-- Use `search-code` for indexed code. `--app` selects `bbc`, `github`, or
-  `gitlab`; `--workspace` maps to workspace/org/group.
+  - Known Jira/Atlas keys are positional for `jira workitem get`, `goals get`, and `projects get`; `--key` is compatibility only.
+  - `work query` is user activity (`--scope me|user`), never `--scope global`; use `work search` for topics and advertised filters such as `--types`.
+  - `assets search` is shallow: inspect schemas/types, shortlist owners, then batch `assets query`/`assets object query` with `--account-id`.
+- Keep projection and product-native commands separate; do not borrow unadvertised flags. Use `search-code` for indexed code. Unless the user explicitly scopes a code host, omit `--app` so all available indexed SCM surfaces are searched; repeated `--app` values are supported for an explicit multi-host scope. Apply `--workspace` only when a known tenant boundary is useful, and `--repo` only as a discovery anchor rather than proof that the full implementation lives there. De-duplicate mirrors, widen after generated-doc or incomplete hits, then fetch selected source files.
 
 ## Load The Narrowest Companion
 
 Use a concrete key, URL, ARI, slug, account ID, name, topic, `me`, or window.
 
-Load companion skills for detailed semantics:
-
-- `../twg-jira/SKILL.md` for Jira semantics.
-- `../twg-confluence/SKILL.md` for Confluence semantics and safe body editing.
-- `../twg-status-rollups/SKILL.md` for personal/team/org/project/goal/leadership status.
-- `../twg-context-discovery/SKILL.md` for context, dependencies, responsibility, and graphs.
-- `../twg-engineering-work/SKILL.md` for PRs, reviews, contributors, and bottlenecks.
-- `../twg-jira-resolve-merged-work/SKILL.md` for board/sprint/epic/space stale Jira workitems whose implementation appears complete from merged PR evidence.
+- `../twg-jira/SKILL.md` for Jira; `../twg-confluence/SKILL.md` for Confluence edits.
+- `../twg-status-rollups/SKILL.md` for status; `../twg-context-discovery/SKILL.md`
+  for context, dependencies, and graphs.
+- `../twg-agentic-search/SKILL.md` for fuzzy Rovo/company-knowledge search.
+- `../twg-responsibility-routing/SKILL.md` for ownership, approval, and escalation.
+- `../twg-engineering-work/SKILL.md` for PRs/reviews; `../twg-jira-resolve-merged-work/SKILL.md`
+  for stale Jira work backed by merged PRs.
 - `../twg-operational-health/SKILL.md` for handoffs, reliability, incidents, assets, staffing, and risk.
 
 
 ## Rules
 
-- Never guess IDs, flags, account IDs, page IDs, repo slugs, ARIs, object IDs,
-  or mutation contracts.
-- For product-specific writes or rich body formats, load the relevant product
-  skill first and follow exact live help.
-- Do not route normal TWG prompts through local workspace inspection,
-  cached-output spelunking, raw schema probing, or process diagnostics unless the
-  user asks about local state.
-- For writes, read current state first and state the intended mutation unless
-  the user explicitly asked you to execute it.
+- Never guess IDs, flags, slugs, ARIs, object IDs, or mutation contracts.
+- For product writes, load the product skill and follow live help.
+- Avoid local inspection, caches, schema probes, or diagnostics unless local state is requested.
+- For writes, read current state and state the mutation unless execution was requested.
 

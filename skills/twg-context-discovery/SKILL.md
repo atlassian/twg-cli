@@ -1,8 +1,8 @@
 ---
 name: twg-context-discovery
 description: >
-  Use with root `twg` for deep context, dependency maps, responsibility,
-  related entities, experts, project-to-repo discovery, OOO catch-ups, and
+  Use with root `twg` for deep context, dependency maps, related entities,
+  project-to-repo discovery, OOO catch-ups, and
   "catch me up" requests around a concrete anchor.
 ---
 
@@ -18,30 +18,28 @@ Run `twg <command>`. On shell `command not found`, use `$HOME/.local/bin/twg`
 tell user to add that directory to PATH. Do not treat auth or command errors as
 PATH failures.
 
-## Use When
-
-- "Catch me up on..." or "I was out / OOO"
-- "Deep context around this workitem/page/topic"
-- "Dependency map" or "find upstream/downstream blockers"
-- "Which repo should I change?"
-- "Draw the graph" / "visualize" / "open the graph"
-- "Who's involved" / "experts on X"
-- "Who owns/maintains/knows/reviews this?" or "who should I ask/escalate to?"
-
 ## First Move
 
 Resolve the anchor before widening:
 
 - Stable key, URL, or ARI: use directly when the family is clear.
-- Fuzzy topic or name: use resolve/search once, then select concrete anchors.
+- Fuzzy topic or name: classify scope; hydrate 2-5 anchors before ranking.
 - Multiple same-kind anchors: batch them in one context call when supported.
 - Unknown command shape: inspect focused help before calling data.
+
+For fuzzy topics, group high-signal candidates by scope using explicit charter,
+roadmap, project, product, or service evidence. Keep same-named feature,
+platform, domain, team, and initiative clusters separate. Compare scope fit,
+centrality, breadth, and recency before selecting one. If ambiguity remains,
+show alternatives or ask. Set the boundary before inferring experts or
+ownership; nearby authorship or activity does not prove broader responsibility.
 
 If context is not advertised for an anchor type, use product-native hydration
 and search evidence instead of inventing paths.
 
-For ownership, maintainer, expert, reviewer, or escalation questions, follow
-`references/responsibility.md`.
+For ownership, expertise, approval authority, leadership reach-outs, or
+escalation, load `../twg-responsibility-routing/SKILL.md`. Return here only
+when that workflow needs relationship or dependency expansion.
 
 ## Route Selection
 
@@ -49,17 +47,24 @@ For ownership, maintainer, expert, reviewer, or escalation questions, follow
   context.
 - Projects and goals need native details plus Jira, docs, search, PR, and
   meeting evidence.
-- For OOO catch-up with a window, use the pinned site.
-  Start with one bounded `collaborators` call and one ranked `work query` across
-  Jira, PRs, projects/goals, docs, meetings/recordings, and comments/decisions.
-  Keep the returning user, requested focus, and next actions central. Infer at
-  most two priority workstreams and five material changes across them. Use up to
-  three detail calls only when a missing decision, blocker, owner, or action
-  changes today. Do not rerun collaborators, enumerate artifacts, or use
-  org/tree routes without an org anchor; label requested surfaces with no
-  material evidence.
-- Pages/topics/dependency prompts need hydrated central anchors before broad
-  search results become evidence.
+- For OOO catch-up, make this the first data call on the pinned site:
+  `twg work query --scope me --since <window> --types jira,pr,projects,goals,docs --activity authored,reviewed,commented,updated,contributed,assigned,owned,mentioned --items-per-section 3 --ranked`.
+  It spans relationships; do not narrow it to `assigned`. On failure, split the
+  types into `jira,pr` and `docs,projects,goals` with the same activities. Treat
+  counts as coverage, not personal activity, and no assigned issue or returned
+  project proves priority. Cluster candidates across surfaces by outcome; prefer
+  workstreams with both current execution and decision/discussion evidence. Do
+  not force one candidate per section or a sparse second theme. Another person's
+  project needs direct user-relationship evidence before it is personal priority.
+  Hydrate representative anchors. For PRs with opaque URLs, pass the ARI to
+  `context get`. If conversation evidence is missing, use `collaborators` once;
+  it has no window. After the inventory, use at most three targeted data calls
+  across the strongest clusters: current execution, decision context, and—only
+  if still missing—conversation or ownership. Do not reopen broad PR inventories
+  or hydrate every representative PR.
+  Preserve URLs and label material coverage gaps.
+- Dependency map and page/topic prompts need hydrated anchors before broad search is
+  evidence. Map broad subdomains before assigning owners/experts.
 - Raw graph-query/debugging surfaces are not the default dependency-map route.
   Use them only when the user explicitly asks for that query language or typed
   commands cannot express the required edge.
@@ -97,6 +102,7 @@ provenance for relationship direction.
   continue with product-native hydrated evidence.
 - Stop when the next candidate would not add new entities, links, contributors,
   teams, decisions, ownership, risk, or next action.
+
 ## Graph Visualization
 
 For graph requests, pipe typed context output to `twg visualize`. Keep entities
@@ -121,7 +127,3 @@ that change direction, ownership, risk, or next action; collapse duplicates.
   "Done".
 - Do not dismiss a 1-hop candidate by title alone.
 - Do not hand-roll graph HTML.
-
-## References
-
-- `references/responsibility.md` - declared and inferred responsibility evidence

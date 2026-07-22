@@ -77,8 +77,9 @@ consequential mutation.
 
 ## Handoffs
 
-- Load `twg-context-discovery` for dependencies, responsibility, related
-  documents, implementation links, or experts.
+- Load `twg-context-discovery` for dependencies, related documents, or
+  implementation links; load `twg-responsibility-routing` for owners, experts,
+  authority, or escalation.
 - Load `twg-status-rollups` for project, sprint, team, or leadership synthesis.
 - Load `twg-engineering-work` when the Jira anchor must be traced to PRs or
   repositories.

@@ -52,14 +52,10 @@ vendor-internal incident site.
 
 ### Leadership Incident Reliability Review / On-Call Handoff
 
-Resolve leader, platform, and window. Query incidents and PIRs on the pinned
-site. Use `org-tree` once when people data is available; otherwise use
-incident service/owner evidence and label org coverage as a gap.
-Cluster up to three supported themes; hydrate at most six incident/PIR records
-or two per theme. Add ownership or prevention evidence only for a selected
-record missing it. Mark sparse results as a gap; do not use tenant-wide search
-or force a theme. Rank three leadership actions. For handoffs, add a first-hour
-checklist and escalation map.
+Load `references/reliability-review.md`. Resolve leader, platform, and window;
+cluster supported themes, separate cause from mitigation, connect prevention
+work, and rank leadership actions. For handoffs, add a first-hour checklist and
+escalation map.
 
 ### Incident Investigation / Mitigation
 
@@ -121,5 +117,6 @@ ownership, review influence, docs, and project/goal involvement; check load
 ## References
 
 - `references/assets.md` - schema-first Assets queries and person/device joins
+- `references/reliability-review.md` - bounded incident/PIR leadership review
 - `references/incident-investigation.md` - active investigation and mitigation
 - `references/pir-root-cause.md` - post-mitigation root-cause and PIR workflow

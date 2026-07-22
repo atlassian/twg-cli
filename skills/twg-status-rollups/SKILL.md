@@ -20,7 +20,9 @@ PATH failures.
 ## Use When
 
 - "What did I/person/team/org work on?" or weekly personal update
+- "Prepare a standup" for a named person, project, and window
 - "Status of project/goal/topic/focus area"
+- "Is this project ready to launch?" or go/no-go decision brief
 - Leadership, monthly, annual, cycle, appraisal, or goal-alignment readout
 - Org bottlenecks, priorities, stale goals, or project risks
 
@@ -79,6 +81,12 @@ project/goal involvement. Load `references/personal-work-summary.md` for exact
 subject, notification, PR hydration, and outcome-first rules.
 Separate delivery, review, docs/strategy, coordination, and influence.
 
+### Named Daily Standup
+
+Load `references/named-standup.md`. Resolve the person, preserve the requested
+project and window, prioritize material work, and distinguish evidence gaps
+from confirmed blockers.
+
 ### Team Or Org Leadership Readout
 
 Resolve org-tree first. Group before per-person details. Use org-level signals,
@@ -90,10 +98,25 @@ ownership.
 Fetch the native project/goal first. Include owner, state, update,
 links, dates, and recency. Hydrate only risk, progress, or dependency evidence.
 
+### Launch Readiness Decision
+
+Resolve the native Atlas project first and use its identity and explicit links
+as the scope boundary. Combine delivery, decision, dependency, operational, and
+customer-risk evidence only when it is connected to that project. Rank the
+workstreams that determine launch, then give a go, conditional-go, or no-go
+recommendation with owners, confidence, gaps, and conditions that would change
+the decision. Use `twg-context-discovery` for material dependencies and
+`twg-operational-health` for selected operational risks.
+
 ### Topic Status
 
 Resolve/search once, select central project, goal, page, or workitem anchors,
 then hydrate those before using broad work/activity queries.
+
+## References
+
+- `references/named-standup.md` - bounded named-person standup
+- `references/personal-work-summary.md` - broader personal status evidence
 
 ### Appraisal / Performance Evidence
 

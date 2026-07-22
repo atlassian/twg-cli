@@ -84,8 +84,9 @@ mutation.
 
 ## Handoffs
 
-- Load `twg-context-discovery` for related Jira work, projects, goals, people,
-  responsibility, or dependencies.
+- Load `twg-context-discovery` for related Jira work, projects, goals, or
+  dependencies; load `twg-responsibility-routing` for people, ownership,
+  authority, or escalation.
 - Load `twg-status-rollups` when pages contribute to a broader status report.
 - Load `twg-operational-health` for runbooks, incidents, PIRs, or reliability
   evidence.

@@ -59,9 +59,11 @@ uncertain routes/contracts.
   supplements PR details.
 - For person/repo status, collect merged/open PRs for relevant people, repos,
   and window.
+- Code: load `references/code-search.md`.
 - For person-scoped summaries with Jira, docs, meetings, planning, or
   notifications, use `twg-status-rollups` plus
-  `references/personal-work-summary.md`; this skill owns PR-only work.
+  `../twg-status-rollups/references/personal-work-summary.md`; this skill owns
+  PR-only work.
 
 ## Evidence Policy
 
@@ -113,7 +115,8 @@ Resolve org/team first, then collect PRs for members or repos in the time window
 Group into themes and repos/services. Call out gaps where PR-only evidence omits
 Jira, docs, planning, or customer context.
 For a single person where the prompt is broader than PRs, switch to
-`twg-status-rollups` and load `references/personal-work-summary.md`.
+`twg-status-rollups` and load
+`../twg-status-rollups/references/personal-work-summary.md`.
 
 ## Output Shape
 
