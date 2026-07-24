@@ -47,22 +47,18 @@ when that workflow needs relationship or dependency expansion.
   context.
 - Projects and goals need native details plus Jira, docs, search, PR, and
   meeting evidence.
-- For OOO catch-up, make this the first data call on the pinned site:
-  `twg work query --scope me --since <window> --types jira,pr,projects,goals,docs --activity authored,reviewed,commented,updated,contributed,assigned,owned,mentioned --items-per-section 3 --ranked`.
-  It spans relationships; do not narrow it to `assigned`. On failure, split the
-  types into `jira,pr` and `docs,projects,goals` with the same activities. Treat
-  counts as coverage, not personal activity, and no assigned issue or returned
-  project proves priority. Cluster candidates across surfaces by outcome; prefer
-  workstreams with both current execution and decision/discussion evidence. Do
-  not force one candidate per section or a sparse second theme. Another person's
-  project needs direct user-relationship evidence before it is personal priority.
-  Hydrate representative anchors. For PRs with opaque URLs, pass the ARI to
-  `context get`. If conversation evidence is missing, use `collaborators` once;
-  it has no window. After the inventory, use at most three targeted data calls
-  across the strongest clusters: current execution, decision context, and—only
-  if still missing—conversation or ownership. Do not reopen broad PR inventories
-  or hydrate every representative PR.
-  Preserve URLs and label material coverage gaps.
+- For topic onboarding, search knowledge and product-native work once. Compare
+  formal epic, project, goal, and page anchors across same-named scopes;
+  source-defined hierarchy distinguishes the central program/platform from a
+  feature, migration, or adoption effort. Prefer the anchor linking current
+  delivery work and code. Hydrate it, then use context and responsibility once
+  each only if they add dependencies or people. Hydrate at most three items. Never
+  refetch a source with another projection or try more synonyms after resolution.
+  Target 6-10 calls; stop once the categories are supported.
+- For restart, handoff, or OOO catch-up, load
+  `../twg-status-rollups/references/personal-work-summary.md` and follow its
+  restart guidance. Infer priority across connected evidence and hydrate only
+  anchors that change the user's next action.
 - Dependency map and page/topic prompts need hydrated anchors before broad search is
   evidence. Map broad subdomains before assigning owners/experts.
 - Raw graph-query/debugging surfaces are not the default dependency-map route.
@@ -111,9 +107,9 @@ that change direction, ownership, risk, or next action; collapse duplicates.
 ## Output Shape
 
 - Anchor snapshot: what it is and why it matters.
-- For OOO catch-ups, follow the prompt's short sections; do not add a
-  relationship table. For other context work, include entity, relationship,
-  owner, importance, and evidence.
+- For OOO catch-ups, synthesize by priority workstream and next action; do not
+  add a relationship table. For other context work, include entity,
+  relationship, owner, importance, and evidence.
 - Risks and dependencies, separating confirmed edges from inferred relationships.
 - Suggested next actions.
 - Confidence and gaps when evidence is incomplete, access-limited, stale, or

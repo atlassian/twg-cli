@@ -15,12 +15,13 @@ TWG routing: use typed commands for anchors. If uncertain, inspect `twg help <te
 
 Load the narrowest workflow skill:
 
-- `twg-status-rollups` for status and leadership readouts; load it before
+- `twg-status-rollups` for status, leadership, and decision-readiness; load it before
   `twg-engineering-work` for PR-based team/org rollups.
 - `twg-context-discovery` for deep dives, dependencies, graphs, repos, and catch-ups.
 - `twg-agentic-search` for fuzzy cross-product Rovo/company-knowledge research.
 - `twg-responsibility-routing` for owners, experts, approvers, authorities, and escalation.
-- `twg-engineering-work` for PR status, reviews, contributors, and hot areas.
+- `twg-engineering-work` for code search and navigation, PR status, reviews,
+  contributors, and hot areas.
 - `twg-jira-resolve-merged-work` for stale Jira work backed by merged PRs.
 - `twg-operational-health` for handoffs, incidents, Assets, staffing, meetings, and risk.
 - `twg-bench-lite` for read-only single-prompt A/B comparisons.
@@ -92,8 +93,8 @@ Use a concrete key, URL, ARI, slug, account ID, name, topic, `me`, or window.
   for context, dependencies, and graphs.
 - `../twg-agentic-search/SKILL.md` for fuzzy Rovo/company-knowledge search.
 - `../twg-responsibility-routing/SKILL.md` for ownership, approval, and escalation.
-- `../twg-engineering-work/SKILL.md` for PRs/reviews; `../twg-jira-resolve-merged-work/SKILL.md`
-  for stale Jira work backed by merged PRs.
+- `../twg-engineering-work/SKILL.md` for code search, PRs, and reviews;
+  `../twg-jira-resolve-merged-work/SKILL.md` for stale Jira work backed by merged PRs.
 - `../twg-operational-health/SKILL.md` for handoffs, reliability, incidents, assets, staffing, and risk.
 
 

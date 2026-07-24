@@ -50,7 +50,7 @@ vendor-internal incident site.
 
 ## Recipe Cards
 
-### Leadership Incident Reliability Review / On-Call Handoff
+### Leadership Reliability Review / On-Call Handoff
 
 Load `references/reliability-review.md`. Resolve leader, platform, and window;
 cluster supported themes, separate cause from mitigation, connect prevention

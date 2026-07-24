@@ -28,8 +28,22 @@ Do not replace a long existing body with an inline string unless the user
 explicitly intends a complete rewrite. Do not omit optimistic-concurrency
 tokens when the command requires them.
 
-For targeted edits, prefer an advertised edits-file operation over rewriting
-the entire body. Title-only changes should not resend body content.
+For targeted edits, prefer an advertised granular edit operation over rewriting
+the entire body. Use inline `--edits` for small payloads and `--edits-file` for
+larger, multiline, or sensitive payloads. Title-only changes should not resend
+body content.
 
-If the snapshot is stale, refetch and reconcile. Never silently overwrite newer
-content.
+## Dry Runs and Snapshot Conflicts
+
+- A dry run validates one snapshot; it neither reserves nor refreshes it. For
+  body-changing dry runs, add `-o json --output-file <path>` and read
+  `data.body.value` for the computed body.
+- On `snapshot_stale`, refetch the latest body and token, then rebase the
+  intended change. Never retry the stale payload with
+  `data.currentSnapshot.token`; that defeats the concurrency guard.
+- For targeted edits, revalidate targets and anchors against the latest body.
+  For full replacement, merge the original, proposed, and latest bodies.
+- Stop if a target was deleted, changed incompatibly, or the result is
+  ambiguous. Otherwise write promptly with the fresh token and verify.
+- If one reconciled retry also becomes stale, report active editing instead of
+  looping.

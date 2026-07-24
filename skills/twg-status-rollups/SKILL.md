@@ -1,8 +1,9 @@
 ---
 name: twg-status-rollups
 description: >
-  Use with root `twg` for bounded status rollups. Routes to `pr-tree`,
-  `org-tree`, `work-tree`, or `workitem-tree`.
+  Use with root `twg` for status rollups, personal work summaries, and
+  decision-readiness or go/no-go briefs. Routes to `pr-tree`, `org-tree`,
+  `work-tree`, or `workitem-tree`.
 ---
 
 # twg-status-rollups
@@ -20,7 +21,7 @@ PATH failures.
 ## Use When
 
 - "What did I/person/team/org work on?" or weekly personal update
-- "Prepare a standup" for a named person, project, and window
+- Short-window personal update, standup, handoff, or restart after time away
 - "Status of project/goal/topic/focus area"
 - "Is this project ready to launch?" or go/no-go decision brief
 - Leadership, monthly, annual, cycle, appraisal, or goal-alignment readout
@@ -55,9 +56,13 @@ For PR-based leadership prompts:
    `--since 14d`.
 2. Use `pr-tree` first. It groups by reporting-tree `directReports`; add
    `org-tree` only for hierarchy context.
-3. Start count-first. Add `--limited-fetch` or `--full-fetch` only for
-   repo/theme evidence, and a reviewer-view pass only when review load matters.
-4. Synthesize from PRs; add one secondary surface only for a named gap.
+3. If option shape is uncertain, inspect `twg help describe "pr-tree"` before
+   the data call; do not probe incompatible flag combinations.
+4. Start count-first, then make at most one supported sampling/full-fetch pass
+   for repo or theme evidence. Synthesize at manager/team level from that tree.
+   Do not issue per-person queries merely to populate every group; use one
+   targeted PR follow-up only when a material theme lacks representative proof.
+5. Add one secondary surface only for a named gap.
 
 Target 2-4 calls.
 
@@ -81,11 +86,11 @@ project/goal involvement. Load `references/personal-work-summary.md` for exact
 subject, notification, PR hydration, and outcome-first rules.
 Separate delivery, review, docs/strategy, coordination, and influence.
 
-### Named Daily Standup
+### Short-Window Personal Update / Standup
 
-Load `references/named-standup.md`. Resolve the person, preserve the requested
-project and window, prioritize material work, and distinguish evidence gaps
-from confirmed blockers.
+Load `references/personal-work-summary.md`. Resolve the person, preserve the
+requested project and window, prioritize material work, and distinguish
+evidence gaps from confirmed blockers.
 
 ### Team Or Org Leadership Readout
 
@@ -98,15 +103,12 @@ ownership.
 Fetch the native project/goal first. Include owner, state, update,
 links, dates, and recency. Hydrate only risk, progress, or dependency evidence.
 
-### Launch Readiness Decision
+### Decision Readiness / Go-No-Go
 
-Resolve the native Atlas project first and use its identity and explicit links
-as the scope boundary. Combine delivery, decision, dependency, operational, and
-customer-risk evidence only when it is connected to that project. Rank the
-workstreams that determine launch, then give a go, conditional-go, or no-go
-recommendation with owners, confidence, gaps, and conditions that would change
-the decision. Use `twg-context-discovery` for material dependencies and
-`twg-operational-health` for selected operational risks.
+Load `references/decision-readiness.md`. Resolve the native project or decision
+anchor first and keep explicit links as the scope boundary. Identify the gates,
+then give the requested decision or recommendation with confidence, gaps, and
+change conditions. Do not infer owners.
 
 ### Topic Status
 
@@ -115,8 +117,9 @@ then hydrate those before using broad work/activity queries.
 
 ## References
 
-- `references/named-standup.md` - bounded named-person standup
-- `references/personal-work-summary.md` - broader personal status evidence
+- `references/personal-work-summary.md` - standups, catch-ups, and broader
+  personal status evidence
+- `references/decision-readiness.md` - cross-domain go/no-go and approval evidence
 
 ### Appraisal / Performance Evidence
 
@@ -127,8 +130,8 @@ ranking; add caveats when evidence is weak.
 ## Output Shape
 
 - Executive summary first, with 3-6 high-signal observations.
-- Table with owner/team/workstream, positive signals, risk signals, current focus,
-  confidence, and evidence.
+- Table with owner/team/workstream, positive signals, risk signals, current
+  focus, confidence, and evidence.
 - Risks and leadership attention ranked by impact and owner.
 - Confidence and gaps, including stale updates, missing product coverage, ACL
   gaps, or sampled evidence boundaries.

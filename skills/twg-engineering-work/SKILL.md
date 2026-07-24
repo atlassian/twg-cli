@@ -1,8 +1,8 @@
 ---
 name: twg-engineering-work
 description: >
-  Use with root `twg` for PR/PRs-only status, PR status for a person, pull
-  request summaries, review queues, stale reviews, review bottlenecks, repo
+  Use with root `twg` for code search, repositories using an API/package,
+  implementation and reverse-dependency discovery, PR status and reviews, repo
   contributors, hot areas, and issue-to-PR lookups.
 ---
 
@@ -21,6 +21,8 @@ PATH failures.
 ## Use When
 
 - "Which PRs are waiting for my review?"
+- "Where is this API implemented or used?"
+- "Which repositories directly depend on this package?"
 - "Latest PRs for this issue"
 - "Who contributed most to this repo/topic?"
 - "Repos I created PRs in"
@@ -41,6 +43,8 @@ Resolve the engineering anchor:
 - Workitem prompt: fetch/context the Jira workitem to discover linked PRs,
   commits, branches, and repos.
 - Topic prompt: resolve/search once, then find linked repos, PRs, and workitems.
+- Code prompt: search the concrete package, API, symbol, or behavior, then
+  inspect only the source locations needed to verify the requested relationship.
 
 Use matching typed pull-request, Bitbucket, Jira, context, and search commands.
 Provider-native PR commands apply only to their host; Bitbucket
@@ -120,11 +124,9 @@ For a single person where the prompt is broader than PRs, switch to
 
 ## Output Shape
 
-- Queue/action tasks: table with PR, repo, owner, state, why it needs attention,
-  next action, and evidence.
-- Engineering reports: executive summary, repo/workstream table, contributors,
-  review bottlenecks, risks, and gaps.
-- Always include URLs or stable IDs for key artifacts.
+For queues, include PR, repo, owner, state, reason, next action, and evidence.
+For engineering reports, summarize workstreams, contributors, bottlenecks,
+risks, and gaps. Include stable URLs or IDs for key artifacts.
 
 ## Anti-Patterns
 

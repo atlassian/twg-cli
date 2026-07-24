@@ -1,8 +1,8 @@
 ---
 description: >
-  Summarize work for any person across Jira, pull requests, docs, meetings, and
-  notifications for weekly personal updates, performance review evidence,
-  appraisals, and year-bounded summaries.
+  Summarize person-scoped work for standups, OOO/return-after-time-away catch-up,
+  handoffs, weekly updates, performance review evidence, appraisals, and
+  year-bounded summaries across work, code, docs, meetings, and notifications.
 ---
 
 # Personal Work Summary
@@ -25,6 +25,8 @@ based primarily on merged/open PR evidence, use the `pr-tree` fast path in
 - "Summarize this person's annual/cycle work."
 - "Give all work, PRs, PR activity, and related info for a user."
 - "Weekly personal update" or "what changed since the last update?"
+- "Prepare a standup" for a person, project, and short window.
+- "Help me restart after time away" or prepare a person-scoped handoff.
 - "Show delivery, review, docs, meetings, and planning signals together."
 
 Use `twg-engineering-work` instead when the user asks only for PR queues, stale
@@ -61,11 +63,19 @@ Start broad, then hydrate only what changes the answer:
 
 1. Baseline activity:
    for self, run
-   `twg work query --scope me --activity all --ranked --since <window> --items-per-section <n> -o json`,
+   `twg work query --scope me --activity all --ranked --since <window> --items-per-section 2 -o json`,
    or use `--from <YYYY-MM-DD> --to <YYYY-MM-DD>` for explicit calendar windows.
+   For self restart/catch-up after time away, use the same unrestricted query;
+   omitting `--types` previews every supported person-scoped work section in one
+   batch. Do not narrow it to `assigned` or create source quotas. On failure,
+   retry once with supported person-scoped sections rather than switching to a
+   tenant-wide inventory.
    For another person, run
-   `twg work query --scope user --account-id <id> --activity all --ranked --since <window> --items-per-section <n> -o json`,
+   `twg work query --scope user --account-id <id> --activity all --ranked --since <window> --items-per-section 2 -o json`,
    or use `--from <YYYY-MM-DD> --to <YYYY-MM-DD>` for explicit calendar windows.
+   Inspect title or summary, relationship, recency, and URL across the combined
+   preview before opening details. Hydrate only candidates whose detail could
+   change priorities, decisions, blockers, or next actions.
 2. PR state:
    use `twg pull-requests query --scope me ...` or
    `twg pull-requests query --scope user --account-id <id> ...` for authored,
@@ -92,6 +102,27 @@ Start broad, then hydrate only what changes the answer:
    add docs/query or docs/search, meetings/videos, Jira workitem details,
    projects, goals, or context commands only when they explain momentum,
    blockers, decisions, ownership, or stakeholder impact.
+
+## Short Window And Restart Rules
+
+For a standup or short project update, use one bounded account-scoped work
+query for the person, project, and window. Hydrate only a blocker, decision, or
+ownership gap that changes today's action. If it finds no qualifying work, make
+at most one project-identity lookup, then stop. Report the person, project,
+window, and relationship scope checked. Do not replace an empty personal result
+with tenant-wide Jira, Confluence, context, or PR inventories, and do not claim
+there was no work when coverage was incomplete.
+
+For restart, OOO catch-up, or handoff, treat counts, returned projects, status,
+and recorded owners as context—not proof of personal priority. Establish
+priority from direct execution plus decision or discussion evidence. Cluster by
+outcome and rank across the combined preview by recency and decision pressure.
+Prefer two complementary signals for a selected cluster when available, but do
+not require them. Use at most three targeted hydrations total; use
+`collaborators` once only if conversation evidence is missing. Do not reopen
+broad inventories, hydrate every PR, force one candidate per source section, or
+invent a second workstream with weak support. Do not mention an empty section
+unless access failed or the prompt specifically required evidence from it.
 
 ## Synthesis
 

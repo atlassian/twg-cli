@@ -31,10 +31,12 @@ PATH failures.
    `twg rovo list-apps -o json` or `twg search list-apps -o json`. Use the
    returned built-ins, connectors, readiness, and auth/setup actions to decide
    scope; do not start setup or login unless the user asked for it.
-4. Generate two or three keyword query variants before searching:
-   - direct topic phrasing from the user's request,
-   - canonical or authoritative phrasing for official pages/issues,
-   - recent or update-oriented phrasing for announcements, decisions, or changes.
+4. Start with one query that combines the concrete topic with the requested
+   artifact or decision type. Use at most one canonical/authoritative or
+   recent/update-oriented refinement when the first result set mixes scopes,
+   lacks primary sources, or misses the requested time signal. Do not fan out
+   exact-title searches for every candidate already returned by the primary
+   query.
 5. Choose filters deliberately. Default to Confluence and Jira built-ins for
    official/internal knowledge. Broaden to Slack, Google Drive, Bitbucket,
    GitHub, or other connectors only when useful and available. Use app, type,
@@ -53,14 +55,23 @@ provenance need more detail.
 ## Evidence Rules
 
 - Treat search snippets as candidates, not facts.
-- Hydrate one to three selected results before final claims. Use product-native
+- Hydrate a small, diverse primary-source set before final claims. For document
+  discovery, cover distinct roles such as requirements, architecture/design,
+  and current delivery rather than redundant pages. Use product-native
   commands such as `twg confluence content get`, `twg jira workitem get`,
   `twg jira workitem query`, `twg bb prs`, `twg bb repo`, or the relevant
   product command for the result URL/type.
+- For document or PRD discovery, select at most five sources across those roles.
+  Hydrate one source per role unless a material conflict requires a second.
+  Stop once the roles, current delivery, and important conflicts are supported,
+  even when search returns more candidates.
 - Prefer official spaces, owned project pages, current Jira issues, and recent
   decision records over personal drafts or stale chat mentions, unless the user
   explicitly asked for informal signal.
 - Compare hydrated evidence for conflicts, recency, ownership, and authority.
+- Do not rerun an `@evidence` search for a candidate that can be hydrated through
+  its product-native URL or ID, and do not refetch one source under another
+  projection.
   Call out ACL gaps, unavailable connectors, low recall, and unresolved
   contradictions instead of flattening them into a single claim.
 
