@@ -99,7 +99,7 @@
 </code></pre>
 <p>During setup:</p>
 <ul>
-<li>When consent is required, select whether to agree. Noninteractive setup must pass <code>--agree</code> or <code>--yes</code>.</li>
+<li>First-time consent and OAuth login require a controlling terminal.</li>
 <li>Setup installs and refreshes TWG agent skills.</li>
 <li>The installer opens your browser to sign in with OAuth. Sign in to Atlassian, select the site you want to authorize (auto-selected if you have access to only one), review the requested permissions, and select <strong>Accept</strong>.</li>
 <li>After core setup and <code>twg doctor</code> pass, setup may offer to configure the optional Bitbucket token. If you skip it, TWG CLI is still ready for non-Bitbucket commands.</li>
@@ -107,6 +107,8 @@
 <p>The installer completes setup and runs <code>twg doctor</code> automatically. To repair setup later:</p>
 <pre><code class="language-bash">twg setup
 </code></pre>
+<p>Run installation from a terminal when consent or login is needed. Runtime <code>TWG_*</code>
+credentials authenticate commands and <code>twg doctor</code>, but are not used by login.</p>
 <p>On macOS, setup may enable a background helper and show a system notification for <strong>Atlassian Pty Ltd</strong> or <strong>twg</strong>. This is expected; see <a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a> for details.</p>
 <p>To install a specific version:</p>
 <pre><code class="language-bash">curl -fsSL --retry 2 https://teamwork-graph.atlassian.com/cli/install | bash -s -- --version 0.9.1
@@ -130,7 +132,9 @@ powershell -ExecutionPolicy Bypass -File .\twg-install.ps1
 <pre><code class="language-cmd">curl.exe -fsSL https://teamwork-graph.atlassian.com/cli/install.ps1 -o twg-install.ps1
 powershell -ExecutionPolicy Bypass -File twg-install.ps1
 </code></pre>
-<p>The Windows installer performs the same setup as macOS and Linux: binary install, checksum verification, consent, skill install, OAuth login, and doctor verification.</p>
+<p>The Windows installer performs the same interactive setup as macOS and Linux: binary install, checksum verification, consent, skill install, OAuth login, and doctor verification.</p>
+<p>Run the Windows installer from a console when consent or login is needed. Runtime
+<code>TWG_*</code> credentials authenticate commands and <code>twg doctor</code>, but are not used by login.</p>
 <p>During setup, the installer:</p>
 <ul>
 <li>Opens your browser to sign in with OAuth. In the browser, select the site you want to authorize (auto-selected if you have access to only one), review the requested permissions, and select <strong>Accept</strong>.</li>
@@ -206,7 +210,7 @@ twg jira --help
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli a62dde20bf64 (2026-07-27T19:41:01+00:00).
+        Generated from atlassian/twg-cli 5a18e93012e4 (2026-07-27T20:38:51+00:00).
       </footer>
     </main>
   </div>
