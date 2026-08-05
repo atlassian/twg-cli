@@ -29,14 +29,18 @@ Non-doc body formats hydrate their bodies through `--format`, not `--detail`:
 # Editable persisted whiteboard SVG.
 twg confluence content get <ID-or-URL> \
   --format svg \
-  --body-output-file /tmp/whiteboard.svg \
+  -o json \
+  --output-file /tmp/whiteboard.json \
   --site <site>
+jq -r '.data.body.value' /tmp/whiteboard.json > /tmp/whiteboard.svg
 
 # Persisted database rows and fields.
 twg confluence content get <ID-or-URL> \
   --format csv \
-  --body-output-file /tmp/database.csv \
+  -o json \
+  --output-file /tmp/database.json \
   --site <site>
+jq -r '.data.body.value' /tmp/database.json > /tmp/database.csv
 ```
 
 Do not add `--detail` to whiteboard, database, embed, or smart-link body reads;
@@ -53,8 +57,8 @@ twg confluence content get <ID-or-URL> \
 The response contains a short-lived signed media URL, normally in
 `data.body.value`. Download the bytes behind that URL to a `.png` file, open the
 file, and inspect the rendered layout before claiming visual verification.
-`--body-output-file` writes the returned PNG body value (the URL), not the image
-bytes. A URL alone is not visual proof.
+`--output-file` writes the full command payload, including the returned PNG URL.
+A URL alone is not visual proof.
 
 ## Writes
 

@@ -74,8 +74,10 @@ Start broad, then hydrate only what changes the answer:
    `twg work query --scope user --account-id <id> --activity all --ranked --since <window> --items-per-section 2 -o json`,
    or use `--from <YYYY-MM-DD> --to <YYYY-MM-DD>` for explicit calendar windows.
    Inspect title or summary, relationship, recency, and URL across the combined
-   preview before opening details. Hydrate only candidates whose detail could
-   change priorities, decisions, blockers, or next actions.
+   preview before opening details. Each item carries `activityAt`, the timestamp
+   of the relationship that matched the window — use it for recency and to show
+   why an item is in the window, not `createdAt`. Hydrate only candidates whose
+   detail could change priorities, decisions, blockers, or next actions.
 2. PR state:
    use `twg pull-requests query --scope me ...` or
    `twg pull-requests query --scope user --account-id <id> ...` for authored,

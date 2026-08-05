@@ -8,8 +8,9 @@ description: >
 
 # twg-engineering-work
 
-Use together with the root `twg` skill. Exact command grammar must come from
-live `twg help`, `twg help <terms>`, or `twg help describe <path>`.
+Use together with the root `twg` skill. Use documented command shapes when they
+cover the request. Use focused live `twg help` only when the required command,
+argument, or output contract is absent or uncertain.
 
 ## CLI launcher fallback
 
@@ -43,8 +44,8 @@ Resolve the engineering anchor:
 - Workitem prompt: fetch/context the Jira workitem to discover linked PRs,
   commits, branches, and repos.
 - Topic prompt: resolve/search once, then find linked repos, PRs, and workitems.
-- Code prompt: search the concrete package, API, symbol, or behavior, then
-  inspect only the source locations needed to verify the requested relationship.
+- Code prompt: resolve the concrete package, API, symbol, or repository anchor,
+  then load `references/code-search.md` for route selection and hydration.
 
 Use matching typed pull-request, Bitbucket, Jira, context, and search commands.
 Provider-native PR commands apply only to their host; Bitbucket

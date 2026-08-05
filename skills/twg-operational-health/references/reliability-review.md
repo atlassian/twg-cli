@@ -12,7 +12,7 @@ content; do not assume its name appears in incident or PIR titles. These
 commands accept natural search text when an incident-specific alias is known;
 use `--jql` only for a structured JQL query.
 Run without `--site` unless the user or runtime explicitly selects another
-tenant. Use semantic `twg search` only to resolve an ambiguous platform name,
+tenant. Use semantic `twg rovo search "<platform name>"` only to resolve an ambiguous platform name,
 not as the incident inventory.
 
 If structured JSM records are unavailable or do not expose the verified

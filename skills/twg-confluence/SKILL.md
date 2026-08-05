@@ -33,15 +33,16 @@ inside a broader workflow.
 
 ## First Route
 
-| Intent | Route |
-| --- | --- |
-| Known content ID or URL | `confluence content get` |
-| Exact Confluence filtering | Confluence search with CQL |
-| Fuzzy page/topic discovery | Cross-product search, then native get |
-| Create or update content | Unified `confluence content` surface |
-| Space metadata/lifecycle | `confluence space` |
-| Hierarchy | `confluence tree` |
-| Export | Word returns a download directly; PDF requires export-status polling |
+| Intent                           | Route                                                                                  |
+| -------------------------------- | -------------------------------------------------------------------------------------- |
+| Known content ID or URL          | `confluence content get`                                                               |
+| Exact Confluence filtering       | Confluence search with CQL                                                             |
+| Date-filtered page/blogpost list | `confluence search query --cql` with `lastmodified`; `content list` has no date filter |
+| Fuzzy page/topic discovery       | Cross-product search, then native get                                                  |
+| Create or update content         | Unified `confluence content` surface                                                   |
+| Space metadata/lifecycle         | `confluence space`                                                                     |
+| Hierarchy                        | `confluence tree`                                                                      |
+| Export                           | Word returns a download directly; PDF requires export-status polling                   |
 
 Use `twg help describe "<exact path>"` before an unfamiliar or consequential
 mutation.
@@ -66,6 +67,19 @@ mutation.
 
 ## Safe Authoring And Editing
 
+- Treat user authorization and CLI confirmation as separate checks for archive,
+  trash, and purge. The CLI requirement to pass `--yes` is an execution
+  preflight, not evidence that the user authorized the mutation. Use `--yes`
+  only after the user explicitly named the mutation and the exact target or a
+  previously displayed bounded target set.
+- Explicit instructions such as "archive page XYZ" or "archive those 15 pages"
+  after a concrete list authorize execution without another confirmation.
+  Vague outcome language such as "clean up", "organize", "remove clutter", or
+  "take care of" does not authorize archive, trash, or purge.
+- If the mutation or targets were inferred, read and resolve the proposed
+  targets, present the exact action and bounded target list, and wait for the
+  user to affirm that mutation. Do not generalize approval from a similar prior
+  action. `trash` does not authorize an additional permanent purge.
 - Before creating or editing content in a space, read that space's instructions
   with `confluence space instructions get --key <spaceKey>` (or with
   `confluence space instructions get --id <spaceId>`) and apply them while

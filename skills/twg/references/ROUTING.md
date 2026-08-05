@@ -11,7 +11,7 @@ syntax comes from live `twg help`.
 
 - `resolve` handles stable IDs, URLs, keys, ARIs, exact names, and people.
 - Product-native commands provide authoritative fields and mutations.
-- `search` handles fuzzy topics, partial titles, nicknames, and unknown
+- `rovo search` handles fuzzy topics, partial titles, nicknames, and unknown
   products.
 - `docs query` handles a user's relationship-based document activity;
   `docs search` handles fuzzy document-only discovery across available sources.

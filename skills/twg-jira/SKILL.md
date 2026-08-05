@@ -1,9 +1,10 @@
 ---
 name: twg-jira
 description: >
-  Use with root `twg` for Jira workitems, projects, boards, sprints, fields,
-  transitions, comments, links, and administration. Applies Jira semantics and
-  safe mutation rules.
+  Use with root `twg` for Jira workitems, similar issue discovery,
+  duplicate detection, projects, boards, sprints, fields, transitions,
+  comments, links, and administration. Applies Jira semantics and safe mutation
+  rules.
 ---
 
 # twg-jira
@@ -25,6 +26,7 @@ PATH failures.
   primary anchor.
 - The user asks to create, update, transition, comment on, link, watch, or
   delete Jira work.
+- The user asks to find or review duplicate Jira workitems.
 - Required or custom fields must be discovered and populated.
 - A workflow skill needs authoritative Jira fields or status.
 
@@ -38,13 +40,15 @@ inside a cross-product answer.
 | Known workitem                 | Native workitem `get`                 |
 | Jira-only fuzzy text discovery | Workitem `search` (JQL-backed)        |
 | Exact Jira filtering           | Workitem `query` with JQL             |
-| Semantic Jira discovery        | Top-level `search --app jira` (Rovo)  |
+| Semantic Jira discovery        | `rovo search --app jira`              |
+| Duplicate workitem detection   | `references/duplicates.md`            |
 | Related artifacts or people    | Native read plus `context`            |
-| Link implementation artifacts  | `jira workitem link pr|repo|deployment|build|branch|commit|loom|meeting` |
+| Link implementation artifacts  | `jira workitem link`                  |
 | Create or update               | Field metadata, then mutation         |
 | Change workflow state          | Discover transitions, then transition |
 | Board or sprint ordering       | Board/backlog/sprint command          |
 | Jira configuration             | Jira administration namespace         |
+
 
 Run one focused `twg help describe "<exact path>"` before an unfamiliar or
 consequential mutation.
@@ -69,6 +73,10 @@ consequential mutation.
   fields.
 - Use returned `customfield_*` IDs rather than display names in writes.
 - Discover available transitions instead of guessing a transition name or ID.
+  - Run `twg jira workitem transition --id <KEY> --site <SITE> -o json` without `--transition-id` to discover available transitions, their screen field requirements, and required fields.
+  - Select a transition from the result and use its `requirements` to gather the screen-required field values before calling with `--transition-id`.
+  - Treat required fields as user-decision inputs. If the user did not supply a required value, do not infer or choose an allowed value; ask the user before transitioning. This includes Resolution: a request to cancel does not imply `Won't Do`, `Declined`, `Duplicate`, or another Resolution.
+  - This discovery call is read-only and does not transition the workitem.
 - Keep global Jira field administration separate from workitem field values.
 - Use typed workitem artifact links when the request is to add Jira remote links
   to PRs, repos, deployments, builds, branches, commits, Loom videos, or meetings.
@@ -90,5 +98,6 @@ consequential mutation.
 - `references/workitems.md` - workitem reads, writes, comments, and links
 - `references/fields-and-transitions.md` - metadata-first fields and workflow changes
 - `references/querying.md` - JQL and board/backlog selection
+- `references/duplicates.md` - prompt driven duplicate detection and review
 - `references/rich-content.md` - descriptions, comments, and mentions
 - `references/administration.md` - Jira configuration versus workitem data

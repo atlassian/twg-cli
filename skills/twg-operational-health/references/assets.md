@@ -68,7 +68,7 @@ Classify an empty result before retrying:
 
 When a query misses, change one assumption at a time: schema or object type,
 then user-like join field, then value format. Use live `twg help assets` or
-`twg help describe` before trying a new command shape.
+`twg help describe <path>` before trying a new command shape.
 
 Keep retries bounded. After checking the plausible schema/type, the best
 discovered user-like field, and one alternate value format, either use the

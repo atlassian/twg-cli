@@ -4,12 +4,31 @@ description: Discover and navigate implementations across available indexed code
 
 # Code Search And Navigation
 
-Start with one hybrid `search-code search` using the concrete topic, symbol, or
-known repository anchor. Unless the user explicitly limits a code host, omit
-`--app` so the command searches every available indexed SCM surface. Add
-`--workspace` only when a known tenant boundary improves precision; a workspace
-is not required. A named repository is a starting anchor, not an instruction to
-ignore related implementations elsewhere.
+Choose the route from anchor precision:
+
+- Known repository and exact path: fetch the file directly after establishing
+  the required scope metadata.
+- Known repository and symbol or class: run one repository-scoped lexical or
+  hybrid search, then fetch only the selected files.
+- Unknown repository or conceptual behavior: begin with one hybrid
+  `search-code search` using the concrete topic, symbol, or behavior.
+- Cross-repository or reverse-dependency question: search every available
+  indexed SCM surface unless the user explicitly limits a code host.
+
+Honor an explicitly named repository as the requested scope. Widen beyond it
+only when the user asks for cross-repository coverage, the repository identity
+is ambiguous, or scoped evidence is demonstrably incomplete. For unscoped
+discovery, omit `--app` unless the user explicitly limits the code host.
+
+Apply scope requirements by operation:
+
+- `search-code search` may omit `--workspace` for discovery; add it when an
+  established tenant boundary improves precision.
+- `search-code file` requires the established `--workspace` when `--repo` is
+  supplied.
+- Derive workspace and provider only from returned repository metadata or a
+  resolved repository URL. Do not guess them or call `search-code file` before
+  its required scope is established.
 
 For reverse-dependency questions, search the exact API or symbol first. If that
 does not establish direct consumption, search the package/import anchor once,
@@ -25,7 +44,10 @@ each repository, code host, authorization mode, or usage pattern. Select a
 small, diverse set of direct consumers, hydrate at most one call-site file per
 selected repository, and fetch a manifest only when the call-site evidence does
 not establish the package. Stop when another result would repeat an already
-verified integration role.
+verified integration role. After discovery establishes repository metadata and
+paths, hydrate independent source files concurrently in one orchestration/tool
+round when the execution environment supports it. Do not wait for one file
+before requesting another unless its result determines the next path.
 
 When the requested scope is public code, count a repository only when returned
 source metadata or its stable source URL establishes public visibility. Exclude
@@ -44,4 +66,6 @@ Join ownership, PR, or work-item evidence only for the selected locations and
 only when it clarifies responsibility or delivery. Never infer behavior from a
 filename, ownership from one commit, or completeness from one provider's empty
 result. Report indexing and connector gaps instead of filling the result count.
-Target 4-8 `search-code` calls total, including source hydration.
+Use the fewest calls that establish the answer. For a single known repository
+and symbol, aim for one discovery call and one hydration round. Treat four
+`search-code` calls as a ceiling unless a documented evidence gap requires more.

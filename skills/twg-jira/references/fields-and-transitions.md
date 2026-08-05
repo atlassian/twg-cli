@@ -11,12 +11,16 @@ Discover metadata before create or update:
 
 ```bash
 twg help jira custom fields
-twg jira workitem field create-metadata ...
-twg jira workitem field update-metadata ...
+twg jira workitem field create-metadata --space <KEY> --type <TYPE>
+twg jira workitem field update-metadata --id <KEY>
+twg jira workitem field update-metadata --id <KEY> --include-system-fields
 ```
 
-Use returned `customfield_*` IDs in `--field` or `--fields-json`. Display names
-are for readability and may be duplicated or localized.
+`update-metadata` returns editable custom fields by default. Pass
+`--include-system-fields` when an agent needs the complete editable-field view
+for an existing work item, including built-in fields such as Summary and
+Priority. Use returned `customfield_*` IDs in `--field` or `--fields-json`.
+Display names are for readability and may be duplicated or localized.
 
 Rules:
 

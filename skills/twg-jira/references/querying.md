@@ -33,7 +33,7 @@ Guidance:
   Jira priority/rank or the named board backlog.
 - Use board/backlog commands when the user identifies a concrete board and its
   backlog order matters.
-- Use top-level `search --app jira` only when semantic Rovo discovery is wanted;
+- Use `rovo search --app jira` only when semantic Rovo discovery is wanted;
   hydrate selected Jira keys with `jira workitem get`.
 - Pair the query with context only for the few workitems whose relationships
   affect the answer.

@@ -41,13 +41,46 @@ agent_output:
   fields: [data.issues.key, data.issues.summary, data.issues.status]
 stdout_stats:
   top_level_keys: [apiVersion, command, data, meta]
-  array_fields: 1
-  max_array_length: 50
+  collections:
+    "data.issues": 50
 ---END---
 ```
 
+`collections` maps each array in the payload to its element count, primary
+collection first, so "where are the rows and how many are there?" is answered
+without opening the file. `"[]"` means the payload itself is the array. A payload
+with more arrays than the envelope reports keeps the primary and contract-declared
+ones and adds `collections_omitted: <n>` for the remainder.
+
 Small payloads may include `stdout_inline` with the full JSON payload. Large
-payloads include `stdout_stats` and sometimes `stdout_shape`.
+payloads include `stdout_stats`, and `stdout_shape` whenever the envelope
+cannot otherwise describe the rows - it is omitted only when `collections`
+locates them _and_ `agent_output.fields` says what they contain.
+
+`agent_output.fields_unresolved` lists advertised fields whose container was
+present but which the payload did not carry - a field the contract promised and
+the response did not deliver. Paths from a response dialect that does not apply
+are not reported, and an empty result reports nothing.
+
+A failed command puts the diagnosis first, at every summary level:
+
+```yaml
+ok: false
+error:
+  code: "TWG_COMMAND_FAILED"
+  kind: "twg_command_failed"
+  message: "No goal found for key \"NONEXISTENT-1\"."
+  repair: "Check the goal key with `twg goals query`."
+  retry:
+    recommended: false
+    guidance: "do_not_retry_unchanged"
+output_files:
+  stdout: "$TMPDIR/twg/.../stdout.json"
+---END---
+```
+
+Act on `error.repair` and `error.retry.guidance` directly. Bulk diagnostics
+(`backendFailure`, `traceId`, `feedback`) stay in `output_files.stdout`.
 
 ## Reading Rule
 
@@ -79,6 +112,7 @@ Use these flags to keep agent stdout manageable:
 twg <cmd> --output-summary stats
 twg <cmd> --output-summary auto
 twg <cmd> --agent-fields data.items.key,data.items.status
+twg <cmd> --select data.items.key,data.items.status
 ```
 
 - `--output-summary stats` - smallest stdout; best for broad discovery.
@@ -90,6 +124,22 @@ twg <cmd> --agent-fields data.items.key,data.items.status
   advertised by help; on commands without a preset contract they safely fall
   back to the normal summary envelope. Literal field paths remain supported for
   custom projections.
+- `--select` - narrow the **payload itself**. Unlike `--agent-fields`, which only
+  adds a compact sidecar next to the full JSON, `--select` applies before
+  serialization, so `output_files.stdout`, `--output-file`, plain
+  `--output json` stdout, and streaming `--output jsonl` records all carry only
+  the selected paths. Accepts the same literal paths and `@preset` names. Prefer
+  it over piping raw output through `jq`. A selection that matches nothing emits
+  the full payload and a `runtime_advisories.selectUnmatched` entry rather than
+  an empty envelope; on routes with no envelope slot for advisories the same
+  warning goes to stderr. A selection that is part literal paths and part
+  presets the command does not advertise projects the paths that resolved and
+  names the dropped presets under `runtime_advisories.selectUnresolved` - a
+  separate key from `selectUnmatched`, because the payload *was* projected.
+  A top-level array payload stays an array.
+  Failed commands are never projected - the `ok: false` recovery envelope is
+  returned whole, because `error.code`, `error.repair`, and `error.retry` are
+  the actionable content and none of them sit under a selected data path.
 
 Use `@rows` or `@compact` before writing custom JSON filters for broad scans.
 Use `@evidence` after narrowing to the few artifacts that need fuller detail.
@@ -105,7 +155,12 @@ file instead of running repeated `jq .` or one-field probes.
 
 If a local `jq` command fails, stop probing nearby paths. Re-read the compact
 file or the command's help-described view, then use at most one exact projection.
-Missing collections usually mean "no rows returned", not a new output contract.
+A collection reported as `0` means "no rows returned". A collection absent from
+`stdout_stats.collections` means the payload holds no such array at all - not
+that the output contract changed. The exception is `collections_omitted`: when
+that key is present the list was capped, so `n` further arrays exist that the
+envelope did not name, and absence proves nothing. Use `stdout_shape` or `jq`
+to locate them.
 
 Before opening another large output file, run a sufficiency check: do you already
 have the names/keys, owners, statuses, dates, risks/blockers, and evidence URLs

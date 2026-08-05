@@ -28,7 +28,7 @@ PATH failures.
 2. Confirm or infer the Atlassian site. Ask only when no configured or explicit
    site is available and the ambiguity would change the search.
 3. If app/source availability changes the plan, run
-   `twg rovo list-apps -o json` or `twg search list-apps -o json`. Use the
+   `twg rovo list-apps -o json`. Use the
    returned built-ins, connectors, readiness, and auth/setup actions to decide
    scope; do not start setup or login unless the user asked for it.
 4. Start with one query that combines the concrete topic with the requested
@@ -59,8 +59,8 @@ provenance need more detail.
   discovery, cover distinct roles such as requirements, architecture/design,
   and current delivery rather than redundant pages. Use product-native
   commands such as `twg confluence content get`, `twg jira workitem get`,
-  `twg jira workitem query`, `twg bb prs`, `twg bb repo`, or the relevant
-  product command for the result URL/type.
+  `twg jira workitem query`, `twg bb pull-requests get <id>`,
+  `twg bb repo get`, or the relevant product command for the result URL/type.
 - For document or PRD discovery, select at most five sources across those roles.
   Hydrate one source per role unless a material conflict requires a second.
   Stop once the roles, current delivery, and important conflicts are supported,

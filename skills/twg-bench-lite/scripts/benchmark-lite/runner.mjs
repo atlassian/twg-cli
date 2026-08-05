@@ -40,7 +40,16 @@ const READ_ONLY_TWG_BASH_COMMANDS = [
   "(?:\\S+/)?twg\\s+jira\\s+workitem\\s+(?:get|query|search|bulk-get)\\b.*",
   "(?:\\S+/)?twg\\s+confluence\\s+(?:content\\s+get|search\\s+query|spaces\\s+(?:get|list|query)|tree\\s+get)\\b.*",
   "(?:\\S+/)?twg\\s+(?:projects|goals)\\s+(?:query|get)\\b.*",
-  "(?:\\S+/)?twg\\s+(?:context|resolve|search|search-code|user|org-tree|responsibility|teams|recently-viewed|notifications|assets|meetings)\\b.*",
+  "(?:\\S+/)?twg\\s+context\\s+(?:get|jira\\s+workitem|confluence\\s+(?:page|space|blogpost|whiteboard)|user)\\b.*",
+  "(?:\\S+/)?twg\\s+resolve\\b.*",
+  "(?:\\S+/)?twg\\s+search-code\\s+(?:search|file|dir|scan|overview|symbol|diff)\\b.*",
+  "(?:\\S+/)?twg\\s+user\\s+(?:get|direct-reports|manager|bulk-lookup|describe)\\b.*",
+  "(?:\\S+/)?twg\\s+org-tree\\b.*",
+  "(?:\\S+/)?twg\\s+responsibility\\s+(?:get|infer)\\b.*",
+  "(?:\\S+/)?twg\\s+teams\\s+(?:query|get|members\\s+list)\\b.*",
+  "(?:\\S+/)?twg\\s+(?:recently-viewed|notifications)\\b.*",
+  "(?:\\S+/)?twg\\s+assets\\s+(?:object\\s+(?:get|query)|objects\\s+query|service-object\\s+query|objectschema\\s+(?:get|list|attributes\\s+query)|reference-type\\s+query|type\\s+(?:get|query|list-attr\\s+query)|search|query|graph\\s+(?:schema|connections))\\b.*",
+  "(?:\\S+/)?twg\\s+meetings\\s+(?:query|get)\\b.*",
   "(?:\\S+/)?twg\\s+rovo\\s+(?:search|list-apps|list-connectors)\\b.*",
 ];
 let resolvedCodexExecutable;
