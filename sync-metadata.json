@@ -1,7 +1,7 @@
 {
-  "sourceBranch": "main",
-  "sourceCommit": "7b40bcce6dc49b689468569bbf8d5cd6aa3e16d3",
-  "sourceCommitDate": "2026-08-04T23:22:59+00:00",
+  "sourceBranch": "",
+  "sourceCommit": "8c27db2c7786e380fb315ff266c86f62868e3f4e",
+  "sourceCommitDate": "2026-08-05T00:36:27+00:00",
   "sourcePath": "dac/content/cloud/twg-cli",
   "sourceRepo": "atlassian/twg-cli"
 }
