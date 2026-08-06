@@ -61,6 +61,12 @@ Resolve the subject and time window before querying:
 
 Start broad, then hydrate only what changes the answer:
 
+For personal project discovery, use `twg projects query --scope me --include-inferred`
+(`owner` by default; use `--role contributor` for
+collaborative work). Check `projectType`, `meta.coverage`, and `warnings`;
+hydrate inferred evidence through its Jira or Confluence links.
+`[Paid: Intelligence]`; may consume Rovo credits.
+
 1. Baseline activity:
    for self, run
    `twg work query --scope me --activity all --ranked --since <window> --items-per-section 2 -o json`,

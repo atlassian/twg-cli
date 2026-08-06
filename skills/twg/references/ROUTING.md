@@ -46,6 +46,7 @@ anchors with native reads or typed context.
 Do not confuse Jira projects with Atlas projects or Compass components. Do not
 use Jira workitem commands for JSM approval semantics.
 
+
 ## Query Languages
 
 - JQL: exact Jira workitem filters. See the Jira skill's querying reference.
