@@ -94,9 +94,9 @@ evidence gaps from confirmed blockers.
 
 ### Team Or Org Leadership Readout
 
-Resolve org-tree first. Group before per-person details. Use org-level signals,
-then hydrate only outliers that change momentum, blockers, review load, or
-ownership.
+Resolve org-tree first. Org projects: `twg projects query --scope org
+--include-inferred` (`[Paid: Intelligence]`). Group results; hydrate outliers
+affecting momentum, blockers, or ownership.
 
 ### Project Or Goal Status
 

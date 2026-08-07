@@ -88,9 +88,13 @@ Converge; prefer typed or product-native evidence.
   - Known Jira/Atlas keys are positional for `jira workitem get`, `goals get`, and `projects get`; `--key` is compatibility only.
   - `work query` is user activity (`--scope me|user`), never `--scope global`; use `work search` for topics and advertised filters such as `--types`.
   - For inferred teams (`ari:cloud:graph::jiraTeam/...` or `ari:cloud:graph-store::inferred-team/...`), see `references/inferred-teams.md` and use explicit `--include-inferred`.
-  - `assets search` is shallow: inspect schemas/types, shortlist owners, then batch `assets query`/`assets object query` with `--account-id`.
 - Use `search-code`; omit `--app` so all available indexed SCM surfaces are searched; use `--repo` only as a discovery anchor; widen after generated-doc or incomplete hits.
 
+## Assets / CMDB graph
+
+Traversal (object↔owner/team, Jira↔object) → `assets graph`; see
+`references/ASSETS_GRAPH.md`. No hop → `assets search` / `assets query --aql` /
+`assets object get`.
 
 ## Load The Narrowest Companion
 
