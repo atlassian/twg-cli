@@ -86,6 +86,46 @@
 <p>The public Teamwork Graph CLI changelog source is:</p>
 <p><a href="https://developer.atlassian.com/cloud/twg-cli/changelog.md">https://developer.atlassian.com/cloud/twg-cli/changelog.md</a></p>
 <p>This page mirrors the same release notes so the version headings appear in the page navigation.</p>
+<h2 id="1-2-4-2026-08-07">1.2.4 — 2026-08-07</h2>
+<p><strong>Beta release:</strong> Available through the beta channel only; not yet generally available.</p>
+<h3 id="minor-changes">Minor Changes</h3>
+<ul>
+<li>
+<p>49def8e: Expose <code>twg assets graph schema</code> and <code>twg assets graph connections</code>.</p>
+</li>
+<li>
+<p>e7b36eb: Add formatted transition comments to <code>twg jira workitem transition</code> using the same <code>--transition-comment</code> and <code>--transition-comment-format</code> contract as <code>twg jira workitem update</code>.</p>
+<p><code>--transition-comment</code> remains optional. When supplied, the command must also
+specify its transition target (<code>--status</code> for <code>update</code> or <code>--transition-id</code>
+for <code>transition</code>). Supported formats are <code>html</code>, <code>markdown</code>, and <code>plain</code>,
+with <code>html</code> as the default.</p>
+</li>
+<li>
+<p>e0b6422: Add <code>--scope org</code> support to <code>twg projects query --include-inferred</code>, returning Atlassian Projects and inferred projects across resolved reporting chains.</p>
+</li>
+<li>
+<p>980c6ec: Migrate <code>context jira-workitem</code>, <code>context confluence-page</code>, <code>context confluence-space</code>, <code>context confluence-blogpost</code>, <code>context confluence-whiteboard</code>, and <code>context user</code> commands to the <code>@atlassian/twg-tools</code> SDK. All context subcommands are now isolate-safe and host-neutral. CLI behavior is preserved byte-for-byte. Old app-native projection files removed.</p>
+</li>
+</ul>
+<h3 id="patch-changes">Patch Changes</h3>
+<ul>
+<li>
+<p>d4d3b85: Fix five <code>twg confluence space</code> defects:</p>
+<ul>
+<li><code>space get</code> / <code>space list</code> now request <code>description-format=plain</code>, so a space description is returned instead of always being <code>null</code>.</li>
+<li><code>space get --labels</code> / <code>space list --labels</code> now send <code>include-labels=true</code>. The flag was previously read for rendering only and never reached the API, so it could never return labels.</li>
+<li><code>space create</code> / <code>update</code> / <code>archive</code> / <code>unarchive</code> / <code>delete</code> write their confirmation preview to stderr instead of stdout, so <code>-o json</code> output stays parseable when <code>--yes</code> is omitted.</li>
+<li><code>space list --limit</code> now rejects values that are not positive integers instead of silently coercing them (<code>abc</code> became 25, <code>0</code> and <code>-5</code> became 1). The rule lives in <code>normalizeConfluenceSpaceListArguments</code> via the exported <code>parseConfluenceSpacesListLimit</code>, so <code>executeCmd</code> / <code>executeTool</code> callers get it too and not just the native CLI. Values above the API maximum still clamp to 250 with a warning.</li>
+<li><code>space create</code>'s summary no longer advertises a global/personal <code>--type</code> option that the command does not accept; it documents <code>--private</code> instead.</li>
+</ul>
+</li>
+<li>
+<p>a4d1b85: Fix <code>jsm form answers list</code> to return every form question without relying on formatted answers field keys.</p>
+</li>
+<li>
+<p>23c9ecd: Restore <code>user bulk-lookup</code> email and legacy-username lookups without an explicit <code>--site</code> by preserving the site auto-loaded from CLI authentication. Account-ID-only batches continue to use the site-less GraphQL path.</p>
+</li>
+</ul>
 <h2 id="1-2-3-2026-08-07">1.2.3 — 2026-08-07</h2>
 <p><strong>Beta release:</strong> Available through the beta channel only; not yet generally available.</p>
 <h3 id="highlights">Highlights</h3>
@@ -754,17 +794,17 @@ unified <code>twg confluence content ... --content-type whiteboard|database</cod
 availability remains build-gated.</li>
 </ul>
 <h2 id="1-0-8-2026-06-08">1.0.8 — 2026-06-08</h2>
-<h3 id="patch-changes">Patch Changes</h3>
+<h3 id="patch-changes-2">Patch Changes</h3>
 <ul>
 <li>Fix Windows sign step: use npm instead of pnpm to bootstrap tsx (pnpm not on PATH on Windows runner).</li>
 </ul>
 <h2 id="1-0-7-2026-06-08">1.0.7 — 2026-06-08</h2>
-<h3 id="patch-changes-2">Patch Changes</h3>
+<h3 id="patch-changes-3">Patch Changes</h3>
 <ul>
 <li>Pipeline: each step now self-installs via <code>pnpm install --frozen-lockfile</code> — fixes EMFILE on macOS runners after pnpm migration.</li>
 </ul>
 <h2 id="1-0-6-2026-06-07">1.0.6 — 2026-06-07</h2>
-<h3 id="patch-changes-3">Patch Changes</h3>
+<h3 id="patch-changes-4">Patch Changes</h3>
 <ul>
 <li>Updated pnpm to 11.5.2 and ensured <code>corepack enable pnpm</code> is present in all release pipeline steps.</li>
 </ul>
@@ -781,12 +821,12 @@ availability remains build-gated.</li>
 <li><strong>Jira workitem create now uses ADF for <code>--description</code>.</strong> The <code>twg jira workitem create --description</code> flag now accepts Markdown or HTML and converts to Atlassian Document Format, consistent with <code>workitem update</code>.</li>
 </ul>
 <h2 id="1-0-4-2026-05-30">1.0.4 — 2026-05-30</h2>
-<h3 id="patch-changes-4">Patch Changes</h3>
+<h3 id="patch-changes-5">Patch Changes</h3>
 <ul>
 <li>Version-only release prepared for 1.0.4 without pending changesets.</li>
 </ul>
 <h2 id="1-0-3-2026-05-30">1.0.3 — 2026-05-30</h2>
-<h3 id="patch-changes-5">Patch Changes</h3>
+<h3 id="patch-changes-6">Patch Changes</h3>
 <ul>
 <li>5f21300: <code>twg login</code> now uses OAuth by default in installer paths too. The public curl
 installer (<code>bin/install-template.sh</code>) and Windows installer
@@ -939,7 +979,7 @@ POSIX installer template across shell installs.</li>
 reliably.</li>
 </ul>
 <h2 id="0-9-8-2026-05-14">0.9.8 — 2026-05-14</h2>
-<h3 id="minor-changes">Minor Changes</h3>
+<h3 id="minor-changes-2">Minor Changes</h3>
 <ul>
 <li>
 <p>b48bdbd: Add <code>twg access</code> for product, site, org, test-like, configured-site, Bitbucket, and Rovo access inventory checks.</p>
@@ -1024,7 +1064,7 @@ validated sections, require <code>--fetch items</code> when callers need hydrate
 rows, and guard unbounded item fetches with a 2000-relationship preflight limit.</p>
 </li>
 </ul>
-<h3 id="patch-changes-6">Patch Changes</h3>
+<h3 id="patch-changes-7">Patch Changes</h3>
 <ul>
 <li>3b0a2d7: Add a <code>--body-output-file</code> option to Confluence page reads so body content can be saved to a file while JSON output stays metadata-focused.</li>
 <li>e3c4f17: Stop user search from calling the admin users GraphQL lookup.</li>
@@ -1035,7 +1075,7 @@ rows, and guard unbounded item fetches with a 2000-relationship preflight limit.
 <li>b437a97: Add <code>twg workitem-tree</code> with an <code>issue-tree</code> alias to summarize Jira work item activity by reporting tree with fast GraphStore Cypher-backed counts by default and guarded <code>--full-fetch</code> issue sample fetching.</li>
 </ul>
 <h2 id="0-9-7-2026-05-06">0.9.7 — 2026-05-06</h2>
-<h3 id="patch-changes-7">Patch Changes</h3>
+<h3 id="patch-changes-8">Patch Changes</h3>
 <ul>
 <li>
 <p>5087758: context: gracefully handle partial GraphQL responses; search snippet formatting</p>
@@ -1075,7 +1115,7 @@ behavior.</p>
 <p>Please use the latest stable installer for supported setup and update flows.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli c02aecd79e21 (2026-08-10T22:52:42+00:00).
+        Generated from atlassian/twg-cli 2f835fcbe213 (2026-08-11T00:13:03+00:00).
       </footer>
     </main>
   </div>
