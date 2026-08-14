@@ -194,6 +194,10 @@ twg jira --help
 <h3 id="switch-back-to-stable">Switch back to stable</h3>
 <pre><code class="language-bash">twg update --channel stable
 </code></pre>
+<p>Beta releases are usually ahead of stable, so returning to stable normally means moving your binary to an older version. In that case, the command records the stable preference, reports the version difference, and leaves the binary alone. To install the stable release over the newer beta build, confirm the downgrade:</p>
+<pre><code class="language-bash">twg update --channel stable --yes
+</code></pre>
+<p>Until you confirm, <code>twg update</code> and <code>twg update --check</code> report that your installed build is ahead of the channel you follow, along with the command that resolves it, instead of reporting that the CLI is up to date.</p>
 <h2 id="feedback">Feedback</h2>
 <p>To share feedback or report an issue, use the CLI:</p>
 <pre><code class="language-bash">twg feedback --summary &quot;&lt;short title&gt;&quot;
@@ -210,7 +214,7 @@ twg jira --help
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 5801dc669e19 (2026-08-14T18:30:22+00:00).
+        Generated from atlassian/twg-cli e36b0d8d3bc1 (2026-08-14T18:37:04+00:00).
       </footer>
     </main>
   </div>
