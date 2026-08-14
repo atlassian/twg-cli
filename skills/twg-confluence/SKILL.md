@@ -8,9 +8,9 @@ description: >
 
 # twg-confluence
 
-Use with the root `twg` skill whenever Confluence is the source of truth or a
-Confluence mutation is required. This skill owns content-type, hierarchy,
-format, and concurrency semantics; exact command grammar comes from live help.
+Use with root `twg` when Confluence is the primary source or mutation target.
+This skill owns content-type, hierarchy, format, and concurrency semantics;
+live help owns exact command grammar.
 
 ## CLI launcher fallback
 
@@ -21,15 +21,9 @@ PATH failures.
 
 ## Use When
 
-- A Confluence URL, content ID, space key, page title, or CQL expression is the
-  primary anchor.
-- The user asks to create, edit, move, copy, comment on, export, archive, or
-  organize Confluence content.
-- A workflow needs authoritative page bodies, hierarchy, versions,
-  permissions, or space metadata.
-
-Do not load this skill merely because a Confluence page is one supporting link
-inside a broader workflow.
+- Use for Confluence-anchored content or space reads and mutations, including
+  CQL, bodies, hierarchy, versions, permissions, and exports.
+- Do not load for a supporting Confluence link in a broader workflow.
 
 ## First Route
 
@@ -49,21 +43,15 @@ mutation.
 
 ## Confluence Semantics
 
-- Use the unified content surface for pages, blog posts, live docs,
-  whiteboards, databases, folders, comments, versions, history, permissions,
-  tasks, labels, and attachments when advertised.
-- For Confluence Share dialog access changes, treat General access as
-  `restriction-state` and Specific access rows as direct `permissions`:
-  `Open / Can edit` -> `OPEN`, `Open / Can view` -> `EDIT_RESTRICTED`,
-  `Restricted` -> `VIEW_RESTRICTED`; Specific `Can edit` -> `update`, and
-  Specific `Can view` -> `read`.
-- Use `confluence space` for spaces and `confluence tree` for hierarchy.
-- A stable URL may resolve directly, but exact help remains authoritative about
-  accepted ID, URL, site, and content-type forms.
+- Use the unified content surface for content operations advertised by live
+  help; use `confluence space` for spaces and `confluence tree` for hierarchy.
 - Search snippets are discovery candidates. Read the selected content before
   summarizing or editing it.
 - Page titles are supplied separately from bodies. Do not repeat the title as
   the first body heading.
+- Remix create commands create an asset, not a page embed. For a visual on the
+  page, continue with the HTML guide already loaded, update that page, and read
+  it back; an asset ID or URL alone is not completion proof.
 
 ## Safe Authoring And Editing
 
@@ -80,14 +68,14 @@ mutation.
   targets, present the exact action and bounded target list, and wait for the
   user to affirm that mutation. Do not generalize approval from a similar prior
   action. `trash` does not authorize an additional permanent purge.
-- Before creating or editing content in a space, read that space's instructions
-  with `confluence space instructions get --key <spaceKey>` (or with
-  `confluence space instructions get --id <spaceId>`) and apply them while
-  authoring; see `references/spaces.md`. Absent or empty ⇒ author with defaults.
-- For an unspecified new internal "page," "doc," "write-up," "runbook," or
-  notes artifact, prefer a live doc.
-- Prefer a classic page for knowledge bases, customer-facing help, established
-  classic-page spaces, page-only operations, or explicit page requests.
+- Before authoring, read and apply the target space's instructions by key or ID;
+  see `references/spaces.md`. Empty instructions mean use defaults.
+- Prefer `live_doc` for collaborative or co-authored internal content when the
+  target supports it. Bare "page" or "doc" creation also defaults to live docs.
+- Use `page` for explicit classic/non-live intent, knowledge bases, customer
+  help, established classic-page spaces, or page-only operations. Preserve an
+  existing target's type; a classic parent or reference does not set a new
+  child's type.
 - For non-trivial edits, read current content, save the body locally, edit the
   file, then update with the snapshot token.
 - Use the lossless HTML round trip when macros or exact storage representation

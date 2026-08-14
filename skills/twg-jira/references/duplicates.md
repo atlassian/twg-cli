@@ -1,5 +1,5 @@
 ---
-description: Detect prior duplicate Jira issues across a bounded scope with semantic comparison and explicit stopping rules.
+description: Detect duplicate Jira issues across a bounded scope with semantic comparison and explicit stopping rules.
 ---
 
 # Jira Duplicate Detection
@@ -10,9 +10,10 @@ JQL querying, `jira workitem similar`, or native workitem reads.
 Load `references/querying.md` when the prompt needs a bounded Jira candidate
 set. Use live `twg help` for exact command grammar.
 
-Detect whether a target Jira issue duplicates any issue created before it or
-within the same calendar minute. Base the decision on semantic meaning, not an
-exact text match.
+Detect whether a target Jira issue duplicates another issue in the requested
+scope. Base the decision on semantic meaning, not an exact text match. Search
+in both creation time directions by default. Apply a created time filter only
+when the user requests one.
 
 ## Safety Boundary
 
@@ -24,16 +25,16 @@ They can expose an existing duplicate decision and invalidate an independent
 comparison. Judge only from summary, description, created time, project, issue
 type, status, and other metadata that does not reveal issue relationships.
 
-## Prior Cutoff
+## Candidate Scope
 
-Treat a candidate as prior when either condition is true:
+Do not restrict candidates by created time unless the user asks for a date or
+directional filter. A newer issue can reveal that an older target is a
+duplicate, just as an older issue can reveal that a newer target is a
+duplicate. Always discard the target itself from candidate results.
 
-1. Its created timestamp is earlier than the target timestamp.
-2. Its created timestamp has the same year, month, day, hour, and minute as the
-   target, regardless of seconds.
-
-Round the target cutoff to the minute in JQL. Discard the target itself even
-when the cutoff query returns it.
+When the user requests a directional search, apply that filter after semantic
+retrieval or include it in JQL when it reduces the requested scope. Round
+minute-level JQL cutoffs consistently when the user supplies a time boundary.
 
 ## Duplicate Meaning
 
@@ -111,12 +112,9 @@ If at least one verified semantic result passes every gate with confidence of
 If the semantic pass has no result at 0.80 or higher, run one to three focused
 JQL queries. Use semantic results as token hints when useful.
 
-Every candidate retrieval query must include:
-
-`created <= "YYYY-MM-DD HH:MM"`
-
-Use only a quoted date in `YYYY-MM-DD HH:MM`, `YYYY/MM/DD HH:MM`, or
-`YYYY-MM-DD` format. Never use an ISO timestamp containing `T` or `Z`.
+When the user requests a created time filter, use only a quoted date in
+`YYYY-MM-DD HH:MM`, `YYYY/MM/DD HH:MM`, or `YYYY-MM-DD` format. Never use an ISO
+timestamp containing `T` or `Z`.
 
 Start in the target project when its key is known. Always include one
 cross project query unless a strong semantic result already caused the early
@@ -131,7 +129,7 @@ Choose queries by type:
    template plus identifier. Search across projects by exact identifier.
 3. Mirrored alerts: search all projects for the exact target key in brackets.
    When the target is a tracking issue with a bracketed key, fetch that known
-   issue directly and verify its created time.
+   issue directly.
 4. Human written work: search the project summary with two core tokens, then
    project text with those tokens. Search summaries across projects with the
    same tokens.
@@ -144,10 +142,10 @@ retrieval queries.
 
 Apply these gates in order to every hydrated candidate.
 
-### Gate 0: prior and self check
+### Gate 0: self and requested-scope check
 
-The candidate must satisfy the Prior Cutoff. Its key must differ from the
-target key.
+The candidate key must differ from the target key. It must satisfy any project,
+board, date, or direction constraint requested by the user.
 
 ### Gate 1: type compatibility
 

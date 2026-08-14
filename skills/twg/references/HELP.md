@@ -22,8 +22,9 @@ twg help discover-skills "JQL sprint prioritization" --skill twg-jira
 Discovery searches reference titles and curated frontmatter descriptions, not
 arbitrary body prose. Each result contains the owning skill and exact reference.
 Skill names and descriptions are a fallback for top-level routes that do not
-yet own references. The response contains one primary skill and at most two
-close alternatives.
+yet own references. By default, the response contains one primary skill and at
+most two close alternatives (three results total). An explicit positive
+`--limit` may return additional qualifying alternatives.
 
 Follow `next.loadSkill` and `next.loadReference` when present. Loading a skill
 returns its full `SKILL.md` and reference index without loading every reference
