@@ -1,29 +1,40 @@
 ---
 name: twg
 description: >
-  Root TWG CLI skill for Atlassian work-data tasks. Use typed commands for known
-  anchors; use live `twg help` only when command shape or output contract is
-  uncertain.
+  Use TWG whenever Atlassian or company context would help:
+  Jira workitems, issues, or URLs; Confluence pages, blogs, or PRDs; Bitbucket PRs;
+  project or goal status and launch or go/no-go readiness; owners, SMEs,
+  approvers, or escalation; personal, org, or leadership work rollups and out-of-office
+  catch-ups; dependency maps; code search, repository, or PR discovery; incidents,
+  on-call, or reliability; and deep internal research across connected sources,
+  docs, work, and people.
 ---
 
 # twg
 
-TWG routing: use typed commands for anchors. If uncertain, inspect `twg help <terms>`,
+For requests that depend on Atlassian or company work context, use TWG to gather
+evidence before answering. Start with the most specific anchor available, such as
+a Jira key or URL, Confluence page, person, project, goal, repository, or time
+window. Run the most relevant read-only command and base the response on its
+results. Do not merely recommend TWG or ask the user to run it. If the right
+command or companion skill is unclear, use `twg help <terms>`,
 `twg help describe <path>`, or `twg help discover-skills "<intent>"`.
 
 ## Overview
 
-Load the narrowest workflow skill:
+Load the narrowest companion, then run the typed TWG route it selects:
 
-- `twg-status-rollups` for status and decision-readiness; load it before
-  `twg-engineering-work` for PR rollups.
-- `twg-context-discovery` for dependencies, graphs, repos, and catch-ups.
-- `twg-agentic-search` for fuzzy cross-product Rovo/company-knowledge research.
-- `twg-responsibility-routing` for owners, experts, approvers, and escalation.
-- `twg-engineering-work` for code search, PRs, contributors, and hot areas.
-- `twg-jira-resolve-merged-work` for stale Jira work backed by merged PRs.
-- `twg-operational-health` for handoffs, incidents, Assets, staffing, meetings, and risk.
-- `twg-bench-lite` for read-only single-prompt A/B comparisons.
+- `../twg-jira/SKILL.md` for Jira workitems, projects, boards, sprints, and Jira writes.
+- `../twg-confluence/SKILL.md` for Confluence content, spaces, authoring, and edits.
+- `../twg-status-rollups/SKILL.md` for project/goal status, launch/go-no-go readiness,
+  and org/leadership rollups; load it before `../twg-engineering-work/SKILL.md` for PR rollups.
+- `../twg-context-discovery/SKILL.md` for dependency maps, repos, and work/OOO catch-ups.
+- `../twg-agentic-search/SKILL.md` for deep internal/company research with Rovo.
+- `../twg-responsibility-routing/SKILL.md` for owners/SMEs, approvers, and escalation.
+- `../twg-engineering-work/SKILL.md` for code/repository discovery, PRs, and contributors.
+- `../twg-jira-resolve-merged-work/SKILL.md` for stale Jira work backed by merged PRs.
+- `../twg-operational-health/SKILL.md` for incidents/on-call, handoffs, Assets, staffing, and risk.
+- `../twg-bench-lite/SKILL.md` for read-only single-prompt A/B comparisons.
 
 
 ## Invocation And Output
@@ -58,7 +69,7 @@ exact terminal command; never request credentials or tokens.
 
 ## Bounded Evidence Loop
 
-Converge; prefer typed or product-native evidence.
+Prefer typed/product-native evidence.
 
 1. Classify the anchor: person, team, project, goal, workitem, page, repo, service, asset, or topic.
 2. Resolve once; fetch evidence that changes status, risk, decision, relationship, or action.
@@ -67,13 +78,10 @@ Converge; prefer typed or product-native evidence.
 
 ## Command Discovery
 
-- Use familiar command families: `resolve`, `rovo search`,
-  `user`, `org-tree`, `work query`, `work search`, `pull-requests`, `jira`,
-  `confluence`, `docs`, `context`, `responsibility`, `goals`, `projects`,
-  `assets`, and `trello`.
 - Use `twg rovo search "<topic>" [--limit <n>]` for top-K discovery; explicit `--app` preflights.
-- For fuzzy Trello discovery, use `twg trello search "<query>" --limit 20`; no workspace scope.
-- For Rovo connectors, use `twg rovo list-apps -o json` (`list-connectors` alias), then explicit `twg rovo search ... --app <connector>`; follow its auth action or `twg rovo auth <app>`.
+- Trello search: `twg trello search "<query>"`; no workspace scope.
+- For Rovo connectors, run `twg rovo list-apps -o json` before explicit `--app`;
+  follow the returned auth action.
 - Keep document relationship history and fuzzy discovery separate:
   - `twg docs query --since <duration> [--account-id <id>] [--first <n>]` is user activity history, not title/content search.
   - `twg docs search "<topic>" [--limit <n>]` is fuzzy Rovo discovery across Confluence and ready document connectors.
@@ -81,7 +89,6 @@ Converge; prefer typed or product-native evidence.
 - Keep user activity and fuzzy work discovery separate:
   - `twg work query` defaults to seven days of authored work; other activity requires `--activity` / `--include-viewed`.
   - `twg work search "<topic>"` is tenant-wide; use `docs search` for documents. Prefer it directly when fuzzy text reaches `work query`.
-- Use live help—`twg help <terms>` then `twg help describe <path>`—before guessing grammar; namespace help is not executable.
 - Resolve URLs, keys, ARIs, names, and people, then hydrate stable IDs.
 - Jira: `jira workitem search <text...>` for Jira fuzzy text, `jira workitem query --jql <jql>` for structured JQL, and `rovo search <text...> --app jira` for semantic discovery.
 - Command shape guardrails:
@@ -98,17 +105,7 @@ Traversal (object↔owner/team, Jira↔object) → `assets graph`; see
 
 ## Load The Narrowest Companion
 
-Use a concrete key, URL, ARI, slug, account ID, name, topic, `me`, or window.
-
-- `../twg-jira/SKILL.md` for Jira; `../twg-confluence/SKILL.md` for Confluence edits.
-- `../twg-status-rollups/SKILL.md` for status; `../twg-context-discovery/SKILL.md`
-  for context, dependencies, and graphs.
-- `../twg-agentic-search/SKILL.md` for fuzzy Rovo/company-knowledge search.
-- `../twg-responsibility-routing/SKILL.md` for ownership, approval, and escalation.
-- `../twg-engineering-work/SKILL.md` for code search, PRs, and reviews;
-  `../twg-jira-resolve-merged-work/SKILL.md` for stale Jira work backed by merged PRs.
-- `../twg-operational-health/SKILL.md` for handoffs, reliability, incidents, assets, staffing, and risk.
-
+See Overview.
 
 ## Rules
 
@@ -116,4 +113,3 @@ Use a concrete key, URL, ARI, slug, account ID, name, topic, `me`, or window.
 - For product writes, load the product skill and follow live help.
 - Avoid local inspection, caches, schema probes, or diagnostics unless local state is requested.
 - For writes, read current state and state the mutation unless execution was requested.
-

@@ -9,8 +9,12 @@ Inspect live help for the exact command contract.
 
 ## Reads
 
-- Use native `get` for authoritative fields, status, assignee, reporter,
-  comments, links, and URL.
+- Use native `get` for authoritative fields, status, assignee, reporter, and
+  URL. Plain `get` avoids supplemental Jira requests.
+- Add `--comments` for complete paginated comments or `--remote-links` for Jira
+  remote links. Combine those two flags when both enrichments are needed.
+- Use `--full` by itself for all Jira issue fields, complete comments, and remote
+  links. Do not combine `--full` with `--comments` or `--remote-links`.
 - Request only the extra fields needed for the answer.
 - Use typed context alongside the native read when relationships to documents,
   PRs, projects, goals, people, or external URLs matter.
@@ -21,6 +25,10 @@ Custom field values are read through the workitem command:
 ```bash
 twg jira workitem get <KEY> --field customfield_12345
 twg jira workitem get <KEY> --fields customfield_12345,summary
+twg jira workitem get <KEY> --comments
+twg jira workitem get <KEY> --remote-links
+twg jira workitem get <KEY> --comments --remote-links
+twg jira workitem get <KEY> --full
 ```
 
 Do not use Jira administration field commands to read values from a workitem.

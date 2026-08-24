@@ -61,7 +61,10 @@ consequential mutation.
 - JSM requests have an underlying Jira workitem, but approvals, portals, queues,
   request types, and SLAs belong to JSM.
 - Search results are candidate anchors. Use the native workitem read for final
-  fields, comments, links, and status.
+  fields and status. Plain `get` avoids supplemental hydration; add `--comments`
+  for complete comments or `--remote-links` for Jira remote links. The two
+  enrichment flags may be combined. Use `--full` by itself for all fields and
+  both enrichments.
 - For "what should I pick next," query actual open Jira work or the requested
   board backlog. Do not rank from broad activity alone.
 

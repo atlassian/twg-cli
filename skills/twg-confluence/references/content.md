@@ -84,6 +84,21 @@ through direct `permissions`: `Can edit` -> `update` and `Can view` -> `read`.
 Copy operations may copy only the selected entity rather than descendants.
 Inspect the exact contract and do not imply a subtree copy without evidence.
 
+## Comments
+
+- `comments list` returns footer and inline comments when `--comment-type` is omitted.
+- Each list invocation returns one agentic API page. `--limit` accepts 1-250 and defaults to 50;
+  it is a page size, not an all-results cap. If JSON `data.nextCursor` is present, pass that value
+  to the next invocation with `--cursor` and continue until `nextCursor` is absent.
+- Pass `--include-replies true` to list nested replies; `comments get` includes replies by default.
+- List/get `--body-format` accepts `md` or `markdown` for Markdown, and `html` for HTML.
+- Create requires `--comment-type footer|inline`. Inline comments also require
+  `--text-selection`; use the match index/count flags when the selected text repeats.
+- Get, update, resolve, and reopen auto-detect the type when `--comment-type` is omitted.
+- Use `--expected-version` on update when the current version is known. A stale version is
+  returned as a structured `version_conflict` failure.
+- Delete can return `blockingReplyIds` and guidance. Delete those replies before retrying.
+
 ## Exports
 
 Export behavior depends on the requested format:
