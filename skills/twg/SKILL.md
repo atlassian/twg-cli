@@ -2,8 +2,8 @@
 name: twg
 description: >
   Use TWG whenever Atlassian or company context would help:
-  Jira workitems, issues, or URLs; Confluence pages, blogs, or PRDs; Bitbucket PRs;
-  project or goal status and launch or go/no-go readiness; owners, SMEs,
+  Jira workitems and issues; Confluence pages and PRDs; Bitbucket PRs;
+  project or goal status and launch readiness; owners, SMEs,
   approvers, or escalation; personal, org, or leadership work rollups and out-of-office
   catch-ups; dependency maps; code search, repository, or PR discovery; incidents,
   on-call, or reliability; and deep internal research across connected sources,
@@ -26,6 +26,7 @@ Load the narrowest companion, then run the typed TWG route it selects:
 
 - `../twg-jira/SKILL.md` for Jira workitems, projects, boards, sprints, and Jira writes.
 - `../twg-confluence/SKILL.md` for Confluence content, spaces, authoring, and edits.
+- `../twg-space-creation/SKILL.md` to create or clone Confluence spaces.
 - `../twg-status-rollups/SKILL.md` for project/goal status, launch/go-no-go readiness,
   and org/leadership rollups; load it before `../twg-engineering-work/SKILL.md` for PR rollups.
 - `../twg-context-discovery/SKILL.md` for dependency maps, repos, and work/OOO catch-ups.
@@ -61,11 +62,11 @@ explicitly requested for setup/auth/repair. Otherwise report remediation and wai
 ## Sandboxed Pipeline Logs
 
 Pipeline logs can redirect to S3. If a sandboxed `twg bb pipeline get`, `wait`, `grep`, or
-`tail` log request has a network-blocked message, S3 hostname, or log-only HTTP 403 while
-metadata succeeds, treat it as a sandbox restriction, not an authentication failure.
+`tail` log request shows a network-blocked message, S3 hostname, or log-only HTTP 403 while
+metadata succeeds, treat it as a sandbox restriction, not an auth failure.
 
 Request an approved unsandboxed retry of that command only. If unavailable, give the user the
-exact terminal command; never request credentials or tokens.
+exact terminal command; never request credentials.
 
 ## Bounded Evidence Loop
 
@@ -84,8 +85,8 @@ Prefer typed/product-native evidence.
   follow the returned auth action.
 - Keep document relationship history and fuzzy discovery separate:
   - `twg docs query --since <duration> [--account-id <id>] [--first <n>]` is user activity history, not title/content search.
-  - `twg docs search "<topic>" [--limit <n>]` is fuzzy Rovo discovery across Confluence and ready document connectors.
-  - Never pass topic text to `docs query`; route that intent to `docs search`.
+  - `twg docs search "<topic>" [--limit <n>]` is fuzzy Rovo discovery across Confluence and document connectors.
+  - Never pass topic text to `docs query`; route it to `docs search`.
 - Keep user activity and fuzzy work discovery separate:
   - `twg work query` defaults to seven days of authored work; other activity requires `--activity` / `--include-viewed`.
   - `twg work search "<topic>"` is tenant-wide; use `docs search` for documents. Prefer it directly when fuzzy text reaches `work query`.

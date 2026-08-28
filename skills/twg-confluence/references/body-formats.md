@@ -1,5 +1,5 @@
 ---
-description: Choose HTML or Markdown body formats, preserve macros, encode mentions, and avoid unsafe conversions.
+description: Choose HTML or Markdown body formats, load the database CSV and whiteboard SVG specs, preserve macros, encode mentions, diagrams, and avoid unsafe conversions.
 ---
 
 # Confluence Body Formats

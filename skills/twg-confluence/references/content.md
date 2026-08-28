@@ -29,6 +29,29 @@ does not determine a new child's type.
 For known content, use the native get command with the stable ID or URL. Request
 full body, comments, versions, or permissions only when the task needs them.
 
+## Persisted Remix Infographics
+
+A saved Remix infographic is exposed as an attachment on its owning page. Resolve
+and download it with the existing content attachment commands:
+
+```bash
+twg confluence content attachments list \
+  --id <content-id> \
+  --filename <media-file-id> \
+  --site <site> \
+  -o json
+
+twg confluence content attachments download \
+  --attachment-id <id-from-list-result> \
+  --out <local-path> \
+  --site <site>
+```
+
+The first command's matching `id` is the Confluence attachment ID. It is not the
+Remix `mediaFileId`; passing `mediaFileId` directly to `--attachment-id` fails
+validation or lookup. Do not invent a Media Platform URL or substitute the
+attachment result's internal `fileId`.
+
 ## Non-doc Read-back And Whiteboard Rendering
 
 Non-doc body formats hydrate their bodies through `--format`, not `--detail`:
@@ -77,9 +100,19 @@ A URL alone is not visual proof.
 - Verify the created or changed entity and report its stable URL.
 
 For Share dialog access changes, map General access through
-`restriction-state`: `Open / Can edit` -> `OPEN`, `Open / Can view` ->
-`EDIT_RESTRICTED`, and `Restricted` -> `VIEW_RESTRICTED`. Map Specific access
+`restriction-state`: `Open, Anyone in this space can edit` -> `OPEN`; `Open,
+Anyone in this space can view` -> `EDIT_RESTRICTED`; and `Restricted, Only
+specific people can view or edit` -> `VIEW_RESTRICTED`. Map Specific access
 through direct `permissions`: `Can edit` -> `update` and `Can view` -> `read`.
+Specific access grants add access; they do not restrict other principals or
+change General access. Each principal holds exactly one direct level, and
+`update` already includes `read`/view.
+
+`content create --private` already sets General access to `VIEW_RESTRICTED` and
+gives the creator `update`. Do not add `read` for that creator: it is redundant
+for viewing and would replace edit access. For existing content, ensure the
+caller has `update` before setting General access away from `OPEN`; the server
+rejects a state change that would lock the caller out.
 
 Copy operations may copy only the selected entity rather than descendants.
 Inspect the exact contract and do not imply a subtree copy without evidence.

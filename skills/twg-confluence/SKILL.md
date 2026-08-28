@@ -49,9 +49,17 @@ mutation.
   summarizing or editing it.
 - Page titles are supplied separately from bodies. Do not repeat the title as
   the first body heading.
-- Remix create commands create an asset, not a page embed. For a visual on the
-  page, continue with the HTML guide already loaded, update that page, and read
-  it back; an asset ID or URL alone is not completion proof.
+- Remix create returns an asset, not a page embed. Embed via the loaded HTML
+  guide and read back the page; an ID/URL is not proof.
+- Maui create uses `--content-id` only for ownership/embedding, not page
+  reading. Read source first; include values, labels, narrative, and
+  visualization instructions in the prompt. "This page" is insufficient.
+- To download a persisted Remix infographic, use the existing attachment
+  commands. List the owning page's attachments with
+  `confluence content attachments list --id <content-id> --filename <media-file-id>`,
+  then pass the matching result's attachment `id` to
+  `confluence content attachments download --attachment-id <attachment-id> --out <path>`.
+  Do not pass `mediaFileId` directly as `--attachment-id`; the two IDs are different.
 
 ## Safe Authoring And Editing
 
@@ -80,8 +88,8 @@ mutation.
   file, then update with the snapshot token.
 - Use the lossless HTML round trip when macros or exact storage representation
   matter.
-- Use `--dry-run` only for explicit preview or validation requests, or for
-  unusually risky edits where direct execution was not requested.
+- Use `--dry-run` only for explicit preview/validation requests, or unusually
+  risky edits where direct execution was not requested.
 - Read back the content or space after mutation and report its URL.
 
 ## Handoffs
@@ -92,6 +100,7 @@ mutation.
 - Load `twg-status-rollups` when pages contribute to a broader status report.
 - Load `twg-operational-health` for runbooks, incidents, PIRs, or reliability
   evidence.
+- Load `twg-space-creation` to create or clone a whole space.
 
 ## References
 

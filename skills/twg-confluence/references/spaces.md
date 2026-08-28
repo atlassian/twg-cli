@@ -1,11 +1,17 @@
 ---
-description: Create and manage Confluence spaces, keys, visibility, folders, page trees, and hierarchy.
+description: Manage an existing Confluence space — metadata, keys, visibility, archive, unarchive, restore, update, delete — plus folders, page trees, and hierarchy reads.
 ---
 
 # Confluence Spaces And Hierarchy
 
 Use `confluence space` for space metadata and lifecycle. Use `confluence tree`
 for graph-backed hierarchy reads.
+
+This reference covers operating on a space: creating one space, reading it,
+updating it, archiving it, and moving content within it. To **bootstrap a whole
+space** — pick a blueprint, propose a folder/page tree from a brief, an existing
+space, or a repository, and write the space's instructions — load
+`twg-space-creation` instead.
 
 ## Space Operations
 
