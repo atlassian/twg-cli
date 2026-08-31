@@ -1,0 +1,3509 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Commands Catalog | TWG CLI</title>
+  <meta name="description" content="Commercial availability, billing tier, and usage summary for TWG CLI commands.">
+  <style>
+    :root { color-scheme: light; --ink: #172b4d; --muted: #44546f; --line: #dcdfe4; --panel: #f7f8f9; --accent: #0c66e4; --warning: #fff7d6; --note: #e9f2ff; --tip: #dcfff1; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; background: #fff; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 16px 24px; border-bottom: 1px solid var(--line); }
+    .brand { color: var(--ink); font-weight: 700; }
+    .topbar-links { display: flex; gap: 16px; font-size: 14px; }
+    .layout { display: grid; grid-template-columns: minmax(220px, 280px) minmax(0, 1fr); min-height: calc(100vh - 58px); }
+    .sidebar { border-right: 1px solid var(--line); padding: 24px; background: var(--panel); }
+    .site-nav ul { list-style: none; margin: 0; padding: 0; }
+    .site-nav li { padding-left: calc(var(--depth, 0) * 12px); }
+    .site-nav li + li { margin-top: 10px; }
+    .nav-heading { color: var(--ink); font-size: 13px; font-weight: 700; letter-spacing: 0; margin-top: 18px; text-transform: uppercase; }
+    .site-nav li:first-child { margin-top: 0; }
+    .site-nav a { color: var(--muted); font-size: 14px; }
+    .site-nav a[aria-current="page"] { color: var(--ink); font-weight: 700; }
+    main { max-width: 920px; padding: 32px 40px 56px; }
+    h1, h2, h3 { line-height: 1.25; margin: 1.6em 0 0.6em; }
+    h1 { margin-top: 0; font-size: 34px; }
+    h2 { font-size: 24px; border-top: 1px solid var(--line); padding-top: 24px; }
+    h3 { font-size: 18px; }
+    table { width: 100%; border-collapse: collapse; display: block; overflow-x: auto; }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: var(--panel); }
+    code { background: #f1f2f4; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 0.92em; }
+    pre { overflow-x: auto; background: #0b1020; color: #f7f8f9; border-radius: 6px; padding: 14px 16px; }
+    pre code { background: transparent; color: inherit; padding: 0; }
+    .dac-panel { border: 1px solid var(--line); border-left-width: 4px; border-radius: 6px; margin: 18px 0; padding: 14px 16px; }
+    .dac-panel-warning { background: var(--warning); border-left-color: #f5c84b; }
+    .dac-panel-note { background: var(--note); border-left-color: #579dff; }
+    .dac-panel-tip { background: var(--tip); border-left-color: #36b37e; }
+    .dac-panel-label { font-weight: 700; margin-bottom: 4px; }
+    .prompt-copy-card pre { margin: 8px 0 12px; white-space: pre-wrap; }
+    .prompt-copy-card button { background: var(--accent); border: 0; border-radius: 4px; color: #fff; cursor: pointer; font: inherit; font-size: 13px; font-weight: 700; padding: 5px 9px; }
+    .prompt-copy-card button:hover { background: #0055cc; }
+    .source-footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; margin-top: 48px; padding-top: 16px; }
+    @media (max-width: 760px) {
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .layout { display: block; }
+      .sidebar { border-right: 0; border-bottom: 1px solid var(--line); }
+      main { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/twg-cli/">TWG CLI</a>
+    <div class="topbar-links">
+      <a href="/twg-cli/getting-started/installation/">Install</a>
+      <a href="https://developer.atlassian.com/cloud/twg-cli/">DAC source</a>
+      <a href="https://github.com/atlassian/twg-cli">GitHub repo</a>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar">
+      <nav class="site-nav" aria-label="TWG CLI docs">
+<ul>
+<li class="nav-heading" style="--depth:0">Guides</li>
+<li class="nav-heading" style="--depth:1">Getting started</li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/">Overview</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/installation/">Set up TWG CLI</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/how-authentication-works/">How authentication works</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/manage-settings/">Manage TWG CLI settings</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/configure-permissions/">Configure TWG CLI permissions</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/getting-started/troubleshooting/">Troubleshoot TWG CLI</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/faq/">FAQ</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/changelog/">Changelog</a></li>
+<li class="nav-heading" style="--depth:1">Agent integration</li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/agents/skills/">Agent skills</a></li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/agents/examples/">Agent examples</a></li>
+<li class="nav-heading" style="--depth:1">Command Reference</li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/commands/commands-catalog/" aria-current="page">Command Catalog</a></li>
+</ul>
+</nav>
+    </aside>
+    <main>
+      <h1 id="teamwork-graph-cli-command-catalog">Teamwork Graph CLI Command Catalog</h1>
+<p>This catalog identifies which Teamwork Graph CLI commands require Rovo Credits
+and which are free to use without them. Commands that require Rovo Credits are
+classified as <strong>Enriched</strong> because they use advanced Teamwork Graph, GraphStore,
+Rovo Search, Collaboration Graph, or code intelligence capabilities. All other
+commands use direct product APIs or local CLI utilities and do not require Rovo
+Credits.</p>
+<!-- Generated by scripts/sync-dac-command-catalog.ts from stable release v1.2.6 (aa6d932f79f4). Manual edits to generated tables will be overwritten. -->
+<h2 id="commands-that-require-rovo-credits">Commands that Require Rovo Credits</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What this command does</th>
+<th>Tier</th>
+<th>Why it is enriched</th>
+<th>billableEvent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>twg collaborators</code></td>
+<td>Discover your top collaborators using ML-powered recommendations.</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Uses ML-ranked Collaboration Graph recommendations across shared work.</td>
+<td><code>twg-cli-collaborators</code></td>
+</tr>
+<tr>
+<td><code>twg context confluence blogpost</code></td>
+<td>Fetch TwG context for a Confluence blogpost</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Expands direct GraphStore relationships and hydrates a bounded context graph.</td>
+<td><code>twg-cli-context</code></td>
+</tr>
+<tr>
+<td><code>twg context confluence page</code></td>
+<td>Fetch TwG context for a Confluence page</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Expands direct GraphStore relationships and hydrates a bounded context graph.</td>
+<td><code>twg-cli-context</code></td>
+</tr>
+<tr>
+<td><code>twg context confluence space</code></td>
+<td>Fetch TwG context for a Confluence space</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Expands direct GraphStore relationships and hydrates a bounded context graph.</td>
+<td><code>twg-cli-context</code></td>
+</tr>
+<tr>
+<td><code>twg context confluence whiteboard</code></td>
+<td>Fetch TwG context for a Confluence whiteboard</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Expands direct GraphStore relationships and hydrates a bounded context graph.</td>
+<td><code>twg-cli-context</code></td>
+</tr>
+<tr>
+<td><code>twg context get</code></td>
+<td>Resolve one Atlassian work artifact and return bounded direct context</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Expands direct GraphStore relationships and hydrates a bounded context graph.</td>
+<td><code>twg-cli-context</code></td>
+</tr>
+<tr>
+<td><code>twg context jira workitem</code></td>
+<td>Fetch TwG context (relationships) for a Jira work item — parity with getTeamworkGraphContext</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Expands direct GraphStore relationships and hydrates a bounded context graph.</td>
+<td><code>twg-cli-context</code></td>
+</tr>
+<tr>
+<td><code>twg context user</code></td>
+<td>Fetch TwG context for an Atlassian user</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Expands direct GraphStore relationships and hydrates a bounded context graph.</td>
+<td><code>twg-cli-context</code></td>
+</tr>
+<tr>
+<td><code>twg docs get</code></td>
+<td>Get one or more documents by ID or ARI from federated docs results</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Queries federated document relationships across first- and third-party providers.</td>
+<td><code>twg-cli-docs</code></td>
+</tr>
+<tr>
+<td><code>twg docs query</code></td>
+<td>List documents related to a user through Teamwork Graph activity relationships</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Queries federated document relationships across first- and third-party providers.</td>
+<td><code>twg-cli-docs</code></td>
+</tr>
+<tr>
+<td><code>twg docs search</code></td>
+<td>Fuzzy-search document titles and content across ready providers using Rovo</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Uses Rovo Search across available document providers.</td>
+<td><code>twg-cli-docs</code></td>
+</tr>
+<tr>
+<td><code>twg focus-areas get</code></td>
+<td>Get one or more Focus areas by ARI.</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Can hydrate focus-area positions and risks through GraphStore/Cypher.</td>
+<td><code>twg-cli-focus-areas</code></td>
+</tr>
+<tr>
+<td><code>twg focus-areas query</code></td>
+<td>Query focus areas with structured filters</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Uses GraphStore/Cypher for user- and organization-scoped focus-area queries.</td>
+<td><code>twg-cli-focus-areas</code></td>
+</tr>
+<tr>
+<td><code>twg focus-areas-tree</code></td>
+<td>Show focus area hierarchy tree for a focus area</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Builds a focus-area hierarchy using GraphStore/Cypher.</td>
+<td><code>twg-cli-focus-areas-tree</code></td>
+</tr>
+<tr>
+<td><code>twg goals get</code></td>
+<td>Get one or more Atlas goals by exact goal key; returns full goal metadata — status, owner, scope, contributors, sub-goals, and recent updates.</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Can hydrate contributing goal and project relationships through GraphStore/Cypher.</td>
+<td><code>twg-cli-goals</code></td>
+</tr>
+<tr>
+<td><code>twg goals query</code></td>
+<td>Query Atlas goals by scope (org/team/user), status (on-track, at-risk, off-track), owner, tags, and other filters; returns goal keys, names, and current status.</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Can combine GraphStore goal relationships with Rovo Search discovery.</td>
+<td><code>twg-cli-goals</code></td>
+</tr>
+<tr>
+<td><code>twg jira workitem similar</code></td>
+<td>Find semantically similar Jira work items</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Uses graph inference semantic similarity over Jira item embeddings.</td>
+<td><code>twg-cli-jira</code></td>
+</tr>
+<tr>
+<td><code>twg meetings get</code></td>
+<td>Get one or more meetings by ID or ARI from federated meetings results</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Queries meeting relationships through GraphStore/Cypher.</td>
+<td><code>twg-cli-meetings</code></td>
+</tr>
+<tr>
+<td><code>twg meetings query</code></td>
+<td>Query federated meetings</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Queries meeting relationships through GraphStore/Cypher.</td>
+<td><code>twg-cli-meetings</code></td>
+</tr>
+<tr>
+<td><code>twg org-tree</code></td>
+<td>Show manager chain and direct/indirect reports for a user</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Builds an org hierarchy using GraphStore/Cypher.</td>
+<td><code>twg-cli-org-tree</code></td>
+</tr>
+<tr>
+<td><code>twg people describe</code></td>
+<td>Compatibility alias for <code>twg user get &lt;account-id&gt;</code>; looks up people by account ID or IdentityUser ARI</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Can expand manager and direct-report relationships through GraphStore/Cypher.</td>
+<td>Not emitted by the CLI event header today.</td>
+</tr>
+<tr>
+<td><code>twg people search</code></td>
+<td>Find users by name and/or email, and return accountId + identity user ARI</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Can hydrate linked Slack identities through GraphStore/Cypher.</td>
+<td>Not emitted by the CLI event header today.</td>
+</tr>
+<tr>
+<td><code>twg pr-tree</code></td>
+<td>Show pull request activity grouped by an org reporting tree</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Builds a pull-request relationship tree using GraphStore/Cypher.</td>
+<td><code>twg-cli-pr-tree</code></td>
+</tr>
+<tr>
+<td><code>twg projects get</code></td>
+<td>Get one or more Atlassian projects by project key or Atlassian Home project URL.</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Can hydrate linked goals through GraphStore/Cypher.</td>
+<td><code>twg-cli-projects</code></td>
+</tr>
+<tr>
+<td><code>twg projects query</code></td>
+<td>Query Atlassian Projects by owner, org, role, status, and health (on-track/at-risk/off-track). Atlassian Projects rows include keys, names, owners, and health; use --include-inferred to also include active projects inferred from linked Jira and Confluence work.</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Uses GraphStore/Cypher for scoped project queries and linked-goal hydration.</td>
+<td><code>twg-cli-projects</code></td>
+</tr>
+<tr>
+<td><code>twg pull-requests get</code></td>
+<td>Get one or more pull requests by Teamwork Graph ARI or Bitbucket URL</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Hydrates pull-request detail with GraphStore comment relationships.</td>
+<td><code>twg-cli-pull-requests</code></td>
+</tr>
+<tr>
+<td><code>twg pull-requests query</code></td>
+<td>Query pull requests by user, org reporting chain, role, state, and date</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Queries cross-product pull-request relationships through GraphStore/Cypher.</td>
+<td><code>twg-cli-pull-requests</code></td>
+</tr>
+<tr>
+<td><code>twg pull-requests search</code></td>
+<td>Search pull request-like records across indexed code-hosting content</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Uses Rovo Search for fuzzy pull-request discovery.</td>
+<td><code>twg-cli-pull-requests</code></td>
+</tr>
+<tr>
+<td><code>twg recently-viewed</code></td>
+<td>Show entities you have recently viewed across Jira issues, Confluence pages, Confluence blog posts, Atlas projects, Atlas goals, and Loom videos</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Queries recently viewed cross-product relationships through GraphStore/Cypher.</td>
+<td><code>twg-cli-recently-viewed</code></td>
+</tr>
+<tr>
+<td><code>twg responsibility get</code></td>
+<td>Return explicit owners, assignees, responsible teams, or declared reviewers</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Infers responsibility evidence from bounded direct GraphStore relationships.</td>
+<td>Not emitted by the CLI event header today.</td>
+</tr>
+<tr>
+<td><code>twg responsibility infer</code></td>
+<td>Rank likely owners, maintainers, experts, reviewers, or escalation contacts from declared evidence and recent activity</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Infers responsibility evidence from bounded direct GraphStore relationships.</td>
+<td>Not emitted by the CLI event header today.</td>
+</tr>
+<tr>
+<td><code>twg rovo auth</code></td>
+<td>Authenticate the current user for a Rovo connector selected from <code>twg rovo list-apps</code></td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Uses Rovo Search app discovery and search APIs.</td>
+<td>Not emitted by the CLI event header today.</td>
+</tr>
+<tr>
+<td><code>twg rovo list-apps</code></td>
+<td>List all possible Rovo Search app filters available to the current site, including connector availability, current-user authentication, and setup actions</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Uses Rovo Search app discovery and search APIs.</td>
+<td>Not emitted by the CLI event header today.</td>
+</tr>
+<tr>
+<td><code>twg rovo search</code></td>
+<td>Return a globally bounded top-K search across Atlassian content and ready Rovo connectors; explicit --app connectors are checked strictly before search</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Uses Rovo Search app discovery and search APIs.</td>
+<td><code>twg-cli-search</code></td>
+</tr>
+<tr>
+<td><code>twg search-code diff</code></td>
+<td>Find all symbols changed between two commits and where they are referenced (blast radius analysis)</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Uses code intelligence indexing and enriched repository analysis.</td>
+<td><code>twg-cli-code-search</code></td>
+</tr>
+<tr>
+<td><code>twg search-code dir</code></td>
+<td>Browse directory contents of a remote repository</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Uses code intelligence indexing and enriched repository analysis.</td>
+<td><code>twg-cli-code-search</code></td>
+</tr>
+<tr>
+<td><code>twg search-code file</code></td>
+<td>Read the contents of a file from a remote repository</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Uses code intelligence indexing and enriched repository analysis.</td>
+<td><code>twg-cli-code-search</code></td>
+</tr>
+<tr>
+<td><code>twg search-code overview</code></td>
+<td>Get a high-level overview of a repository's structure</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Uses code intelligence indexing and enriched repository analysis.</td>
+<td><code>twg-cli-code-search</code></td>
+</tr>
+<tr>
+<td><code>twg search-code scan</code></td>
+<td>List all file paths in a repository</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Uses code intelligence indexing and enriched repository analysis.</td>
+<td><code>twg-cli-code-search</code></td>
+</tr>
+<tr>
+<td><code>twg search-code search</code></td>
+<td>Search code across repositories using semantic, lexical, or hybrid search</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Uses code intelligence indexing and enriched repository analysis.</td>
+<td><code>twg-cli-code-search</code></td>
+</tr>
+<tr>
+<td><code>twg search-code symbol</code></td>
+<td>Get symbol definitions, references, and docs at a specific code position</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Uses code intelligence indexing and enriched repository analysis.</td>
+<td><code>twg-cli-code-search</code></td>
+</tr>
+<tr>
+<td><code>twg spaces get</code></td>
+<td>Get one Jira space/project by key or ARI</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Queries federated collaboration spaces beyond a single product API.</td>
+<td>Not emitted by the CLI event header today.</td>
+</tr>
+<tr>
+<td><code>twg spaces query</code></td>
+<td>Query Jira spaces/projects by keyword</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Queries federated collaboration spaces beyond a single product API.</td>
+<td>Not emitted by the CLI event header today.</td>
+</tr>
+<tr>
+<td><code>twg subgraph content-references</code></td>
+<td>Traverse only content_referenced_entity links from an ARI or URL</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Builds subgraphs through GraphStore/Cypher.</td>
+<td><code>twg-cli-subgraph</code></td>
+</tr>
+<tr>
+<td><code>twg subgraph get</code></td>
+<td>Traverse a bounded Teamwork Graph neighborhood around an ARI or URL</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Builds subgraphs through GraphStore/Cypher.</td>
+<td><code>twg-cli-subgraph</code></td>
+</tr>
+<tr>
+<td><code>twg subgraph jira-links</code></td>
+<td>Traverse common Jira issue link relationships from an ARI or URL</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Builds subgraphs through GraphStore/Cypher.</td>
+<td><code>twg-cli-subgraph</code></td>
+</tr>
+<tr>
+<td><code>twg subgraph space-content</code></td>
+<td>Traverse common Confluence space/content containment links from an ARI or URL</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Builds subgraphs through GraphStore/Cypher.</td>
+<td><code>twg-cli-subgraph</code></td>
+</tr>
+<tr>
+<td><code>twg trello search</code></td>
+<td>Search Trello boards and cards visible to the authenticated user through Rovo Search.</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Uses Rovo Search for fuzzy Trello board and card discovery.</td>
+<td>Not emitted by the CLI event header today.</td>
+</tr>
+<tr>
+<td><code>twg user direct-reports</code></td>
+<td>List users who report directly to a user</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Expands direct-report relationships through GraphStore/Cypher.</td>
+<td>Not emitted by the CLI event header today.</td>
+</tr>
+<tr>
+<td><code>twg user get</code></td>
+<td>Get the current user or one user by Atlassian account ID</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Can expand manager and direct-report relationships through GraphStore/Cypher.</td>
+<td>Not emitted by the CLI event header today.</td>
+</tr>
+<tr>
+<td><code>twg user manager</code></td>
+<td>Get a user's immediate manager</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Expands manager relationships through GraphStore/Cypher.</td>
+<td>Not emitted by the CLI event header today.</td>
+</tr>
+<tr>
+<td><code>twg user search</code></td>
+<td>Find users by name and/or email, and return accountId + identity user ARI</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Can hydrate linked Slack identities through GraphStore/Cypher.</td>
+<td>Not emitted by the CLI event header today.</td>
+</tr>
+<tr>
+<td><code>twg user-search</code></td>
+<td>Alias for <code>twg user search</code></td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Can hydrate linked Slack identities through GraphStore/Cypher.</td>
+<td>Not emitted by the CLI event header today.</td>
+</tr>
+<tr>
+<td><code>twg videos get</code></td>
+<td>Get one or more federated videos by ID, URL, or ARI</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Queries video relationships through GraphStore/Cypher.</td>
+<td><code>twg-cli-videos</code></td>
+</tr>
+<tr>
+<td><code>twg videos query</code></td>
+<td>Query federated videos</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Queries GraphStore video relationships and can use Rovo Search for fuzzy discovery.</td>
+<td><code>twg-cli-videos</code></td>
+</tr>
+<tr>
+<td><code>twg work query</code></td>
+<td>Summarize a user's authored or explicitly selected work activity</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Builds a cross-product work view using GraphStore/Cypher.</td>
+<td><code>twg-cli-work</code></td>
+</tr>
+<tr>
+<td><code>twg work search</code></td>
+<td>Fuzzy-search tenant work artifacts using Rovo</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Uses Rovo Search for globally bounded work-artifact discovery.</td>
+<td><code>twg-cli-work</code></td>
+</tr>
+<tr>
+<td><code>twg work-tree</code></td>
+<td>Roll up a manager's org work across multiple surfaces (per-report counts)</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Rolls up a manager's org work across multiple surfaces using GraphStore/Cypher.</td>
+<td><code>twg-cli-work-tree</code></td>
+</tr>
+<tr>
+<td><code>twg workitem-tree</code></td>
+<td>Show Jira work item activity grouped by an org reporting tree</td>
+<td><span style="background-color: #deebff; color: #0747a6; border-radius: 3px; padding: 2px 6px;">Enriched</span></td>
+<td>Builds a Jira work-item relationship tree using GraphStore/Cypher.</td>
+<td><code>twg-cli-workitem-tree</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="commands-that-require-rovo-credits-only-with-certain-opt-in-flags">Commands that Require Rovo Credits Only with Certain Opt-in Flags</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What this command does</th>
+<th>Flag that requires Rovo Credits</th>
+<th>Tier</th>
+<th>billableEvent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No commands in the stable release.</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="free-commands">Free Commands</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What this command does</th>
+<th>Tier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>twg access</code></td>
+<td>Inspect products, sites, orgs, and access signals visible to the current token</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin auth login</code></td>
+<td>Save a separate Atlassian Admin API key for admin commands</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin auth logout</code></td>
+<td>Remove saved admin credentials without touching user auth</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin auth status</code></td>
+<td>Show configured admin auth status</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin auth switch</code></td>
+<td>Switch the active organization for saved admin credentials</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin directory list</code></td>
+<td>List directories for the active or selected organization</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin group access grant</code></td>
+<td>Grant app access to a group</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin group access revoke</code></td>
+<td>Remove app access from a group</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin group count</code></td>
+<td>Count groups in a Cloud Admin v2 directory</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin group create</code></td>
+<td>Create a group in a Cloud Admin v2 directory</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin group get</code></td>
+<td>Get a group from a Cloud Admin v2 directory</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin group list</code></td>
+<td>List groups from a Cloud Admin v2 directory</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin group member add</code></td>
+<td>Add a user to a group</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin group member remove</code></td>
+<td>Remove a user from a group</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin group role-assignments</code></td>
+<td>Get role assignments for a Cloud Admin v2 group</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin group stats</code></td>
+<td>Get group stats for a Cloud Admin v2 directory</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin org get</code></td>
+<td>Get the active or selected organization</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin org list</code></td>
+<td>List organizations accessible to the saved admin key</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin user cancel-delete</code></td>
+<td>Cancel a scheduled deletion for a managed Atlassian account</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin user capabilities</code></td>
+<td>Check which user lifecycle operations the admin key can perform</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin user count</code></td>
+<td>Count users in a Cloud Admin v2 directory</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin user delete</code></td>
+<td>Schedule deletion for a managed Atlassian account</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin user get</code></td>
+<td>Get a user from a Cloud Admin v2 directory</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin user invite</code></td>
+<td>Invite users to an organization with optional group and app access</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin user last-active</code></td>
+<td>Get last active dates for an organization user</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin user list</code></td>
+<td>List users from a Cloud Admin v2 directory</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin user restore</code></td>
+<td>Restore a user's access in a Cloud Admin v2 directory</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin user stats</code></td>
+<td>Get user stats for a Cloud Admin v2 directory</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg admin user suspend</code></td>
+<td>Suspend a user's access in a Cloud Admin v2 directory</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg api</code></td>
+<td>Make an authenticated Atlassian REST or GraphQL API request using the CLI's saved credentials</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets graph connections</code></td>
+<td>Build and execute a schema-aware Assets relationship query</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets graph schema</code></td>
+<td>Load dynamic Assets node and relationship types</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets object create</code></td>
+<td>Create an Assets object</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets object delete</code></td>
+<td>Delete an Assets object</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets object get</code></td>
+<td>Get an Assets object by ID</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets object query</code></td>
+<td>Query Assets objects with generated AQL</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets object update</code></td>
+<td>Update an Assets object</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets object-attribute-value update</code></td>
+<td>Update an Assets object attribute value</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets objects query</code></td>
+<td>Query Assets objects by ID</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets objectschema attributes query</code></td>
+<td>Query Assets object schema attributes by schema ID</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets objectschema create</code></td>
+<td>Create an Assets object schema</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets objectschema delete</code></td>
+<td>Delete an Assets object schema</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets objectschema get</code></td>
+<td>Get Assets object schemas by ID</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets objectschema list</code></td>
+<td>List all Assets object schemas in the workspace</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets objectschema settings update</code></td>
+<td>Update Assets object schema settings</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets objectschema update</code></td>
+<td>Update an Assets object schema</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets query</code></td>
+<td>Query Assets objects using AQL (Assets Query Language)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets reference-type create</code></td>
+<td>Create an Assets reference type</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets reference-type delete</code></td>
+<td>Delete an Assets reference type</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets reference-type query</code></td>
+<td>Query Assets reference types</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets reference-type update</code></td>
+<td>Update an Assets reference type</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets search</code></td>
+<td>Compatibility search for Assets objects by name or query-builder flags</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets service-object query</code></td>
+<td>Query Assets service objects by ID</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets type attribute create</code></td>
+<td>Create an Assets object type attribute</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets type attribute delete</code></td>
+<td>Delete an Assets object type attribute</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets type attribute update</code></td>
+<td>Update an Assets object type attribute</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets type create</code></td>
+<td>Create an Assets object type</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets type delete</code></td>
+<td>Delete an Assets object type</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets type get</code></td>
+<td>Get Assets types by ID</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets type list-attr query</code></td>
+<td>Query Assets type attributes by type ID</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets type query</code></td>
+<td>Query Assets object types by schema</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg assets type update</code></td>
+<td>Update an Assets object type</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg auth refresh</code></td>
+<td>Refresh OAuth credentials when due without prompting</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg benchmark lite</code></td>
+<td>Run or plan the lightweight TWG benchmark-lite comparison</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg benchmark lite check</code></td>
+<td>Check whether benchmark-lite setup is ready to run</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg benchmark lite doctor</code></td>
+<td>Inspect the bundled benchmark-lite runner contract</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg benchmark lite plan</code></td>
+<td>Plan the TWG skill and command route for a benchmark-lite prompt</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg benchmark lite report</code></td>
+<td>Regenerate a benchmark-lite report from a result artifact</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg benchmark lite run</code></td>
+<td>Run a live single-prompt benchmark-lite comparison</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket branch create</code></td>
+<td>Create a new git branch in a Bitbucket repository from a source branch or commit hash; sets up the branch ref for subsequent commits or PRs.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket branch delete</code></td>
+<td>Permanently delete a git branch from the Bitbucket repository; removes the branch ref but commits remain reachable via PRs or other branches.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket branch query</code></td>
+<td>List git branches in a Bitbucket repository with optional name filter, sorted by most recently updated; returns branch names, head commits, and timestamps.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket commit create</code></td>
+<td>Create a commit in a Bitbucket repository directly through the API, adding, replacing or deleting files without a local clone or git push.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket commit query</code></td>
+<td>List recent git commits for a Bitbucket repository with author, message, timestamp, and parent hashes; optionally filtered by branch or include path.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket deployment environment variable create</code></td>
+<td>Create a Bitbucket deployment environment variable from the local clipboard; the value is never printed.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket deployment environment variable delete</code></td>
+<td>Delete a Bitbucket deployment environment variable by key or UUID.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket deployment environment variable query</code></td>
+<td>List deployment environment variables for a Bitbucket environment without exposing secret values.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket deployment environment variable update</code></td>
+<td>Update a Bitbucket deployment environment variable from the local clipboard; the value is never printed.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket deployment get</code></td>
+<td>Get a Bitbucket deployment by UUID from a repository.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket deployment query</code></td>
+<td>List deployment environments for a Bitbucket repository (production, staging, etc.) with latest deployment status, version, and trigger metadata.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket inbox</code></td>
+<td>Summarize Bitbucket pull requests needing the current user's attention — your authored PRs, PRs awaiting your review, and PRs with mentions or unresolved feedback.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pipeline get</code></td>
+<td>Get detailed info for a specific CI/CD pipeline run by UUID, build number, or URL; optionally hydrates per-step logs, test reports, and test cases for debugging.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pipeline grep</code></td>
+<td>Search a pipeline's step logs for a pattern</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pipeline latest-failure</code></td>
+<td>Find the most recent failed pipeline run for a branch and automatically hydrate the failed step's log tail; ideal for quick CI failure debugging.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pipeline query</code></td>
+<td>List CI/CD pipeline runs for a Bitbucket repository with optional state, branch, trigger, and pattern (custom pipeline selector) filters; shows build status, duration, and triggering commit.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pipeline rerun-failed</code></td>
+<td>Rerun the failed steps in an existing Bitbucket pipeline by UUID, build number, or result URL.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pipeline run</code></td>
+<td>Start a Bitbucket pipeline run for a branch or tag, optionally selecting a custom pipeline pattern.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pipeline tail</code></td>
+<td>Stream a pipeline step's logs in real time. TARGET can be a Bitbucket pipeline URL (e.g. https://bitbucket.org/&lt;ws&gt;/&lt;repo&gt;/pipelines/results/&lt;n&gt;[/steps/%7B&lt;uuid&gt;%7D]) or a build number; --pipeline is accepted for backwards compatibility.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pipeline trigger</code></td>
+<td>Trigger a new Bitbucket Pipelines run</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests activity</code></td>
+<td>List the full activity log of a pull request — approvals, comments, status changes, commits, reviewer changes — in chronological order.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests approve</code></td>
+<td>Approve a pull request on behalf of the authenticated user; adds you to the approval list and may unblock merge if minimum approvals are met.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests comment create</code></td>
+<td>Add a comment to a pull request; supports general comments and inline comments anchored to a line or range in the diff.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests comment delete</code></td>
+<td>Permanently delete a pull request comment by comment ID; removes it from the PR thread and cannot be recovered.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests comment get</code></td>
+<td>Get a single pull request comment by comment ID; returns author, body, created/updated timestamps, and inline anchor (if any).</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests comment query</code></td>
+<td>List all comments on a pull request including general comments, inline comments on specific files/lines, and reviewer reply threads.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests comment reopen</code></td>
+<td>Reopen a resolved pull request comment thread</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests comment resolve</code></td>
+<td>Resolve a pull request comment thread</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests comment update</code></td>
+<td>Edit the body of an existing pull request comment by comment ID; preserves author and timestamps while updating content.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests commits</code></td>
+<td>List commits attached to a Bitbucket pull request, including commit hashes, messages, authors, and timestamps.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests create</code></td>
+<td>Create a new pull request in a Bitbucket repository from source branch to destination branch; supports reviewers, description, draft state, and close-source-branch.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests decline</code></td>
+<td>Decline a pull request; closes it without merging. The PR remains visible but is moved to declined state and cannot be re-merged without reopening.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests default-reviewer add</code></td>
+<td>Add a user as a default reviewer for the repository by Bitbucket user UUID; they will be auto-added to all future PRs in this repo.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests default-reviewer get</code></td>
+<td>Get a single repository default reviewer by Bitbucket user UUID; returns whether the user is currently configured as a default reviewer.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests default-reviewer query</code></td>
+<td>List the repository's default reviewers — users automatically added to every new PR's reviewer list; returns account IDs and display names.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests default-reviewer remove</code></td>
+<td>Remove a user from the repository's default reviewers by Bitbucket user UUID; they will no longer be auto-added to new PRs.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests diff</code></td>
+<td>Print the raw unified diff for a pull request — line-by-line changes across all modified files in standard diff format.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests diffstat</code></td>
+<td>List file-level diff statistics for a pull request — files changed, lines added/removed per file; useful for scoping review effort.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests effective-default-reviewer query</code></td>
+<td>List effective default reviewers for the repository</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests for-commit</code></td>
+<td>Find all pull requests containing a specific commit hash; useful for tracing which PR introduced a change or where a bug-fix was merged.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests get</code></td>
+<td>Get full details of a pull request — title, description, source/destination, author, reviewers, state — with optional hydration of comments, tasks, statuses, and diff stats.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests merge</code></td>
+<td>Merge a pull request into its destination branch using the configured merge strategy (merge commit, squash, or fast-forward); irreversible once committed.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests merge-status</code></td>
+<td>Check the status of an asynchronous pull request merge task by task ID; returns running/succeeded/failed state for long-running merges.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests patch</code></td>
+<td>Print the raw patch (mbox-style) for a pull request — includes commit metadata and full diff, suitable for git am application.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests query</code></td>
+<td>Query pull requests with filters for state, author, reviewer, branch, and date; works at repo scope or for the current user across all accessible repos.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests remove-request-changes</code></td>
+<td>Withdraw your previous request-changes marker from a pull request; clears your block and allows the PR to proceed to merge if other gates pass.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests request-changes</code></td>
+<td>Mark a pull request as needing changes; signals to author and other reviewers that the PR should not be merged until changes are made.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests task create</code></td>
+<td>Create an actionable task on a pull request that the author or reviewers must resolve before merging; useful for review checklists and blocking feedback.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests task delete</code></td>
+<td>Permanently delete a pull request task by task ID; removes it from the PR's task list and cannot be recovered.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests task get</code></td>
+<td>Get a single pull request task by task ID; returns full task metadata including content, creator, assignee, and resolution state.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests task query</code></td>
+<td>List all tasks on a pull request including open, resolved, and re-opened tasks; returns task creators, assignees, content, and resolution state.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests task reopen</code></td>
+<td>Reopen a previously-resolved pull request task by task ID; returns it to the open state and may re-block merge depending on workflow.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests task resolve</code></td>
+<td>Mark a pull request task as resolved; signals the task is complete and unblocks PR merge (if the workflow gates on unresolved tasks).</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests task update</code></td>
+<td>Edit the content of an existing pull request task by task ID; preserves creator, assignee, and timestamps while updating the task body.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests unapprove</code></td>
+<td>Withdraw your previous approval from a pull request; the PR returns to the unapproved state from your account's perspective.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket pull-requests update</code></td>
+<td>Update pull request metadata — title, description, reviewers, close-source-branch flag, or draft state — by PR ID; visible immediately to all participants.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket repo contributors</code></td>
+<td>Rank top contributors for a local git repository checkout by commit count, lines changed, or recency; useful for codeowner discovery and team analysis.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket repo file</code></td>
+<td>Read the content of a single file from a Bitbucket repository at a given branch, tag, or commit. Defaults to the repository's main branch when --ref is omitted.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket repo get</code></td>
+<td>Get detailed metadata for a single Bitbucket repository — owner, language, main branch, clone URLs, mainline policy, and access settings.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket repo query</code></td>
+<td>List repositories in a Bitbucket workspace with optional name, language, role, or project filters; returns repo names, languages, and last-update timestamps.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket repo url</code></td>
+<td>Print the canonical Bitbucket repository URL for a repository slug, full_name, URL, or the current git checkout.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket search prs</code></td>
+<td>Search pull request titles and descriptions by free text across a workspace or specific repo; returns matching PRs ranked by relevance.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket workspace get</code></td>
+<td>Get Bitbucket workspace metadata — name, slug, created date, type, project count, and basic settings; useful for resolving workspace identity.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg bitbucket workspace member query</code></td>
+<td>List members of a Bitbucket workspace with their account IDs, display names, and workspace roles (admin, collaborator); useful for access audits.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg cache clear</code></td>
+<td>Clear cached data under ~/.config/twg/</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg capabilities</code></td>
+<td>Report offline build and embedding-host capabilities</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg commits</code></td>
+<td>Show detailed information about one or more commits from any connected SCM provider (Bitbucket, GitHub, GitLab, etc.)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content archive</code></td>
+<td>Archive Confluence content</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content attachments delete</code></td>
+<td>Delete a Confluence attachment by attachment ID</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content attachments download</code></td>
+<td>Download a Confluence attachment to a local file</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content attachments get</code></td>
+<td>Get metadata for a single attachment</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content attachments list</code></td>
+<td>List attachment metadata for a parent Confluence content item</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content attachments upload</code></td>
+<td>Upload a local file as an attachment to a Confluence content item</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content body-formats</code></td>
+<td>Print supported Confluence body formats and markup reference</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content comments create</code></td>
+<td>Create a footer or inline comment on Confluence content</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content comments delete</code></td>
+<td>Delete a comment by --comment-id</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content comments get</code></td>
+<td>Get a single comment by --comment-id, optionally including replies</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content comments list</code></td>
+<td>List comments on a page or blogpost (footer and inline by default)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content comments reopen</code></td>
+<td>Reopen a resolved footer or inline Confluence comment</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content comments reply</code></td>
+<td>Reply to an existing comment</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content comments resolve</code></td>
+<td>Resolve a footer or inline Confluence comment</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content comments update</code></td>
+<td>Update the body of an existing comment</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content convert</code></td>
+<td>Convert Confluence content between page and live doc modes</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content copy</code></td>
+<td>Copy Confluence content to a parent or space root</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content create</code></td>
+<td>Create new Confluence content of any supported type. Doc types (page, live_doc, blogpost) require --body/--body-file + --format + --ack-body-formats and support --content-width narrow|wide|max; omitted width defaults to narrow. Whiteboards require an SVG body (--body/--body-file with --format svg + --ack-body-formats). Databases require a CSV body (--body/--body-file with --format csv + --ack-body-formats). (folder, slide) ignore body. Embed and smart_link require --body &lt;url&gt; --format url. Returns the new content id and an opaque snapshot token suitable for chaining into a follow-up update.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content delete-draft</code></td>
+<td>Delete a page or blogpost draft</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content disable-public-link</code></td>
+<td>Disable the external public link for a Confluence page. Revokes the share token immediately; any cached external link stops working. Idempotent.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content enable-public-link</code></td>
+<td>Enable the external public link for a Confluence page. Anyone with the link can read it. The server forces accessType=EXTERNAL; classification/DSP blocks (DLP, space policy, site-disabled) surface as status=NOT_SUPPORTED with a stable reason code.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content export</code></td>
+<td>Export a Confluence page. --format is required: 'word' returns a download URL synchronously ({ downloadUrl, fileId, fileName }); 'pdf' starts an async task and returns immediately ({ taskId, status: IN_PROGRESS, downloadUrl: null }) — use export-status &lt;taskId&gt; to retrieve the PDF download URL.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content export-status</code></td>
+<td>Check the status of a content export task. Returns { taskId, status, downloadUrl } — downloadUrl is populated when status is SUCCEEDED.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content get</code></td>
+<td>Read Confluence content (page, blogpost, whiteboard, database, folder, custom-content). When --detail is omitted, the server picks a per-type default: summary for doc types, a requested format-specific body for supported non-doc types, or envelope-only metadata otherwise. Use --detail full for editing doc types; omit it for whiteboard, database, embed, and smart-link body formats.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content get-public-link</code></td>
+<td>Read the current public-link status for a Confluence page without changing it. Returns {status, operationPerformed: READ_ONLY, publicLinkUrl?, lastEnabledBy?, lastEnabledAt?, reason?}.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content get-status</code></td>
+<td>Get the Confluence content state/status</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content history diff</code></td>
+<td>Server-computed unified diff between two versions (alias for versions diff)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content history get</code></td>
+<td>Get details of a specific version (alias for versions get)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content history list</code></td>
+<td>List version history (newest first)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content labels add</code></td>
+<td>Add one or more labels to a piece of content</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content labels list</code></td>
+<td>List labels on a piece of content (type auto-inferred)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content labels remove</code></td>
+<td>Remove one or more labels from a piece of content</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content labels unwatch</code></td>
+<td>Stop watching this Confluence label</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content labels watch</code></td>
+<td>Start watching this Confluence label</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content list</code></td>
+<td>List Confluence content in a space</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content macros resolve</code></td>
+<td>Start resolving supported Confluence macros on a content item to HTML. Returns immediately with a task ID; use <code>twg confluence content macros resolve-status &lt;taskId&gt;</code> to fetch the result.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content macros resolve-status</code></td>
+<td>Check a Confluence macro resolution task once. Succeeded tasks return the resolved HTML results.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content move</code></td>
+<td>Move Confluence content under or around another item</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content permissions add</code></td>
+<td>Add (grant) one or more operations to user(s)/group(s) — additive, never removes</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content permissions clear</code></td>
+<td>Clear ALL direct permissions from a piece of content</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content permissions list</code></td>
+<td>List direct permissions on a piece of content</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content permissions remove</code></td>
+<td>Remove direct permissions matching the given filters</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content permissions replace</code></td>
+<td>Replace ALL direct permissions with the given set (full overwrite)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content publish</code></td>
+<td>Publish a page or blogpost draft</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content purge</code></td>
+<td>Permanently purge trashed Confluence content</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content reactions add</code></td>
+<td>Add an emoji reaction to a Confluence content object</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content reactions list</code></td>
+<td>List all emoji reactions on a Confluence content object</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content reactions remove</code></td>
+<td>Remove your emoji reaction from a Confluence content object</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content restriction-state get</code></td>
+<td>Get the current restriction state</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content restriction-state set</code></td>
+<td>Set the restriction state (OPEN | EDIT_RESTRICTED | VIEW_RESTRICTED)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content set-owner</code></td>
+<td>Change the owner of a Confluence page</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content set-status</code></td>
+<td>Set or create the Confluence content state/status</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content star</code></td>
+<td>Star this Confluence content</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content tasks complete</code></td>
+<td>Mark a task complete</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content tasks get</code></td>
+<td>Get a single task by --task-id</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content tasks list</code></td>
+<td>Query Confluence tasks (optionally scoped to a parent --id)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content tasks reopen</code></td>
+<td>Reopen a completed task</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content trash</code></td>
+<td>Move Confluence content to trash</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content unarchive</code></td>
+<td>Unarchive Confluence content</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content unstar</code></td>
+<td>Unstar this Confluence content</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content untrash</code></td>
+<td>Restore Confluence content from trash</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content unwatch</code></td>
+<td>Stop watching this Confluence content</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content update</code></td>
+<td>Update existing Confluence content using snapshot tokens where required</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content versions diff</code></td>
+<td>Server-computed unified diff between two versions</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content versions get</code></td>
+<td>Get details of a specific version, optionally rendering its body</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content versions list</code></td>
+<td>List version history (newest first)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content versions restore</code></td>
+<td>Restore a previous version (creates a new latest version)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence content watch</code></td>
+<td>Start watching this Confluence content</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence search query</code></td>
+<td>Search Confluence pages, blog posts, attachments, and comments using CQL (Confluence Query Language); supports type, space, title, label, text, date filters, and recent created/lastmodified bounds.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence search text</code></td>
+<td>Search recent Confluence pages and blog posts with natural text</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence space archive</code></td>
+<td>Archive a Confluence space by --key or --id; hides it from the main directory but preserves all content for later restoration with 'unarchive'.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence space create</code></td>
+<td>Create a new Confluence space with key, name, and optional description; pass --private for a private space. The authenticated user becomes the initial admin.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence space delete</code></td>
+<td>Permanently delete a Confluence space and all its pages, attachments, and history by --key or --id; this action is irreversible.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence space get</code></td>
+<td>Get a single Confluence space by identifier (space key or numeric ID); returns full space metadata including type, status, description, homepage, labels, enabled content types, and space instructions.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence space instructions get</code></td>
+<td>Get the instructions for a Confluence space</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence space instructions set</code></td>
+<td>Set the instructions for a Confluence space</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence space list</code></td>
+<td>List Confluence spaces accessible to the authenticated user; filterable by type (global/personal), status (current/archived), or explicit space keys.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence space me</code></td>
+<td>Resolve the authenticated user's Confluence personal space for this site.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence space star</code></td>
+<td>Star this Confluence space</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence space unarchive</code></td>
+<td>Restore an archived Confluence space (target via --key or --id)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence space unstar</code></td>
+<td>Unstar this Confluence space</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence space unwatch</code></td>
+<td>Stop watching this Confluence space</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence space update</code></td>
+<td>Update a Confluence space (target via --key or --id)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence space watch</code></td>
+<td>Start watching this Confluence space</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence templates get</code></td>
+<td>Get a Confluence template body</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence templates list</code></td>
+<td>List Confluence templates available globally or in a space</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg confluence tree</code></td>
+<td>Show content hierarchy tree for a space or content node</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg consent</code></td>
+<td>Review and record TWG CLI terms consent</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg csm channel query</code></td>
+<td>Query the support inquiry channels identity hash</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg csm channel query-by-client-name</code></td>
+<td>Query channels by client name</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg csm context query</code></td>
+<td>Query support inquiry user context</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg csm organization get</code></td>
+<td>Get CSM organizations by ARI</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg deployments</code></td>
+<td>Show detailed information about one or more deployments from any connected SCM provider (Bitbucket, GitHub, GitLab, etc.)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg doctor</code></td>
+<td>Inspect local build metadata, auth resolution, and API connectivity</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg env</code></td>
+<td>Inspect and manage the active TWG shell environment.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg env auth</code></td>
+<td>Manage the active TWG auth mode (oauth vs api).</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg feedback</code></td>
+<td>Feedback: open a prefilled public form for the TWG CLI team; stored per Atlassian Privacy Policy.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg focus-areas search</code></td>
+<td>Search focus areas sitewide by text</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg goals archive</code></td>
+<td>Archive an Atlas goal by goal key; hides it from active dashboards but preserves it for historical reference and reporting.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg goals create</code></td>
+<td>Create a new Atlas goal with name, scope (org/team/user), owner, target date, and optional parent goal; goal appears on Atlas dashboards immediately.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg goals status-update create</code></td>
+<td>Post a status update on an Atlas goal with status (on-track/at-risk/off-track), summary, and optional contributors — the standard weekly/monthly check-in format.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg goals status-update update</code></td>
+<td>Edit an existing Atlas goal status update by update ID; modify the summary, status, or contributors of a previously-posted update.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg goals types</code></td>
+<td>List the goal types available on a site, including the goal-type-id ARIs required by <code>goals create</code>.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg goals update</code></td>
+<td>Update Atlas goal metadata — name, description, owner, target date, contributors, parent goal — by goal key; visible immediately to all stakeholders.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg help</code></td>
+<td>Discover skills or search and describe command help</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg help describe</code></td>
+<td>Inspect a command namespace, executable command, or bundled skill</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg help discover-skills</code></td>
+<td>Find bundled TWG reference guidance and its owning skill</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira board backlog query</code></td>
+<td>Query backlog data for a Jira board</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira board backlog-view query</code></td>
+<td>Query a Jira board backlog view</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira board cells query</code></td>
+<td>Get Jira board view cells by ID or ARI</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira board create</code></td>
+<td>Create a Jira software board</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira board delete</code></td>
+<td>Delete a Jira software board</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira board get</code></td>
+<td>Get Jira boards by ID or ARI</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira board projects query</code></td>
+<td>Query Jira projects associated with a software board</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira board query</code></td>
+<td>Search Jira software boards for a project</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira board quick-filter get</code></td>
+<td>Get one quick filter configured on a Jira software board</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira board quick-filter query</code></td>
+<td>Query quick filters configured on a Jira software board</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira board scope query</code></td>
+<td>Query scope settings for a Jira board</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira board sprints query</code></td>
+<td>Query Jira sprints associated with a software board</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira board view-settings query</code></td>
+<td>Query Jira board view settings</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira dashboard bulk-edit</code></td>
+<td>Experimentally edit owners or permissions for up to 100 Jira dashboards</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira dashboard copy</code></td>
+<td>Copy a Jira dashboard with explicit name and permission settings</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira dashboard create</code></td>
+<td>Create a Jira dashboard</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira dashboard delete</code></td>
+<td>Delete a Jira dashboard</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira dashboard gadget add</code></td>
+<td>Add a gadget to a Jira dashboard</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira dashboard gadget catalog query</code></td>
+<td>Query gadgets available to add to Jira dashboards</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira dashboard gadget delete</code></td>
+<td>Delete a Jira dashboard gadget</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira dashboard gadget query</code></td>
+<td>Query gadgets on a Jira dashboard</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira dashboard gadget update</code></td>
+<td>Update a Jira dashboard gadget</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira dashboard get</code></td>
+<td>Get a Jira dashboard</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira dashboard item-property delete</code></td>
+<td>Delete one property from a Jira dashboard item</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira dashboard item-property get</code></td>
+<td>Get one Jira dashboard item property by key</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira dashboard item-property query</code></td>
+<td>Query property keys stored on a Jira dashboard item</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira dashboard item-property set</code></td>
+<td>Set a Jira dashboard item property to an arbitrary JSON value</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira dashboard query</code></td>
+<td>Search Jira dashboards</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira dashboard update</code></td>
+<td>Update a Jira dashboard</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira field cancel-delete</code></td>
+<td>Admin: restore trashed global Jira custom field definitions</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira field create</code></td>
+<td>Admin: create a global Jira custom field definition</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira field delete</code></td>
+<td>Admin: move global Jira custom field definitions to trash</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira field update</code></td>
+<td>Admin: update a global Jira custom field definition</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira filter add-favourite</code></td>
+<td>Add a Jira filter as a favourite for the current user</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira filter change-owner</code></td>
+<td>Change a Jira filter owner</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira filter columns get</code></td>
+<td>Get columns configured for a Jira filter</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira filter columns set</code></td>
+<td>Set the ordered field columns saved for a Jira filter</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira filter create</code></td>
+<td>Create a Jira filter</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira filter delete</code></td>
+<td>Delete a Jira filter</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira filter get</code></td>
+<td>Get a Jira filter</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira filter query</code></td>
+<td>Search Jira filters</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira filter remove-favourite</code></td>
+<td>Remove a Jira filter from the current user's favourites</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira filter reset-columns</code></td>
+<td>Reset Jira filter columns to the default</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira filter share add</code></td>
+<td>Add a Jira filter share permission</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira filter share query</code></td>
+<td>Query Jira filter share permissions</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira filter share remove</code></td>
+<td>Remove a Jira filter share permission</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira filter subscription query</code></td>
+<td>Query Jira filter subscriptions</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira filter update</code></td>
+<td>Update a Jira filter</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space archive</code></td>
+<td>Archive a Jira space (project)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space component counts</code></td>
+<td>Get related issue counts for a Jira space component</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space component create</code></td>
+<td>Create a Jira space component</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space component delete</code></td>
+<td>Delete a Jira space component</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space component get</code></td>
+<td>Get a Jira space component by ID</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space component query</code></td>
+<td>Query Jira space components by space key</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space component update</code></td>
+<td>Update a Jira space component</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space create</code></td>
+<td>Create a Jira space (project)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space delete</code></td>
+<td>Delete a Jira space (project) into the Jira recycle bin</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space get</code></td>
+<td>Get a Jira space (project) by ID or key</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space issue-types</code></td>
+<td>Query issue types available in a Jira space</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space notification-scheme get</code></td>
+<td>Get the notification scheme assigned to a Jira space</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space query</code></td>
+<td>Search Jira spaces (projects)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space restore</code></td>
+<td>Restore an archived or deleted Jira space (project)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space status query</code></td>
+<td>Query all statuses for a Jira project, grouped by status category. Useful for writing accurate JQL.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space types query</code></td>
+<td>Get Jira space types by ID or ARI</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space update</code></td>
+<td>Update a Jira space (project)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space version counts</code></td>
+<td>Get related issue counts for a Jira space version</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space version create</code></td>
+<td>Create a Jira space version</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space version delete</code></td>
+<td>Delete a Jira space version</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space version get</code></td>
+<td>Get a Jira space version by ID</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space version merge</code></td>
+<td>Merge one Jira space version into another</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space version move</code></td>
+<td>Move a Jira space version within project ordering</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space version update</code></td>
+<td>Update a Jira space version</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira space versions query</code></td>
+<td>Query Jira space versions by space key</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira sprint complete</code></td>
+<td>Mark a Jira sprint as complete; closes the sprint, moves incomplete issues to the backlog (or next sprint, per board config).</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira sprint create</code></td>
+<td>Create a new Jira sprint on a software board; sets sprint name, optional goal, and start/end dates (Scrum and Kanban boards both support sprints).</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira sprint delete</code></td>
+<td>Permanently delete a Jira sprint by ID; removes the sprint from its board and moves its issues back to the backlog.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira sprint get</code></td>
+<td>Get a Jira sprint by ID or ARI</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira sprint snapshot</code></td>
+<td>Summarize the active sprint for a Jira board</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira sprint start</code></td>
+<td>Start a Jira sprint</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira sprint update</code></td>
+<td>Update an existing Jira sprint's name, goal, or start/end dates by sprint ID; visible to all team members on the board.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira sprint workitems query</code></td>
+<td>Query Jira work items in a sprint</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem archive</code></td>
+<td>Archive Jira work items by IDs or asynchronously by JQL</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem attachment delete</code></td>
+<td>Permanently delete a file attachment from a Jira work item by attachment ID; removes the file from storage and updates issue metadata.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem attachment download</code></td>
+<td>Download Jira attachment content to a local file</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem attachment get</code></td>
+<td>Get Jira attachment metadata by attachment ID</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem attachment query</code></td>
+<td>List file attachments on a Jira work item with metadata; returns filename, author, size, MIME type, thumbnail URL, and created timestamp.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem attachment thumbnail</code></td>
+<td>Download a Jira attachment thumbnail to a local file</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem attachment upload</code></td>
+<td>Upload one or more files as Jira work item attachments</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem bulk-get</code></td>
+<td>Bulk fetch Jira work items by issue key or ID using Jira Cloud REST issue bulkfetch.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem bulk-transition</code></td>
+<td>Validate or submit a Jira Cloud bulk status transition for many work items</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem changelog query</code></td>
+<td>Query changelog entries for a Jira work item</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem clone</code></td>
+<td>Clone a Jira work item</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem comment create</code></td>
+<td>Add a comment to a Jira work item; supports HTML, markdown, or plain text body and optional internal (JSM-only) visibility for service desk responses.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem comment delete</code></td>
+<td>Permanently delete a comment from a Jira work item by comment ID and issue ID; removes the comment and its history from the issue thread.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem comment query</code></td>
+<td>Query comments on a Jira work item with pagination and ordering; returns author, body, created/updated timestamps, and visibility for each comment.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem comment update</code></td>
+<td>Edit the body of an existing Jira work item comment by comment ID and issue ID; preserves author and creation timestamp while updating content.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem create</code></td>
+<td>Create a Jira work item</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem create-bulk</code></td>
+<td>Bulk create Jira work items from JSON payloads</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem delete</code></td>
+<td>Delete a Jira work item</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem field create-metadata</code></td>
+<td>Discover required custom fields, customfield_* IDs, and allowed values for work item create</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem field update-metadata</code></td>
+<td>Discover editable fields and allowed values for work item update (custom fields by default)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem get</code></td>
+<td>Get one or more Jira work items by issue key or ARI. Pass multiple issue keys in one command to batch hydrate known issues.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem link artifact</code></td>
+<td>Link a Jira workitem to a typed artifact remote link</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem link branch</code></td>
+<td>Link a Jira workitem to a branch remote link</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem link build</code></td>
+<td>Link a Jira workitem to a build remote link</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem link commit</code></td>
+<td>Link a Jira workitem to a commit remote link</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem link deployment</code></td>
+<td>Link a Jira workitem to a deployment remote link</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem link goal</code></td>
+<td>Link a Jira workitem to a goal</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem link loom</code></td>
+<td>Link a Jira workitem to a Loom video remote link</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem link meeting</code></td>
+<td>Link a Jira workitem to a meeting remote link</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem link page</code></td>
+<td>Link a Jira workitem to a Confluence page</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem link pr</code></td>
+<td>Link a Jira workitem to a pull request remote link</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem link project</code></td>
+<td>Link a Jira workitem to a project</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem link query</code></td>
+<td>Query issue links on a Jira work item</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem link repo</code></td>
+<td>Link a Jira workitem to a repository remote link</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem link weblink</code></td>
+<td>Link a Jira workitem to an external web link</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem link workitem</code></td>
+<td>Create issue-to-issue links between Jira work items</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem link-types query</code></td>
+<td>Query available issue link types</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem priorities query</code></td>
+<td>Get Jira priorities by ID or ARI</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem project-link-candidates query</code></td>
+<td>Search Jira work items that can be linked to a project</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem property delete</code></td>
+<td>Delete a Jira work item property</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem property get</code></td>
+<td>Get a Jira work item property by key</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem property query</code></td>
+<td>Query Jira work item property keys</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem property set</code></td>
+<td>Set a Jira work item property from arbitrary JSON</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem query</code></td>
+<td>Run an explicit structured JQL query against Jira work items</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem search</code></td>
+<td>Find Jira work items by fuzzy text using Jira JQL</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem statuses query</code></td>
+<td>Get Jira workitem statuses by ID or ARI</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem transition</code></td>
+<td>Transition a Jira work item to a new status</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem transitions query</code></td>
+<td>List available transitions for a Jira work item. Useful for discovering valid status names.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem types get</code></td>
+<td>Get Jira workitem types by ID or ARI</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem types query</code></td>
+<td>Query Jira workitem types available in a project by project key or ID</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem unarchive</code></td>
+<td>Unarchive Jira work items by ID or ARI</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem unlink artifact</code></td>
+<td>Unlink a typed artifact remote link from a Jira workitem</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem unlink branch</code></td>
+<td>Unlink a branch remote link from a Jira workitem</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem unlink build</code></td>
+<td>Unlink a build remote link from a Jira workitem</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem unlink commit</code></td>
+<td>Unlink a commit remote link from a Jira workitem</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem unlink deployment</code></td>
+<td>Unlink a deployment remote link from a Jira workitem</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem unlink goal</code></td>
+<td>Unlink a Jira workitem from a goal</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem unlink loom</code></td>
+<td>Unlink a Loom video remote link from a Jira workitem</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem unlink meeting</code></td>
+<td>Unlink a meeting remote link from a Jira workitem</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem unlink page</code></td>
+<td>Unlink a Jira workitem from a Confluence page</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem unlink pr</code></td>
+<td>Unlink a pull request remote link from a Jira workitem</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem unlink project</code></td>
+<td>Remove a Jira workitem link from a project</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem unlink repo</code></td>
+<td>Unlink a repository remote link from a Jira workitem</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem unlink weblink</code></td>
+<td>Unlink an external web link from a Jira workitem</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem unlink workitem</code></td>
+<td>Delete an issue-to-issue link</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem update</code></td>
+<td>Update fields on a Jira work item</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem vote add</code></td>
+<td>Add the current user's vote to a Jira work item</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem vote query</code></td>
+<td>Query vote state for a Jira work item</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem vote remove</code></td>
+<td>Remove the current user's vote from a Jira work item</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem watcher add</code></td>
+<td>Add a watcher to a Jira work item</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem watcher query</code></td>
+<td>Query users watching a Jira work item; returns the list of accounts subscribed to email notifications when the issue changes.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem watcher remove</code></td>
+<td>Remove a user account from a Jira work item's watcher list; unsubscribes them from email notifications on issue changes.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem worklog add</code></td>
+<td>Log time spent on a Jira work item with optional comment and start-time; supports Jira's standard time format (e.g. '2h 30m', '1d', '45m').</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem worklog changed</code></td>
+<td>Query Jira worklogs changed since an epoch millisecond timestamp</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem worklog delete</code></td>
+<td>Delete a Jira worklog</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem worklog deleted</code></td>
+<td>Query Jira worklogs deleted since an epoch millisecond timestamp</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem worklog get</code></td>
+<td>Get a Jira worklog by issue and worklog ID</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem worklog query</code></td>
+<td>List worklog entries (time tracking) on a Jira work item; returns author, time spent, comment, and start time for each logged interval.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jira workitem worklog update</code></td>
+<td>Update a Jira worklog</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm agents availability get</code></td>
+<td>Get my current agent availability; project context is optional</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm agents availability list</code></td>
+<td>List project or team agent availability; requires a project</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm agents availability set</code></td>
+<td>Set my JSM agent availability for one project</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm agents list</code></td>
+<td>List agents assigned to a JSM project</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm alert create</code></td>
+<td>Create a new JSM Ops (Opsgenie) alert; use to trigger a monitoring event, on-call page, or escalation programmatically.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm alert delete</code></td>
+<td>Delete a JSM Ops alert by ID; use only for test or noise alerts — this cannot be undone.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm alert get</code></td>
+<td>Get a single JSM Ops alert by its ID; returns full alert metadata, status, responders, and tags.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm alert query</code></td>
+<td>Search JSM Ops alerts using Opsgenie search syntax; use to find open pages, P1 alerts, or team-specific monitoring events.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm alert update</code></td>
+<td>Update a JSM Ops alert's priority, message, or description; use to escalate or de-escalate an existing alert.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm approval approve</code></td>
+<td>Approve a pending JSM service desk request</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm approval get</code></td>
+<td>Get details of a specific approval on a JSM service desk request</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm approval list</code></td>
+<td>List all approvals for a JSM service desk request</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm approval reject</code></td>
+<td>Reject a pending JSM service desk request</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm conversation claim create</code></td>
+<td>Claim a conversation for the current agent</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm conversation close create</code></td>
+<td>Close a conversation</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm conversation message query</code></td>
+<td>Query conversation messages</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm conversation query</code></td>
+<td>Query conversations</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm conversation settings query</code></td>
+<td>Query project conversation settings</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm conversation settings update</code></td>
+<td>Update project conversation settings</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm conversation workspace create</code></td>
+<td>Inspect or invoke JSM Chat mutation API fields</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm conversation workspace query</code></td>
+<td>Inspect or invoke JSM Chat query API fields</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm form answers list</code></td>
+<td>List formatted answers from a form attached to a work item</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm form fields list</code></td>
+<td>List all fields in a form attached to a work item</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm form get</code></td>
+<td>Get a form attached to a work item</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm form list</code></td>
+<td>List all forms attached to a work item</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-article query</code></td>
+<td>Search Help Object Store articles</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-center config get</code></td>
+<td>Get multi-Help-Center workspace config</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-center create</code></td>
+<td>Inspect or invoke Help Center mutation API fields</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-center customer-experience list</code></td>
+<td>List customer experience Help Centers</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-center get</code></td>
+<td>Get a Help Center by ARI</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-center get-by-project</code></td>
+<td>Get a Help Center by workspace and project ARI</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-center hub-media-config get</code></td>
+<td>Get media config for a Help Center or page ARI</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-center layout-translations list</code></td>
+<td>List stored layout translations for a Help Center</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-center list</code></td>
+<td>List Help Centers in a workspace</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-center list-basic</code></td>
+<td>List basic Help Center connection data</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-center list-by-project</code></td>
+<td>List Help Centers associated with a project ID</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-center media-config get</code></td>
+<td>Get Help Center media upload config</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-center page get</code></td>
+<td>Get a Help Center page by ARI</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-center page list</code></td>
+<td>List pages in a Help Center</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-center permission-settings get</code></td>
+<td>Get Help Center permission settings</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-center permissions get</code></td>
+<td>Get Help Center permission booleans</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-center product-entities query</code></td>
+<td>Query generic product entities for a Help Center</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-center reporting get</code></td>
+<td>Get Help Center reporting metrics</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-center topic get</code></td>
+<td>Get a Help Center topic</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-object-store create</code></td>
+<td>Inspect or invoke Help Object Store mutation API fields</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm help-object-store query</code></td>
+<td>Inspect or invoke Help Object Store query API fields</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm incident affected-service query</code></td>
+<td>List affected services linked to a JSM incident.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm incident affected-services query</code></td>
+<td>List affected services linked to a JSM incident.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm incident alert query</code></td>
+<td>List alerts linked to a JSM incident.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm incident create</code></td>
+<td>Create a new JSM incident</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm incident delete</code></td>
+<td>Permanently delete a JSM incident</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm incident get</code></td>
+<td>Get a single JSM incident by key, URL, ID, or ARI</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm incident link affected-service</code></td>
+<td>Link affected services to a JSM incident</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm incident link alert</code></td>
+<td>Link alerts to a JSM incident</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm incident query</code></td>
+<td>Search JSM incidents by JQL; returns live production outages, sev tickets, and downtime records from incident projects.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm incident responder add</code></td>
+<td>Add responders to a JSM incident</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm incident responder query</code></td>
+<td>List responders on a JSM incident.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm incident responder remove</code></td>
+<td>Remove responders from a JSM incident</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm incident transition</code></td>
+<td>Transition a JSM incident to a new status</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm incident unlink affected-service</code></td>
+<td>Unlink affected services from a JSM incident</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm incident unlink alert</code></td>
+<td>Unlink alerts from a JSM incident</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm incident update</code></td>
+<td>Update fields on an existing JSM incident</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm knowledge-app-link query</code></td>
+<td>Query Confluence app-link details</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm knowledge-article query</code></td>
+<td>Search knowledge articles</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm knowledge-base create</code></td>
+<td>Inspect or invoke Knowledge Base mutation API fields</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm knowledge-base query</code></td>
+<td>Inspect or invoke Knowledge Base query API fields</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm knowledge-base search query</code></td>
+<td>Search knowledge articles for agents</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm knowledge-capability query</code></td>
+<td>Query knowledge-base user capabilities</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm knowledge-discovery create</code></td>
+<td>Inspect or invoke Knowledge Discovery mutation API fields</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm knowledge-discovery query</code></td>
+<td>Inspect or invoke Knowledge Discovery query API fields</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm knowledge-permission bulk query</code></td>
+<td>Bulk query source permissions</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm knowledge-source-type get</code></td>
+<td>Get linked-source types for a container</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm linked-source link</code></td>
+<td>Link knowledge sources to a project</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm linked-source permission update</code></td>
+<td>Update linked-source view permissions</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm linked-source query</code></td>
+<td>Query linked knowledge sources</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm linked-source suggestion query</code></td>
+<td>Query source suggestions</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm linked-source unlink</code></td>
+<td>Unlink knowledge sources from a project</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm linked-source view update</code></td>
+<td>Update source view permissions for a space</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm portal query</code></td>
+<td>Search JSM portals</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm post-incident-review create</code></td>
+<td>Create a new post-incident review from an incident</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm post-incident-review delete</code></td>
+<td>Permanently delete a post-incident review</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm post-incident-review get</code></td>
+<td>Get a single post-incident review by key, URL, ID, or ARI</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm post-incident-review incident get</code></td>
+<td>Get the incident linked to a PIR</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm post-incident-review link incident</code></td>
+<td>Link an incident to a post-incident review</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm post-incident-review query</code></td>
+<td>Search post-incident reviews by JQL.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm post-incident-review unlink incident</code></td>
+<td>Unlink an incident from a post-incident review</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm post-incident-review update</code></td>
+<td>Update fields on an existing post-incident review</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm request create</code></td>
+<td>Raise a JSM request (also known as a JSM work item or JSM ticket) in a Jira Service Management project. Use this command - not <code>twg jira workitem create</code> - whenever the target project is a JSM/service-desk project. Omit --request-type on the first attempt and the command will list available request types for the resolved service desk.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm request participant add</code></td>
+<td>Add one or more participants to a JSM request</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm request participant list</code></td>
+<td>List participants on a JSM request</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm request participant remove</code></td>
+<td>Remove one or more participants from a JSM request</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm request-type field get</code></td>
+<td>Get fields and form metadata for a JSM request type</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm request-type fields get</code></td>
+<td>Get fields and form metadata for a JSM request type</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm request-type query</code></td>
+<td>Search request types</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm resolution-state get</code></td>
+<td>Get service-agent resolution state by ticket ID</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm service get</code></td>
+<td>Get a single JSM DevOps service by its ID; returns full service metadata.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm service query</code></td>
+<td>List JSM DevOps services on a site, optionally filtered; returns service IDs needed for incident and PIR workflows.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm service search</code></td>
+<td>Search JSM services by name</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm service-tier query</code></td>
+<td>List JSM service tiers on a site; returns tier IDs and names used for service classification.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm sla get</code></td>
+<td>Get SLA details for one JSM workitem/request</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm sla metrics</code></td>
+<td>List configured JSM SLA metrics for a Jira project</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm sla workitems</code></td>
+<td>List workitems matching an SLA JQL clause</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg jsm support-site-article query</code></td>
+<td>Search support-site articles</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg login</code></td>
+<td>Configure CLI credentials and save them to ~/.config/twg/auth.conf for use across sessions</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg logout</code></td>
+<td>Sign out by clearing stored credentials while preserving auth metadata</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom folder create</code></td>
+<td>Create a folder in the current Loom workspace.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom get</code></td>
+<td>Get one or more Loom resources (videos, spaces, workspaces, settings) by ID, URL, or ARI; batches multiple lookups in a single API call.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom invite accept</code></td>
+<td>Accept a pending Loom organization invitation by invite ID or invite token; adds you to the organization with the invite's default permissions.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom space create</code></td>
+<td>Create a new Loom space (folder/container) in the current workspace; spaces organize Loom videos by team, project, or topic.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom space query</code></td>
+<td>List Loom spaces (folders/containers) on the configured site with names, IDs, and URLs; useful for discovering organizational structure.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom video action-item list</code></td>
+<td>List AI-generated action items for a Loom meeting recording.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom video agent-brief list</code></td>
+<td>List AI-generated agent briefs for a Loom video.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom video comment create</code></td>
+<td>Create a timestamped comment on a Loom video.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom video comments</code></td>
+<td>List comments on a Loom video by video ID, URL, or ARI; returns the flat comment stream exposed by Loom.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom video delete</code></td>
+<td>Permanently delete one or more Loom videos by video ID, URL, or ARI; removes the video from your library and all shared links stop working.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom video get</code></td>
+<td>Get Loom video details (title, owner, duration, view count, transcript availability, recorded date) by video ID, URL, or ARI; batches multiple IDs.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom video move</code></td>
+<td>Move a Loom video to a folder.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom video reaction add</code></td>
+<td>Add a timestamped emoji reaction to a Loom video.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom video recover</code></td>
+<td>Recover an archived or deleted Loom video when recovery is available.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom video rename</code></td>
+<td>Rename a Loom video.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom video share</code></td>
+<td>Share a Loom video with one or more Atlassian users.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom video transcript</code></td>
+<td>Get the transcript for a Loom video; returns a bounded preview by default.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom video upload</code></td>
+<td>Stream a local video to Loom and publish it in one command.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom video visibility set</code></td>
+<td>Set who can view a Loom video.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg loom workspace join</code></td>
+<td>Join a Loom workspace by workspace ID; the authenticated user is added as a member with default permissions.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg notifications</code></td>
+<td>Notifications: browse and filter your direct and watching notification feed — mentions, task assignments, page updates, and shares — across Atlassian products.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg people bulk-lookup</code></td>
+<td>Alias for <code>twg user bulk-lookup</code></td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg projects archive</code></td>
+<td>Archive an Atlas project by project key; hides it from active dashboards but preserves it for historical reference and reporting.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg projects create</code></td>
+<td>Create a new Atlas project with name, owner, start/target dates, and optional parent; appears on Atlas dashboards immediately for tracking and discovery.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg projects status-update create</code></td>
+<td>Post a status update on an Atlas project with health, summary, and optional highlights/notes — the standard check-in format.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg projects status-update update</code></td>
+<td>Edit an existing Atlas project status update by update ID or ARI; replaces highlights/notes if provided.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg projects update</code></td>
+<td>Update Atlas project metadata — name, description, owner, target date, contributors, parent — by project key; changes immediately visible to stakeholders.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg resolve</code></td>
+<td>Resolve natural-language references into Atlassian ARIs</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg setup</code></td>
+<td>Finish TWG setup: install skills, log in, enable upkeep, and check health</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg setup bitbucket</code></td>
+<td>Set up the optional Bitbucket token for Bitbucket-specific commands</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg setup default-site</code></td>
+<td>Save the default Atlassian site (no re-login)</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg skills install</code></td>
+<td>Install TWG agent skills</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg skills uninstall</code></td>
+<td>Uninstall TWG agent skills</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg talent position get</code></td>
+<td>Get full details of one or more Talent positions by ARI or position key (e.g. P-3007) — role name, level, owner, team, focus area allocation, and proposal history.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg talent position me</code></td>
+<td>Get the current user's own Talent position</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg talent position query</code></td>
+<td>Query Talent positions (workforce roles) by team, focus area, status, or other filters; returns positions with owners, levels, and team assignments.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg teams archive</code></td>
+<td>Archive one or more teams</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg teams create</code></td>
+<td>Create a new team</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg teams get</code></td>
+<td>Get one or more teams by name or ARI</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg teams members add</code></td>
+<td>Add members to a team</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg teams members list</code></td>
+<td>List members of a team</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg teams members remove</code></td>
+<td>Remove members from a team</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg teams query</code></td>
+<td>Query teams on a site</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg teams update</code></td>
+<td>Update a team's display name or description</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello board close</code></td>
+<td>Close (archive) a Trello board by ID; the board disappears from the workspace list but is reversible via 'trello board reopen'.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello board get</code></td>
+<td>Get Trello board details by board ID or short link — name, description, workspace, members, list count, label colors, and preferences.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello board list query</code></td>
+<td>List the columns (lists) on a Trello board — names, positions, IDs, and archive state; useful for discovering the board's workflow stages.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello board member query</code></td>
+<td>List members with access to a Trello board with their membership type (admin, normal, observer); useful for board access audits.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello board reopen</code></td>
+<td>Reopen a previously-closed Trello board by board ID; restores it to the workspace's active board list with all cards and lists intact.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello board update</code></td>
+<td>Update Trello board settings — name, description, preferences (background, permissions, voting), or close/reopen state by board ID.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello card add-label</code></td>
+<td>Apply one or more labels to a Trello card by label ID; labels are useful for categorization, priority, and filtering.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello card add-member</code></td>
+<td>Assign a Trello member to a card by member ID; the member is notified and the card appears in their 'cards assigned to me' list.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello card archive</code></td>
+<td>Archive (close) a Trello card by card ID; the card disappears from the board view but is preserved and reversible via 'trello card unarchive'.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello card create</code></td>
+<td>Create a new Trello card in a specified list with name, optional description, and optional numeric position.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello card get</code></td>
+<td>Get Trello card details by card ID or short link — name, description, members, labels, due date, checklists, attachments, comments, and board context.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello card label query</code></td>
+<td>List labels currently applied to a Trello card with color and name; useful for filtering, categorization audits, and label-based workflows.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello card mark-complete</code></td>
+<td>Mark a Trello card as complete by card ID; useful for cards with due dates that integrate with the 'completed' visual indicator.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello card member query</code></td>
+<td>List members assigned to a Trello card with their usernames and IDs; useful for understanding card ownership and collaborators.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello card remove-label</code></td>
+<td>Remove one or more labels from a Trello card by label ID; the labels stay on the board but no longer apply to this card.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello card remove-member</code></td>
+<td>Unassign a Trello member from a card by member ID; the card no longer appears in their assigned list and they may stop receiving updates.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello card unarchive</code></td>
+<td>Restore a previously-archived Trello card by card ID; brings it back to the active board view in its original list.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello card update</code></td>
+<td>Update Trello card fields — name or description — by card ARI or 8-character shortlink.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello list card query</code></td>
+<td>List cards in a specific Trello list (column) — card names, IDs, due dates, members, labels; filterable by status (open/closed).</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello list card sort</code></td>
+<td>Sort cards in a Trello list by a given order — by created date, due date, alphabetically, etc.; affects card display order within the column.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello list get</code></td>
+<td>Get a single Trello list (column) by list ID — name, position, board ID, closed status, and basic metadata.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello member get</code></td>
+<td>Get a single Trello member's profile by member ID or username; returns full name, email visibility, avatar, and member-level metadata.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello member me</code></td>
+<td>Get the currently authenticated Trello member's profile — username, full name, email, member ID, and account metadata.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello member workspace query</code></td>
+<td>List Trello workspaces (organizations) the specified member belongs to; defaults to the current authenticated member if no member is specified.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello workspace get</code></td>
+<td>Get full Trello workspace (organization) details by workspace ID — name, display name, description, member count, visibility, and basic settings.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg trello workspace member query</code></td>
+<td>List members of a Trello workspace (organization) with their roles (admin, normal, observer); useful for access audits and member discovery.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg uninstall</code></td>
+<td>Remove a direct TWG CLI installation, scheduled upkeep, skills, and all local TWG configs</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg update</code></td>
+<td>Check for and install the latest public TWG CLI release, then silently refresh detected installed skills with overwrite</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg upkeep disable</code></td>
+<td>Remove the per-user upkeep schedule</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg upkeep enable</code></td>
+<td>Install or reconcile the per-user upkeep schedule</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg upkeep run</code></td>
+<td>Run one OAuth refresh and update-check maintenance pass</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg upkeep status</code></td>
+<td>Show configured and live scheduler status</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg user bulk-lookup</code></td>
+<td>Bulk look up users by email or Atlassian account ID</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg visualize</code></td>
+<td>Generate a local graph visualization from exact graph JSON</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+<tr>
+<td><code>twg whoami</code></td>
+<td>Display the current authenticated user.</td>
+<td><span style="background-color: #e3fcef; color: #006644; border-radius: 3px; padding: 2px 6px;">Free</span></td>
+</tr>
+</tbody>
+</table>
+
+      <footer class="source-footer">
+        Generated from atlassian/twg-cli e4394b657abe (2026-08-31T01:49:54+00:00).
+      </footer>
+    </main>
+  </div>
+  <script>
+    for (const button of document.querySelectorAll("[data-copy-text]")) {
+      button.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(button.getAttribute("data-copy-text") || "");
+        const previous = button.textContent;
+        button.textContent = "Copied";
+        setTimeout(() => {
+          button.textContent = previous;
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -78,6 +78,8 @@
 <li class="nav-heading" style="--depth:1">Agent integration</li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/agents/skills/">Agent skills</a></li>
 <li class="nav-link" style="--depth:2"><a href="/twg-cli/agents/examples/">Agent examples</a></li>
+<li class="nav-heading" style="--depth:1">Command Reference</li>
+<li class="nav-link" style="--depth:2"><a href="/twg-cli/commands/commands-catalog/">Command Catalog</a></li>
 </ul>
 </nav>
     </aside>
@@ -87,9 +89,19 @@
 <p>Yes. Teamwork Graph CLI is available to all Atlassian customers.</p>
 <h3 id="is-teamwork-graph-cli-free-to-use">Is Teamwork Graph CLI free to use?</h3>
 <p>Teamwork Graph CLI is free to install and use.</p>
-<p>In the future, installing the CLI will remain free, but certain forms of usage will be billed. With 90 days advance notice, certain enriched, value-added commands will be billed with at least 1 Rovo credit per call. Certain complex queries will cost more than 1 credit per call.</p>
-<p>These enriched commands require Teamwork Graph CLI to aggregate responses from multiple Atlassian and non-Atlassian apps and run AI inferencing to generate insights. For example, <code>twg collaborators</code> provides insights on collaborators by analyzing common artifacts and interactions between users in an organization. Similarly, <code>twg context</code> aggregates information across multiple Atlassian and non-Atlassian systems to deliver the best context around a work item, Confluence page, or user.</p>
-<p>The detailed rate card will be published with 90 days advance notice before billing begins.</p>
+<p>However, certain commands require up to 10 Rovo Credits per call. These are
+called <strong>Enriched</strong> commands. They require Rovo Credits because they aggregate
+responses from multiple Atlassian and non-Atlassian apps and may use AI
+inferencing to generate insights.</p>
+<p>For example, <code>twg collaborators</code> provides insights on collaborators by analyzing
+common artifacts and interactions between users in an organization. Similarly,
+<code>twg context</code> aggregates information across multiple Atlassian and
+non-Atlassian systems to deliver context around a work item, Confluence page,
+or user.</p>
+<p>To see which commands require Rovo Credits, refer to the <a href="/twg-cli/commands/commands-catalog/">Teamwork Graph CLI
+Command Catalog</a>. To check an
+individual command in the CLI, run <code>twg help &lt;command&gt;</code>; Enriched commands are
+labeled <code>[Enriched]</code> in the help output.</p>
 <p>Rovo credit consumption from Teamwork Graph CLI is included in your Rovo credits dashboard in the Atlassian Admin hub. To view it, go to <a href="https://admin.atlassian.com/">Atlassian Administration</a>, then select <strong>Insights</strong> &gt; <strong>Platform Usage</strong> &gt; <strong>Rovo Credits</strong>.</p>
 <h3 id="how-is-teamwork-graph-cli-different-from-atlassian-cli">How is Teamwork Graph CLI different from Atlassian CLI?</h3>
 <p>Atlassian CLI was built for human-driven administration before agentic usage was common. Teamwork Graph CLI is purpose-built as an agent-first CLI that standardizes commands and outputs for how agents actually work.</p>
@@ -117,7 +129,7 @@
 <p>For a detailed comparison and decision guide, see <a href="https://support.atlassian.com/organization-administration/docs/choosing-between-twg-cli-and-rovo-mcp/">Choosing between Teamwork Graph CLI and Rovo MCP</a>.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 974b36f10467 (2026-08-30T11:14:17+00:00).
+        Generated from atlassian/twg-cli e4394b657abe (2026-08-31T01:49:54+00:00).
       </footer>
     </main>
   </div>
