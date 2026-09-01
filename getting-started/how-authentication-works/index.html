@@ -86,33 +86,59 @@
     </aside>
     <main>
       <h1 id="how-authentication-works">How authentication works</h1>
-<p>Teamwork Graph CLI (TWG CLI) uses authentication to verify your identity, so it only accesses Atlassian data on your behalf. When you authenticate, TWG CLI stores your credentials securely on your device and uses them automatically each time you run a command.</p>
+<p>Teamwork Graph CLI (TWG CLI) authenticates you with Atlassian and uses your existing permissions when it accesses data. Your credentials are stored locally and reused across commands.</p>
 <p>TWG CLI uses OAuth 2.1 as its only supported authentication method. The one exception is Bitbucket, which isn't covered by OAuth yet and requires a separate Bitbucket token.</p>
+<aside class="dac-panel dac-panel-warning">
+<div class="dac-panel-label">Warning</div>
+<p>TWG CLI never asks you to paste or share an authentication token in a prompt, chat, or conversation. If an agent or tool asks for one, don't share it. Enter tokens only through the secure terminal prompts provided by TWG CLI.</p>
+</aside>
 <h2 id="oauth-2-1">OAuth 2.1</h2>
-<p>When you run <code>twg login</code> in your terminal, TWG CLI opens a browser window where you sign in to Atlassian and grant access. Your credentials are then stored locally and refreshed automatically, so you don't need to sign in again for day-to-day use.</p>
+<p>When you run <code>twg login</code>, TWG CLI opens a browser where you sign in to Atlassian and grant access. Your credentials are saved locally and refreshed automatically, so you usually won't need to sign in again.</p>
 <p>To set up OAuth 2.1, see <a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a>.</p>
 <h3 id="admin-authentication">Admin authentication</h3>
-<p>Site admin and organization admin authentication works differently. It uses an <strong>Atlassian Admin API key</strong> limited to your organization. This API key is stored in its own config file, so it never interacts with your personal <code>auth.conf</code>.</p>
+<p>Site and organization admin authentication use an <strong>Atlassian Admin API key</strong> limited to your organization. The key is stored separately from your personal credentials.</p>
 <p>To authenticate as an admin, run:</p>
 <pre><code class="language-bash">twg admin auth login --email &lt;your-email&gt; --org &lt;your-org-id&gt;
 </code></pre>
 <h2 id="bitbucket">Bitbucket</h2>
-<p>Bitbucket is the only exception to OAuth support: Bitbucket commands aren't covered by OAuth yet and require a separate Bitbucket token, set up independently of <code>twg login</code> via <code>twg setup bitbucket</code>. To set or refresh it, see <a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a>.</p>
-<aside class="dac-panel dac-panel-warning">
-<div class="dac-panel-label">Warning</div>
-<p>TWG CLI never asks you to paste or share your authentication tokens in a prompt, chat, or conversation. Don't respond if an agent or tool asks you to share a token this way. Tokens are always entered through secure, interactive terminal prompts that aren't stored in shell history or visible to other processes.</p>
-</aside>
+<p>Bitbucket is the only exception to OAuth support. Its commands require a separate Bitbucket token, set up independently with <code>twg setup bitbucket</code>.</p>
 <h2 id="permissions-are-always-respected">Permissions are always respected</h2>
-<p>TWG CLI always acts within the bounds of your existing Atlassian permissions. It can only read or modify the data you already have access to — authentication doesn't grant any elevated access beyond what your account allows.</p>
+<p>TWG CLI can read or modify only the Atlassian data your account already has access to. Authentication does not grant additional permissions.</p>
 <h2 id="token-lifecycle">Token lifecycle</h2>
-<p>OAuth access tokens expire after their server-issued lifetime, but TWG CLI refreshes them using a refresh token, so you typically won't notice. TWG CLI schedules refresh before the access token expires and also installs a per-user upkeep helper during setup so coding agents don't need to rotate credentials from inside their sandboxes. After 30 days of inactivity, the refresh token itself expires, and TWG CLI prompts you to sign in again.</p>
+<p>OAuth access tokens expire after 8 hours. TWG CLI refreshes credentials while commands run, but an agent sandbox may block refresh. During installation, <code>twg setup</code> enables the <a href="/twg-cli/getting-started/configure-oauth/#oauth-upkeep-background-helper">upkeep helper</a>, which runs outside agent sandboxes and refreshes credentials in the background. You can also enable it later with <code>twg upkeep enable</code>. After 30 days without use, the refresh token expires and TWG CLI asks you to sign in again.</p>
 <p>You can re-authenticate at any time by running:</p>
 <pre><code class="language-bash">twg login --force
 </code></pre>
 <p>To revoke your OAuth token, run:</p>
 <pre><code class="language-bash">twg logout
 </code></pre>
-<p>Organization admins can also revoke active TWG CLI sessions after changing OAuth permission settings in Atlassian Administration. When that happens, users must authenticate again before TWG CLI can use the updated permissions.</p>
+<p>Organization admins can revoke active TWG CLI sessions after changing OAuth permissions in Atlassian Administration. You must sign in again before TWG CLI can use the updated permissions.</p>
+<h2 id="experimental-encrypted-credential-storage">Experimental encrypted credential storage</h2>
+<p>TWG CLI now has an experimental option to store encrypted credentials in its vault at <code>auth-storage/auth.db</code>, instead of <code>auth.conf</code>. Its root key is stored separately: in the OS vault on macOS and Windows, or in the <code>TWG_AUTH_STORAGE_KEY</code> environment variable on Linux. This helps protect credentials from software that can inspect local files but cannot access the root key.</p>
+<p>This option is not enabled automatically. Existing credentials continue to use <code>auth.conf</code> until you migrate them. New users can save their first login directly to encrypted storage. See <a href="/twg-cli/getting-started/configure-oauth/#enable-experimental-encrypted-credential-storage">Enable experimental encrypted credential storage</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Root key</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>macOS</td>
+<td>macOS Keychain</td>
+</tr>
+<tr>
+<td>Windows</td>
+<td>Windows Credential Manager</td>
+</tr>
+<tr>
+<td>Linux</td>
+<td><code>TWG_AUTH_STORAGE_KEY</code>; Linux does not use an OS vault.</td>
+</tr>
+</tbody>
+</table>
+<p>After setup, <code>twg doctor --basic</code> shows which storage method is in use. The <code>auth.db</code> path identifies the encrypted database; the root key is stored separately.</p>
 <h2 id="next-steps">Next steps</h2>
 <ul>
 <li><a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a></li>
@@ -121,7 +147,7 @@
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli b569143c0e22 (2026-09-01T17:22:36+00:00).
+        Generated from atlassian/twg-cli 2f82c11d357d (2026-09-01T17:36:10+00:00).
       </footer>
     </main>
   </div>
