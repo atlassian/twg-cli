@@ -117,6 +117,17 @@ credentials authenticate commands and <code>twg doctor</code>, but are not used 
 <pre><code class="language-bash">curl -fsSL --retry 2 https://teamwork-graph.atlassian.com/cli/install | bash -s -- --version 0.9.1
 </code></pre>
 <p>If <code>~/.local/bin</code> is not in your <code>PATH</code>, the installer prints the exact line to add to your shell profile.</p>
+<h5 id="install-with-the-macos-package">Install with the macOS package</h5>
+<p>Use the signed, universal macOS package when you need a system-wide or managed installation. Download <a href="https://teamwork-graph.atlassian.com/cli/install.pkg">install.pkg</a>, open it in Finder, and follow the installer prompts. The package installs <code>twg</code> to <code>/usr/local/bin/twg</code> and requires an administrator password.</p>
+<p>To install it from a terminal instead:</p>
+<pre><code class="language-bash">curl -fL https://teamwork-graph.atlassian.com/cli/install.pkg -o twg.pkg
+sudo installer -pkg twg.pkg -target /
+</code></pre>
+<p>The package installs only the CLI binary. Open a new terminal and complete the per-user setup:</p>
+<pre><code class="language-bash">twg setup
+twg doctor
+</code></pre>
+<p>To update a package-managed installation, install the latest package again or use your organization's device-management process. <code>twg update</code> does not update package-managed installations.</p>
 <h4 id="windows">Windows</h4>
 <aside class="dac-panel dac-panel-note">
 <div class="dac-panel-label">Note</div>
@@ -136,6 +147,21 @@ powershell -ExecutionPolicy Bypass -File .\twg-install.ps1
 powershell -ExecutionPolicy Bypass -File twg-install.ps1
 </code></pre>
 <p>The Windows installer performs the same interactive setup as macOS and Linux: binary install, checksum verification, consent, skill install, OAuth login, and doctor verification.</p>
+<h5 id="install-with-a-windows-msi">Install with a Windows MSI</h5>
+<p>Use the signed MSI when you need a system-wide or managed installation. Choose the package that matches your device:</p>
+<ul>
+<li><a href="https://teamwork-graph.atlassian.com/cli/twg-windows-x64.msi">Windows x64 MSI</a> for most Windows PCs</li>
+<li><a href="https://teamwork-graph.atlassian.com/cli/twg-windows-arm64.msi">Windows ARM64 MSI</a> for Windows on ARM</li>
+</ul>
+<p>Download the MSI, then double-click it and approve the administrator prompt. To install from PowerShell, download the matching package and run <code>msiexec</code>:</p>
+<pre><code class="language-powershell">Invoke-WebRequest https://teamwork-graph.atlassian.com/cli/twg-windows-x64.msi -OutFile twg-windows-x64.msi
+msiexec.exe /i .\twg-windows-x64.msi
+</code></pre>
+<p>For Windows on ARM, replace <code>x64</code> with <code>arm64</code> in both commands. The MSI installs <code>twg.exe</code> to <code>C:\Program Files\twg</code> and adds that directory to the machine <code>PATH</code>.</p>
+<p>The MSI installs only the CLI binary. Open a new PowerShell or Command Prompt window, then complete the per-user setup:</p>
+<pre><code class="language-powershell">twg setup
+twg doctor
+</code></pre>
 <p>Run the Windows installer from a console when consent or login is needed. Runtime
 <code>TWG_*</code> credentials authenticate commands and <code>twg doctor</code>, but are not used by login.</p>
 <p>During setup, the installer:</p>
@@ -217,7 +243,7 @@ twg jira --help
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli ebbbedd025b0 (2026-09-02T01:05:09+00:00).
+        Generated from atlassian/twg-cli 06c3b7c15d5a (2026-09-02T01:25:43+00:00).
       </footer>
     </main>
   </div>
