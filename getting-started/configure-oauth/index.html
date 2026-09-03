@@ -138,23 +138,23 @@
 <h3 id="macos">macOS</h3>
 <p>Encrypted storage uses macOS Keychain for the root key.</p>
 <p>If you already use TWG CLI, migrate your existing credentials:</p>
-<pre><code class="language-bash">TWG_SECRET_STORE=keychain twg auth storage migrate --yes
+<pre><code class="language-bash">twg auth storage migrate
 </code></pre>
-<p>This copies your credentials to encrypted storage, then deletes <code>auth.conf</code> so TWG CLI uses <code>auth.db</code>.</p>
+<p>This detects your active storage and asks before migrating to the other backend. With <code>auth.conf</code> active, it copies your credentials to encrypted storage, then deletes <code>auth.conf</code> so TWG CLI uses <code>auth.db</code>. With encrypted storage active, it copies the selected profile back to <code>auth.conf</code>, then resets encrypted storage and its other profile slots. Use <code>--yes</code> for an already-confirmed script.</p>
 <p>If you are signing in for the first time, save the login directly to encrypted storage:</p>
 <pre><code class="language-bash">TWG_SECRET_STORE=keychain twg login --force --oauth
 </code></pre>
-<p><code>TWG_SECRET_STORE</code> only applies to these commands; it does not need to remain set.</p>
+<p><code>TWG_SECRET_STORE</code> only applies to login; it does not need to remain set.</p>
 <h3 id="windows">Windows</h3>
 <p>Encrypted storage uses Windows Credential Manager for the root key.</p>
 <p>In PowerShell, migrate existing credentials:</p>
-<pre><code class="language-powershell">$env:TWG_SECRET_STORE = &quot;keychain&quot;; twg auth storage migrate --yes
+<pre><code class="language-powershell">twg auth storage migrate
 </code></pre>
 <p>If you are signing in for the first time:</p>
 <pre><code class="language-powershell">$env:TWG_SECRET_STORE = &quot;keychain&quot;; twg login --force --oauth
 </code></pre>
 <p>In Command Prompt, migrate existing credentials:</p>
-<pre><code class="language-cmd">set TWG_SECRET_STORE=keychain &amp;&amp; twg auth storage migrate --yes
+<pre><code class="language-cmd">twg auth storage migrate
 </code></pre>
 <p>If you are signing in for the first time:</p>
 <pre><code class="language-cmd">set TWG_SECRET_STORE=keychain &amp;&amp; twg login --force --oauth
@@ -163,7 +163,7 @@
 <h3 id="linux">Linux</h3>
 <p>Linux does not use an OS vault for this option. Provide the root key with <code>TWG_AUTH_STORAGE_KEY</code> for each command:</p>
 <p>To migrate existing credentials:</p>
-<pre><code class="language-bash">TWG_SECRET_STORE=keychain TWG_AUTH_STORAGE_KEY=&lt;your-key&gt; twg auth storage migrate --yes
+<pre><code class="language-bash">TWG_AUTH_STORAGE_KEY=&lt;your-key&gt; twg auth storage migrate
 </code></pre>
 <p>If you are signing in for the first time:</p>
 <pre><code class="language-bash">TWG_SECRET_STORE=keychain TWG_AUTH_STORAGE_KEY=&lt;your-key&gt; twg login --force --oauth
@@ -255,7 +255,7 @@ twg upkeep disable
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 9b8918251225 (2026-09-03T06:12:46+00:00).
+        Generated from atlassian/twg-cli dd57df72c42b (2026-09-03T19:18:12+00:00).
       </footer>
     </main>
   </div>
