@@ -712,7 +712,7 @@ with <code>html</code> as the default.</p>
 <h3 id="highlights-11">Highlights</h3>
 <ul>
 <li><strong>JSM service management coverage:</strong> Add <code>twg jsm sla metrics</code> for listing configured SLA metrics on a project, and make <code>twg jsm request create</code> easier to use with friendly service desk and request type resolution plus clearer required-field guidance.</li>
-<li><strong>Simpler agent skill setup:</strong> <code>twg skills install</code>, <code>twg setup</code>, <code>twg update</code>, and <code>twg doctor</code> now use one canonical home skills location and the same repair command, reducing stale-skill confusion across agents.</li>
+<li><strong>Simpler agent skill setup:</strong> <code>twg skills install</code>, <code>twg setup</code>, <code>twg upgrade</code>, and <code>twg doctor</code> now use one canonical home skills location and the same repair command, reducing stale-skill confusion across agents.</li>
 <li><strong>More reliable terminal behavior:</strong> OS credential agents such as <code>ssh-agent</code> and <code>gpg-agent</code> no longer cause false agent-mode detection, and Windows background upkeep no longer flashes a command window every few minutes.</li>
 <li><strong>Sharper agent guidance:</strong> Bundled skills now include clearer guidance for Assets lookup, batched user discovery, canonical work/project/goal/Jira aliases, and compact outputs that reduce follow-up inspection turns.</li>
 </ul>
@@ -765,7 +765,7 @@ with <code>html</code> as the default.</p>
 <li><strong>Smoother Confluence content workflows:</strong> <code>twg confluence content get</code> can now write editable page content directly to a local file with <code>--body-output-file</code>, while keeping the snapshot token available in JSON output.</li>
 <li><strong>More reliable pasted-link support:</strong> Confluence content lifecycle commands now accept full Confluence URLs, tiny links, ARIs, and numeric IDs consistently, including move targets such as <code>--parent-id</code>, <code>--before</code>, and <code>--after</code>.</li>
 <li><strong>Clearer Confluence URLs and comment metadata:</strong> create/update output now prints full content URLs when available, and inline comment responses expose <code>inlineMarkerRef</code> for clients that need to reconnect comments to document positions.</li>
-<li><strong>Better troubleshooting and updates:</strong> backend-error feedback links are easier to open from terminals, <code>twg feedback --last-error</code> exposes the most recent error context, Windows <code>twg update</code> now runs in the foreground for clearer progress and failure reporting, and <code>twg update --version &lt;version&gt;</code> now installs the requested version instead of printing the CLI version.</li>
+<li><strong>Better troubleshooting and upgrades:</strong> backend-error feedback links are easier to open from terminals, <code>twg feedback --last-error</code> exposes the most recent error context, Windows <code>twg upgrade</code> now runs in the foreground for clearer progress and failure reporting, and <code>twg upgrade --version &lt;version&gt;</code> now installs the requested version instead of printing the CLI version.</li>
 </ul>
 <h2 id="1-0-16-2026-06-24">1.0.16 — 2026-06-24</h2>
 <h3 id="highlights-16">Highlights</h3>
@@ -777,7 +777,7 @@ with <code>html</code> as the default.</p>
 <h2 id="1-0-15-2026-06-23">1.0.15 — 2026-06-23</h2>
 <h3 id="highlights-17">Highlights</h3>
 <ul>
-<li><strong>General availability:</strong> Remove beta product labels from CLI and DAC surfaces. Beta terms now apply only to beta-channel releases, and update guidance consistently points to <code>twg update</code>.</li>
+<li><strong>General availability:</strong> Remove beta product labels from CLI and DAC surfaces. Beta terms now apply only to beta-channel releases, and upgrade guidance consistently points to <code>twg upgrade</code>.</li>
 <li><strong>Search that fails gracefully:</strong> User search now limits each Jira, Confluence, and Slack source to 30 seconds and returns partial results when one times out. Rovo Jira search adds actionable filter suggestions after transient search-service failures.</li>
 <li><strong>Safer automation contracts:</strong> <code>twg jira workitem create</code> accepts <code>--yes</code>, Teams create and update default scope to the configured site, and local validation failures return structured 400-level usage errors with exit code 2.</li>
 <li><strong>Reliable Trello identifiers:</strong> Read commands accept canonical ARIs from earlier results while preserving supported shortlinks and usernames. Malformed or wrong-entity board and member identifiers now fail locally with clearer guidance.</li>
@@ -798,7 +798,7 @@ with <code>html</code> as the default.</p>
 </ul>
 <h3 id="upgrade-notes">Upgrade notes</h3>
 <ul>
-<li>Public installs and updates now use the signed <code>twg</code> or <code>twg.exe</code> executable directly and clean up legacy <code>twg-bin</code> and <code>twg.cmd</code> launchers automatically. Continue updating with <code>twg update</code>.</li>
+<li>Public installs and upgrades now use the signed <code>twg</code> or <code>twg.exe</code> executable directly and clean up legacy <code>twg-bin</code> and <code>twg.cmd</code> launchers automatically. Continue upgrading with <code>twg upgrade</code>.</li>
 </ul>
 <h2 id="1-0-13-2026-06-22">1.0.13 — 2026-06-22</h2>
 <h3 id="highlights-19">Highlights</h3>
@@ -1074,7 +1074,7 @@ Confluence content and space surfaces.</li>
 and a corrected scope allowlist for the TWG CLI OAuth client.</li>
 <li>Adds low-frequency update checks from <code>doctor</code>/version commands and reports
 installed TWG skill freshness with repair guidance.</li>
-<li>Fixes Windows <code>twg update</code> replacement flows, records install metadata, and
+<li>Fixes Windows <code>twg upgrade</code> replacement flows, records install metadata, and
 preserves logs when background replacement fails.</li>
 <li>Warns about duplicate Homebrew/direct installs and prevents accidental direct
 installs over active Homebrew-managed installs.</li>
@@ -1221,7 +1221,7 @@ behavior.</p>
 <p>Please use the latest stable installer for supported setup and update flows.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 92ebca09811f (2026-09-02T06:57:03+00:00).
+        Generated from atlassian/twg-cli 9b8918251225 (2026-09-03T06:12:46+00:00).
       </footer>
     </main>
   </div>

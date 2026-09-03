@@ -222,15 +222,15 @@ Connectivity
 </code></pre>
 <p>Before refreshing, TWG CLI checks that it can save the updated credentials. If the config directory isn't writable, it sends no refresh request and asks you to run <code>twg auth refresh</code> in a normal terminal. It also detects common coding agents and prints the relevant configuration.</p>
 <h2 id="oauth-upkeep-background-helper">OAuth upkeep background helper</h2>
-<p>Upkeep is a per-user background helper that runs outside coding-agent sandboxes. It keeps OAuth credentials fresh and checks for CLI updates. <code>twg setup</code> enables it during installation. To enable or repair it later:</p>
+<p>Upkeep is a per-user background helper that runs outside coding-agent sandboxes. It keeps OAuth credentials fresh and checks for CLI upgrades. <code>twg setup</code> enables it during installation. To enable or repair it later:</p>
 <pre><code class="language-bash">twg upkeep enable
 </code></pre>
 <aside class="dac-panel dac-panel-note">
 <div class="dac-panel-label">Note</div>
 <p>On macOS, you may see a system notification that software from <strong>Atlassian Pty Ltd</strong> or <strong>twg</strong> can run in the background. This is expected after <code>twg setup</code> enables the upkeep helper.</p>
-<p>It does not install updates automatically. You can manage it in <strong>System Settings &gt; General &gt; Login Items &amp; Extensions</strong>.</p>
+<p>It does not install upgrades automatically. You can manage it in <strong>System Settings &gt; General &gt; Login Items &amp; Extensions</strong>.</p>
 </aside>
-<p>The helper runs every 12 minutes. It refreshes OAuth when needed and checks for CLI updates at most once a day. When an update is available, it sends an initial notification, followed by limited reminders. Each notification tells you to run <code>twg update</code>; upkeep never downloads or installs updates automatically.</p>
+<p>The helper runs every 12 minutes. It refreshes OAuth when needed and checks for CLI upgrades at most once a day. When an upgrade is available, it sends an initial notification, followed by limited reminders. Each notification tells you to run <code>twg upgrade</code>; upkeep never downloads or installs upgrades automatically.</p>
 <p>Use these commands to inspect, run, or remove it:</p>
 <pre><code class="language-bash">twg upkeep status
 twg upkeep run
@@ -239,7 +239,7 @@ twg upkeep disable
 <p>TWG CLI uses a macOS LaunchAgent, Linux systemd user timer, or Windows Scheduled Task to run the helper as your user.</p>
 <p>On Linux, scheduling requires a systemd user instance and an active user D-Bus session. If setup cannot install the schedule, retry <code>twg upkeep enable</code> after fixing the reported system error.</p>
 <p>The helper stores only non-secret maintenance state in <code>upkeep.json</code> under the TWG config directory. <code>twg logout</code> leaves it enabled but skips auth work until you sign in again. <code>twg uninstall</code> disables it, revokes stored credentials, and removes the CLI and local TWG configs.</p>
-<p>If you disable the helper, TWG CLI still works, but OAuth refresh and update notifications may not run in the background. Run <code>twg auth refresh</code> or <code>twg update</code> manually if needed.</p>
+<p>If you disable the helper, TWG CLI still works, but OAuth refresh and upgrade notifications may not run in the background. Run <code>twg auth refresh</code> or <code>twg upgrade</code> manually if needed.</p>
 <h2 id="bitbucket-authentication">Bitbucket authentication</h2>
 <p>Bitbucket commands require a separate token. <code>twg login</code> does not prompt for it. Set it up with:</p>
 <pre><code class="language-bash">twg setup bitbucket
@@ -255,7 +255,7 @@ twg upkeep disable
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 92ebca09811f (2026-09-02T06:57:03+00:00).
+        Generated from atlassian/twg-cli 9b8918251225 (2026-09-03T06:12:46+00:00).
       </footer>
     </main>
   </div>

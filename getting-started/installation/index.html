@@ -127,7 +127,7 @@ sudo installer -pkg twg.pkg -target /
 <pre><code class="language-bash">twg setup
 twg doctor
 </code></pre>
-<p>To update a package-managed installation, install the latest package again or use your organization's device-management process. <code>twg update</code> does not update package-managed installations.</p>
+<p>To upgrade a package-managed installation, install the latest package again or use your organization's device-management process. <code>twg upgrade</code> does not upgrade package-managed installations.</p>
 <h4 id="windows">Windows</h4>
 <aside class="dac-panel dac-panel-note">
 <div class="dac-panel-label">Note</div>
@@ -199,11 +199,11 @@ twg doctor
 twg confluence --help
 twg jira --help
 </code></pre>
-<h2 id="update">Update</h2>
-<p>Run the built-in updater:</p>
-<pre><code class="language-bash">twg update
+<h2 id="upgrade">Upgrade</h2>
+<p>Run the built-in upgrader:</p>
+<pre><code class="language-bash">twg upgrade
 </code></pre>
-<p>TWG CLI checks for updates during normal use and notifies you when a new version is available.</p>
+<p>TWG CLI checks for upgrades during normal use and notifies you when a new version is available.</p>
 <h2 id="uninstall">Uninstall</h2>
 <p>Preview the files and configs that would be removed:</p>
 <pre><code class="language-bash">twg uninstall --dry-run
@@ -211,22 +211,22 @@ twg jira --help
 <p>Uninstall asks for confirmation, revokes stored credentials, and removes the binary, installer-owned skill bundles, PATH changes, caches, consent, and all local TWG configs:</p>
 <pre><code class="language-bash">twg uninstall
 </code></pre>
-<h2 id="beta-updates">Beta updates</h2>
-<p>To receive pre-release updates before they reach the stable channel, use the beta channel.</p>
+<h2 id="beta-upgrades">Beta upgrades</h2>
+<p>To receive pre-release upgrades before they reach the stable channel, use the beta channel.</p>
 <h3 id="first-install-via-beta">First install via beta</h3>
 <pre><code class="language-bash">bash &lt;(curl -fsSL https://teamwork-graph.atlassian.com/cli/beta/install)
 </code></pre>
-<p>Installs from the beta channel record the channel preference automatically — future <code>twg update</code> calls continue to check the beta channel.</p>
+<p>Installs from the beta channel record the channel preference automatically — future <code>twg upgrade</code> calls continue to check the beta channel.</p>
 <h3 id="switch-an-existing-install-to-beta">Switch an existing install to beta</h3>
-<pre><code class="language-bash">twg update --channel beta
+<pre><code class="language-bash">twg upgrade --channel beta
 </code></pre>
 <h3 id="switch-back-to-stable">Switch back to stable</h3>
-<pre><code class="language-bash">twg update --channel stable
+<pre><code class="language-bash">twg upgrade --channel stable
 </code></pre>
 <p>Beta releases are usually ahead of stable, so returning to stable normally means moving your binary to an older version. In that case, the command records the stable preference, reports the version difference, and leaves the binary alone. To install the stable release over the newer beta build, confirm the downgrade:</p>
-<pre><code class="language-bash">twg update --channel stable --yes
+<pre><code class="language-bash">twg upgrade --channel stable --yes
 </code></pre>
-<p>Until you confirm, <code>twg update</code> and <code>twg update --check</code> report that your installed build is ahead of the channel you follow, along with the command that resolves it, instead of reporting that the CLI is up to date.</p>
+<p>Until you confirm, <code>twg upgrade</code> and <code>twg upgrade --check</code> report that your installed build is ahead of the channel you follow, along with the command that resolves it, instead of reporting that the CLI is up to date.</p>
 <h2 id="feedback">Feedback</h2>
 <p>To share feedback or report an issue, use the CLI:</p>
 <pre><code class="language-bash">twg feedback --summary &quot;&lt;short title&gt;&quot;
@@ -243,7 +243,7 @@ twg jira --help
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 92ebca09811f (2026-09-02T06:57:03+00:00).
+        Generated from atlassian/twg-cli 9b8918251225 (2026-09-03T06:12:46+00:00).
       </footer>
     </main>
   </div>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Troubleshoot TWG CLI | TWG CLI</title>
-  <meta name="description" content="Diagnose common problems, update the CLI, and repair your setup when TWG CLI isn't working as expected.">
+  <meta name="description" content="Diagnose common problems, upgrade the CLI, and repair your setup when TWG CLI isn't working as expected.">
   <style>
     :root { color-scheme: light; --ink: #172b4d; --muted: #44546f; --line: #dcdfe4; --panel: #f7f8f9; --accent: #0c66e4; --warning: #fff7d6; --note: #e9f2ff; --tip: #dcfff1; }
     * { box-sizing: border-box; }
@@ -97,8 +97,8 @@
 <pre><code class="language-bash">twg setup
 </code></pre>
 <p>This re-runs the setup process and refreshes your agent skill files without reinstalling the binary.</p>
-<h2 id="update-twg-cli">Update TWG CLI</h2>
-<p>If you're on version 0.9.6 or earlier, <code>twg update</code> may not work correctly. Use the manual update steps below instead.</p>
+<h2 id="upgrade-twg-cli">Upgrade TWG CLI</h2>
+<p>If you're on version 0.9.6 or earlier, <code>twg upgrade</code> may not work correctly. Use the manual upgrade steps below instead.</p>
 <h3 id="macos-and-linux-curl-installer-recommended-for-older-versions">macOS and Linux (curl installer, recommended for older versions)</h3>
 <pre><code class="language-bash">curl -fsSL --retry 2 https://teamwork-graph.atlassian.com/cli/install | bash
 </code></pre>
@@ -110,8 +110,8 @@ powershell -ExecutionPolicy Bypass -File .\twg-install.ps1
 <pre><code class="language-cmd">curl.exe -fsSL https://teamwork-graph.atlassian.com/cli/install.ps1 -o twg-install.ps1
 powershell -ExecutionPolicy Bypass -File twg-install.ps1
 </code></pre>
-<p>If you're on version 0.9.7 or later and want to use the built-in updater, run:</p>
-<pre><code class="language-bash">twg update
+<p>If you're on version 0.9.7 or later and want to use the built-in upgrader, run:</p>
+<pre><code class="language-bash">twg upgrade
 </code></pre>
 <p>For full installation options, see <a href="/twg-cli/getting-started/installation/">Set up TWG CLI</a>.</p>
 <h2 id="get-help-and-give-feedback">Get help and give feedback</h2>
@@ -120,7 +120,7 @@ powershell -ExecutionPolicy Bypass -File twg-install.ps1
 <p>Review the details, provide an email if needed, complete reCAPTCHA, and submit the form.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 92ebca09811f (2026-09-02T06:57:03+00:00).
+        Generated from atlassian/twg-cli 9b8918251225 (2026-09-03T06:12:46+00:00).
       </footer>
     </main>
   </div>
