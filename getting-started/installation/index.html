@@ -162,6 +162,7 @@ msiexec.exe /i .\twg-windows-x64.msi
 <pre><code class="language-powershell">twg setup
 twg doctor
 </code></pre>
+<p>To update an MSI-managed installation, install the latest MSI again or use your organization's device-management process. <code>twg update</code> does not update MSI-managed installations.</p>
 <p>Run the Windows installer from a console when consent or login is needed. Runtime
 <code>TWG_*</code> credentials authenticate commands and <code>twg doctor</code>, but are not used by login.</p>
 <p>During setup, the installer:</p>
@@ -243,7 +244,7 @@ twg jira --help
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli bbcf7394d515 (2026-09-03T20:42:42+00:00).
+        Generated from atlassian/twg-cli 5b856b1df460 (2026-09-04T04:39:30+00:00).
       </footer>
     </main>
   </div>
