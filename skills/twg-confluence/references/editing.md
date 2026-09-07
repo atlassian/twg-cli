@@ -12,7 +12,9 @@ read -> save to file -> edit locally -> update from file -> verify
 
 ## Safe Workflow
 
-1. Fetch the current content at full detail in the format you will edit.
+1. Fetch the current content at full detail in the format you will edit, with
+   `--include-metadata` so `data.metadata.hasSpaceInstructions` tells you
+   whether a space-instructions read is needed (see `spaces.md`).
 2. Save `data.body.value` to a local file.
 3. Capture the response's snapshot token.
 4. Modify the file without reconstructing unrelated content.

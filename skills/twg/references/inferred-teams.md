@@ -13,10 +13,9 @@ an inferred-team ID from a previous result.
 - Follow up on an inferred team: pass the returned `teamIdForFollowUp` to
   `twg teams get <teamIdForFollowUp> --include-inferred --site <site>` or
   `twg teams members list <teamIdForFollowUp> --include-inferred --site <site>`.
-- Follow-up IDs may be either:
-  - Legacy masked: `ari:cloud:graph::jiraTeam/<base64(jiraProjectAri)>`
-  - Hydrated: `ari:cloud:graph-store::inferred-team/workspace/<workspaceId>/<teamId>`
-    Both forms require `--include-inferred` on `teams get` and `teams members list`.
+- Follow-up IDs are first-class InferredTeam workspace ARIs:
+  `ari:cloud:graph-store::inferred-team/workspace/<workspaceId>/<teamId>`.
+  They require `--include-inferred` on `teams get` and `teams members list`.
 - Inferred teams are project/space-backed semantic handles (JiraProject or
   ConfluenceSpace), not canonical teams. Treat fields such as
   `semanticType: "inferred_team"`, `backingEntityType`, `backingEntityAri`,
@@ -27,6 +26,6 @@ an inferred-team ID from a previous result.
   are member-scoped.
 - Inferred lookups require a resolved site context (`--site` or configured site).
 - Path tier stays Basic for `teams`. `--include-inferred` is a
-  `[Paid: Intelligence]` opt-in (may consume credits). Billing stays on the
+  `[Paid: Enriched]` opt-in (may consume credits). Billing stays on the
   command path (no separate inferred event); backend Cypher costing covers the
-  inferred pathway without reclassifying canonical teams reads as Intelligence.
+  inferred pathway without reclassifying canonical teams reads as paid.

@@ -6,8 +6,8 @@ description: >
   project or goal status and launch readiness; owners, SMEs,
   approvers, or escalation; personal, org, or leadership work rollups and out-of-office
   catch-ups; dependency maps; code search, repository, or PR discovery; incidents,
-  on-call, or reliability; and deep internal research across connected sources,
-  docs, work, and people.
+  on-call, or reliability;
+  and deep internal research across connected sources, docs, work, and people.
 ---
 
 # twg
@@ -56,7 +56,7 @@ gaps. Match the intent to the narrowest companion skill. Let that skill determin
 
 ## Auth/Setup Guard
 
-Do not run setup, login, install, update, upkeep, or credential commands unless
+Do not run setup, login, install, upgrade, upkeep, or credential commands unless
 explicitly requested for setup/auth/repair. Otherwise report remediation and wait for user direction.
 
 ## Sandboxed Pipeline Logs
@@ -95,7 +95,7 @@ Prefer typed/product-native evidence.
 - Command shape guardrails:
   - Known Jira/Atlas keys are positional for `jira workitem get`, `goals get`, and `projects get`; `--key` is compatibility only.
   - `work query` is user activity (`--scope me|user`), never `--scope global`; use `work search` for topics and advertised filters such as `--types`.
-  - For inferred teams (`ari:cloud:graph::jiraTeam/...` or `ari:cloud:graph-store::inferred-team/...`), see `references/inferred-teams.md` and use explicit `--include-inferred`.
+  - For inferred teams (`ari:cloud:graph-store::inferred-team/workspace/...`), see `references/inferred-teams.md` and use explicit `--include-inferred`.
 - Use `search-code`; omit `--app` so all available indexed SCM surfaces are searched; use `--repo` only as a discovery anchor; widen after generated-doc or incomplete hits.
 
 ## Assets / CMDB graph

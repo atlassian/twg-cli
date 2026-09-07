@@ -5,9 +5,8 @@ description: >
   from a brief, existing space, repository evidence, or another source. Use for
   space creation or structure adaptation, not individual edits.
 metadata:
-  spaceCreation:
-    existingSpaceAdaptation: same-site
-    spaceInstructions: best-effort
+  twg-space-creation-existing-space-adaptation: "same-site"
+  twg-space-creation-space-instructions: "best-effort"
 ---
 
 # twg-space-creation

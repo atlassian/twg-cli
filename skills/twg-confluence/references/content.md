@@ -52,6 +52,18 @@ Remix `mediaFileId`; passing `mediaFileId` directly to `--attachment-id` fails
 validation or lookup. Do not invent a Media Platform URL or substitute the
 attachment result's internal `fileId`.
 
+To read the generated AI summary for document content, request the dedicated
+detail mode:
+
+```bash
+twg confluence content get <ID-or-URL> --detail ai_summary -o json --site <site>
+```
+
+Read `data.aiSummary`. It is a string when a generated summary exists and
+`null` when one is unavailable; this mode never falls back to the standard
+page excerpt. Do not use it for whiteboards, databases, embeds, folders, or
+smart links because non-document content rejects `--detail`.
+
 ## Non-doc Read-back And Whiteboard Rendering
 
 Non-doc body formats hydrate their bodies through `--format`, not `--detail`:

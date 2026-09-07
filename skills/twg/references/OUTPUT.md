@@ -20,7 +20,8 @@ authorization in some agent runtimes.
 The CLI core applies the same file-backed protection for direct structured
 agent calls such as `twg --mode agent --output json work query`. It only applies
 when the caller has not explicitly chosen `--output-summary`, `--output-file`, or
-`--output text`.
+`--output text`. Use `--output-summary none` when a script needs structured output
+directly on stdout inside an agent runtime.
 
 ## Envelope Shape
 
@@ -111,6 +112,7 @@ Use these flags to keep agent stdout manageable:
 ```bash
 twg <cmd> --output-summary stats
 twg <cmd> --output-summary auto
+twg <cmd> --output-summary none
 twg <cmd> --agent-fields data.items.key,data.items.status
 twg <cmd> --select data.items.key,data.items.status
 ```
@@ -119,6 +121,8 @@ twg <cmd> --select data.items.key,data.items.status
 - `--output-summary auto` - inline small results, summarize large results.
 - `--output-summary inline` - force inline selected data; in agent mode very
   large inline payloads are capped and fall back to file-backed summary output.
+- `--output-summary none` - disable automatic summary envelopes and emit the
+  selected structured format directly on stdout.
 - `--agent-fields` - narrow the summary while preserving the full JSON file.
   Presets such as `@rows`, `@compact`, and `@evidence` are command-scoped when
   advertised by help; on commands without a preset contract they safely fall
@@ -135,7 +139,7 @@ twg <cmd> --select data.items.key,data.items.status
   warning goes to stderr. A selection that is part literal paths and part
   presets the command does not advertise projects the paths that resolved and
   names the dropped presets under `runtime_advisories.selectUnresolved` - a
-  separate key from `selectUnmatched`, because the payload *was* projected.
+  separate key from `selectUnmatched`, because the payload _was_ projected.
   A top-level array payload stays an array.
   Failed commands are never projected - the `ok: false` recovery envelope is
   returned whole, because `error.code`, `error.repair`, and `error.retry` are

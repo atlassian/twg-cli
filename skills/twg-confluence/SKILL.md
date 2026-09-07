@@ -76,8 +76,8 @@ mutation.
   targets, present the exact action and bounded target list, and wait for the
   user to affirm that mutation. Do not generalize approval from a similar prior
   action. `trash` does not authorize an additional permanent purge.
-- Before authoring, read and apply the target space's instructions by key or ID;
-  see `references/spaces.md`. Empty instructions mean use defaults.
+- Before authoring, read and apply the target space's instructions once per
+  space per session; see `references/spaces.md`. Empty instructions mean defaults.
 - Prefer `live_doc` for collaborative or co-authored internal content when the
   target supports it. Bare "page" or "doc" creation also defaults to live docs.
 - Use `page` for explicit classic/non-live intent, knowledge bases, customer
