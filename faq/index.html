@@ -90,10 +90,10 @@
 <p>Yes. Teamwork Graph CLI is available to all Atlassian customers.</p>
 <h3 id="is-teamwork-graph-cli-free-to-use">Is Teamwork Graph CLI free to use?</h3>
 <p>Teamwork Graph CLI is free to install and use.</p>
-<p>However, certain commands require up to 10 Rovo Credits per call. These are
-called <strong>Enriched</strong> commands. They require Rovo Credits because they aggregate
-responses from multiple Atlassian and non-Atlassian apps and may use AI
-inferencing to generate insights.</p>
+<p>How many Rovo credits you use depends on the value of each operation. Connecting sources, metadata, tool discovery, and writes are always <strong>Free</strong>; basic single-product reads are <strong>Standard</strong> and included with your plan; <strong>Enriched</strong> operations where Teamwork Graph delivers connected context across your tools use up to 10 Rovo Credits per call, so richer answers cost a little more than simple lookups. Your plan includes a monthly Rovo credit allowance, with any extra usage billed transparently.</p>
+<p>Enriched commands require Rovo Credits because they aggregate responses from
+multiple Atlassian and non-Atlassian apps and may use AI inferencing to generate
+insights.</p>
 <p>For example, <code>twg collaborators</code> provides insights on collaborators by analyzing
 common artifacts and interactions between users in an organization. Similarly,
 <code>twg context</code> aggregates information across multiple Atlassian and
@@ -103,6 +103,7 @@ or user.</p>
 Command Catalog</a>. To check an
 individual command in the CLI, run <code>twg help &lt;command&gt;</code>; Enriched commands are
 labeled <code>[Enriched]</code> in the help output.</p>
+<p>For thresholds, plan-level allotments, and what happens when you approach a limit, see <a href="https://support.atlassian.com/rovo/docs/rovo-usage-limits/">Rovo usage limits</a>.</p>
 <p>Rovo credit consumption from Teamwork Graph CLI is included in your Rovo credits dashboard in the Atlassian Admin hub. To view it, go to <a href="https://admin.atlassian.com/">Atlassian Administration</a>, then select <strong>Insights</strong> &gt; <strong>Platform Usage</strong> &gt; <strong>Rovo Credits</strong>.</p>
 <h3 id="how-is-teamwork-graph-cli-different-from-atlassian-cli">How is Teamwork Graph CLI different from Atlassian CLI?</h3>
 <p>Atlassian CLI was built for human-driven administration before agentic usage was common. Teamwork Graph CLI is purpose-built as an agent-first CLI that standardizes commands and outputs for how agents actually work.</p>
@@ -130,7 +131,7 @@ labeled <code>[Enriched]</code> in the help output.</p>
 <p>For a detailed comparison and decision guide, see <a href="https://support.atlassian.com/organization-administration/docs/choosing-between-twg-cli-and-rovo-mcp/">Choosing between Teamwork Graph CLI and Rovo MCP</a>.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli bfd4e76fe60a (2026-09-08T22:50:48+00:00).
+        Generated from atlassian/twg-cli 8dbb301a62d7 (2026-09-08T23:50:03+00:00).
       </footer>
     </main>
   </div>
