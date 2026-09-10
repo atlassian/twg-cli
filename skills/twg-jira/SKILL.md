@@ -9,8 +9,8 @@ description: >
 
 # twg-jira
 
-Use with the root `twg` skill whenever Jira is the source of truth or a Jira
-mutation is required. This skill owns Jira semantics and safety; exact command
+Use with the root `twg` skill when Jira is the source of truth or a Jira
+mutation is required. This skill owns Jira semantics and safety; command
 grammar comes from live `twg help`.
 
 ## CLI launcher fallback
@@ -38,6 +38,7 @@ inside a cross-product answer.
 | Intent                         | Route                                 |
 | ------------------------------ | ------------------------------------- |
 | Known workitem                 | Native workitem `get`                 |
+| Several known workitems        | One `get`/`bulk-get` with all keys    |
 | Jira-only fuzzy text discovery | Workitem `search` (JQL-backed)        |
 | Exact Jira filtering           | Workitem `query` with JQL             |
 | Semantic Jira discovery        | `rovo search --app jira`              |
@@ -60,13 +61,15 @@ consequential mutation.
   schemes, boards, versions, components, filters, and dashboards.
 - JSM requests have an underlying Jira workitem, but approvals, portals, queues,
   request types, and SLAs belong to JSM.
-- Search results are candidate anchors. Use the native workitem read for final
-  fields and status. Plain `get` avoids supplemental hydration; add `--comments`
-  for complete comments or `--remote-links` for Jira remote links. The two
-  enrichment flags may be combined. Use `--full` by itself for all fields and
-  both enrichments.
+- Search results are candidate anchors; use the native workitem read for final
+  fields and status. Plain `get` avoids supplemental hydration; add
+  `--comments` and/or `--remote-links`, or `--full` for all fields plus both.
 - For "what should I pick next," query actual open Jira work or the requested
   board backlog. Do not rank from broad activity alone.
+- Read a set of workitems in one call: `jira workitem get`,
+  `jira workitem bulk-get`, and `context jira workitem` all accept every key at
+  once. Never loop `get` over a key list. When the fields are queryable, use
+  `jira workitem query --jql <jql> --fields <fields>` and skip hydration.
 
 ## Safe Reads And Writes
 
@@ -76,20 +79,20 @@ consequential mutation.
   fields.
 - Use returned `customfield_*` IDs rather than display names in writes.
 - Discover available transitions instead of guessing a transition name or ID.
-  - Run `twg jira workitem transition --id <KEY> --site <SITE> -o json` without `--transition-id` to discover available transitions, their screen field requirements, and required fields.
-  - Select a transition from the result and use its `requirements` to gather the screen-required field values before calling with `--transition-id`.
+  - Run `twg jira workitem transition --id <KEY> --site <SITE> -o json` without `--transition-id` to discover available transitions and their required screen fields.
+  - Select one and use its `requirements` to gather field values before calling with `--transition-id`.
   - Treat required fields as user-decision inputs. If the user did not supply a required value, do not infer or choose an allowed value; ask the user before transitioning. This includes Resolution: a request to cancel does not imply `Won't Do`, `Declined`, `Duplicate`, or another Resolution.
   - This discovery call is read-only and does not transition the workitem.
 - Keep global Jira field administration separate from workitem field values.
-- Use typed workitem artifact links when the request is to add Jira remote links
-  to PRs, repos, deployments, builds, branches, commits, Loom videos, or meetings.
-  These are not Jira Software devinfo/provider writes.
+- Use typed workitem artifact links to add Jira remote links to PRs, repos,
+  deployments, builds, branches, commits, Loom videos, or meetings. These are
+  not Jira Software devinfo/provider writes.
 - Verify mutations with a native read and report the resulting key and URL.
 
 ## Handoffs
 
 - Load `twg-context-discovery` for dependencies, related documents, or
-  implementation links; load `twg-responsibility-routing` for owners, experts,
+  implementation links; `twg-responsibility-routing` for owners, experts,
   authority, or escalation.
 - Load `twg-status-rollups` for project, sprint, team, or leadership synthesis.
 - Load `twg-engineering-work` when the Jira anchor must be traced to PRs or

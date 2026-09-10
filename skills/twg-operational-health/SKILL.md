@@ -47,6 +47,11 @@ vendor-internal incident site.
   `missing evidence`; use references for RCA details.
 - After one correction of a repeated backend, auth, or schema error, report the
   gap and use remaining evidence instead of nearby aliases or broad inventories.
+- Read build health from `bitbucket pipeline query`, not `pipeline get` per
+  pipeline; reserve that for failures whose logs or test reports change the
+  pattern, owner, or action. `query` lists recent runs only (`--limit` default
+  15), so raise it and state the span covered. Hydrate ranked sets through one
+  batched `get`.
 
 ## Recipe Cards
 

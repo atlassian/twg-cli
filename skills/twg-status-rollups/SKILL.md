@@ -20,10 +20,10 @@ PATH failures.
 
 ## Use When
 
-- "What did I/person/team/org work on?" or weekly personal update
-- Short-window personal update, standup, handoff, or restart after time away
+- "What did I/person/team/org work on?", weekly update, standup, handoff, or
+  restart after time away
 - "Status of project/goal/topic/focus area"
-- "Is this project ready to launch?" or go/no-go decision brief
+- "Is this project ready to launch?" or go/no-go brief
 - Leadership, monthly, annual, cycle, appraisal, or goal-alignment readout
 - Org bottlenecks, priorities, stale goals, or project risks
 
@@ -32,21 +32,21 @@ PATH failures.
 Resolve scope before retrieval:
 
 - Person/team/org: resolve identity, roster, or org-tree groups.
-- Project, goal, focus area, or topic: resolve native key, ARI, URL, name, or
-  central project/page/workitem anchors.
+- Project, goal, focus area, or topic: resolve native key, ARI, URL, name, or a
+  central page/workitem anchor.
 
 Establish the time window. If absent, ask when precision matters; otherwise use
-a recent bounded window and state it. Keep personal summaries to 1 year or less.
+a recent bounded window and state it. Keep personal summaries to a year or less.
 
 ## Tree Routing Matrix
 
-- `pr-tree`: merged/open PRs, reviews, shipped work, or repo momentum by manager
-  or team. Default for PR-constrained evidence.
-- `org-tree`: manager chain, roster, and reporting structure; use for grouping,
+- `pr-tree`: merged/open PRs, reviews, shipped work, or repo momentum by
+  manager or team. Default for PR-constrained evidence.
+- `org-tree`: manager chain, roster, and reporting structure; grouping only,
   not delivery evidence.
 - `workitem-tree`: Jira issue load and active/done movement by org tree.
-- `work-tree`: multi-surface org counts across Jira, PRs, goals, projects, docs,
-  or videos. Not for PR-only or Jira-only asks.
+- `work-tree`: multi-surface org counts across Jira, PRs, goals, projects,
+  docs, videos. Not for PR-only or Jira-only asks.
 
 ## Fast Path: PR-Based Leadership Rollup
 
@@ -58,21 +58,23 @@ For PR-based leadership prompts:
    `org-tree` only for hierarchy context.
 3. If option shape is uncertain, inspect `twg help describe "pr-tree"` before
    the data call; do not probe incompatible flag combinations.
-4. Start count-first, then make at most one supported sampling/full-fetch pass
-   for repo or theme evidence. Synthesize at manager/team level from that tree.
-   Do not issue per-person queries merely to populate every group; use one
-   targeted PR follow-up only when a material theme lacks representative proof.
+4. Start count-first, then at most one supported sampling/full-fetch pass for
+   repo or theme evidence, and synthesize at manager/team level.
+   Do not issue per-person queries to populate groups; add one targeted PR
+   follow-up only when a material theme lacks proof.
 5. Add one secondary surface only for a named gap.
 
 Target 2-4 calls.
 
 ## Evidence Policy
 
-- Match evidence to prompt constraints; merged-PR-only conclusions require PR
-  evidence.
+- Match evidence to prompt constraints; merged-PR conclusions need PR evidence.
 - Start count-first on tree surfaces; hydrate examples only for themes, risks,
   or owner attribution.
 - Rank broad lists before minimal hydration.
+- Hydrate the ranked set in one call, never one per item: `goals get`,
+  `projects get`, `focus-areas get`, `jira workitem get`, `docs get`, and
+  `pull-requests get` take every key or URL at once.
 - Distinguish authored delivery from review, coordination, and influence.
 - Stop when evidence is sufficient. After two identical backend failures, stop
   that path and report the gap.
@@ -82,15 +84,15 @@ Target 2-4 calls.
 ### Person Or Personal Update
 
 Resolve the person, then pull recent Jira work, PRs, docs/pages, meetings, and
-project/goal involvement. Load `references/personal-work-summary.md` for exact
-subject, notification, PR hydration, and outcome-first rules.
-Separate delivery, review, docs/strategy, coordination, and influence.
+project/goal involvement. Load `references/personal-work-summary.md` for
+subject, notification, PR hydration, and outcome-first rules. Separate
+delivery, review, docs/strategy, coordination, and influence.
 
 ### Short-Window Personal Update / Standup
 
 Load `references/personal-work-summary.md`. Resolve the person, preserve the
-requested project and window, prioritize material work, and distinguish
-evidence gaps from confirmed blockers.
+requested project and window, prioritize material work, and separate evidence
+gaps from confirmed blockers.
 
 ### Team Or Org Leadership Readout
 
@@ -100,20 +102,20 @@ affecting momentum, blockers, or ownership.
 
 ### Project Or Goal Status
 
-Fetch the native project/goal first. Include owner, state, update,
-links, dates, and recency. Hydrate only risk, progress, or dependency evidence.
+Fetch the native project/goal first, with owner, state, update, links, dates,
+and recency. Hydrate only risk, progress, or dependency evidence.
 
 ### Decision Readiness / Go-No-Go
 
 Load `references/decision-readiness.md`. Resolve the native project or decision
 anchor first and keep explicit links as the scope boundary. Identify the gates,
-then give the requested decision or recommendation with confidence, gaps, and
-change conditions. Do not infer owners.
+then give the decision or recommendation with confidence, gaps, and change
+conditions. Do not infer owners.
 
 ### Topic Status
 
 Resolve/search once, select central project, goal, page, or workitem anchors,
-then hydrate those before using broad work/activity queries.
+then hydrate those before broad work/activity queries.
 
 ## References
 
@@ -125,22 +127,21 @@ then hydrate those before using broad work/activity queries.
 
 Resolve person and horizon. Separate delivery, review, collaboration,
 docs/strategy, project/goal impact, and stakeholder signals. Avoid count-only
-ranking; add caveats when evidence is weak.
+ranking; caveat weak evidence.
 
 ## Output Shape
 
 - Executive summary first, with 3-6 high-signal observations.
-- Table with owner/team/workstream, positive signals, risk signals, current
-  focus, confidence, and evidence.
-- Risks and leadership attention ranked by impact and owner.
-- Confidence and gaps, including stale updates, missing product coverage, ACL
-  gaps, or sampled evidence boundaries.
+- Table with owner/team/workstream, positive and risk signals, current focus,
+  confidence, and evidence.
+- Risks ranked by impact and owner.
+- Confidence and gaps: stale updates, missing coverage, ACL gaps, or sampling
+  boundaries.
 
 ## Anti-Patterns
 
-- Do not make a status report a list of every artifact.
+- Do not list every artifact.
 - Do not infer goal/project health from issue counts alone.
-- Do not fan out across every org member if manager/team-level grouping answers
-  the prompt.
+- Do not fan out per org member when manager/team grouping answers the prompt.
 - Do not use search snippets as final evidence for status or risk.
 - Start explicit merged/open PR rollups with `pr-tree`, not the other trees.

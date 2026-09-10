@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://teamworkgraph.com/schemas/twg-code-review-artifact-v1.json",
+  "title": "TWG code review artifact",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "reviewRunId",
+    "createdAt",
+    "target",
+    "outcome",
+    "confidence",
+    "summary",
+    "findings",
+    "strengths",
+    "sources",
+    "validation",
+    "missingEvidence",
+    "residualRisks",
+    "posting"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "reviewRunId": { "type": "string", "pattern": "^[A-Za-z0-9._:-]+$" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "target": {
+      "type": "object",
+      "required": [
+        "kind",
+        "provider",
+        "repository",
+        "baseSha",
+        "headSha",
+        "diffHash",
+        "conversationHash",
+        "acquiredAt"
+      ],
+      "properties": {
+        "kind": { "enum": ["bitbucket_pr", "github_pr", "local"] },
+        "provider": { "enum": ["bitbucket", "github", "local"] },
+        "repository": { "$ref": "#/$defs/nonEmptyString" },
+        "pullRequestId": { "$ref": "#/$defs/nonEmptyString" },
+        "url": { "$ref": "#/$defs/nonEmptyString" },
+        "baseSha": { "type": "string", "pattern": "^[A-Fa-f0-9]{7,64}$" },
+        "headSha": { "type": "string", "pattern": "^[A-Fa-f0-9]{7,64}$" },
+        "diffHash": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" },
+        "conversationHash": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" },
+        "acquiredAt": { "type": "string", "format": "date-time" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "kind": { "enum": ["bitbucket_pr", "github_pr"] } },
+            "required": ["kind"]
+          },
+          "then": { "required": ["pullRequestId", "url"] }
+        }
+      ],
+      "additionalProperties": true
+    },
+    "outcome": { "enum": ["ready", "not_ready", "incomplete"] },
+    "confidence": { "enum": ["high", "medium", "low"] },
+    "summary": { "$ref": "#/$defs/nonEmptyString" },
+    "findings": { "type": "array", "items": { "$ref": "#/$defs/finding" } },
+    "strengths": {
+      "type": "array",
+      "maxItems": 3,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "sources": { "type": "array", "items": { "$ref": "#/$defs/source" } },
+    "validation": { "type": "array", "items": { "$ref": "#/$defs/validation" } },
+    "missingEvidence": { "type": "array", "items": { "$ref": "#/$defs/nonEmptyString" } },
+    "residualRisks": { "type": "array", "items": { "$ref": "#/$defs/nonEmptyString" } },
+    "posting": {
+      "type": "object",
+      "required": ["adapter", "readiness"],
+      "properties": {
+        "adapter": { "enum": ["bitbucket", "github", "none"] },
+        "readiness": { "enum": ["ready", "not_ready", "posted", "unavailable"] },
+        "commentBody": { "type": "string" },
+        "commentHash": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" },
+        "planHash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "maxCommentBytes": { "type": "integer", "minimum": 1 },
+        "commentId": { "$ref": "#/$defs/nonEmptyString" },
+        "commentUrl": { "$ref": "#/$defs/nonEmptyString" },
+        "postedAt": { "type": "string", "format": "date-time" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "readiness": { "const": "posted" } },
+            "required": ["readiness"]
+          },
+          "then": {
+            "required": [
+              "commentBody",
+              "commentHash",
+              "planHash",
+              "maxCommentBytes",
+              "commentId",
+              "postedAt"
+            ],
+            "properties": { "commentBody": { "$ref": "#/$defs/nonEmptyString" } }
+          }
+        }
+      ],
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "nonEmptyString": { "type": "string", "pattern": "\\S" },
+    "finding": {
+      "type": "object",
+      "required": [
+        "status",
+        "severity",
+        "title",
+        "anchor",
+        "evidenceSource",
+        "detail",
+        "impact",
+        "suggestion",
+        "proof",
+        "confidence",
+        "sourceIds"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "new",
+            "still_open",
+            "partially_fixed",
+            "resolved",
+            "accepted_tradeoff",
+            "invalid"
+          ]
+        },
+        "severity": { "enum": ["blocker", "important", "suggestion"] },
+        "title": { "$ref": "#/$defs/nonEmptyString" },
+        "anchor": {
+          "type": "object",
+          "required": ["path"],
+          "properties": {
+            "path": { "$ref": "#/$defs/nonEmptyString" },
+            "line": { "type": "integer", "minimum": 1 },
+            "side": { "$ref": "#/$defs/nonEmptyString" }
+          },
+          "additionalProperties": true
+        },
+        "evidenceSource": { "$ref": "#/$defs/nonEmptyString" },
+        "detail": { "$ref": "#/$defs/nonEmptyString" },
+        "impact": { "$ref": "#/$defs/nonEmptyString" },
+        "suggestion": { "$ref": "#/$defs/nonEmptyString" },
+        "proof": { "$ref": "#/$defs/nonEmptyString" },
+        "confidence": { "enum": ["high", "medium", "low"] },
+        "sourceIds": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/nonEmptyString" }
+        },
+        "fingerprint": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" }
+      },
+      "additionalProperties": true
+    },
+    "source": {
+      "type": "object",
+      "required": ["id", "type", "title", "retrievedAt", "confidence"],
+      "properties": {
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "type": { "$ref": "#/$defs/nonEmptyString" },
+        "title": { "$ref": "#/$defs/nonEmptyString" },
+        "key": { "$ref": "#/$defs/nonEmptyString" },
+        "url": { "$ref": "#/$defs/nonEmptyString" },
+        "retrievedAt": { "type": "string", "format": "date-time" },
+        "confidence": { "enum": ["high", "medium", "low"] }
+      },
+      "additionalProperties": true
+    },
+    "validation": {
+      "type": "object",
+      "required": ["command", "status", "summary"],
+      "properties": {
+        "command": { "$ref": "#/$defs/nonEmptyString" },
+        "status": { "enum": ["passed", "failed", "not_run", "unavailable"] },
+        "summary": { "$ref": "#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

@@ -154,3 +154,11 @@ Export behavior depends on the requested format:
 
 Do not poll Word exports, and do not treat the initial PDF task response as a
 completed export.
+
+## Downloading A Persisted Remix Infographic
+
+Use the existing attachment commands. List the owning page's attachments with
+`confluence content attachments list --id <content-id> --filename <media-file-id>`,
+then pass the matching result's attachment `id` to
+`confluence content attachments download --attachment-id <attachment-id> --out <path>`.
+Do not pass `mediaFileId` directly as `--attachment-id`; the two IDs are different.
