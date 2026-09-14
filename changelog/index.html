@@ -89,9 +89,20 @@
 <p>The public Teamwork Graph CLI changelog source is:</p>
 <p><a href="https://developer.atlassian.com/cloud/twg-cli/changelog.md">https://developer.atlassian.com/cloud/twg-cli/changelog.md</a></p>
 <p>This page publishes the root changelog and derives beta labels from public release manifests.</p>
-<h2 id="1-2-9-2026-09-09">1.2.9 — 2026-09-09</h2>
+<h2 id="1-3-0-2026-09-13">1.3.0 — 2026-09-13</h2>
 <p><strong>Beta release:</strong> Available through the beta channel only; not yet generally available.</p>
 <h3 id="new-features">New Features</h3>
+<ul>
+<li><strong>Work queries:</strong> Query work for multiple users with repeatable <code>--identifier</code> options, with third-party identities and linked same-email identities supported where enabled.</li>
+<li><strong>Manager discovery:</strong> Find managers using third-party identities where enabled, while retaining existing Atlassian account inputs.</li>
+</ul>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>Command completion:</strong> Fix foreground CLI commands that remain running after their work completes.</li>
+</ul>
+<h2 id="1-2-9-2026-09-09">1.2.9 — 2026-09-09</h2>
+<p><strong>Beta release:</strong> Available through the beta channel only; not yet generally available.</p>
+<h3 id="new-features-2">New Features</h3>
 <ul>
 <li><strong>Confluence space access:</strong> Add commands for space permissions, roles, role assignments, and custom-role management, including role-aware space creation and JSONL output.</li>
 <li><strong>Cross-product identity queries:</strong> Support feature-gated third-party user identifiers and bounded actor scopes for Docs, Calendar meeting, and video queries, including same-email identity relationships where available.</li>
@@ -101,7 +112,7 @@
 <li><strong>Assets discovery:</strong> Accept <code>twg assets schema query</code> as an alias for schema listing and clarify the schema-ID discovery flow in command help.</li>
 <li><strong>Code-review workflow:</strong> Include the public <code>twg-code-review</code> skill and its artifact helper in public builds.</li>
 </ul>
-<h3 id="bug-fixes">Bug Fixes</h3>
+<h3 id="bug-fixes-2">Bug Fixes</h3>
 <ul>
 <li><strong>Confluence content reads:</strong> Read labels from folders, whiteboards, databases, and other supported content types; keep pagination cursors out of prose; and materialize large Maui source files instead of printing them inline by default.</li>
 <li><strong>Confluence HTML conversion:</strong> Prevent duplicate formatting marks while preserving repeatable annotations and innermost formatting attributes.</li>
@@ -125,13 +136,13 @@
 <li><strong>Docs user selectors:</strong> Use <code>--identifier</code> for new Docs query and get integrations; existing <code>--account-id</code> scripts continue to run through a hidden compatibility option.</li>
 </ul>
 <h2 id="1-2-8-2026-09-06">1.2.8 — 2026-09-06</h2>
-<h3 id="new-features-2">New Features</h3>
+<h3 id="new-features-3">New Features</h3>
 <ul>
 <li><strong>Bitbucket workflows:</strong> Query draft pull requests and deployments, create repositories, inspect or update Bitbucket Pipelines configuration, and list file-level pull-request merge conflicts before merging.</li>
 <li><strong>Confluence workflows:</strong> Manage approvals and content status, list available statuses, check content permissions, fetch AI summaries, inspect date-bounded analytics with agent viewers, and update whiteboards or databases using exact context files.</li>
 <li><strong>CLI output, search, and authentication:</strong> Add bounded Jira field projection, evidence metadata, direct JSON/JSONL output control, billed usage totals, Feedback App filters by JPD idea or space, feature-gated Rovo deep search in public builds, third-party identity fallback, and encrypted credential storage with bidirectional migration, gated raw inspection, and connectivity diagnostics.</li>
 </ul>
-<h3 id="bug-fixes-2">Bug Fixes</h3>
+<h3 id="bug-fixes-3">Bug Fixes</h3>
 <ul>
 <li><strong>Queries, mutations, and structured output:</strong> Resolve Bitbucket repository slugs and named-person <code>pr-tree</code> roots, Jira parents, Rovo Slack results, inferred projects, mixed-case cloud IDs, and linked third-party identities correctly; repair meetings queries and limits; reliably deliver Jira transition comments; return actionable Confluence edit and Remix errors; advertise the actual <code>work-tree</code> JSON fields; and emit nested primary collections correctly in JSONL.</li>
 <li><strong>Authentication, installation, connectivity, and embedded execution:</strong> Reuse stored OAuth for <code>twg login --no-verify</code> and remote help, accept server catalog grammar, skip installer login in headless environments, avoid unreliable pooled update checks, prevent captured Windows version output from hanging, isolate timed-out just-bash executions, make credential migration race-safe, preserve Linux scheduler definitions and data when removal fails, remove complete Windows and copied skill installations, and classify transport handshake failures as retryable network errors.</li>
@@ -147,14 +158,14 @@
 <li><strong>Inferred teams:</strong> Update stored inferred-team identifiers to use first-class InferredTeam workspace ARIs; legacy masked IDs are no longer accepted by inferred-team queries or follow-up commands.</li>
 </ul>
 <h2 id="1-2-7-2026-08-27">1.2.7 — 2026-08-27</h2>
-<h3 id="new-features-3">New Features</h3>
+<h3 id="new-features-4">New Features</h3>
 <ul>
 <li><strong>Bitbucket:</strong> Add deployment-environment queries, workspace-member lookup, repository directory browsing, pull-request diff anchor resolution, and reviewer selection by Atlassian account ID or Bitbucket UUID.</li>
 <li><strong>Confluence:</strong> Add commands for content-approval state, per-user content analytics, and Maui remix retrieval.</li>
 <li><strong>Installers and local management:</strong> Add signed Windows MSI installers and explicit <code>twg uninstall</code> selectors for all, direct, and macOS package installations.</li>
 <li><strong>CLI vault:</strong> Add opt-in encrypted credential storage with OS-keychain-backed keys and recovery and administration commands, while preserving existing <code>auth.conf</code> installations.</li>
 </ul>
-<h3 id="bug-fixes-3">Bug Fixes</h3>
+<h3 id="bug-fixes-4">Bug Fixes</h3>
 <ul>
 <li><strong>Queries and targeting:</strong> Fix Confluence space search, dummy-cloud routing, natural-language organization targeting, and startup when <code>SharedArrayBuffer</code> is unavailable.</li>
 <li><strong>Partial results:</strong> Preserve usable <code>work query</code> and <code>docs query</code> rows when later GraphStore pages fail, expose diagnostics, and return exit code 3 for incomplete results.</li>
@@ -169,7 +180,7 @@
 <li><strong>Bitbucket deployments:</strong> Use <code>twg bb deployment environments query</code> instead of the renamed <code>twg bb deployment query</code> command.</li>
 </ul>
 <h2 id="1-2-6-2026-08-23">1.2.6 — 2026-08-23</h2>
-<h3 id="new-features-4">New Features</h3>
+<h3 id="new-features-5">New Features</h3>
 <ul>
 <li><strong>Confluence content status:</strong> Add <code>twg confluence content get-status</code> for pages, blog posts, and live docs.</li>
 <li><strong>Confluence macro resolution:</strong> Add asynchronous <code>content macros resolve</code> and <code>resolve-status</code> commands for converting supported macros to HTML.</li>
@@ -180,7 +191,7 @@
 <li><strong>Pipeline filtering:</strong> Add <code>--pattern</code> to Bitbucket pipeline query and latest-failure commands for filtering custom pipeline selectors.</li>
 <li><strong>Rovo connector authorization:</strong> Expose the validated connector <code>authorizationUrl</code> from <code>twg rovo auth &lt;app&gt; --output json</code> without opening a browser.</li>
 </ul>
-<h3 id="bug-fixes-4">Bug Fixes</h3>
+<h3 id="bug-fixes-5">Bug Fixes</h3>
 <ul>
 <li><strong>Confluence content fidelity:</strong> Preserve table widths, image dimensions, breakout widths, inline media types, smart links, attachment chips, panel tables, and emoji normalization through ADF and HTML conversion.</li>
 <li><strong>Confluence routing and creation:</strong> Keep URL-based commands on the tenant embedded in the URL, fix synced-folder creation, and return correct Confluence page URLs from <code>docs query</code>.</li>
@@ -210,14 +221,14 @@
 <li><strong>Search Code cache controls:</strong> Remove the obsolete Search Code cache environment variables and cache-clear flags.</li>
 </ul>
 <h2 id="1-2-5-2026-08-13">1.2.5 — 2026-08-13</h2>
-<h3 id="new-features-5">New features</h3>
+<h3 id="new-features-6">New features</h3>
 <ul>
 <li>Add <code>--content-width</code> to Confluence content create and update commands for pages, live docs, and blog posts.</li>
 <li>Add <code>--synced-container-url</code> to <code>twg confluence content create</code> so a new folder can be linked to an external Google Drive or Dropbox folder and synced. The command reports the linked source and sync status.</li>
 <li>Add dedicated Jira Service Management Help Center query commands, replacing the former combined Help Center query command.</li>
 <li>Add YAML output with <code>--output yaml</code> or <code>--output yml</code>. YAML uses the same response envelope as JSON and supports YAML output-summary files. Follow-mode commands buffer their output before emitting YAML.</li>
 </ul>
-<h3 id="bug-fixes-5">Bug fixes</h3>
+<h3 id="bug-fixes-6">Bug fixes</h3>
 <ul>
 <li>Confluence HTML conversion now handles inline code and nested code blocks correctly, preserves media attribution metadata, and renders infographic media at the intended width.</li>
 <li>Confluence public-link requests now reject unsupported content types with a clear message instead of attempting a page-only operation.</li>
@@ -1278,7 +1289,7 @@ behavior.</p>
 <p>Please use the latest stable installer for supported setup and update flows.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 81fd3979d502 (2026-09-13T22:36:48+00:00).
+        Generated from atlassian/twg-cli b4bb0f1a82d3 (2026-09-14T03:50:57+00:00).
       </footer>
     </main>
   </div>
