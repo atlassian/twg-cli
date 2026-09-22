@@ -54,6 +54,20 @@ inside a cross-product answer.
 Run one focused `twg help describe "<exact path>"` before an unfamiliar or
 consequential mutation.
 
+## Implementation-bearing workitem reads
+
+When implementation depends on a known workitem's description, acceptance
+criteria, dependencies, or constraints, execute
+[`scripts/jira_workitem_implementation.py`](scripts/jira_workitem_implementation.py)
+with all known keys in one call. Resolve the script path relative to this
+`SKILL.md` and run `python3 <script-path> <KEY...>`. The script fetches bounded
+native fields, converts Jira ADF to Markdown, and emits compact JSON.
+
+Use `@compact` only for identity, status, owner, and URL. Do not open raw TWG
+stdout to recover implementation requirements. If the script fails, report its
+diagnostic and stop that evidence branch instead of falling back to the raw
+payload.
+
 ## Jira Semantics
 
 - "Issue" and "workitem" refer to the same Jira object in user language.
