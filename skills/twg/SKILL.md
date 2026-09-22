@@ -44,7 +44,9 @@ Run `twg <command>`. On shell `command not found`, use `$HOME/.local/bin/twg`
 tell user to add that directory to PATH. Do not treat auth or command errors as
 PATH failures.
 
-Do not add per-command env prefixes unless requested; hosts may set `TWG_AGENT_DEFAULTS=1`.
+Do not add per-command env prefixes. Pair `--agent-fields` with
+`-o json --output-summary auto`; do not rely on the host setting
+`TWG_AGENT_DEFAULTS=1`.
 
 Use `stdout_inline` first when present. Outside benchmark lanes, inspect `output_files.compact`
 only when inline evidence is incomplete; full stdout is the last resort.
@@ -77,8 +79,9 @@ request credentials.
 
 One call per entity is the costliest mistake: every call re-submits the whole
 conversation. When a `get` accepts a repeated identifier - live help marks these
-"one or more" - pass the whole set in one call with `--agent-fields @compact`,
-about twenty IDs at a time. Otherwise answer from a query or tree route
+"one or more" - pass the whole set in one call with
+`-o json --output-summary auto --agent-fields @compact`, about twenty IDs at a
+time. Otherwise answer from a query or tree route
 (`... query`, `pr-tree`, `work-tree`, `workitem-tree`, `org-tree`, `context`)
 rather than hydrating each entity, or hydrate a ranked sample and say what was
 omitted. Pick the projection before the batch call; re-running one batch to
