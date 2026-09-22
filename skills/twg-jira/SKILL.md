@@ -58,9 +58,9 @@ consequential mutation.
 
 When implementation depends on a known workitem's description, acceptance
 criteria, dependencies, or constraints, execute
-[`scripts/jira_workitem_implementation.py`](scripts/jira_workitem_implementation.py)
+[`scripts/jira-workitem-implementation.mjs`](scripts/jira-workitem-implementation.mjs)
 with all known keys in one call. Resolve the script path relative to this
-`SKILL.md` and run `python3 <script-path> <KEY...>`. The script fetches bounded
+`SKILL.md` and run `node <script-path> <KEY...>`. The script fetches bounded
 native fields, converts Jira ADF to Markdown, and emits compact JSON.
 
 Use `@compact` only for identity, status, owner, and URL. Do not open raw TWG

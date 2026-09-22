@@ -3,8 +3,6 @@
 .env
 .env.*
 *.log
-__pycache__/
-*.py[cod]
 
 # Generated public export staging
 release/
