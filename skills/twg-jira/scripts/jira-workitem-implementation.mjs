@@ -7,7 +7,49 @@ import { homedir } from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 
-export const JIRA_FIELDS = "summary,description,status,parent,issuetype";
+export const JIRA_FIELDS =
+  "summary,description,status,parent,issuetype,issuelinks";
+
+const KNOWN_ADF_NODES = new Set([
+  "blockquote",
+  "blockCard",
+  "bulletList",
+  "codeBlock",
+  "decisionItem",
+  "decisionList",
+  "doc",
+  "embedCard",
+  "emoji",
+  "expand",
+  "hardBreak",
+  "heading",
+  "inlineCard",
+  "listItem",
+  "mention",
+  "nestedExpand",
+  "orderedList",
+  "panel",
+  "paragraph",
+  "rule",
+  "status",
+  "table",
+  "tableCell",
+  "tableHeader",
+  "tableRow",
+  "taskItem",
+  "taskList",
+  "text",
+]);
+const KNOWN_ADF_MARKS = new Set([
+  "code",
+  "em",
+  "link",
+  "strike",
+  "strong",
+  "subsup",
+  "textColor",
+  "underline",
+]);
 
 function contentOf(node) {
   return Array.isArray(node?.content) ? node.content : [];
@@ -68,11 +110,16 @@ export function renderBlock(node) {
       .join("\n");
   }
   if (node?.type === "rule") return "---";
-  if (["bulletList", "orderedList"].includes(node?.type)) {
+  if (
+    ["bulletList", "decisionList", "orderedList", "taskList"].includes(
+      node?.type,
+    )
+  ) {
     const start = Number(node.attrs?.order) || 1;
     return content
       .map((item, index) => {
-        const marker = node.type === "bulletList" ? "-" : `${start + index}.`;
+        const marker =
+          node.type === "orderedList" ? `${start + index}.` : "-";
         const lines = renderBlock(item).trim().split(/\r\n|\r|\n/u);
         return [
           `${marker} ${lines[0] ?? ""}`,
@@ -81,11 +128,17 @@ export function renderBlock(node) {
       })
       .join("\n");
   }
-  if (node?.type === "listItem")
-    return content
+  if (["decisionItem", "listItem", "taskItem"].includes(node?.type)) {
+    const rendered = content
       .map((child) => renderBlock(child).trim())
       .filter(Boolean)
       .join("\n");
+    if (node.type !== "taskItem") return rendered;
+    const checked = ["DONE", "COMPLETE"].includes(node.attrs?.state)
+      ? "x"
+      : " ";
+    return `[${checked}] ${rendered}`;
+  }
   if (node?.type === "table") {
     const rows = content.map((row) => renderTableRow(row));
     if (rows.length === 0) return "";
@@ -152,6 +205,47 @@ function compactObject(value) {
   );
 }
 
+function adfDiagnostics(value) {
+  const nodes = new Set();
+  const marks = new Set();
+  const visit = (node) => {
+    if (!node || typeof node !== "object") return;
+    if (typeof node.type === "string" && !KNOWN_ADF_NODES.has(node.type))
+      nodes.add(node.type);
+    for (const mark of Array.isArray(node.marks) ? node.marks : [])
+      if (typeof mark?.type === "string" && !KNOWN_ADF_MARKS.has(mark.type))
+        marks.add(mark.type);
+    for (const child of contentOf(node)) visit(child);
+  };
+  visit(value);
+  return {
+    unsupportedAdfNodes: [...nodes].sort(),
+    unsupportedAdfMarks: [...marks].sort(),
+  };
+}
+
+function projectIssueLinks(links) {
+  if (!Array.isArray(links)) return undefined;
+  return links
+    .map((link) => {
+      const linkedIssue = link?.inwardIssue ?? link?.outwardIssue;
+      if (!linkedIssue) return undefined;
+      const fields =
+        linkedIssue.fields && typeof linkedIssue.fields === "object"
+          ? linkedIssue.fields
+          : {};
+      return compactObject({
+        relationship: link.inwardIssue
+          ? link.type?.inward
+          : link.type?.outward,
+        key: linkedIssue.key,
+        summary: fields.summary,
+        status: namedValue(fields.status),
+      });
+    })
+    .filter(Boolean);
+}
+
 export function projectWorkitem(workitem) {
   const parent = workitem?.parent;
   const parentFields =
@@ -163,6 +257,7 @@ export function projectWorkitem(workitem) {
           summary: parent.summary ?? parentFields.summary,
         })
       : undefined;
+  const diagnostics = adfDiagnostics(workitem?.description);
   return compactObject({
     key: workitem?.key,
     summary: workitem?.summary,
@@ -170,7 +265,9 @@ export function projectWorkitem(workitem) {
     issueType: namedValue(workitem?.issuetype),
     parent: projectedParent,
     description: compactText(workitem?.description),
+    issueLinks: projectIssueLinks(workitem?.issuelinks),
     url: workitem?.url,
+    ...diagnostics,
   });
 }
 

@@ -61,12 +61,16 @@ criteria, dependencies, or constraints, execute
 [`scripts/jira-workitem-implementation.mjs`](scripts/jira-workitem-implementation.mjs)
 with all known keys in one call. Resolve the script path relative to this
 `SKILL.md` and run `node <script-path> <KEY...>`. The script fetches bounded
-native fields, converts Jira ADF to Markdown, and emits compact JSON.
+native fields, projects formal issue links, converts Jira ADF to Markdown, and
+emits compact JSON.
 
 Use `@compact` only for identity, status, owner, and URL. Do not open raw TWG
 stdout to recover implementation requirements. If the script fails, report its
 diagnostic and stop that evidence branch instead of falling back to the raw
-payload.
+payload. Complete the read when the requested keys are present and neither
+`unsupportedAdfNodes` nor `unsupportedAdfMarks` is reported. If either is
+present, name the unsupported features and mark that workitem's rich content
+incomplete.
 
 ## Jira Semantics
 

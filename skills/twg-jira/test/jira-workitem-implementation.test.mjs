@@ -27,6 +27,21 @@ test("projects implementation fields and renders ADF", () => {
         priority: { name: "Medium" },
       },
     },
+    issuelinks: [
+      {
+        type: {
+          inward: "is blocked by",
+          outward: "blocks",
+        },
+        outwardIssue: {
+          key: "PROJ-124",
+          fields: {
+            summary: "Publish trace schema",
+            status: { name: "In Progress" },
+          },
+        },
+      },
+    ],
     description: {
       type: "doc",
       version: 1,
@@ -163,7 +178,44 @@ test("projects implementation fields and renders ADF", () => {
       "| --- | --- |",
       "| decision | [allowed](https://example.invalid/docs) |",
     ].join("\n"),
+    issueLinks: [
+      {
+        relationship: "blocks",
+        key: "PROJ-124",
+        summary: "Publish trace schema",
+        status: "In Progress",
+      },
+    ],
   });
+});
+
+test("reports unsupported ADF instead of silently claiming completeness", () => {
+  const projected = projectWorkitem({
+    key: "PROJ-123",
+    description: {
+      type: "doc",
+      content: [
+        {
+          type: "paragraph",
+          content: [
+            {
+              type: "text",
+              text: "Visible text",
+              marks: [{ type: "customMark" }],
+            },
+          ],
+        },
+        {
+          type: "mediaSingle",
+          content: [{ type: "media", attrs: { id: "redacted" } }],
+        },
+      ],
+    },
+  });
+
+  assert.equal(projected.description, "Visible text");
+  assert.deepEqual(projected.unsupportedAdfNodes, ["media", "mediaSingle"]);
+  assert.deepEqual(projected.unsupportedAdfMarks, ["customMark"]);
 });
 
 test("normalizes single and batch payloads", () => {
@@ -185,7 +237,7 @@ test("builds a bounded JSON command", () => {
     "PROJ-123",
     "PROJ-124",
     "--fields",
-    "summary,description,status,parent,issuetype",
+    "summary,description,status,parent,issuetype,issuelinks",
     "-o",
     "json",
     "--output-summary",
