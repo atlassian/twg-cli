@@ -118,16 +118,27 @@ credentials authenticate commands and <code>twg doctor</code>, but are not used 
 </code></pre>
 <p>If <code>~/.local/bin</code> is not in your <code>PATH</code>, the installer prints the exact line to add to your shell profile.</p>
 <h5 id="install-with-the-macos-package">Install with the macOS package</h5>
-<p>Use the signed, universal macOS package when you need a system-wide or managed installation. Download <a href="https://teamwork-graph.atlassian.com/cli/install.pkg">install.pkg</a>, open it in Finder, and follow the installer prompts. The package installs <code>twg</code> to <code>/usr/local/bin/twg</code> and requires an administrator password.</p>
-<p>To install it from a terminal instead:</p>
-<pre><code class="language-bash">curl -fL https://teamwork-graph.atlassian.com/cli/install.pkg -o twg.pkg
-sudo installer -pkg twg.pkg -target /
-</code></pre>
-<p>The package installs only the CLI binary. Open a new terminal and complete the per-user setup:</p>
+<p>Install TWG for your user account using either method below. The package installs
+<code>twg</code> to <code>~/.local/bin/twg</code> and adds <code>~/.local/bin</code> to your PATH. No sudo or
+administrator password is required.</p>
+<h6 id="manual-installation">Manual installation</h6>
+<ol>
+<li>Download <a href="https://teamwork-graph.atlassian.com/cli/install.pkg">install.pkg</a>.</li>
+<li>Open the downloaded package in Finder and follow the installer prompts.</li>
+<li>Open a new terminal to load the PATH change.</li>
+</ol>
+<p>When you are ready to authenticate and configure TWG, run:</p>
 <pre><code class="language-bash">twg setup
 twg doctor
 </code></pre>
-<p>To upgrade a package-managed installation, install the latest package again or use your organization's device-management process. <code>twg upgrade</code> does not upgrade package-managed installations.</p>
+<h6 id="silent-installation">Silent installation</h6>
+<p>Run this command to install TWG without an interactive terminal, sign-in prompts,
+or setup prompts:</p>
+<pre><code class="language-bash">pkg=$(mktemp -d) &amp;&amp; curl -fsSL https://teamwork-graph.atlassian.com/cli/install.pkg -o &quot;$pkg/install.pkg&quot; &amp;&amp; /usr/sbin/installer -pkg &quot;$pkg/install.pkg&quot; -target CurrentUserHomeDirectory &gt;/dev/null
+</code></pre>
+<p>The downloaded package remains in the temporary directory shown by <code>echo &quot;$pkg&quot;</code>. Open a new terminal
+to use <code>twg</code>, or run <code>export PATH=&quot;$HOME/.local/bin:$PATH&quot;</code> in the current shell.</p>
+<p>To upgrade, download and install the latest package using either method.</p>
 <h4 id="windows">Windows</h4>
 <aside class="dac-panel dac-panel-note">
 <div class="dac-panel-label">Note</div>
@@ -244,7 +255,7 @@ twg jira --help
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli e380d0fd5bcd (2026-09-23T06:59:57+00:00).
+        Generated from atlassian/twg-cli 95cc31dfc594 (2026-09-25T05:29:21+00:00).
       </footer>
     </main>
   </div>
