@@ -244,10 +244,10 @@ twg upkeep disable
 <p>Bitbucket commands require a separate token. <code>twg login</code> does not prompt for it. Set it up with:</p>
 <pre><code class="language-bash">twg setup bitbucket
 </code></pre>
-<p><code>twg setup</code> also offers this during setup. An existing token is reused; pass <code>--force</code> to replace it:</p>
+<p><code>twg setup</code> also offers this during setup. A valid existing token is reused. If the token is invalid or expired, <code>twg setup bitbucket</code> starts token setup again automatically. Pass <code>--force</code> to replace a token without checking it first:</p>
 <pre><code class="language-bash">twg setup bitbucket --force
 </code></pre>
-<p>For CI/CD, set the <code>TWG_BBC_TOKEN</code> environment variable to your Bitbucket token.</p>
+<p>For CI/CD, set the <code>TWG_BBC_TOKEN</code> environment variable to your Bitbucket token. If it is set when you replace a token through setup, update or unset it afterward because it overrides the saved token.</p>
 <h2 id="next-steps">Next steps</h2>
 <ul>
 <li><a href="/twg-cli/getting-started/how-authentication-works/">How authentication works</a></li>
@@ -255,7 +255,7 @@ twg upkeep disable
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 19b47cedc88c (2026-09-30T02:51:42+00:00).
+        Generated from atlassian/twg-cli e3482dcf65eb (2026-09-30T03:44:00+00:00).
       </footer>
     </main>
   </div>
