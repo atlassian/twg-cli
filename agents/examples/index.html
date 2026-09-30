@@ -165,6 +165,90 @@
 <li>Summarises completed work in a format you can share.</li>
 <li>Identifies any blockers or at-risk items.</li>
 </ol>
+<h2 id="people-across-connected-directories">People across connected directories</h2>
+<p>Check the commands and selectors in your installed version. Reporting requires
+the enriched surface. Mixed-identity hierarchy and 3P activity/context also
+require the third-party identity feature for your caller and tenant context.
+Signing in does not itself enable it. Connected-provider data and permissions
+determine coverage; do not replace an unavailable route with another person's data.</p>
+<h3 id="example-5-prepare-for-a-manager-conversation">Example 5: Prepare for a manager conversation</h3>
+<p><strong>What you say:</strong></p>
+<blockquote>
+<p><em>&quot;Find my immediate manager, then summarise their work and documents from the last two weeks, including supported connected-directory activity.&quot;</em></p>
+</blockquote>
+<p><strong>What your agent does:</strong></p>
+<ol>
+<li>Resolves your AAID and uses <code>user manager --identifier</code> on the selected site.</li>
+<li>Uses <code>data.managerIdentifier.ari</code> for a 3P manager, otherwise
+<code>data.manager.accountId</code> for a 1P manager. Stops if neither is returned.</li>
+<li>Passes that returned identifier to work/docs queries with <code>--identifier</code>,
+preserving the site and 14-day window. For bounded manager levels, uses
+<code>user manager-chain --identifier --depth 2</code> when advertised and enabled.</li>
+<li>Summarises returned evidence with links and any coverage limitations.</li>
+</ol>
+<h3 id="example-6-summarise-direct-reports-work">Example 6: Summarise direct reports' work</h3>
+<p><strong>What you say:</strong></p>
+<blockquote>
+<p><em>&quot;What did my direct reports work on over the last two weeks? Tell me if directory-only people are outside the available coverage.&quot;</em></p>
+</blockquote>
+<p><strong>What your agent does:</strong></p>
+<ol>
+<li>Resolves your account ID, then calls <code>user direct-reports --identifier</code>
+when the mixed-identity route is advertised and enabled.</li>
+<li>Preserves each report's complete <code>actorIdentifiers</code> in one downstream query,
+never merging different people's actors. Reports an unavailable gate or a
+roster-bound failure rather than claiming a complete first-party-only result.</li>
+<li>Keeps each person's identity separate in downstream work queries. If a
+full roster would require excessive calls, agrees a smaller scope or clearly
+states which people were sampled.</li>
+<li>Groups evidence by person and outcome, preserving failures and missing
+coverage rather than silently dropping people.</li>
+</ol>
+<h3 id="example-7-find-a-person-s-meetings-and-videos">Example 7: Find a person's meetings and videos</h3>
+<p><strong>What you say:</strong></p>
+<blockquote>
+<p><em>&quot;For this resolved person, find meetings and videos relevant to their work this fortnight.&quot;</em></p>
+</blockquote>
+<p><strong>What your agent does:</strong></p>
+<ol>
+<li>Preserves the person's verified AAID or returned identity ARI.</li>
+<li>Checks the installed meetings/video query contract and 3P availability if needed.</li>
+<li>Queries meetings/videos using <code>--identifier</code>, the selected site, and a
+14-day window; it does not infer a reporting-peer roster from collaborators.</li>
+<li>Uses supported provider-specific detail reads for selected results. It does
+not infer that every returned video has a retrievable transcript or that
+meeting attendance implies ownership.</li>
+</ol>
+<h3 id="example-8-explore-a-directory-only-person-s-context">Example 8: Explore a directory-only person's context</h3>
+<p><strong>What you say:</strong></p>
+<blockquote>
+<p><em>&quot;For this directory user's returned identity, show their conversations and mentions. Can you also rank their collaborators?&quot;</em></p>
+</blockquote>
+<p><strong>What your agent does:</strong></p>
+<ol>
+<li>Checks <code>context user</code> help for third-party support, then preserves the returned
+identity in <code>context user &lt;3p-ari&gt;</code> with the selected site and time window.</li>
+<li>Reports the supported conversation-membership and message-mention
+relationships, keeping target links and pagination limits visible.</li>
+<li>Explains that <code>collaborators</code> requires a verified Atlassian account ID and
+cannot rank collaborators for a 3P-only subject. It does not substitute your
+account or label reporting peers or conversation members as ranked collaborators.</li>
+</ol>
+<h3 id="example-9-separate-reporting-peers-from-collaborators">Example 9: Separate reporting peers from collaborators</h3>
+<blockquote>
+<p><em>&quot;Who reports to the same manager as me, and who are my recommended collaborators? Keep those groups separate.&quot;</em></p>
+</blockquote>
+<p>The agent uses <code>user peers --identifier</code> for the bounded reporting group and
+<code>collaborators --account-id</code> for the verified 1P subject's recommendations.
+It keeps the groups and scores separate and reports each route's coverage.</p>
+<h3 id="example-10-continue-a-partial-document-result">Example 10: Continue a partial document result</h3>
+<blockquote>
+<p><em>&quot;Find my manager's documents from the last two weeks. If only a page is returned, continue once and explain what remains incomplete.&quot;</em></p>
+</blockquote>
+<p>The agent preserves the manager's identity or complete actor set, site, and
+window across <code>docs query</code> calls. It follows only a returned cursor when
+<code>hasNextPage</code> is true, retains usable partial data, and reports remaining
+limits. An authorization denial stops that route, not an automatic login retry.</p>
 <h2 id="example-prompts-quick-reference">Example prompts quick reference</h2>
 <p>Use these prompts as starting points. Your agent understands natural language, so you don't need the exact wording.</p>
 <table>
@@ -219,7 +303,7 @@
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli e3482dcf65eb (2026-09-30T03:44:00+00:00).
+        Generated from atlassian/twg-cli 7f8cd6b4605c (2026-09-30T04:05:05+00:00).
       </footer>
     </main>
   </div>
