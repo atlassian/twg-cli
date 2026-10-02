@@ -136,6 +136,15 @@ twg doctor
 or setup prompts:</p>
 <pre><code class="language-bash">pkg=$(mktemp -d) &amp;&amp; curl -fsSL https://teamwork-graph.atlassian.com/cli/install.pkg -o &quot;$pkg/install.pkg&quot; &amp;&amp; /usr/sbin/installer -pkg &quot;$pkg/install.pkg&quot; -target CurrentUserHomeDirectory &gt;/dev/null
 </code></pre>
+<p>For current-user package installations, <code>twg upgrade</code> (or <code>twg update</code>) silently
+installs the latest stable macOS package without sudo. It verifies the immutable
+package checksum, Atlassian signing identity, and package identifier/version
+before installation. Use <code>--check</code> to check without installing. Package upgrades
+do not support beta or pinning a version other than the latest published package.</p>
+<p>Legacy system-wide installations at <code>/usr/local/bin/twg</code> receive migration
+instructions instead. Install the current-user package, put <code>~/.local/bin</code>
+before <code>/usr/local/bin</code> in <code>PATH</code>, and open a new terminal or invoke
+<code>~/.local/bin/twg</code> explicitly. The user package does not replace the legacy binary.</p>
 <p>The downloaded package remains in the temporary directory shown by <code>echo &quot;$pkg&quot;</code>. Open a new terminal
 to use <code>twg</code>, or run <code>export PATH=&quot;$HOME/.local/bin:$PATH&quot;</code> in the current shell.</p>
 <p>To upgrade, download and install the latest package using either method.</p>
@@ -159,20 +168,25 @@ powershell -ExecutionPolicy Bypass -File twg-install.ps1
 </code></pre>
 <p>The Windows installer performs the same interactive setup as macOS and Linux: binary install, checksum verification, consent, skill install, OAuth login, and doctor verification.</p>
 <h5 id="install-with-a-windows-msi">Install with a Windows MSI</h5>
-<p>Use the signed MSI when you need a system-wide or managed installation. Choose the package that matches your device:</p>
+<p>Use the signed MSI for a current-user installation without administrator approval. Choose the package that matches your device:</p>
 <ul>
 <li><a href="https://teamwork-graph.atlassian.com/cli/twg-windows-x64.msi">Windows x64 MSI</a> for most Windows PCs</li>
 <li><a href="https://teamwork-graph.atlassian.com/cli/twg-windows-arm64.msi">Windows ARM64 MSI</a> for Windows on ARM</li>
 </ul>
-<p>Download the MSI, then double-click it and approve the administrator prompt. To install from PowerShell, download the matching package and run <code>msiexec</code>:</p>
+<p>Download the MSI and double-click it, or install silently from a normal PowerShell session as the intended user. The following commands install without installer UI, password prompts, or a restart:</p>
 <pre><code class="language-powershell">Invoke-WebRequest https://teamwork-graph.atlassian.com/cli/twg-windows-x64.msi -OutFile twg-windows-x64.msi
-msiexec.exe /i .\twg-windows-x64.msi
+msiexec.exe /i &quot;$PWD\twg-windows-x64.msi&quot; /qn /norestart
 </code></pre>
-<p>For Windows on ARM, replace <code>x64</code> with <code>arm64</code> in both commands. The MSI installs <code>twg.exe</code> to <code>C:\Program Files\twg</code> and adds that directory to the machine <code>PATH</code>.</p>
-<p>The MSI installs only the CLI binary. Open a new PowerShell or Command Prompt window, then complete the per-user setup:</p>
+<p>For Windows on ARM, replace <code>x64</code> with <code>arm64</code> in both commands. The MSI installs <code>twg.exe</code> to <code>%LOCALAPPDATA%\Programs\twg-msi</code> and adds that directory to the user <code>PATH</code> for newly opened terminals.</p>
+<p>The MSI installs only the CLI binary and does not launch login or setup. When you are ready to configure skills and authentication, open a new PowerShell or Command Prompt window and run:</p>
 <pre><code class="language-powershell">twg setup
 twg doctor
 </code></pre>
+<p>Per-user MSIs replace earlier per-user MSIs of the same architecture. The per-user MSI refuses a fresh installation while an older machine-wide <code>C:\Program Files\twg\twg.exe</code> remains. Remove the old package <strong>before</strong> installing the per-user MSI, using the state-preserving migration below. Do not uninstall the old MSI through Settings after installing the new one: its bundled cleanup code can delete authentication and setup shared by the new installation. Direct PowerShell installations remain separate; use <code>Get-Command -All twg</code> to inspect PATH resolution.</p>
+<p>For migration, obtain the exact MSI used for the machine-wide installation and run the helper from the TWG CLI source checkout (<code>twg-cli/</code>) in an elevated PowerShell session:</p>
+<pre><code class="language-powershell">powershell -NoProfile -File bin/release/migrate-windows-machine-msi.ps1 -MsiPath &quot;C:\path\to\legacy-twg.msi&quot;
+</code></pre>
+<p>The helper checks that the installed package supports suppressing user-data cleanup, then removes it silently with that protection enabled. It refuses unsupported packages before uninstalling anything. After it succeeds, return to a normal PowerShell session and install the new MSI with <code>/qn /norestart</code>. This one-time removal of a machine-wide package requires administrator approval; fresh per-user installs do not.</p>
 <p>To update an MSI-managed installation, install the latest MSI again or use your organization's device-management process. <code>twg update</code> does not update MSI-managed installations.</p>
 <p>Run the Windows installer from a console when consent or login is needed. Runtime
 <code>TWG_*</code> credentials authenticate commands and <code>twg doctor</code>, but are not used by login.</p>
@@ -255,7 +269,7 @@ twg jira --help
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 7f8cd6b4605c (2026-09-30T04:05:05+00:00).
+        Generated from atlassian/twg-cli 56b9b3472458 (2026-10-02T09:34:03+00:00).
       </footer>
     </main>
   </div>
