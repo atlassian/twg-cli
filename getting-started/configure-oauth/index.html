@@ -113,6 +113,7 @@
 twg auth profile list
 </code></pre>
 <p>Use <code>--profile work</code> to choose that login, or <code>--site &lt;site&gt;</code> to let TWG choose one for the site. Unnamed profiles get a name from your email and site.</p>
+<p>Set <code>TWG_PROFILE=work</code> to select a login for your shell; <code>--profile</code> overrides it. Each login uses its saved environment. Create a staging login with <code>twg login --new-profile work-stg --env stg</code>.</p>
 <p>Your default login follows your default site. Change it with <code>twg auth profile default work</code> or <code>twg setup default-site --site &lt;site&gt;</code> for a site associated with a login profile; signing in again keeps that choice. To remove a login and its saved credentials, run <code>twg logout --profile work</code>. Other logins remain available.</p>
 <h2 id="enable-experimental-encrypted-credential-storage">Enable experimental encrypted credential storage</h2>
 <p>TWG CLI now has an experimental option to store encrypted credentials in its vault at <code>auth-storage/auth.db</code>. Its root key is stored separately: in the OS vault on macOS and Windows, or in the <code>TWG_AUTH_STORAGE_KEY</code> environment variable on Linux. This helps protect credentials from software that can inspect local files but cannot access the root key.</p>
@@ -264,7 +265,7 @@ twg upkeep disable
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli d519e55861bc (2026-10-05T17:41:00+00:00).
+        Generated from atlassian/twg-cli 01ffb0eabdcb (2026-10-05T19:06:32+00:00).
       </footer>
     </main>
   </div>
