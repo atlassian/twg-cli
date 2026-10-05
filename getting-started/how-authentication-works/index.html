@@ -87,13 +87,13 @@
     <main>
       <h1 id="how-authentication-works">How authentication works</h1>
 <p>Teamwork Graph CLI (TWG CLI) authenticates you with Atlassian and uses your existing permissions when it accesses data. Your credentials are stored locally and reused across commands.</p>
-<p>TWG CLI uses OAuth 2.1 as its only supported authentication method. The one exception is Bitbucket, which isn't covered by OAuth yet and requires a separate Bitbucket token.</p>
+<p>Personal sign-in uses OAuth 2.1. Bitbucket commands require a separate token, and admin commands use an organization-scoped API key.</p>
 <aside class="dac-panel dac-panel-warning">
 <div class="dac-panel-label">Warning</div>
 <p>TWG CLI never asks you to paste or share an authentication token in a prompt, chat, or conversation. If an agent or tool asks for one, don't share it. Enter tokens only through the secure terminal prompts provided by TWG CLI.</p>
 </aside>
 <h2 id="oauth-2-1">OAuth 2.1</h2>
-<p>When you run <code>twg login</code>, TWG CLI opens a browser where you sign in to Atlassian and grant access. Your credentials are saved locally and refreshed automatically, so you usually won't need to sign in again.</p>
+<p>When you run <code>twg login</code>, TWG CLI offers to open a browser where you sign in to Atlassian and grant access. You can also open the printed verification URL yourself. Your credentials are saved locally and refreshed automatically, so you usually won't need to sign in again.</p>
 <p>To set up OAuth 2.1, see <a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a>.</p>
 <h3 id="admin-authentication">Admin authentication</h3>
 <p>Site and organization admin authentication use an <strong>Atlassian Admin API key</strong> limited to your organization. The key is stored separately from your personal credentials.</p>
@@ -101,25 +101,27 @@
 <pre><code class="language-bash">twg admin auth login --email &lt;your-email&gt; --org &lt;your-org-id&gt;
 </code></pre>
 <h2 id="bitbucket">Bitbucket</h2>
-<p>Bitbucket is the only exception to OAuth support. Its commands require a separate token, attached to your login profile with <code>twg setup bitbucket</code>.</p>
+<p>Attach a Bitbucket token to your login profile with <code>twg setup bitbucket</code>.</p>
 <h2 id="login-profiles">Login profiles</h2>
-<p>Profiles keep separate logins for different organizations and environments. Login allows one profile for each organization and environment. Each profile keeps one login and optional Bitbucket credentials; signing in again replaces its login. TWG chooses a login for the site, or you can choose one with <code>--profile &lt;name&gt;</code>. Your default login follows your default site.</p>
-<p>Use <code>twg auth profile list</code> to see your logins. For naming, defaults, and removal, see <a href="/twg-cli/getting-started/configure-oauth/#manage-login-profiles">Manage login profiles</a>.</p>
+<p>Profiles keep separate logins for different organizations. Each has a default site and optional Bitbucket credentials. TWG allows one profile per organization; signing in again updates its credentials.</p>
+<p>Without a selector, commands use the saved default profile and its default site. <code>--site &lt;site&gt;</code> selects a profile for that site's organization. <code>--profile &lt;name&gt;</code> pins a login: an organization mismatch or permission error does not trigger a retry with another profile. <code>--profile default</code> selects the saved default, whatever its name. Using a profile for one command does not change the default.</p>
+<p>Selection order is <code>--profile</code>, then <code>TWG_PROFILE</code>, then automatic site selection, then the saved default. Either explicit selector keeps the login pinned when <code>--site</code> is supplied. <code>twg env --export</code> exports the selected session.</p>
+<p><code>twg auth refresh</code> and upkeep maintain all profiles; <code>twg auth refresh --profile &lt;name&gt;</code> refreshes just one. Use <code>twg auth profile list</code> to see your logins. For naming, defaults, and removal, see <a href="/twg-cli/getting-started/configure-oauth/#manage-login-profiles">Manage login profiles</a>.</p>
 <h2 id="permissions-are-always-respected">Permissions are always respected</h2>
 <p>TWG CLI can read or modify only the Atlassian data your account already has access to. Authentication does not grant additional permissions.</p>
 <h2 id="token-lifecycle">Token lifecycle</h2>
-<p>OAuth access tokens expire after 8 hours. TWG CLI refreshes credentials while commands run, but an agent sandbox may block refresh. During installation, <code>twg setup</code> enables the <a href="/twg-cli/getting-started/configure-oauth/#oauth-upkeep-background-helper">upkeep helper</a>, which runs outside agent sandboxes and refreshes credentials in the background. You can also enable it later with <code>twg upkeep enable</code>. After 30 days without use, the refresh token expires and TWG CLI asks you to sign in again.</p>
+<p>OAuth access tokens expire after 8 hours. TWG CLI refreshes them as needed, but an agent sandbox may block refresh. <code>twg setup</code> enables the <a href="/twg-cli/getting-started/configure-oauth/#oauth-upkeep-background-helper">upkeep helper</a> to refresh credentials outside the sandbox. You can also enable it with <code>twg upkeep enable</code>. After 30 days without use, the refresh token expires and TWG CLI asks you to sign in again.</p>
 <p>You can re-authenticate at any time by running:</p>
 <pre><code class="language-bash">twg login --force
 </code></pre>
 <p>To sign out and remove the active login and its saved credentials, run:</p>
 <pre><code class="language-bash">twg logout
 </code></pre>
-<p>TWG tries to revoke its OAuth token. Use <code>twg logout --profile &lt;name&gt;</code> to remove a particular login. Other logins remain available; removing the default selects the oldest available login.</p>
+<p>TWG tries to revoke the profile's OAuth token. To remove a particular login, use <code>twg logout --profile &lt;name&gt;</code>. Removing the default selects the oldest usable remaining profile, excluding profiles pending deletion.</p>
 <p>Organization admins can revoke active TWG CLI sessions after changing OAuth permissions in Atlassian Administration. You must sign in again before TWG CLI can use the updated permissions.</p>
 <h2 id="experimental-encrypted-credential-storage">Experimental encrypted credential storage</h2>
-<p>TWG CLI has an experimental option to store encrypted credentials in <code>auth-storage/auth.db</code>, instead of the file profile store <code>auth-profiles.json</code>. Its root key is stored separately: in the OS vault on macOS and Windows, or in the <code>TWG_AUTH_STORAGE_KEY</code> environment variable on Linux. This helps protect credentials from software that can inspect local files but cannot access the root key.</p>
-<p>Encrypted storage is opt-in. Existing <code>auth.conf</code> logins continue to work; login/profile updates import them into the profile store. <code>twg auth storage migrate</code> moves every profile and credential between file and encrypted storage. See <a href="/twg-cli/getting-started/configure-oauth/#enable-experimental-encrypted-credential-storage">Enable experimental encrypted credential storage</a>.</p>
+<p>TWG CLI can store encrypted credentials in <code>auth-storage/auth.db</code> instead of <code>auth-profiles.json</code>. This experimental option keeps the root key separate: in the OS vault by default on macOS and Windows, or supplied through <code>TWG_AUTH_STORAGE_KEY</code> on any supported OS. An environment-key database requires its original key for every command.</p>
+<p>Existing <code>auth.conf</code> logins keep working; profile-writing operations import them automatically. TWG can verify missing organization details when routing to another site without requiring a new login. To opt into encrypted storage, use <code>twg auth storage migrate</code>; it moves all profiles, credentials, and defaults between the two stores. Both use the same selection rules. See <a href="/twg-cli/getting-started/configure-oauth/#enable-experimental-encrypted-credential-storage">Enable experimental encrypted credential storage</a>.</p>
 <table>
 <thead>
 <tr>
@@ -130,11 +132,11 @@
 <tbody>
 <tr>
 <td>macOS</td>
-<td>macOS Keychain</td>
+<td>macOS Keychain by default; environment key optional</td>
 </tr>
 <tr>
 <td>Windows</td>
-<td>Windows Credential Manager</td>
+<td>Windows Credential Manager by default; environment key optional</td>
 </tr>
 <tr>
 <td>Linux</td>
@@ -142,17 +144,16 @@
 </tr>
 </tbody>
 </table>
-<p>After setup, <code>twg doctor --basic</code> shows which storage method is in use. The <code>auth.db</code> path identifies the encrypted database; the root key is stored separately.</p>
+<p><code>twg doctor --basic</code> shows which credential store and root-key source are in use.</p>
 <h2 id="next-steps">Next steps</h2>
 <ul>
 <li><a href="/twg-cli/getting-started/configure-oauth/">Configure OAuth 2.1</a></li>
 <li><a href="/twg-cli/getting-started/troubleshooting/">Troubleshoot TWG CLI</a></li>
 <li>To see what's changed in recent versions, view the <a href="/twg-cli/changelog/">changelog</a>.</li>
 </ul>
-<p>Use <code>--profile work</code> or set <code>TWG_PROFILE=work</code> to select a login and its saved environment. <code>--env</code> is only needed when creating a login. <code>twg env --export</code> exports the selected session; re-login with <code>--force</code> replaces its credentials.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli faf0cf1d1f0e (2026-10-05T22:12:20+00:00).
+        Generated from atlassian/twg-cli c9f632abbf0d (2026-10-05T23:09:46+00:00).
       </footer>
     </main>
   </div>
