@@ -101,7 +101,10 @@
 <pre><code class="language-bash">twg admin auth login --email &lt;your-email&gt; --org &lt;your-org-id&gt;
 </code></pre>
 <h2 id="bitbucket">Bitbucket</h2>
-<p>Bitbucket is the only exception to OAuth support. Its commands require a separate Bitbucket token, set up independently with <code>twg setup bitbucket</code>.</p>
+<p>Bitbucket is the only exception to OAuth support. Its commands require a separate token, attached to your login profile with <code>twg setup bitbucket</code>.</p>
+<h2 id="login-profiles">Login profiles</h2>
+<p>Profiles keep separate logins for different organizations and environments. Login allows one profile for each organization and environment. Each profile keeps one login and optional Bitbucket credentials; signing in again replaces its login. TWG chooses a login for the site, or you can choose one with <code>--profile &lt;name&gt;</code>. Your default login follows your default site.</p>
+<p>Use <code>twg auth profile list</code> to see your logins. For naming, defaults, and removal, see <a href="/twg-cli/getting-started/configure-oauth/#manage-login-profiles">Manage login profiles</a>.</p>
 <h2 id="permissions-are-always-respected">Permissions are always respected</h2>
 <p>TWG CLI can read or modify only the Atlassian data your account already has access to. Authentication does not grant additional permissions.</p>
 <h2 id="token-lifecycle">Token lifecycle</h2>
@@ -109,13 +112,14 @@
 <p>You can re-authenticate at any time by running:</p>
 <pre><code class="language-bash">twg login --force
 </code></pre>
-<p>To revoke your OAuth token, run:</p>
+<p>To sign out and remove the active login and its saved credentials, run:</p>
 <pre><code class="language-bash">twg logout
 </code></pre>
+<p>TWG tries to revoke its OAuth token. Use <code>twg logout --profile &lt;name&gt;</code> to remove a particular login. Other logins remain available; removing the default selects the oldest available login.</p>
 <p>Organization admins can revoke active TWG CLI sessions after changing OAuth permissions in Atlassian Administration. You must sign in again before TWG CLI can use the updated permissions.</p>
 <h2 id="experimental-encrypted-credential-storage">Experimental encrypted credential storage</h2>
-<p>TWG CLI now has an experimental option to store encrypted credentials in its vault at <code>auth-storage/auth.db</code>, instead of <code>auth.conf</code>. Its root key is stored separately: in the OS vault on macOS and Windows, or in the <code>TWG_AUTH_STORAGE_KEY</code> environment variable on Linux. This helps protect credentials from software that can inspect local files but cannot access the root key.</p>
-<p>This option is not enabled automatically. Existing credentials continue to use <code>auth.conf</code> until you migrate them. New users can save their first login directly to encrypted storage. See <a href="/twg-cli/getting-started/configure-oauth/#enable-experimental-encrypted-credential-storage">Enable experimental encrypted credential storage</a>.</p>
+<p>TWG CLI has an experimental option to store encrypted credentials in <code>auth-storage/auth.db</code>, instead of the file profile store <code>auth-profiles.json</code>. Its root key is stored separately: in the OS vault on macOS and Windows, or in the <code>TWG_AUTH_STORAGE_KEY</code> environment variable on Linux. This helps protect credentials from software that can inspect local files but cannot access the root key.</p>
+<p>Encrypted storage is opt-in. Existing <code>auth.conf</code> logins continue to work; login/profile updates import them into the profile store. <code>twg auth storage migrate</code> moves every profile and credential between file and encrypted storage. See <a href="/twg-cli/getting-started/configure-oauth/#enable-experimental-encrypted-credential-storage">Enable experimental encrypted credential storage</a>.</p>
 <table>
 <thead>
 <tr>
@@ -147,7 +151,7 @@
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 3543fd2fef42 (2026-10-05T03:48:17+00:00).
+        Generated from atlassian/twg-cli d519e55861bc (2026-10-05T17:41:00+00:00).
       </footer>
     </main>
   </div>

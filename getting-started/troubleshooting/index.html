@@ -92,6 +92,8 @@
 <pre><code class="language-bash">twg doctor
 </code></pre>
 <p>This is always the best first step — it tells you what's working and what isn't.</p>
+<p>For another login, run <code>twg doctor --profile &lt;name&gt;</code> or <code>twg doctor --site &lt;site&gt;</code>. Doctor shows which login and credential store it uses.</p>
+<p>Run <code>twg auth profile list</code> to find a profile showing <code>deletion pending</code>. Its saved site or organization mapping no longer matches the current mapping. Remove the profile with <code>twg logout --profile &lt;name&gt;</code> and sign in again. If the site details are correct, <code>twg login --profile &lt;name&gt; --force</code> can check it again.</p>
 <h2 id="repair-your-setup">Repair your setup</h2>
 <p>If <code>twg doctor</code> reports issues with your configuration or agent skills, run:</p>
 <pre><code class="language-bash">twg setup
@@ -120,7 +122,7 @@ powershell -ExecutionPolicy Bypass -File twg-install.ps1
 <p>Review the details, provide an email if needed, complete reCAPTCHA, and submit the form.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 3543fd2fef42 (2026-10-05T03:48:17+00:00).
+        Generated from atlassian/twg-cli d519e55861bc (2026-10-05T17:41:00+00:00).
       </footer>
     </main>
   </div>

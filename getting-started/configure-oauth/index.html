@@ -107,6 +107,13 @@
 <p>Return to your terminal. TWG CLI confirms when your credentials are saved.</p>
 </li>
 </ol>
+<h2 id="manage-login-profiles">Manage login profiles</h2>
+<p>To create a login for another organization, name it when signing in:</p>
+<pre><code class="language-bash">twg login --new-profile work
+twg auth profile list
+</code></pre>
+<p>Use <code>--profile work</code> to choose that login, or <code>--site &lt;site&gt;</code> to let TWG choose one for the site. Unnamed profiles get a name from your email and site.</p>
+<p>Your default login follows your default site. Change it with <code>twg auth profile default work</code> or <code>twg setup default-site --site &lt;site&gt;</code> for a site associated with a login profile; signing in again keeps that choice. To remove a login and its saved credentials, run <code>twg logout --profile work</code>. Other logins remain available.</p>
 <h2 id="enable-experimental-encrypted-credential-storage">Enable experimental encrypted credential storage</h2>
 <p>TWG CLI now has an experimental option to store encrypted credentials in its vault at <code>auth-storage/auth.db</code>. Its root key is stored separately: in the OS vault on macOS and Windows, or in the <code>TWG_AUTH_STORAGE_KEY</code> environment variable on Linux. This helps protect credentials from software that can inspect local files but cannot access the root key.</p>
 <table>
@@ -140,7 +147,7 @@
 <p>If you already use TWG CLI, migrate your existing credentials:</p>
 <pre><code class="language-bash">twg auth storage migrate
 </code></pre>
-<p>This detects your active storage and asks before migrating to the other backend. With <code>auth.conf</code> active, it copies your credentials to encrypted storage, then deletes <code>auth.conf</code> so TWG CLI uses <code>auth.db</code>. With encrypted storage active, it copies the selected profile back to <code>auth.conf</code>, then resets encrypted storage and its other profile slots. Use <code>--yes</code> for an already-confirmed script.</p>
+<p>This asks before switching between file storage (<code>auth-profiles.json</code>) and encrypted storage (<code>auth.db</code>). It keeps all logins, credentials, and defaults, including older <code>auth.conf</code> logins. Use <code>--yes</code> for an already-confirmed script.</p>
 <p>If you are signing in for the first time, save the login directly to encrypted storage:</p>
 <pre><code class="language-bash">TWG_SECRET_STORE=keychain twg login --force --oauth
 </code></pre>
@@ -205,7 +212,7 @@ Connectivity
 <p>For a fuller authentication and connectivity check, run:</p>
 <pre><code class="language-bash">twg doctor
 </code></pre>
-<p>This checks your credentials, token status, and connected site.</p>
+<p>This checks your credentials, token status, and connected site. Add <code>--site &lt;site&gt;</code> or <code>--profile &lt;name&gt;</code> to check a particular login; doctor reports the selected profile, storage path, and authentication method.</p>
 <h2 id="re-authenticate">Re-authenticate</h2>
 <p>To sign in again:</p>
 <pre><code class="language-bash">twg login
@@ -214,12 +221,13 @@ Connectivity
 <pre><code class="language-bash">twg login --force
 </code></pre>
 <h2 id="refresh-oauth-credentials">Refresh OAuth credentials</h2>
-<p>TWG CLI normally refreshes OAuth credentials before they expire. To check for a refresh without signing in:</p>
+<p>TWG CLI normally refreshes OAuth credentials before they expire. To check every profile without signing in:</p>
 <pre><code class="language-bash">twg auth refresh
 </code></pre>
 <p>If the credentials are still fresh, the command makes no changes. Use <code>--force</code> only for manual repair or validation:</p>
 <pre><code class="language-bash">twg auth refresh --force
 </code></pre>
+<p>Add <code>--profile work</code> to refresh only that profile. A failed refresh does not stop the remaining profiles from being checked.</p>
 <p>Before refreshing, TWG CLI checks that it can save the updated credentials. If the config directory isn't writable, it sends no refresh request and asks you to run <code>twg auth refresh</code> in a normal terminal. It also detects common coding agents and prints the relevant configuration.</p>
 <h2 id="oauth-upkeep-background-helper">OAuth upkeep background helper</h2>
 <p>Upkeep is a per-user background helper that runs outside coding-agent sandboxes. It keeps OAuth credentials fresh and checks for CLI upgrades. <code>twg setup</code> enables it during installation. To enable or repair it later:</p>
@@ -230,7 +238,7 @@ Connectivity
 <p>On macOS, you may see a system notification that software from <strong>Atlassian Pty Ltd</strong> or <strong>twg</strong> can run in the background. This is expected after <code>twg setup</code> enables the upkeep helper.</p>
 <p>It does not install upgrades automatically. You can manage it in <strong>System Settings &gt; General &gt; Login Items &amp; Extensions</strong>.</p>
 </aside>
-<p>The helper runs every 12 minutes. It refreshes OAuth when needed and checks for CLI upgrades at most once a day. When an upgrade is available, it sends an initial notification, followed by limited reminders. Each notification tells you to run <code>twg upgrade</code>; upkeep never downloads or installs upgrades automatically.</p>
+<p>The helper runs every 12 minutes. It checks OAuth credentials across every profile and checks for CLI upgrades at most once a day. When an upgrade is available, it sends an initial notification, followed by limited reminders. Each notification tells you to run <code>twg upgrade</code>; upkeep never downloads or installs upgrades automatically.</p>
 <p>Use these commands to inspect, run, or remove it:</p>
 <pre><code class="language-bash">twg upkeep status
 twg upkeep run
@@ -238,15 +246,16 @@ twg upkeep disable
 </code></pre>
 <p>TWG CLI uses a macOS LaunchAgent, Linux systemd user timer, or Windows Scheduled Task to run the helper as your user.</p>
 <p>On Linux, scheduling requires a systemd user instance and an active user D-Bus session. If setup cannot install the schedule, retry <code>twg upkeep enable</code> after fixing the reported system error.</p>
-<p>The helper stores only non-secret maintenance state in <code>upkeep.json</code> under the TWG config directory. <code>twg logout</code> leaves it enabled but skips auth work until you sign in again. <code>twg uninstall</code> disables it, revokes stored credentials, and removes the CLI and local TWG configs.</p>
+<p>The helper stores only non-secret maintenance state in <code>upkeep.json</code> under the TWG config directory. <code>twg logout</code> leaves it enabled and continues checking any remaining profiles. <code>twg uninstall</code> disables it, attempts to revoke stored OAuth credentials, and removes the CLI and local TWG configs.</p>
 <p>If you disable the helper, TWG CLI still works, but OAuth refresh and upgrade notifications may not run in the background. Run <code>twg auth refresh</code> or <code>twg upgrade</code> manually if needed.</p>
 <h2 id="bitbucket-authentication">Bitbucket authentication</h2>
-<p>Bitbucket commands require a separate token. <code>twg login</code> does not prompt for it. Set it up with:</p>
+<p>Bitbucket commands require a separate token attached to your Atlassian login profile. Sign in first, then set it up with:</p>
 <pre><code class="language-bash">twg setup bitbucket
 </code></pre>
 <p><code>twg setup</code> also offers this during setup. A valid existing token is reused. If the token is invalid or expired, <code>twg setup bitbucket</code> starts token setup again automatically. Pass <code>--force</code> to replace a token without checking it first:</p>
 <pre><code class="language-bash">twg setup bitbucket --force
 </code></pre>
+<p>Add <code>--profile work</code> to attach the token to a particular login.</p>
 <p>For CI/CD, set the <code>TWG_BBC_TOKEN</code> environment variable to your Bitbucket token. If it is set when you replace a token through setup, update or unset it afterward because it overrides the saved token.</p>
 <h2 id="next-steps">Next steps</h2>
 <ul>
@@ -255,7 +264,7 @@ twg upkeep disable
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 3543fd2fef42 (2026-10-05T03:48:17+00:00).
+        Generated from atlassian/twg-cli d519e55861bc (2026-10-05T17:41:00+00:00).
       </footer>
     </main>
   </div>
