@@ -104,7 +104,7 @@
 <p>Attach a Bitbucket token to your login profile with <code>twg setup bitbucket</code>.</p>
 <h2 id="login-profiles">Login profiles</h2>
 <p>Profiles keep separate logins for different organizations. Each has a default site and optional Bitbucket credentials. TWG allows one profile per organization; signing in again updates its credentials.</p>
-<p>Without a selector, commands use the saved default profile and its default site. <code>--site &lt;site&gt;</code> selects a profile for that site's organization. <code>--profile &lt;name&gt;</code> pins a login: an organization mismatch or permission error does not trigger a retry with another profile. <code>--profile default</code> selects the saved default, whatever its name. Using a profile for one command does not change the default.</p>
+<p>Without a selector, commands use the saved default profile and its default site. <code>--site &lt;site&gt;</code> selects a profile for that site's organization. <code>--profile &lt;name&gt;</code> (short form <code>-p &lt;name&gt;</code>) pins a login: an organization mismatch or permission error does not trigger a retry with another profile. <code>--profile default</code> selects the saved default, whatever its name. Using a profile for one command does not change the default.</p>
 <p>Selection order is <code>--profile</code>, then <code>TWG_PROFILE</code>, then automatic site selection, then the saved default. Either explicit selector keeps the login pinned when <code>--site</code> is supplied. <code>twg env --export</code> exports the selected session.</p>
 <p><code>twg auth refresh</code> and upkeep maintain all profiles; <code>twg auth refresh --profile &lt;name&gt;</code> refreshes just one. Use <code>twg auth profile list</code> to see your logins. For naming, defaults, and removal, see <a href="/twg-cli/getting-started/configure-oauth/#manage-login-profiles">Manage login profiles</a>.</p>
 <h2 id="permissions-are-always-respected">Permissions are always respected</h2>
@@ -153,7 +153,7 @@
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli c9f632abbf0d (2026-10-05T23:09:46+00:00).
+        Generated from atlassian/twg-cli 159af3b37893 (2026-10-06T23:46:37+00:00).
       </footer>
     </main>
   </div>
