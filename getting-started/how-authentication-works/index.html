@@ -103,10 +103,29 @@
 <h2 id="bitbucket">Bitbucket</h2>
 <p>Attach a Bitbucket token to your login profile with <code>twg setup bitbucket</code>.</p>
 <h2 id="login-profiles">Login profiles</h2>
-<p>Profiles keep separate logins for different organizations. Each has a default site and optional Bitbucket credentials. TWG allows one profile per organization; signing in again updates its credentials.</p>
-<p>Without a selector, commands use the saved default profile and its default site. <code>--site &lt;site&gt;</code> selects a profile for that site's organization. <code>--profile &lt;name&gt;</code> (short form <code>-p &lt;name&gt;</code>) pins a login: an organization mismatch or permission error does not trigger a retry with another profile. <code>--profile default</code> selects the saved default, whatever its name. Using a profile for one command does not change the default.</p>
-<p>Selection order is <code>--profile</code>, then <code>TWG_PROFILE</code>, then automatic site selection, then the saved default. Either explicit selector keeps the login pinned when <code>--site</code> is supplied. <code>twg env --export</code> exports the selected session.</p>
-<p><code>twg auth refresh</code> and upkeep maintain all profiles; <code>twg auth refresh --profile &lt;name&gt;</code> refreshes just one. Use <code>twg auth profile list</code> to see your logins. For naming, defaults, and removal, see <a href="/twg-cli/getting-started/configure-oauth/#manage-login-profiles">Manage login profiles</a>.</p>
+<p>Login profiles are available in <strong>TWG CLI v1.3.6 and later</strong>. They let you keep separate logins for different organizations without signing out each time you switch.</p>
+<ul>
+<li>Each profile has its own login, organization, default site, and optional Bitbucket credentials.</li>
+<li>TWG allows <strong>one profile per organization</strong>. Signing in again updates that profile's credentials.</li>
+<li>Choosing a profile for one command does not change your saved default.</li>
+</ul>
+<h3 id="how-twg-chooses-a-profile">How TWG chooses a profile</h3>
+<p>TWG checks these options in order and uses the first that applies:</p>
+<ol>
+<li><strong>Command-line profile:</strong> <code>--profile &lt;name&gt;</code> (or <code>-p &lt;name&gt;</code>) selects a login for that command. Use <code>--profile default</code> to select the saved default, whatever its name.</li>
+<li><strong>Shell profile:</strong> <code>TWG_PROFILE</code> selects a login for commands in your shell.</li>
+<li><strong>Site selection:</strong> <code>--site &lt;site&gt;</code> selects a profile for that site's organization.</li>
+<li><strong>Saved default:</strong> Without a profile or site selector, TWG uses the saved default profile and its default site.</li>
+</ol>
+<p>When you use <code>--profile</code> or <code>TWG_PROFILE</code>, TWG keeps that login even if you also supply <code>--site</code>. An organization mismatch or permission error returns an error; TWG does not try another profile.</p>
+<h3 id="inspect-and-refresh-profiles">Inspect and refresh profiles</h3>
+<ul>
+<li><strong>List your logins:</strong> <code>twg auth profile list</code>.</li>
+<li><strong>Export the selected session:</strong> <code>twg env --export</code>.</li>
+<li><strong>Refresh all profiles:</strong> <code>twg auth refresh</code>. The <a href="/twg-cli/getting-started/configure-oauth/#oauth-upkeep-background-helper">upkeep helper</a> also maintains all profiles.</li>
+<li><strong>Refresh one profile:</strong> <code>twg auth refresh --profile &lt;name&gt;</code>.</li>
+</ul>
+<p>For creating profiles, naming rules, defaults, and removal, see <a href="/twg-cli/getting-started/configure-oauth/#manage-login-profiles">Manage login profiles</a>.</p>
 <h2 id="permissions-are-always-respected">Permissions are always respected</h2>
 <p>TWG CLI can read or modify only the Atlassian data your account already has access to. Authentication does not grant additional permissions.</p>
 <h2 id="token-lifecycle">Token lifecycle</h2>
@@ -153,7 +172,7 @@
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 2906a47da6b5 (2026-10-07T14:54:32+00:00).
+        Generated from atlassian/twg-cli 044c2709f1cd (2026-10-07T15:03:42+00:00).
       </footer>
     </main>
   </div>

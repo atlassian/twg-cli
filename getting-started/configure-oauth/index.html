@@ -108,23 +108,59 @@
 </li>
 </ol>
 <h2 id="manage-login-profiles">Manage login profiles</h2>
+<p>Login profiles are available in <strong>TWG CLI v1.3.6 and later</strong>. Use them to keep separate logins for different organizations. Each profile stores its own login, organization, default site, and optional Bitbucket token.</p>
+<h3 id="create-and-list-profiles">Create and list profiles</h3>
 <p>To sign in to another organization, create a named profile:</p>
 <pre><code class="language-bash">twg login --new-profile work
 twg auth profile list
 </code></pre>
-<p>Each profile has its own login, organization, default site, and optional Bitbucket token. Commands without a selector use the saved default profile and its default site:</p>
-<pre><code class="language-bash">twg jira workitem get ABC-1
-twg jira workitem get ABC-1 --site personal-site
-twg jira workitem get ABC-1 --site personal-site --profile personal
+<p>TWG allows one profile per organization. To replace an existing login, see <a href="#update-or-remove-a-profile">Update or remove a profile</a>.</p>
+<p>You can also let TWG choose a name:</p>
+<pre><code class="language-bash">twg login --new-profile
 </code></pre>
-<p>The second command selects a profile for the site's organization. The third pins <code>personal</code>: if the organization doesn't match or the account can't access the item, TWG returns an error without trying another login. <code>--profile default</code> pins the saved default, whatever its name. <code>default</code> is reserved: you can't use it as a new profile name or rename a profile to it, regardless of capitalization.</p>
-<p>With <code>twg login --new-profile</code>, TWG generates a name from the site and authentication method, such as <code>hello-oauth</code>. It shortens <code>.atlassian.net</code> sites to their prefix; other hostnames keep their full name with dots changed to hyphens. Collisions add <code>-2</code>, <code>-3</code>, and so on. You can supply your own name; a duplicate is rejected before sign-in starts.</p>
-<p>Selection order is <code>--profile</code>, then <code>TWG_PROFILE</code>, then automatic site selection, then the saved default. For example, <code>TWG_PROFILE=work</code> selects <code>work</code> for your shell, and <code>--profile personal</code> overrides it. Either selector pins the login even when <code>--site</code> is supplied.</p>
-<p>Choose the default profile with <code>twg auth profile default work</code>. To choose a default site and its matching profile, use <code>twg setup default-site --site &lt;site&gt;</code>. Signing in again preserves the default. Remove a profile and its credentials with <code>twg logout --profile work</code>.</p>
-<p>TWG allows one profile per organization. To update an existing login, run:</p>
+<p>Profile names follow these rules:</p>
+<ul>
+<li><strong>Generated names</strong> combine the site and authentication method, such as <code>hello-oauth</code>. For <code>.atlassian.net</code> sites, TWG uses the site prefix. For other hostnames, it keeps the full hostname and replaces dots with hyphens.</li>
+<li><strong>Name collisions</strong> add <code>-2</code>, <code>-3</code>, and so on to generated names. If you supply a name that already exists, TWG rejects it before sign-in starts.</li>
+<li><strong>The name <code>default</code> is reserved</strong>, regardless of capitalization. You can't create or rename a profile to use it.</li>
+</ul>
+<h3 id="choose-a-profile-for-a-command">Choose a profile for a command</h3>
+<p>Use the saved default profile and its default site:</p>
+<pre><code class="language-bash">twg jira workitem get ABC-1
+</code></pre>
+<p>Choose a site and let TWG select the profile for that site's organization:</p>
+<pre><code class="language-bash">twg jira workitem get ABC-1 --site personal-site
+</code></pre>
+<p>Choose both the site and the login:</p>
+<pre><code class="language-bash">twg jira workitem get ABC-1 --site personal-site --profile personal
+</code></pre>
+<ul>
+<li><code>--profile personal</code> keeps the command on that login. If the organization doesn't match or the account can't access the item, TWG returns an error without trying another login.</li>
+<li><code>--profile default</code> selects the saved default profile, whatever its name.</li>
+<li>Set <code>TWG_PROFILE=work</code> in your shell to select <code>work</code> across commands. A command-line <code>--profile personal</code> overrides it. Both selectors keep the chosen login even when you supply <code>--site</code>.</li>
+</ul>
+<p>For the full selection order, see <a href="/twg-cli/getting-started/how-authentication-works/#login-profiles">Login profiles</a>.</p>
+<h3 id="change-your-defaults">Change your defaults</h3>
+<ul>
+<li><strong>Default profile:</strong> Run <code>twg auth profile default work</code>.</li>
+<li><strong>Default site and matching profile:</strong> Run <code>twg setup default-site --site &lt;site&gt;</code>.</li>
+</ul>
+<p>Signing in again preserves the default. Choosing a profile for one command does not change the saved default.</p>
+<h3 id="update-or-remove-a-profile">Update or remove a profile</h3>
+<p>To replace a profile's saved login credentials, run:</p>
 <pre><code class="language-bash">twg login --profile work --force
 </code></pre>
-<p>Existing single-login installations keep working. A profile-writing operation imports their saved credentials without requiring browser sign-in. If the import lacks organization details, TWG verifies them when needed. An explicit re-login verifies the selected profile without depending on unrelated imports. Automatic selection and new-profile creation still need enough organization information to choose a login or reject a duplicate.</p>
+<p>To remove a profile and its credentials, run:</p>
+<pre><code class="language-bash">twg logout --profile work
+</code></pre>
+<h3 id="upgrade-from-a-single-login">Upgrade from a single login</h3>
+<p>Your existing login keeps working after you upgrade:</p>
+<ul>
+<li>When you run a command that writes profile data, TWG imports your saved credentials without requiring browser sign-in.</li>
+<li>If the imported login lacks organization details, TWG verifies them when needed.</li>
+<li>Signing in again with <code>--profile</code> verifies that profile independently of other imported logins.</li>
+<li>Automatic profile selection and new-profile creation need organization details to choose the right login or detect an existing profile for the same organization.</li>
+</ul>
 <h2 id="enable-experimental-encrypted-credential-storage">Enable experimental encrypted credential storage</h2>
 <p>TWG CLI can store encrypted credentials in <code>auth-storage/auth.db</code>. This experimental option keeps the root key separate: in the OS vault by default on macOS and Windows, or supplied through <code>TWG_AUTH_STORAGE_KEY</code> on any supported OS. This protects credentials from software that can read local files but cannot access the root key.</p>
 <table>
@@ -268,7 +304,7 @@ twg upkeep disable
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 2906a47da6b5 (2026-10-07T14:54:32+00:00).
+        Generated from atlassian/twg-cli 044c2709f1cd (2026-10-07T15:03:42+00:00).
       </footer>
     </main>
   </div>
