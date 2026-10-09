@@ -93,6 +93,7 @@
 </code></pre>
 <p>Doctor shows which login and credential store it uses. To check another login or site, add <code>--profile &lt;name&gt;</code> or <code>--site &lt;site&gt;</code>. <code>--profile default</code> checks the saved default, whatever its name.</p>
 <p>Run <code>twg auth profile list</code> to see available profiles. If no default is saved, choose one with <code>twg auth profile default &lt;name&gt;</code>.</p>
+<p>If <code>--profile</code> fails with <code>AUTH_MIGRATION_REQUIRED</code>, the login was saved before 1.3.6. Run <code>twg auth profile migrate</code> once, then retry. Commands without <code>--profile</code> keep using that login without migrating.</p>
 <p>If site selection fails or is ambiguous, select the intended profile and check its access:</p>
 <pre><code class="language-bash">twg access --site &lt;site&gt; --profile &lt;name&gt;
 </code></pre>
@@ -130,7 +131,7 @@ powershell -ExecutionPolicy Bypass -File twg-install.ps1
 <p>Review the details, provide an email if needed, complete reCAPTCHA, and submit the form.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 3e4ed874960c (2026-10-07T20:35:41+00:00).
+        Generated from atlassian/twg-cli 543bf02aded9 (2026-10-09T01:19:48+00:00).
       </footer>
     </main>
   </div>
