@@ -1,5 +1,8 @@
 # Support
 
+For the Markdown comment hang reported in issue #25, see the
+[verified workaround and reproduction notes](docs/jira-comment-memory-growth.md).
+
 Use GitHub Issues for public, non-sensitive TWG CLI feedback:
 
 - bugs
