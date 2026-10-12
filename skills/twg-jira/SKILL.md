@@ -63,7 +63,12 @@ consequential mutation.
   request types, and SLAs belong to JSM.
 - Search results are candidate anchors; use the native workitem read for final
   fields and status. Plain `get` avoids supplemental hydration; add
-  `--comments` and/or `--remote-links`, or `--full` for all fields plus both.
+  `--comments` and/or `--remote-links` when those enrichments are needed.
+- Omit `fields=*all`. When a named custom field is required, request that field
+  by id (`--field customfield_*`, `--fields`, or `fields` listing the id), not
+  via `fields=*all` or `--full`.
+- Default fields already include description, status, and comments. Add
+  `--comments` for the complete paginated comment history.
 - For "what should I pick next," query actual open Jira work or the requested
   board backlog. Do not rank from broad activity alone.
 - Read a set of workitems in one call: `jira workitem get`,
