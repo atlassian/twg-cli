@@ -13,7 +13,10 @@ Inspect live help for the exact command contract.
   URL. Plain `get` avoids supplemental Jira requests.
 - Add `--comments` for complete paginated comments or `--remote-links` for Jira
   remote links. Combine those two flags when both enrichments are needed.
-- Use `--full` by itself for all Jira issue fields, complete comments, and remote
+- Omit `fields=*all`. When a named custom field is required, request it with
+  `--field customfield_*` or `--fields`. Default fields already include
+  description, status, and comments.
+- Reserve `--full` for a read that needs every field plus comments and remote
   links. Do not combine `--full` with `--comments` or `--remote-links`.
 - Request only the extra fields needed for the answer.
 - Use typed context alongside the native read when relationships to documents,
@@ -28,6 +31,7 @@ twg jira workitem get <KEY> --fields customfield_12345,summary
 twg jira workitem get <KEY> --comments
 twg jira workitem get <KEY> --remote-links
 twg jira workitem get <KEY> --comments --remote-links
+# only when every field plus comments and remote links are required
 twg jira workitem get <KEY> --full
 ```
 
