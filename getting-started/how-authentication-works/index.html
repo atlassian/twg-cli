@@ -100,6 +100,8 @@
 <p>To authenticate as an admin, run:</p>
 <pre><code class="language-bash">twg admin auth login --email &lt;your-email&gt; --org &lt;your-org-id&gt;
 </code></pre>
+<p>For non-interactive calls, set <code>TWG_ADMIN_TOKEN</code> to your Admin API key. Admin commands use this key in memory instead of saved credentials. Pass <code>--org &lt;id-or-name&gt;</code> for organization-scoped commands; the injected key does not inherit the saved login's organization.</p>
+<p>The persistent admin login is stored in plaintext <code>admin-auth.conf</code> under the TWG config directory. It is independent of personal login profiles and encrypted storage. <code>twg admin auth status</code> reports the saved login and its path.</p>
 <h2 id="bitbucket">Bitbucket</h2>
 <p>Attach a Bitbucket token to your login profile with <code>twg setup bitbucket</code>.</p>
 <h2 id="login-profiles">Login profiles</h2>
@@ -172,7 +174,7 @@
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli ed00ff839c6b (2026-10-09T20:18:21+00:00).
+        Generated from atlassian/twg-cli c6ff1a1365fb (2026-10-14T01:40:33+00:00).
       </footer>
     </main>
   </div>

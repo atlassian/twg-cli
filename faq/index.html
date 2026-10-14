@@ -116,6 +116,51 @@ labeled <code>[Enriched]</code> in the help output.</p>
 <p>Teamwork Graph CLI respects your existing Atlassian permissions. It only surfaces data that the authenticated user is already authorised to see. No new access is granted by installing or using the CLI.</p>
 <h3 id="does-teamwork-graph-cli-support-oauth">Does Teamwork Graph CLI support OAuth?</h3>
 <p>Yes. OAuth 2.1 is the only supported authentication method, and interactive <code>twg login</code> uses OAuth by default. TWG CLI also supports delegated OAuth for embedding applications that own the credential lifecycle. Bitbucket is the one exception: it isn't covered by OAuth yet and requires a separate Bitbucket token.</p>
+<h3 id="do-bitbucket-commands-require-workspace-and-repo">Do Bitbucket commands require <code>--workspace</code> and <code>--repo</code>?</h3>
+<p>Commands that target a repository, including <code>twg bb prs mergeability</code>, require
+both a workspace and a repository to resolve. The flags can be omitted when
+another input provides that context. A PR number such as <code>42</code> identifies a PR
+within the selected repository.</p>
+<table>
+<thead>
+<tr>
+<th>Target input</th>
+<th>Workspace and repository source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--workspace my-workspace --repo my-repo</code></td>
+<td>Both values are explicit.</td>
+</tr>
+<tr>
+<td><code>--repo my-workspace/my-repo</code></td>
+<td>Both values come from the repository reference.</td>
+</tr>
+<tr>
+<td><code>--repo https://bitbucket.org/my-workspace/my-repo</code></td>
+<td>Both values come from the URL.</td>
+</tr>
+<tr>
+<td>Neither flag, inside a Bitbucket checkout</td>
+<td>The local CLI reads a Bitbucket Git remote, checking <code>origin</code> first, then the remaining remotes.</td>
+</tr>
+</tbody>
+</table>
+<p>For example, replace the workspace, repository, and PR number with your target:</p>
+<pre><code class="language-bash">twg bb prs mergeability 42 --repo my-workspace/my-repo
+</code></pre>
+<p>Use an explicit target in CI, scripts, and agent calls that might run outside the
+intended checkout. Login and <code>--site</code> do not select a default Bitbucket workspace.
+Workspace operations such as <code>twg bb workspace get</code> need only a workspace.</p>
+<p>For mergeability, Git detection currently runs only when both target flags are
+omitted. Passing a bare <code>--repo my-repo</code> alone does not fill in the workspace
+from Git; passing <code>--workspace my-workspace</code> alone does not fill in the repository.
+Use one of the complete targeting forms above.</p>
+<p>Missing required context produces a local validation error before the product
+API request. An HTTP 404 after context resolves may indicate a missing or
+inaccessible target, or an unavailable endpoint; it does not prove that the
+workspace itself is missing.</p>
 <h3 id="does-teamwork-graph-cli-only-work-with-agent-terminals">Does Teamwork Graph CLI only work with agent terminals?</h3>
 <p>No. Teamwork Graph CLI can be used by any AI agent or tool that can invoke a CLI. For example, agents that run commands behind the scenes — not just agent terminals — can use Teamwork Graph CLI.</p>
 <h3 id="when-using-confluence-via-the-twg-cli-which-models-are-recommended-for-whiteboard-and-database-generation">When using Confluence via the TWG CLI, which models are recommended for whiteboard and database generation?</h3>
@@ -131,7 +176,7 @@ labeled <code>[Enriched]</code> in the help output.</p>
 <p>For a detailed comparison and decision guide, see <a href="https://support.atlassian.com/organization-administration/docs/choosing-between-twg-cli-and-rovo-mcp/">Choosing between Teamwork Graph CLI and Rovo MCP</a>.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli ed00ff839c6b (2026-10-09T20:18:21+00:00).
+        Generated from atlassian/twg-cli c6ff1a1365fb (2026-10-14T01:40:33+00:00).
       </footer>
     </main>
   </div>
