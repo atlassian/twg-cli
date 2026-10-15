@@ -124,6 +124,7 @@
 <ul>
 <li><strong>List your logins:</strong> <code>twg auth profile list</code>.</li>
 <li><strong>Export the selected session:</strong> <code>twg env --export</code>.</li>
+<li><strong>Run a binary with the selected session:</strong> <code>twg env --profile work --exec -- python script.py</code>. TWG refreshes saved OAuth credentials when due before launch and passes effective access credentials, site, profile, and endpoint in the child environment. The binary must read the TWG variables to authenticate requests. Credentials remain a snapshot during the run; long-running tools can outlive their access token. Runtime credential overrides remain caller-managed. Refresh failure prevents launch. Arguments after <code>--</code> pass through literally; terminal streams and child exit codes are preserved. On POSIX, executable names or paths containing <code>=</code> are rejected with status 126; arguments may contain <code>=</code>.</li>
 <li><strong>Refresh all profiles:</strong> <code>twg auth refresh</code>. The <a href="/twg-cli/getting-started/configure-oauth/#oauth-upkeep-background-helper">upkeep helper</a> also maintains all profiles.</li>
 <li><strong>Refresh one profile:</strong> <code>twg auth refresh --profile &lt;name&gt;</code>.</li>
 </ul>
@@ -174,7 +175,7 @@
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 9e8870e19bd8 (2026-10-15T05:00:36+00:00).
+        Generated from atlassian/twg-cli aed480e95311 (2026-10-15T16:24:02+00:00).
       </footer>
     </main>
   </div>
