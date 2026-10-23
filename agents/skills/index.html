@@ -155,6 +155,12 @@ agent-specific locations as focused sibling skill directories:</p>
 </tr>
 </tbody>
 </table>
+<p>The CLI bundles <code>twg</code>, <code>twg-jira</code>, <code>twg-confluence</code>, and <code>twg-setup</code> with external
+wording for offline and first-run use. <code>twg skills refresh</code> fetches updates for
+saved authenticated profiles, including updated essentials and eligible workflow
+skills. It makes no anonymous catalog request. Without a login, the packaged
+baseline updates when the CLI is upgraded. Failed profile refreshes retain their
+last valid content; logout removes only that profile's grants.</p>
 <p>Your agent reads these automatically. No special prompt prefix is needed.</p>
 <h2 id="skill-and-command-discovery">Skill and command discovery</h2>
 <p>Agents already receive the installed top-level skill metadata. When the detailed
@@ -188,7 +194,7 @@ needed.</p>
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 762d3eec326d (2026-10-22T01:58:56+00:00).
+        Generated from atlassian/twg-cli 582844e651d5 (2026-10-23T04:15:59+00:00).
       </footer>
     </main>
   </div>
