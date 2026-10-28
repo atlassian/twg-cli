@@ -89,6 +89,19 @@
 <p>The public Teamwork Graph CLI changelog source is:</p>
 <p><a href="https://developer.atlassian.com/cloud/twg-cli/changelog.md">https://developer.atlassian.com/cloud/twg-cli/changelog.md</a></p>
 <p>This page publishes released sections of the root changelog and derives beta labels from public release manifests.</p>
+<h2 id="1-4-2-2026-10-27">1.4.2 — 2026-10-27</h2>
+<p><strong>Beta release:</strong> Available through the beta channel only; not yet generally available.</p>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>Confluence:</strong> Markdown content reads preserve links to embedded databases, whiteboards, and pages, including conversion details in <code>--section</code> reads.</li>
+<li><strong>Bitbucket:</strong> Repository detection accepts <code>ssh.bitbucket.org</code> remotes and SSH URLs with explicit ports, and skips unusable origins when another valid remote is available.</li>
+<li><strong>Site selection:</strong> <code>twg resolve</code> accepts cloud IDs as site selectors.</li>
+<li><strong>Skills:</strong> Project-only installation leaves global skills alone, and failed remote skill updates preserve the working local copy.</li>
+</ul>
+<h3 id="enhancements">Enhancements</h3>
+<ul>
+<li><strong>Installation:</strong> Experimental npm distribution is available for release validation; continue using the hosted installers for supported setup and updates.</li>
+</ul>
 <h2 id="1-4-1-2026-10-25">1.4.1 — 2026-10-25</h2>
 <p><strong>Beta release:</strong> Available through the beta channel only; not yet generally available.</p>
 <h3 id="new-features">New Features</h3>
@@ -96,7 +109,7 @@
 <li><strong>Responsibility activity:</strong> Use <code>--include-activity</code> and <code>--since</code> with <code>twg responsibility get</code>, and filter existing candidate groups with <code>--role</code>. Candidate output remains compatible and recorded owners are preserved.</li>
 <li><strong>Confluence groups:</strong> Run <code>twg confluence group get --group-id &lt;id&gt;</code> to retrieve group details.</li>
 </ul>
-<h3 id="bug-fixes">Bug Fixes</h3>
+<h3 id="bug-fixes-2">Bug Fixes</h3>
 <ul>
 <li><strong>macOS installation:</strong> Fix progress displays crashing with <code>EINVAL: invalid argument, kqueue</code> during authentication and the post-login health check. Use static progress status on all Bun platforms to avoid opening an extra terminal input reader.</li>
 <li><strong>Offline skill installation:</strong> Complete HTTP retries and fall back to embedded skills when the remote server is unreachable, instead of exiting before installation finishes.</li>
@@ -109,14 +122,14 @@
 <ul>
 <li><strong>Skill refresh:</strong> Run <code>twg skills refresh</code> to synchronize authenticated skills across saved profiles, with essential setup, core, Jira, and Confluence guidance available offline before login.</li>
 </ul>
-<h4 id="bug-fixes-2">Bug Fixes</h4>
+<h4 id="bug-fixes-3">Bug Fixes</h4>
 <ul>
 <li><strong>Skill installs and upgrades:</strong> Fix refreshes for project-only installs and prevent skill state from newer versions from blocking <code>twg upgrade</code>, while preserving unsupported agent entries, quarantined skills, and cached content when refresh is unavailable.</li>
 <li><strong>Confluence content:</strong> Resolve tiny links containing <code>-</code> or <code>_</code> correctly and cap permissions-list requests at the supported limit of 250, with clearer recovery guidance for unsupported formats and conflicting or incomplete updates.</li>
 <li><strong>Input errors:</strong> Report invalid Work and Projects inputs, missing Confluence sites, existing Jira-to-Confluence links, and disabled Code Search apps with specific error codes instead of generic execution failures.</li>
 <li><strong>Connection security:</strong> Reject TLS certificate chains containing compromised eMudhra intermediates and refresh trusted certificate authorities in standalone binaries.</li>
 </ul>
-<h4 id="enhancements">Enhancements</h4>
+<h4 id="enhancements-2">Enhancements</h4>
 <ul>
 <li><strong>Project date filters:</strong> <code>twg projects query</code> now accepts relative dates such as <code>7d</code>, <code>2w</code>, <code>1m</code>, and <code>1y</code> for <code>--updated-since</code>, <code>--created-since</code>, and <code>--since</code>.</li>
 </ul>
@@ -128,7 +141,7 @@
 <li><strong>Project highlights:</strong> <code>twg projects highlights query</code> is now available by default to read project risks and decisions, subject to your project permissions.</li>
 <li><strong>Code search:</strong> <code>twg search-code search</code> now includes repository names, code snippets, line numbers, and commands to read the matching revision; code-search commands also accept <code>--repo &lt;workspace&gt;/&lt;repo&gt;</code>.</li>
 </ul>
-<h3 id="bug-fixes-3">Bug Fixes</h3>
+<h3 id="bug-fixes-4">Bug Fixes</h3>
 <ul>
 <li><strong>Bitbucket token recovery:</strong> <code>twg doctor</code> and code-search connection diagnostics now recommend <code>twg setup bitbucket --force</code> for invalid or expired tokens instead of a token-generation link with an invalid scope.</li>
 <li><strong>Jira reads:</strong> Fix <code>twg jira workitem get</code> targeting the wrong site for issue ARIs, and reject batches containing issues from different Jira sites.</li>
@@ -137,7 +150,7 @@
 <li><strong>Confluence content:</strong> Preserve table footer rows when writing HTML, and retain more panels, status labels, emoji, and macro information when reading Markdown.</li>
 <li><strong>Reliability:</strong> Retry a transient organization-lookup DNS failure once, and preserve successfully retrieved subgraph nodes when other entity types cannot be read with OAuth.</li>
 </ul>
-<h3 id="enhancements-2">Enhancements</h3>
+<h3 id="enhancements-3">Enhancements</h3>
 <ul>
 <li><strong>Command discovery:</strong> <code>twg help-map --all</code> expands the full command map, while <code>twg help-map admin</code> expands administration commands from the compact default view.</li>
 <li><strong>Confluence agent output:</strong> <code>twg confluence content get -o json</code> inlines page bodies up to 24 KiB per page and 48 KiB per call, with larger bodies saved alongside a section index.</li>
@@ -154,13 +167,13 @@
 <li><strong>Integrations:</strong> Run <code>twg integrations list</code> to list available integrations.</li>
 <li><strong>Confluence Remix:</strong> Create and edit infographics and interactive apps with <code>twg confluence remix infographic create</code>, <code>twg confluence remix infographic edit</code>, <code>twg confluence remix maui create</code>, and <code>twg confluence remix maui edit</code>.</li>
 </ul>
-<h3 id="bug-fixes-4">Bug Fixes</h3>
+<h3 id="bug-fixes-5">Bug Fixes</h3>
 <ul>
 <li><strong>Confluence links:</strong> Fix broken page URLs in <code>twg docs query</code> and <code>twg docs get</code>.</li>
 <li><strong>Code review discovery:</strong> <code>twg help discover-skills</code> now selects <code>twg-code-review</code> only when you name it explicitly, preserving repository review workflows for other review requests.</li>
 <li><strong>Windows updates:</strong> Fix <code>twg update</code> and <code>twg upgrade</code> to run the verified silent installer for current-user MSI installations and keep upgrade notices aligned with the available MSI version.</li>
 </ul>
-<h3 id="enhancements-3">Enhancements</h3>
+<h3 id="enhancements-4">Enhancements</h3>
 <ul>
 <li><strong>Upgrade notifications:</strong> Desktop upgrade notifications now identify Atlassian Teamwork Graph CLI and scheduled upkeep, with <code>twg upkeep disable</code> to turn off scheduled upkeep.</li>
 </ul>
@@ -177,7 +190,7 @@
 <li><strong>Claude Code transcripts:</strong> Run <code>twg session-transcript upload --agent claude-code</code> to upload the transcript named in a Claude Code SessionEnd payload. The previous <code>claude</code> agent name remains accepted.</li>
 <li><strong>Login migration:</strong> Run <code>twg auth profile migrate --yes</code> to move older saved logins into profile storage while retaining their names; omit <code>--yes</code> to review the confirmation prompt.</li>
 </ul>
-<h3 id="bug-fixes-5">Bug Fixes</h3>
+<h3 id="bug-fixes-6">Bug Fixes</h3>
 <ul>
 <li><strong>Deployment history:</strong> Fix <code>twg bitbucket deployment history query</code> returning HTTP 404, and apply its documented status, pipeline, and date filters.</li>
 <li><strong>Jira team assignments:</strong> Fix <code>twg jira workitem update --team</code> rejecting valid Team UUIDs and ARIs when Jira does not enumerate selectable teams.</li>
@@ -189,7 +202,7 @@
 <li><strong>Terminal readability:</strong> Render informational text using the terminal's foreground color.</li>
 <li><strong>Installer links:</strong> Refresh legacy Statlas installer aliases alongside the canonical macOS/Linux and Windows installers so existing installation links stay current.</li>
 </ul>
-<h3 id="enhancements-4">Enhancements</h3>
+<h3 id="enhancements-5">Enhancements</h3>
 <ul>
 <li><strong>Command planning:</strong> <code>twg help describe &quot;jira workitem get&quot;</code> now includes recommended output views and summaries; compact descriptions also identify write access, paid command tiers, and paid options.</li>
 <li><strong>Error recovery:</strong> Improve ambiguous-person resolution suggestions and pull-request error guidance with runnable CLI commands and correctly named flags.</li>
@@ -211,12 +224,12 @@
 <li><strong>Bitbucket deployment history:</strong> Use <code>twg bitbucket deployment history query --environment &lt;uuid&gt;</code> to list deployment attempts for one environment, with status and date filters.</li>
 <li><strong>User memory:</strong> Use <code>twg memory create</code>, <code>get</code>, <code>update</code>, <code>delete</code>, and <code>search user-memory</code> in public builds, with <code>--site</code> to select a site.</li>
 </ul>
-<h3 id="bug-fixes-6">Bug Fixes</h3>
+<h3 id="bug-fixes-7">Bug Fixes</h3>
 <ul>
 <li><strong>Jira updates:</strong> Fix estimate updates returning empty results and <code>twg jira workitem update --type</code> reporting success without changing the work item type.</li>
 <li><strong>Subgraph exports:</strong> Export large subgraphs as JSON, JSONL, text, or GEXF without hitting the limits intended for ASCII graphs.</li>
 </ul>
-<h3 id="enhancements-5">Enhancements</h3>
+<h3 id="enhancements-6">Enhancements</h3>
 <ul>
 <li><strong><a href="https://developer.atlassian.com/cloud/twg-cli/getting-started/how-authentication-works/#login-profiles">Multi-profile login</a>:</strong> Create separate organization/environment OAuth or API-token logins with <code>twg login --new-profile</code>, select one with <code>--profile</code> (<code>-p</code>) or <code>TWG_PROFILE</code>, or let <code>--site</code> choose the matching profile; existing logins remain supported. Replace <code>twg env auth</code>, global <code>--env</code>, <code>--stg</code>, and <code>TWG_STG</code> with profile selection (<code>--env</code> remains on login), and replace the former meetings/videos <code>-p</code> with <code>--since</code> and code-search <code>-p</code> with <code>--app</code>. Logout now removes the selected profile and credentials, and rejects <code>--keep-keychain</code>, <code>--keep-file</code>, and <code>--bitbucket</code>; see <a href="https://developer.atlassian.com/cloud/twg-cli/getting-started/configure-oauth/#manage-login-profiles">Manage login profiles</a> for profile management.</li>
 </ul>
@@ -233,7 +246,7 @@
 <li><strong>Enriched tools:</strong> Add gated tool entries for <code>twg pull-requests get</code>, <code>twg pull-requests query</code>, <code>twg pull-requests search</code>, <code>twg pr-tree</code>, <code>twg work query</code>, and <code>twg workitem-tree</code>.</li>
 <li><strong>Jira batches:</strong> Keep failed inputs in ordered Jira work item batch results and return a distinct partial-results exit code for mixed or failed batches.</li>
 </ul>
-<h3 id="bug-fixes-7">Bug Fixes</h3>
+<h3 id="bug-fixes-8">Bug Fixes</h3>
 <ul>
 <li><strong>Site and setup flows:</strong> Resolve legacy Jira Cloud and custom-domain sites more reliably across commands and login, and restart Bitbucket token setup automatically when the saved token is invalid or expired.</li>
 <li><strong>Bitbucket pull requests:</strong> Accept account IDs and UUIDs in author filters, and fix merged-date filtering.</li>
@@ -241,7 +254,7 @@
 <li><strong>Identity lookup:</strong> Match accented and unaccented person names in user-scoped commands.</li>
 <li><strong>Work query:</strong> Report unknown PR description completeness as <code>descriptionTruncated: null</code> in full hydration instead of marking upstream excerpts as complete.</li>
 </ul>
-<h3 id="enhancements-6">Enhancements</h3>
+<h3 id="enhancements-7">Enhancements</h3>
 <ul>
 <li><strong>Install and update:</strong> Run macOS package upgrades and Windows MSI installs as current-user silent installs where possible, keep package-version notices aligned, and avoid blocking users on versions that are not available for their install source.</li>
 <li><strong>Performance:</strong> Speed up Bitbucket merged pull request lookups by overlapping independent requests while preserving existing result coverage.</li>
@@ -258,12 +271,12 @@
 <li><strong>Project highlights and PR windows:</strong> Read project risks and decisions with <code>twg projects highlights query</code>, and bound PR merge-date queries with <code>--merged-before</code>.</li>
 <li><strong>Pipeline targets:</strong> Use branch, tag, commit, custom pipeline, variable, and <code>--open</code> options consistently across <code>twg bb pipeline run</code> and <code>trigger</code>.</li>
 </ul>
-<h3 id="bug-fixes-8">Bug Fixes</h3>
+<h3 id="bug-fixes-9">Bug Fixes</h3>
 <ul>
 <li><strong>Search and result coverage:</strong> Correct combined goal and project filters, incomplete Bitbucket lists, direct-report rosters, collaborator counts, and focus-area tag reads on large sites; retain pagination cursors and partial-result diagnostics in agent output.</li>
 <li><strong>Dates and command reliability:</strong> Reject impossible <code>work query</code> dates, accept year-based relative windows, stop queued reads after interruption, and prevent background CLI processes from stealing Windows focus.</li>
 </ul>
-<h3 id="enhancements-7">Enhancements</h3>
+<h3 id="enhancements-8">Enhancements</h3>
 <ul>
 <li><strong>Readable agent output:</strong> Keep requested Jira, Bitbucket, and code-search details in compact results, preserve explicit nulls and empty lists, and save large Confluence bodies as readable local files referenced by <code>data.body.outputFile</code>.</li>
 <li><strong>Organization checks:</strong> Retry temporary connection failures while keeping access blocked until verification succeeds.</li>
@@ -292,7 +305,7 @@
 <li><strong>Plain terminal prompts:</strong> Add <code>TWG_PLAIN_TUI</code> for line prompts, numbered menus, and static progress messages in terminals where interactive controls are unreliable.</li>
 <li><strong>Pull request reviewers:</strong> Add <code>--reviewer-account-id</code> and <code>--reviewer-uuid</code> to <code>twg bb pull-requests create</code> so reviewer identifier kinds are explicit.</li>
 </ul>
-<h3 id="bug-fixes-9">Bug Fixes</h3>
+<h3 id="bug-fixes-10">Bug Fixes</h3>
 <ul>
 <li><strong>Bitbucket token setup:</strong> Fix <code>twg setup bitbucket</code> incorrectly skipping token setup for accounts with Bitbucket access.</li>
 <li><strong>Pull-request diagnostics:</strong> Preserve partial-result diagnostics for full pull-request hydration, including query and review failure causes.</li>
@@ -311,7 +324,7 @@
 <li><strong>PR tree filters:</strong> Fix <code>twg pr-tree</code> merged-date filtering across hierarchy strategies and bound selected-account requests for large organizations.</li>
 <li><strong>Document batches:</strong> Avoid repeating the same document activity requests for each ID in a <code>docs get</code> batch.</li>
 </ul>
-<h3 id="enhancements-8">Enhancements</h3>
+<h3 id="enhancements-9">Enhancements</h3>
 <ul>
 <li><strong>Offline capabilities:</strong> Keep <code>twg capabilities</code> offline without scheduling background update checks.</li>
 <li><strong>GitHub code-search diagnostics:</strong> Explain SAML SSO or private-repository access issues and direct users to reconnect GitHub from Atlassian connected-app settings.</li>
@@ -374,7 +387,7 @@
 Results retain discovered items when full details are unavailable and distinguish incomplete coverage from empty results for each activity and section. Detailed results include full comment text and parent context, plus pull-request repository information and descriptions.</p>
 </li>
 </ul>
-<h3 id="bug-fixes-10">Bug Fixes</h3>
+<h3 id="bug-fixes-11">Bug Fixes</h3>
 <ul>
 <li>
 <p><strong>Bitbucket token setup:</strong> Fix <code>twg setup bitbucket</code> incorrectly skipping token setup for accounts with Bitbucket access.</p>
@@ -425,7 +438,7 @@ Results retain discovered items when full details are unavailable and distinguis
 <p><strong>Upgrade skill refresh:</strong> Fix <code>twg upgrade</code> failing to restore available skills after their availability changes, even when scheduled upkeep is disabled.</p>
 </li>
 </ul>
-<h3 id="enhancements-9">Enhancements</h3>
+<h3 id="enhancements-10">Enhancements</h3>
 <ul>
 <li><strong>Offline capabilities:</strong> Keep <code>twg capabilities</code> offline without scheduling background update checks.</li>
 <li><strong>GitHub code-search access diagnostics:</strong> Explain when <code>twg search-code search</code> results may be incomplete because GitHub requires SAML SSO authorization or private-repository permissions. Direct users to their Atlassian connected-app settings to reconnect GitHub, and omit the generic no-results message when an access warning is present.</li>
@@ -440,14 +453,14 @@ Results retain discovered items when full details are unavailable and distinguis
 <li><strong>Project comments:</strong> Read and create Atlas project comments with <code>twg projects comments query</code> and <code>twg projects comments create</code>.</li>
 <li><strong>Terminal completion:</strong> Complete shell commands using the local or cached remote tool catalog.</li>
 </ul>
-<h3 id="bug-fixes-11">Bug Fixes</h3>
+<h3 id="bug-fixes-12">Bug Fixes</h3>
 <ul>
 <li><strong>Site targeting:</strong> Make <code>twg access</code> list sites with confirmed account activity, block targets outside the saved default site's organization, reject Assets workspace conflicts, and check API-token site access where enabled.</li>
 <li><strong>Work completeness:</strong> Prevent silent truncation in large work queries and related context reads, continue through permission-filtered pull-request pages, and preserve partial results with failure details.</li>
 <li><strong>Confluence content:</strong> Restore body text in agent evidence and <code>--body-only</code> output, and preserve inline comments, nested formatting, links, and whitespace during HTML conversion.</li>
 <li><strong>macOS login:</strong> Fix installer OAuth login failures when the terminal cannot attach the wait spinner.</li>
 </ul>
-<h3 id="enhancements-10">Enhancements</h3>
+<h3 id="enhancements-11">Enhancements</h3>
 <ul>
 <li><strong>Installer integrity:</strong> Publish SHA-256 hashes for version-scoped public installer scripts.</li>
 </ul>
@@ -462,7 +475,7 @@ Results retain discovered items when full details are unavailable and distinguis
 <li><strong>Work queries:</strong> Query work for multiple users with repeatable <code>--identifier</code> options, with third-party identities and linked same-email identities supported where enabled.</li>
 <li><strong>Manager discovery:</strong> Find managers using third-party identities where enabled, while retaining existing Atlassian account inputs.</li>
 </ul>
-<h3 id="bug-fixes-12">Bug Fixes</h3>
+<h3 id="bug-fixes-13">Bug Fixes</h3>
 <ul>
 <li><strong>Command completion:</strong> Fix foreground CLI commands that remain running after their work completes.</li>
 </ul>
@@ -478,7 +491,7 @@ Results retain discovered items when full details are unavailable and distinguis
 <li><strong>Assets discovery:</strong> Accept <code>twg assets schema query</code> as an alias for schema listing and clarify the schema-ID discovery flow in command help.</li>
 <li><strong>Code-review workflow:</strong> Include the public <code>twg-code-review</code> skill and its artifact helper in public builds.</li>
 </ul>
-<h3 id="bug-fixes-13">Bug Fixes</h3>
+<h3 id="bug-fixes-14">Bug Fixes</h3>
 <ul>
 <li><strong>Confluence content reads:</strong> Read labels from folders, whiteboards, databases, and other supported content types; keep pagination cursors out of prose; and materialize large Maui source files instead of printing them inline by default.</li>
 <li><strong>Confluence HTML conversion:</strong> Prevent duplicate formatting marks while preserving repeatable annotations and innermost formatting attributes.</li>
@@ -487,7 +500,7 @@ Results retain discovered items when full details are unavailable and distinguis
 <li><strong>Administration output:</strong> Show complete user details in <code>twg admin user list</code> text output and keep unavailable Confluence content-status listings hidden from SDK hosts that cannot serve them.</li>
 <li><strong>Uninstall targeting:</strong> Prevent Linux uninstall planning from treating an unrelated <code>/usr/local/bin/twg</code> as a macOS package installation.</li>
 </ul>
-<h3 id="enhancements-11">Enhancements</h3>
+<h3 id="enhancements-12">Enhancements</h3>
 <ul>
 <li><strong>HTTP transport:</strong> Move source and standalone builds to Bun 1.4.1 with native HTTP/2 fetch and HTTP/1.1 fallback, replacing the custom pooled HTTP/2 transport for more reliable requests.</li>
 <li><strong>Work-tree queries:</strong> Report the effective activity window and default activity counts to the last 30 days to avoid accidental unbounded graph queries.</li>
@@ -508,13 +521,13 @@ Results retain discovered items when full details are unavailable and distinguis
 <li><strong>Confluence workflows:</strong> Manage approvals and content status, list available statuses, check content permissions, fetch AI summaries, inspect date-bounded analytics with agent viewers, and update whiteboards or databases using exact context files.</li>
 <li><strong>CLI output, search, and authentication:</strong> Add bounded Jira field projection, evidence metadata, direct JSON/JSONL output control, billed usage totals, Feedback App filters by JPD idea or space, feature-gated Rovo deep search in public builds, third-party identity fallback, and encrypted credential storage with bidirectional migration, gated raw inspection, and connectivity diagnostics.</li>
 </ul>
-<h3 id="bug-fixes-14">Bug Fixes</h3>
+<h3 id="bug-fixes-15">Bug Fixes</h3>
 <ul>
 <li><strong>Queries, mutations, and structured output:</strong> Resolve Bitbucket repository slugs and named-person <code>pr-tree</code> roots, Jira parents, Rovo Slack results, inferred projects, mixed-case cloud IDs, and linked third-party identities correctly; repair meetings queries and limits; reliably deliver Jira transition comments; return actionable Confluence edit and Remix errors; advertise the actual <code>work-tree</code> JSON fields; and emit nested primary collections correctly in JSONL.</li>
 <li><strong>Authentication, installation, connectivity, and embedded execution:</strong> Reuse stored OAuth for <code>twg login --no-verify</code> and remote help, accept server catalog grammar, skip installer login in headless environments, avoid unreliable pooled update checks, prevent captured Windows version output from hanging, isolate timed-out just-bash executions, make credential migration race-safe, preserve Linux scheduler definitions and data when removal fails, remove complete Windows and copied skill installations, and classify transport handshake failures as retryable network errors.</li>
 <li><strong>Help and billing accuracy:</strong> Stop advertising unsupported pull-request, Jira, and Assets options, and correct Assets, responsibility, user, and people billing attribution and feature gating.</li>
 </ul>
-<h3 id="enhancements-12">Enhancements</h3>
+<h3 id="enhancements-13">Enhancements</h3>
 <ul>
 <li><strong>Coverage and enriched metadata:</strong> Report Confluence search and Jira hydration coverage, expose embed and Smart Link destination URLs, show whether a Confluence space has instructions, label paid command paths consistently, include field-level usage details and totals in billing metadata, and send only the current <code>Atl-Ubp-*</code> billing headers.</li>
 <li><strong>Updates:</strong> Show clearer transfer progress and recover more reliably from stalled or failed downloads.</li>
@@ -531,13 +544,13 @@ Results retain discovered items when full details are unavailable and distinguis
 <li><strong>Installers and local management:</strong> Add signed Windows MSI installers and explicit <code>twg uninstall</code> selectors for all, direct, and macOS package installations.</li>
 <li><strong>CLI vault:</strong> Add opt-in encrypted credential storage with OS-keychain-backed keys and recovery and administration commands, while preserving existing <code>auth.conf</code> installations.</li>
 </ul>
-<h3 id="bug-fixes-15">Bug Fixes</h3>
+<h3 id="bug-fixes-16">Bug Fixes</h3>
 <ul>
 <li><strong>Queries and targeting:</strong> Fix Confluence space search, dummy-cloud routing, natural-language organization targeting, and startup when <code>SharedArrayBuffer</code> is unavailable.</li>
 <li><strong>Partial results:</strong> Preserve usable <code>work query</code> and <code>docs query</code> rows when later GraphStore pages fail, expose diagnostics, and return exit code 3 for incomplete results.</li>
 <li><strong>Structured output and Confluence access:</strong> Fix JSON/JSONL error envelopes, permission normalization, and output-file truncation warnings.</li>
 </ul>
-<h3 id="enhancements-13">Enhancements</h3>
+<h3 id="enhancements-14">Enhancements</h3>
 <ul>
 <li><strong>Authoring guidance:</strong> Clarify Confluence layout, access, and visual-aid guidance for more predictable page creation and updates.</li>
 </ul>
@@ -557,7 +570,7 @@ Results retain discovered items when full details are unavailable and distinguis
 <li><strong>Pipeline filtering:</strong> Add <code>--pattern</code> to Bitbucket pipeline query and latest-failure commands for filtering custom pipeline selectors.</li>
 <li><strong>Rovo connector authorization:</strong> Expose the validated connector <code>authorizationUrl</code> from <code>twg rovo auth &lt;app&gt; --output json</code> without opening a browser.</li>
 </ul>
-<h3 id="bug-fixes-16">Bug Fixes</h3>
+<h3 id="bug-fixes-17">Bug Fixes</h3>
 <ul>
 <li><strong>Confluence content fidelity:</strong> Preserve table widths, image dimensions, breakout widths, inline media types, smart links, attachment chips, panel tables, and emoji normalization through ADF and HTML conversion.</li>
 <li><strong>Confluence routing and creation:</strong> Keep URL-based commands on the tenant embedded in the URL, fix synced-folder creation, and return correct Confluence page URLs from <code>docs query</code>.</li>
@@ -571,7 +584,7 @@ Results retain discovered items when full details are unavailable and distinguis
 <li><strong>Command correctness:</strong> Fix connector-filtered Rovo search, Bitbucket merge waiting, Jira Service Management approval completion output and query aliases, and <code>user-search --name me</code> resolution.</li>
 <li><strong>Runtime reliability:</strong> Stop detached telemetry workers after their parent exits so they cannot survive indefinitely and consume CPU.</li>
 </ul>
-<h3 id="enhancements-14">Enhancements</h3>
+<h3 id="enhancements-15">Enhancements</h3>
 <ul>
 <li><strong>Confluence comments:</strong> Move comment commands to cursor-based APIs with <code>ok</code>, <code>comment</code> or <code>comments</code>, <code>nextCursor</code>, failure guidance, optimistic <code>--expected-version</code>, complete filters, the <code>md</code> body-format alias, and optional reply expansion through <code>--include-replies true</code>.</li>
 <li><strong>Work detail levels:</strong> Add explicit <code>none</code>, <code>summary</code>, and <code>full</code> detail levels and load selected entity details from supported services.</li>
@@ -594,7 +607,7 @@ Results retain discovered items when full details are unavailable and distinguis
 <li>Add dedicated Jira Service Management Help Center query commands, replacing the former combined Help Center query command.</li>
 <li>Add YAML output with <code>--output yaml</code> or <code>--output yml</code>. YAML uses the same response envelope as JSON and supports YAML output-summary files. Follow-mode commands buffer their output before emitting YAML.</li>
 </ul>
-<h3 id="bug-fixes-17">Bug fixes</h3>
+<h3 id="bug-fixes-18">Bug fixes</h3>
 <ul>
 <li>Confluence HTML conversion now handles inline code and nested code blocks correctly, preserves media attribution metadata, and renders infographic media at the intended width.</li>
 <li>Confluence public-link requests now reject unsupported content types with a clear message instead of attempting a page-only operation.</li>
@@ -613,7 +626,7 @@ Results retain discovered items when full details are unavailable and distinguis
 <li>Invalid draft requests for unsupported Confluence content types now return a clear error.</li>
 <li>Time-bounded relationship queries now return correctly ordered results and clearer errors when a pattern is unsupported.</li>
 </ul>
-<h3 id="enhancements-15">Enhancements</h3>
+<h3 id="enhancements-16">Enhancements</h3>
 <ul>
 <li>Fixed-value options now accept case and separator variants, such as <code>at-risk</code>, <code>AT_RISK</code>, and <code>at_risk</code>.</li>
 <li>Confluence guidance now makes it clearer when to create a live doc versus a classic page.</li>
@@ -1655,7 +1668,7 @@ behavior.</p>
 <p>Please use the latest stable installer for supported setup and update flows.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 98dd29cd5c3f (2026-10-28T01:37:16+00:00).
+        Generated from atlassian/twg-cli c08af3b8eeb2 (2026-10-28T05:25:34+00:00).
       </footer>
     </main>
   </div>
