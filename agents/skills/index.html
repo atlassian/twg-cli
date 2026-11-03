@@ -161,6 +161,8 @@ saved authenticated profiles, including updated essentials and eligible workflow
 skills. It makes no anonymous catalog request. Without a login, the packaged
 baseline updates when the CLI is upgraded. Failed profile refreshes retain their
 last valid content; logout removes only that profile's grants.</p>
+<p>Before fetching skills, TWG refreshes saved OAuth credentials that are due for
+renewal. A failed profile refresh does not stop other profiles from syncing.</p>
 <p>Your agent reads these automatically. No special prompt prefix is needed.</p>
 <h2 id="skill-and-command-discovery">Skill and command discovery</h2>
 <p>Agents already receive the installed top-level skill metadata. When the detailed
@@ -194,7 +196,7 @@ needed.</p>
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli e21f408ade65 (2026-10-28T22:29:56+00:00).
+        Generated from atlassian/twg-cli 3aea2d6bded4 (2026-11-03T01:04:08+00:00).
       </footer>
     </main>
   </div>

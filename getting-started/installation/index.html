@@ -95,6 +95,12 @@
 <li>To use TWG CLI through an agent after CLI setup, you need an AI coding agent installed on your computer.</li>
 </ul>
 <p>The TWG CLI binary does not require a separate runtime (for example, no Node.js).</p>
+<p>For coding-agent calls, configure the host to set <code>TWG_AGENT_DEFAULTS=1</code> or use
+<code>TWG_AGENT_DEFAULTS=1 twg &lt;command&gt;</code>. This enables agent output defaults, compact
+summaries, and file-backed large results. If the host blocks environment
+assignments, pass <code>--mode agent</code> with explicit output flags. Native
+agent detection identifies the caller only. Ordinary terminal calls retain
+their requested output; <code>--mode user</code> overrides the environment opt-in.</p>
 <h3 id="step-1-install-twg-cli">Step 1: Install TWG CLI</h3>
 <h4 id="macos-and-linux">macOS and Linux</h4>
 <p>Recommended:</p>
@@ -271,7 +277,7 @@ twg jira --help
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli e21f408ade65 (2026-10-28T22:29:56+00:00).
+        Generated from atlassian/twg-cli 3aea2d6bded4 (2026-11-03T01:04:08+00:00).
       </footer>
     </main>
   </div>
