@@ -47,5 +47,11 @@ Before a create or update:
 For links, resolve both endpoints and discover the supported link type before
 writing. For comments and descriptions, follow `rich-content.md`.
 
+`twg jira workitem comment create` adds a top-level comment only. It cannot
+reply inside an existing comment thread. When answering a specific comment,
+start the new comment with a link to it
+(`<issue URL>?focusedCommentId=<commentId>`) and mention its author. Get the
+comment ID from `twg jira workitem comment query`.
+
 Do not combine unrelated field, transition, link, and comment changes in one
 opaque operation. Keep each result independently verifiable.
