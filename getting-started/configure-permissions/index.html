@@ -97,7 +97,7 @@
 </ul>
 <p>By default, <strong>Allow all permissions by default</strong> is on. In this mode, TWG CLI can request all current OAuth permissions shown in Atlassian Administration, and new TWG CLI permissions added later are allowed automatically.</p>
 <p>To manage permissions individually, turn <strong>Allow all permissions by default</strong> off. Each category then opens a side panel where you can select all permissions in that category, clear all permissions, or choose individual permissions.</p>
-<p>Permissions apply to OAuth 2.1, which is the only authentication method TWG CLI supports, except for Bitbucket commands.</p>
+<p>These settings apply to personal OAuth 2.1 sign-in. Bitbucket commands use a separate token, and admin commands use an Atlassian Admin API key; these credentials aren't controlled by the OAuth permission settings. See <a href="/twg-cli/getting-started/how-authentication-works/">How authentication works</a>.</p>
 <aside class="dac-panel dac-panel-warning">
 <div class="dac-panel-label">Warning</div>
 <p><strong>Use write and delete access with caution.</strong> When write and delete permissions are enabled, users can create, edit, manage, or delete objects in your connected apps - such as Jira work items and Confluence pages - using the CLI. Only enable the permissions your organization genuinely needs.</p>
@@ -123,7 +123,7 @@
 </ul>
 <p>Revoking sessions is recommended when you remove permissions or clear a permission category.</p>
 <h2 id="server-side-enforcement">Server-side enforcement</h2>
-<p>Permissions are enforced server-side by Atlassian. This means they can't be bypassed by modifying the CLI binary or local config. When a command is sent, Atlassian checks the permissions configured for your organization before returning any data or performing any action. If TWG CLI isn't allowed to request the required permission, the command is rejected.</p>
+<p>OAuth permissions are enforced server-side by Atlassian, alongside the user's existing product permissions. Modifying the CLI binary or local config can't grant additional access. Permission changes can leave existing sessions usable until re-authentication; choose <strong>Save and revoke sessions</strong> when you need those sessions to use the updated permissions.</p>
 <h2 id="ip-and-location-allowlists">IP and location allowlists</h2>
 <p>IP and location allowlists configured in your Atlassian organization also apply to CLI requests. If a request originates from a blocked IP address, it's rejected regardless of the user's permissions.</p>
 <h2 id="diagnose-a-blocked-command">Diagnose a blocked command</h2>
@@ -140,7 +140,7 @@
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 41b30e80ae61 (2026-11-06T18:35:32+00:00).
+        Generated from atlassian/twg-cli f94b23a1ca8d (2026-11-09T18:09:12+00:00).
       </footer>
     </main>
   </div>

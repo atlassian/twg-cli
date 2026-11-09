@@ -104,7 +104,7 @@
 <div class="dac-panel-label">Warning</div>
 <p><strong>Use write and delete access with caution.</strong> When write and delete permissions are enabled, users can create, edit, manage, or delete objects in your connected apps - such as Jira work items and Confluence pages - using the CLI. Only enable the permissions your organization genuinely needs.</p>
 </aside>
-<p>Use permissions to control what TWG CLI can do across your connected apps and tools. These permissions apply to OAuth 2.1, which is the only authentication method TWG CLI supports, except for Bitbucket commands.</p>
+<p>Use permissions to control what TWG CLI can do across your connected apps and tools through personal OAuth 2.1 sign-in. Bitbucket tokens and Atlassian Admin API keys aren't controlled by these OAuth permission settings.</p>
 <p>For the full procedure and how enforcement works, see <a href="/twg-cli/getting-started/configure-permissions/">Configure TWG CLI permissions</a>.</p>
 <h2 id="revoke-active-sessions-after-changes">Revoke active sessions after changes</h2>
 <p>When you save permission changes, Atlassian Administration asks whether to revoke active TWG CLI sessions:</p>
@@ -115,7 +115,7 @@
 <p>Revoking sessions is the fastest way to make permission reductions take effect for active users.</p>
 <h2 id="authentication-posture">Authentication posture</h2>
 <p>Each user authenticates with OAuth 2.1 during setup. Authentication happens at the user level, while organization settings control the OAuth permissions TWG CLI is allowed to request.</p>
-<p>Bitbucket is the only exception to OAuth support. Bitbucket commands require a separate Bitbucket token and aren't controlled by these OAuth permission settings.</p>
+<p>Bitbucket commands require a separate Bitbucket token, and admin commands use an Atlassian Admin API key. Neither is controlled by these OAuth permission settings. See <a href="/twg-cli/getting-started/how-authentication-works/">How authentication works</a>.</p>
 <h2 id="how-twg-cli-shows-up-in-audit-logs">How TWG CLI shows up in audit logs</h2>
 <p>TWG CLI actions are visible in Atlassian audit logs. Go to <strong>Atlassian Administration</strong>, then <strong>Insights</strong>, then <strong>Audit log</strong>. The captured event details include the following fields:</p>
 <ul>
@@ -131,7 +131,7 @@
 <li>Whether the command was manually interrupted (for example, with Ctrl-C)</li>
 <li>Trace ID for debugging</li>
 </ul>
-<p>Any command run by a user who's logged in sends an event to the audit log. Audit logs are organized in Atlassian Administration by the user's org ID. You can filter logs by:</p>
+<p>Command logging requires authentication, a selected site, and logging enabled. Delivery is best effort, so some invocations may be missing. Logs appear under the user's organization in Atlassian Administration. Filter by:</p>
 <ul>
 <li><strong>Activity</strong> dropdown — select <strong>Invoked TWG CLI command</strong> to view all TWG CLI logs.</li>
 <li><strong>Command name</strong> (such as <code>jira workitem get</code>).</li>
@@ -148,7 +148,7 @@
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 41b30e80ae61 (2026-11-06T18:35:32+00:00).
+        Generated from atlassian/twg-cli f94b23a1ca8d (2026-11-09T18:09:12+00:00).
       </footer>
     </main>
   </div>

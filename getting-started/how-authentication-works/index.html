@@ -90,7 +90,7 @@
 <p>Personal sign-in uses OAuth 2.1. Bitbucket commands require a separate token, and admin commands use an organization-scoped API key.</p>
 <aside class="dac-panel dac-panel-warning">
 <div class="dac-panel-label">Warning</div>
-<p>TWG CLI never asks you to paste or share an authentication token in a prompt, chat, or conversation. If an agent or tool asks for one, don't share it. Enter tokens only through the secure terminal prompts provided by TWG CLI.</p>
+<p>Never share tokens in AI chats. During interactive setup, use TWG CLI's secure terminal prompt or confirm its clipboard read.</p>
 </aside>
 <h2 id="oauth-2-1">OAuth 2.1</h2>
 <p>When you run <code>twg login</code>, TWG CLI offers to open a browser where you sign in to Atlassian and grant access. You can also open the printed verification URL yourself. Your credentials are saved locally and refreshed automatically, so you usually won't need to sign in again.</p>
@@ -132,7 +132,7 @@
 <h2 id="permissions-are-always-respected">Permissions are always respected</h2>
 <p>TWG CLI can read or modify only the Atlassian data your account already has access to. Authentication does not grant additional permissions.</p>
 <h2 id="token-lifecycle">Token lifecycle</h2>
-<p>OAuth access tokens expire after 8 hours. TWG CLI refreshes them as needed, but an agent sandbox may block refresh. <code>twg setup</code> enables the <a href="/twg-cli/getting-started/configure-oauth/#oauth-upkeep-background-helper">upkeep helper</a> to refresh credentials outside the sandbox. You can also enable it with <code>twg upkeep enable</code>. After 30 days without use, the refresh token expires and TWG CLI asks you to sign in again.</p>
+<p>TWG CLI refreshes OAuth tokens before their server-defined expiry. Agent sandboxes may block refresh. <code>twg setup</code> enables the <a href="/twg-cli/getting-started/configure-oauth/#oauth-upkeep-background-helper">upkeep helper</a> to refresh credentials outside the sandbox. You can also enable it with <code>twg upkeep enable</code>. If your refresh token expires or is revoked, sign in again.</p>
 <p>You can re-authenticate at any time by running:</p>
 <pre><code class="language-bash">twg login --force
 </code></pre>
@@ -175,7 +175,7 @@
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 41b30e80ae61 (2026-11-06T18:35:32+00:00).
+        Generated from atlassian/twg-cli f94b23a1ca8d (2026-11-09T18:09:12+00:00).
       </footer>
     </main>
   </div>

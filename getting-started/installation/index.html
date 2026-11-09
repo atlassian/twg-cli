@@ -90,17 +90,14 @@
 <p>Use this mode when you want to install and authenticate TWG CLI directly from your terminal.</p>
 <h3 id="before-you-begin">Before you begin</h3>
 <ul>
-<li>You need macOS (arm64 or x64), Linux (x64), or Windows (arm64 or x64).</li>
+<li>You need macOS (arm64 or x64), Linux (arm64 or x64), or Windows (arm64 or x64).</li>
 <li>You need an Atlassian account with access to the products you want to use.</li>
 <li>To use TWG CLI through an agent after CLI setup, you need an AI coding agent installed on your computer.</li>
 </ul>
 <p>The TWG CLI binary does not require a separate runtime (for example, no Node.js).</p>
-<p>For coding-agent calls, configure the host to set <code>TWG_AGENT_DEFAULTS=1</code> or use
-<code>TWG_AGENT_DEFAULTS=1 twg &lt;command&gt;</code>. This enables agent output defaults, compact
-summaries, and file-backed large results. If the host blocks environment
-assignments, pass <code>--mode agent</code> with explicit output flags. Native
-agent detection identifies the caller only. Ordinary terminal calls retain
-their requested output; <code>--mode user</code> overrides the environment opt-in.</p>
+<p>Leave <code>TWG_AGENT_DEFAULTS</code> unset during interactive installation and setup so
+consent and login prompts work. If it's already set, see
+<a href="/twg-cli/getting-started/troubleshooting/#interactive-consent-or-sign-in-is-unavailable">troubleshooting</a>.</p>
 <h3 id="step-1-install-twg-cli">Step 1: Install TWG CLI</h3>
 <h4 id="macos-and-linux">macOS and Linux</h4>
 <p>Recommended:</p>
@@ -157,7 +154,7 @@ to use <code>twg</code>, or run <code>export PATH=&quot;$HOME/.local/bin:$PATH&q
 <h4 id="windows">Windows</h4>
 <aside class="dac-panel dac-panel-note">
 <div class="dac-panel-label">Note</div>
-<p><strong>Windows:</strong> SmartScreen may warn about the installer — choose <strong>More info → Run anyway</strong>. Pre-release builds may not yet use a production code signature; that is expected until generally available signed binaries ship.</p>
+<p><strong>Windows:</strong> Release executables and MSI packages are signed. If SmartScreen shows a warning, verify the Atlassian publisher before continuing.</p>
 </aside>
 <p>Use Windows PowerShell or Command Prompt for Windows installation. Don't run the Windows installer from Git Bash, MINGW, WSL, or another bash-like shell.</p>
 <h5 id="install-powershell">Install — PowerShell</h5>
@@ -277,7 +274,7 @@ twg jira --help
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 41b30e80ae61 (2026-11-06T18:35:32+00:00).
+        Generated from atlassian/twg-cli f94b23a1ca8d (2026-11-09T18:09:12+00:00).
       </footer>
     </main>
   </div>

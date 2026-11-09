@@ -108,6 +108,32 @@
 <pre><code class="language-bash">twg setup
 </code></pre>
 <p>This refreshes your setup and agent skill files without reinstalling the binary.</p>
+<h3 id="interactive-consent-or-sign-in-is-unavailable">Interactive consent or sign-in is unavailable</h3>
+<p>If setup reports that interactive auth prompting is unavailable, use an interactive terminal with text output.</p>
+<p>If you previously exported <code>TWG_AGENT_DEFAULTS=1</code> in that terminal, remove it before retrying:</p>
+<table>
+<thead>
+<tr>
+<th>Shell</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>macOS or Linux (bash or zsh)</td>
+<td><code>unset TWG_AGENT_DEFAULTS</code></td>
+</tr>
+<tr>
+<td>Windows PowerShell</td>
+<td><code>Remove-Item Env:TWG_AGENT_DEFAULTS -ErrorAction SilentlyContinue</code></td>
+</tr>
+<tr>
+<td>Windows Command Prompt</td>
+<td><code>set TWG_AGENT_DEFAULTS=</code></td>
+</tr>
+</tbody>
+</table>
+<p>Remove the setting from your shell startup file too, if you added it there. Then rerun the installer or <code>twg setup</code>.</p>
 <h2 id="upgrade-twg-cli">Upgrade TWG CLI</h2>
 <p>If you're on version 0.9.6 or earlier, <code>twg upgrade</code> may not work correctly. Use the manual upgrade steps below instead.</p>
 <h3 id="macos-and-linux-curl-installer-recommended-for-older-versions">macOS and Linux (curl installer, recommended for older versions)</h3>
@@ -131,7 +157,7 @@ powershell -ExecutionPolicy Bypass -File twg-install.ps1
 <p>Review the details, provide an email if needed, complete reCAPTCHA, and submit the form.</p>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 41b30e80ae61 (2026-11-06T18:35:32+00:00).
+        Generated from atlassian/twg-cli f94b23a1ca8d (2026-11-09T18:09:12+00:00).
       </footer>
     </main>
   </div>

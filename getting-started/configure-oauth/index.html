@@ -292,11 +292,17 @@ twg upkeep disable
 <p>Bitbucket commands require a separate token attached to your Atlassian login profile. Sign in first, then set it up with:</p>
 <pre><code class="language-bash">twg setup bitbucket
 </code></pre>
-<p><code>twg setup</code> also offers this during setup. A valid existing token is reused. If the token is invalid or expired, <code>twg setup bitbucket</code> starts token setup again automatically. Pass <code>--force</code> to replace a token without checking it first:</p>
+<p>Run setup in an interactive terminal with text output. For releases after 1.4.4:</p>
+<ol>
+<li>Open the token-creation URL shown by setup and generate a token for your Bitbucket account email.</li>
+<li>Copy the token, return to the terminal, and confirm <strong>Read Bitbucket token from clipboard?</strong> Enter confirms the read.</li>
+</ol>
+<p>Setup validates the token before saving it. If the clipboard read or validation fails, saved credentials stay unchanged. For HTTP 401, check the token and email; for HTTP 403, check scopes and account access. Validation requires <code>read:user:bitbucket</code>; other commands may need more scopes. Linux clipboard access requires <code>wl-paste</code>, <code>xclip</code>, or <code>xsel</code>.</p>
+<p><code>twg setup</code> also offers Bitbucket setup. Valid tokens are reused; invalid or expired tokens trigger setup again. To replace an existing token, use <code>--force</code>. The replacement is still validated:</p>
 <pre><code class="language-bash">twg setup bitbucket --force
 </code></pre>
 <p>Add <code>--profile work</code> to attach the token to a particular login.</p>
-<p>For CI/CD, set the <code>TWG_BBC_TOKEN</code> environment variable to your Bitbucket token. If it is set when you replace a token through setup, update or unset it afterward because it overrides the saved token.</p>
+<p>For CI/CD without a saved profile, set <code>TWG_BBC_TOKEN</code> and <code>TWG_USER</code> (the token's account email) through your CI secret settings. <code>TWG_BBC_TOKEN</code> overrides saved tokens, so update or unset it after replacing one through setup.</p>
 <h2 id="next-steps">Next steps</h2>
 <ul>
 <li><a href="/twg-cli/getting-started/how-authentication-works/">How authentication works</a></li>
@@ -304,7 +310,7 @@ twg upkeep disable
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 41b30e80ae61 (2026-11-06T18:35:32+00:00).
+        Generated from atlassian/twg-cli f94b23a1ca8d (2026-11-09T18:09:12+00:00).
       </footer>
     </main>
   </div>

@@ -88,7 +88,7 @@
       <h1 id="agent-skills">Agent skills</h1>
 <p>TWG CLI ships installable <strong>skills</strong> — context files that teach your coding agent how to work with Atlassian products. Install them once, then just describe what you want in plain language.</p>
 <h2 id="install-skills">Install skills</h2>
-<p>The TWG installer installs skills automatically. It keeps shared content in the TWG config directory and creates discovery links under <code>~/.agents/skills</code>, which is used by Codex, Cursor, Gemini CLI, GitHub Copilot, Rovo Dev, and other agents that support the universal <code>.agents/skills</code> layout.</p>
+<p>The shell and PowerShell installers install skills during setup. After a binary-only macOS package or Windows MSI install, run <code>twg setup</code> first. TWG keeps shared content in the TWG config directory and creates discovery links under <code>~/.agents/skills</code>, which is used by Codex, Cursor, Gemini CLI, GitHub Copilot, Rovo Dev, and other agents that support the universal <code>.agents/skills</code> layout.</p>
 <p>If it detects an agent that needs its own skill directory, it also links the shared content there. For example, Claude Code receives discovery links under <code>~/.claude/skills</code> when Claude Code is already installed. Windows uses directory junctions.</p>
 <p>To repair or refresh skills manually, run:</p>
 <pre><code class="language-bash">twg skills install
@@ -196,7 +196,7 @@ needed.</p>
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 41b30e80ae61 (2026-11-06T18:35:32+00:00).
+        Generated from atlassian/twg-cli f94b23a1ca8d (2026-11-09T18:09:12+00:00).
       </footer>
     </main>
   </div>
