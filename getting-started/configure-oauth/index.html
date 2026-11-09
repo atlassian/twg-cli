@@ -289,20 +289,38 @@ twg upkeep disable
 <p>Upkeep stores non-secret maintenance state in <code>upkeep.json</code>. It stays enabled after <code>twg logout</code> and checks any remaining profiles. <code>twg uninstall</code> disables it, attempts to revoke stored OAuth credentials, and removes the CLI and local TWG configs.</p>
 <p>If you disable the helper, TWG CLI still works, but OAuth refresh and upgrade notifications may not run in the background. Run <code>twg auth refresh</code> or <code>twg upgrade</code> manually if needed.</p>
 <h2 id="bitbucket-authentication">Bitbucket authentication</h2>
-<p>Bitbucket commands require a separate token attached to your Atlassian login profile. Sign in first, then set it up with:</p>
+<p>Bitbucket commands use a separate token. To attach one to a saved Atlassian login,
+run:</p>
 <pre><code class="language-bash">twg setup bitbucket
 </code></pre>
-<p>Run setup in an interactive terminal with text output. For releases after 1.4.4:</p>
+<p>Add <code>--profile work</code> to select a particular login. <code>twg setup</code> also offers this
+optional step.</p>
+<p>For releases after 1.4.4, setup uses these paths:</p>
+<ul>
+<li>With <code>TWG_BBC_TOKEN</code> and <code>TWG_USER</code> (the token's account email) supplied through
+environment or secret settings, setup validates the token and offers to save it
+to the selected login; Enter accepts. Without an interactive terminal, it saves
+directly after validation. Without a saved login, it only validates runtime use.</li>
+<li>Without an environment token, setup reuses a valid saved token.</li>
+<li><code>--force</code> ignores the environment token and starts clipboard setup. Declining
+the environment-token save also starts clipboard setup. An invalid environment
+token warns and starts clipboard setup in an interactive terminal; without one,
+it fails without changing saved credentials.</li>
+</ul>
+<p>For clipboard setup:</p>
 <ol>
-<li>Open the token-creation URL shown by setup and generate a token for your Bitbucket account email.</li>
-<li>Copy the token, return to the terminal, and confirm <strong>Read Bitbucket token from clipboard?</strong> Enter confirms the read.</li>
+<li>Open the token-creation URL and generate a token for your Bitbucket account email.</li>
+<li>Copy the token and confirm <strong>Read Bitbucket token from clipboard?</strong> Enter confirms the read.</li>
 </ol>
-<p>Setup validates the token before saving it. If the clipboard read or validation fails, saved credentials stay unchanged. For HTTP 401, check the token and email; for HTTP 403, check scopes and account access. Validation requires <code>read:user:bitbucket</code>; other commands may need more scopes. Linux clipboard access requires <code>wl-paste</code>, <code>xclip</code>, or <code>xsel</code>.</p>
-<p><code>twg setup</code> also offers Bitbucket setup. Valid tokens are reused; invalid or expired tokens trigger setup again. To replace an existing token, use <code>--force</code>. The replacement is still validated:</p>
-<pre><code class="language-bash">twg setup bitbucket --force
-</code></pre>
-<p>Add <code>--profile work</code> to attach the token to a particular login.</p>
-<p>For CI/CD without a saved profile, set <code>TWG_BBC_TOKEN</code> and <code>TWG_USER</code> (the token's account email) through your CI secret settings. <code>TWG_BBC_TOKEN</code> overrides saved tokens, so update or unset it after replacing one through setup.</p>
+<p>The clipboard belongs to the machine running TWG, including over SSH. Linux
+clipboard access requires <code>wl-paste</code>, <code>xclip</code>, or <code>xsel</code>. Failed reads or validation
+leave saved credentials unchanged. Validation requires <code>read:user:bitbucket</code>;
+other commands may need more scopes. For HTTP 401, check the token and email; for
+HTTP 403, check scopes and account access. <code>twg setup bb</code> is an alias.</p>
+<p>Bitbucket commands always prefer <code>TWG_BBC_TOKEN</code> over saved tokens and can use it
+with <code>TWG_USER</code> without running setup. <code>--force</code> ignores the environment token
+only during setup; it does not unset it. After saving a replacement from the
+clipboard, update or unset the old environment token so commands use the replacement.</p>
 <h2 id="next-steps">Next steps</h2>
 <ul>
 <li><a href="/twg-cli/getting-started/how-authentication-works/">How authentication works</a></li>
@@ -310,7 +328,7 @@ twg upkeep disable
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli f94b23a1ca8d (2026-11-09T18:09:12+00:00).
+        Generated from atlassian/twg-cli 1000578bd493 (2026-11-09T20:26:37+00:00).
       </footer>
     </main>
   </div>
