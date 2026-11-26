@@ -1,32 +1,21 @@
 # Teamwork Graph CLI
 
-> Public home for Atlassian Teamwork Graph CLI users, release notes, issue
-> tracking, and agent marketplace integration notes.
+> Public documentation, release notes, bundled public agent skills, and issue
+> tracking for Atlassian Teamwork Graph CLI (`twg`).
 
-TWG CLI (`twg`) is an agent-first command line interface for Atlassian work
-context across Jira, Confluence, Bitbucket, Atlas, Jira Service Management,
-Assets, people, teams, and the Atlassian Teamwork Graph.
+## Documentation
 
-## Primary Links
+- [Installation and upgrade](https://developer.atlassian.com/cloud/twg-cli/getting-started/installation/)
+- [Stable command catalog](https://developer.atlassian.com/cloud/twg-cli/commands/commands-catalog/)
+- [Agent skills guide](https://developer.atlassian.com/cloud/twg-cli/agents/skills/)
+- [Plugin installation](https://github.com/atlassian-labs/twg-plugins)
+- [Public changelog](https://developer.atlassian.com/cloud/twg-cli/changelog/)
+- [Stable release manifest](https://teamwork-graph.atlassian.com/cli/manifest.json)
 
-- Repository: https://github.com/atlassian/twg-cli
-- Stable installer: https://teamwork-graph.atlassian.com/cli/install
-- Stable manifest: https://teamwork-graph.atlassian.com/cli/manifest.json
-- Changelog: https://teamwork-graph.atlassian.com/cli/CHANGELOG.md
+## Repository
 
-## Key Files
-
-- `/README.md` - install, scope, and issue-tracking entrypoints.
-- `/AGENTS.md` - instructions for agents working in this repo.
-- `/docs/public-repo-governance.md` - repo intent, public/private boundary, and
-  pre-automation operating model.
-- `/docs/release-integration.md` - release and changelog integration notes.
-- `/skills/` - public TWG agent skills.
-- `/plugins/codex/README.md` - Codex plugin packaging notes.
-- `/plugins/claude/README.md` - Claude plugin packaging notes.
-- `/.github/ISSUE_TEMPLATE/` - public issue intake forms.
-
-## Public Safety
-
-This repo is public-facing. Do not include tokens, credentials, internal links,
-customer data, local paths, private build outputs, or internal-only command docs.
+- [README](https://github.com/atlassian/twg-cli/blob/main/README.md)
+- [Agent guidance](https://github.com/atlassian/twg-cli/blob/main/AGENTS.md)
+- [Bundled public skills](https://github.com/atlassian/twg-cli/tree/main/skills)
+- [Release integration](https://github.com/atlassian/twg-cli/blob/main/docs/release-integration.md)
+- [Public issue intake](https://github.com/atlassian/twg-cli/issues/new/choose)

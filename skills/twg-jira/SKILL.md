@@ -11,7 +11,9 @@ description: >
 
 Use with the root `twg` skill when Jira is the source of truth or a Jira
 mutation is required. This skill owns Jira semantics and safety; command
-grammar comes from live `twg help`.
+grammar comes from the root `twg` plan.
+
+`twg skills list`: load active companions, otherwise use help.
 
 ## CLI launcher fallback
 
@@ -19,6 +21,8 @@ Run `twg <command>`. On shell `command not found`, use `$HOME/.local/bin/twg`
 (macOS/Linux) / `$env:LOCALAPPDATA\Programs\twg\bin\twg.exe` (PowerShell), then
 tell user to add that directory to PATH. Do not treat auth or command errors as
 PATH failures.
+
+Agents: use host-set `TWG_AGENT_DEFAULTS=1` or `TWG_AGENT_DEFAULTS=1 twg <command>`. If assignments are blocked, pass `--mode agent` with explicit output flags. Respect host permissions. `--mode user` overrides the opt-in.
 
 ## Use When
 
@@ -51,8 +55,12 @@ inside a cross-product answer.
 | Jira configuration             | Jira administration namespace         |
 
 
-Run one focused `twg help describe "<exact path>"` before an unfamiliar or
-consequential mutation.
+Read a known issue with `twg jira workitem get <KEY> --site <SITE>`; pass
+multiple keys positionally to read a set. Both `get` and `bulk-get` also accept
+`--id <KEY>`; repeat `--id` to read multiple issues instead of using positionals.
+`get` retains its `--issue-id` and `--key` aliases.
+
+Verify mutation contracts first; describe them with the planned commands.
 
 ## Jira Semantics
 
@@ -73,7 +81,6 @@ consequential mutation.
 
 ## Safe Reads And Writes
 
-- Resolve the site and workitem key before mutation.
 - Read current state before update, transition, link, comment, or delete.
 - Discover create/update field metadata before supplying required or custom
   fields.

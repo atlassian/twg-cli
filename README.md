@@ -1,95 +1,75 @@
 # Teamwork Graph CLI
 
-Teamwork Graph CLI (`twg`) is an agent-first command line interface for Atlassian
-work context. It helps AI agents and developer tools discover, summarize, and act
-across Jira, Confluence, Bitbucket, Atlas projects and goals, Jira Service
-Management, Assets, people, teams, and the Atlassian Teamwork Graph.
+Teamwork Graph CLI (`twg`) gives coding agents and terminal users access to
+Atlassian work context across Jira, Confluence, Bitbucket, Jira Service
+Management, Assets, Atlas projects and goals, people, teams, and the Atlassian
+Teamwork Graph. This repository is the public home for CLI feedback, release
+notes, and bundled public agent skills.
 
-This repository is the public home for TWG CLI users, agent integrations,
-release notes, and issue tracking. The private engineering source of truth
-remains Atlassian's internal TWG CLI repository; this repo is a curated public
-front door for release-ready artifacts and community feedback.
+## Install and update
 
-## Install
+From a terminal on macOS or Linux:
 
 ```bash
-bash <(curl -fsSL https://teamwork-graph.atlassian.com/cli/install)
-twg login
-twg setup
+curl -fsSL --retry 2 https://teamwork-graph.atlassian.com/cli/install | bash
 ```
 
-On Windows:
+From Windows PowerShell:
 
 ```powershell
-iwr https://teamwork-graph.atlassian.com/cli/install.ps1 -UseBasicParsing -OutFile install.ps1
-.\install.ps1
-twg login
-twg setup
+curl.exe -fsSL https://teamwork-graph.atlassian.com/cli/install.ps1 -o twg-install.ps1
+powershell -ExecutionPolicy Bypass -File .\twg-install.ps1
 ```
 
-## Use With Agents
+The hosted scripts guide you through sign-in and agent skill setup. If you
+installed a standalone package, run `twg setup` to configure it. Use
+`twg doctor` to verify setup and `twg upgrade` to update.
 
-TWG CLI is designed for agents first. After setup, ask your agent for outcomes
-instead of memorizing command syntax:
+See the [installation guide](https://developer.atlassian.com/cloud/twg-cli/getting-started/installation/)
+for macOS packages, Windows MSI installers, and troubleshooting links.
 
-- "Catch me up on this Jira issue."
-- "Find pull requests waiting on me."
-- "Summarize my team's work this week."
-- "Draft a Confluence update from the current project state."
+## Use with agents
 
-The public agent surfaces for this repo are:
+After setup, ask your coding agent to summarize open Jira work, pull requests
+awaiting review, or Confluence pages related to a project.
 
-- `docs/` - public repo governance and release-integration notes.
-- `plugins/` - public marketplace packaging notes for Codex and Claude.
-- `skills/` - public TWG agent skills for Codex-style skill installers.
-- `AGENTS.md` and `llms.txt` - compact guidance for agents and LLM crawlers.
-- GitHub Issues - public bug reports, docs gaps, command requests, and
-  skill/plugin requests.
+The [public skills](skills/README.md) cover first-time setup, core CLI use, and
+workflows across Jira, Confluence, search, engineering, and other products.
+For marketplace installation instructions, see
+[the TWG plugins repository](https://github.com/atlassian-labs/twg-plugins).
+For help installing or refreshing skills through the CLI, see the
+[agent skills guide](https://developer.atlassian.com/cloud/twg-cli/agents/skills/).
 
-## Public Repo Scope
+## Discover commands
 
-This repo should contain only public-safe artifacts:
+Use the CLI's help to check the syntax supported by your installed version:
 
-- Install, setup, update, auth, troubleshooting, and recipe docs.
-- Public command examples generated from the release build profile.
-- Public skills and plugin packages for supported agent marketplaces.
-- Changelog and human-readable release notes.
-- GitHub Issues for public feedback and workflow requests.
+```bash
+twg help describe "jira workitem get"
+twg help describe "confluence content get"
+```
 
-It must not contain internal-only command docs, private Jira or Confluence URLs,
-customer data, internal runbooks, private benchmark data, tokens, auth files, or
-generated catalogs from internal build profiles.
+See the [stable command catalog](https://developer.atlassian.com/cloud/twg-cli/commands/commands-catalog/)
+for the public command list.
 
-## Release Channels
+## Releases
 
-- Documentation mirror: `https://atlassian.github.io/twg-cli/`
-- Stable installer: `https://teamwork-graph.atlassian.com/cli/install`
-- Stable manifest: `https://teamwork-graph.atlassian.com/cli/manifest.json`
-- Release notes: `https://teamwork-graph.atlassian.com/cli/CHANGELOG.md`
-
-The release process that updates this repo is described in
-[`docs/release-integration.md`](docs/release-integration.md).
-
-## Agent Guidance
-
-Agents working in this repo should start with [`AGENTS.md`](AGENTS.md). LLM
-crawlers and tools can use [`llms.txt`](llms.txt) for a compact repo map.
+- [Changelog](CHANGELOG.md) for stable and public beta release notes.
+- [Stable release manifest](https://teamwork-graph.atlassian.com/cli/manifest.json)
+  for release artifacts and checksums.
+- [Release integration](docs/release-integration.md) for how this repository is updated.
 
 ## Community
 
-Use GitHub Issues for bugs, docs gaps, command requests, and skill/plugin
-requests.
+[Open a GitHub issue](https://github.com/atlassian/twg-cli/issues/new/choose)
+for public bugs, docs gaps, or command, skill, and plugin requests. Remove
+credentials, private links, and customer data from examples and logs.
 
-Use Discussions only if they are enabled for this repo. Until then, open an
-issue with the closest matching template.
-
-Before filing anything, remove tokens, private URLs, customer data, internal
-Jira/Confluence links, and proprietary content from logs or examples.
-
-For repo intent, public/private boundaries, and the pre-automation operating
-model, see [`docs/public-repo-governance.md`](docs/public-repo-governance.md).
+See [SUPPORT.md](SUPPORT.md), [SECURITY.md](SECURITY.md), and
+[CONTRIBUTING.md](CONTRIBUTING.md) for support, vulnerability reporting, and
+contributions. Agents working in this repo should start with
+[AGENTS.md](AGENTS.md). [llms.txt](llms.txt) provides a compact index.
 
 ## License
 
-This repository is licensed under the Apache License 2.0. See
-[`LICENSE`](LICENSE).
+This repository is licensed under the Apache License 2.0. See [LICENSE](LICENSE).

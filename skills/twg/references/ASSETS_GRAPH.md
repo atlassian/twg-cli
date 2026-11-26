@@ -15,7 +15,7 @@ reach for it first (before `assets search`/AQL for discovery) and aim for **one*
 `connections` call covering the whole requested path — adding hops is free, adding
 commands is not.
 
-The downloaded schema is the source of truth. Resolve every type, relationship,
+The downloaded schema is the source of truth. Take every type, relationship,
 and field name **from it** — never from `assets search`, AQL, or the prompt's
 wording verbatim.
 
@@ -28,7 +28,7 @@ wording verbatim.
    Once you know the nouns, scope reads with `--node <name>` (repeatable, fuzzy):
    `twg assets graph schema --node "Maruti Suzuki" -o json` returns just that type
    plus its relationships — prefer it over re-`jq`-ing the whole file.
-2. **Resolve each noun to an exact type `name`.** Nouns rarely match verbatim
+2. **Match each noun to an exact type `name`.** Nouns rarely match verbatim
    ("Maruti Suzuki Cars" → `Maruti Suzuki`, "Hyundai cars" → `Hyundai`). Enumerate
    and match — never `assets search`/AQL to find a type:
    `jq -r '.data.nodes[].name' file` (also `.data.staticNodeTypes[]` and
@@ -67,12 +67,12 @@ wording verbatim.
 issues, Loom videos, and Atlas goals/projects come back with display fields
 (name/title, key, url, status, updated) already on the row — read them, no
 follow-up `content get` / `workitem get` needed. **Assets objects (cmdb) and users
-are not hydratable** (OAuth scope) and return id/ARI only; resolve those names with
+are not hydratable** (OAuth scope) and return id/ARI only; get those names with
 the product-native command (`assets object get`, `resolve`, `user search`), one
 batched call per type (repeat `--account-id` / pass multiple ids), not one per row.
 Because a cmdb object can't be hydrated, **any path that includes a dynamic Assets
 node returns id-only for the whole row** (hydration is skipped, not failed) — so
-Assets-anchored paths always need a product-native resolve for the object names.
+Assets-anchored paths always need a product-native lookup for the object names.
 `--no-hydrate` forces id-only everywhere.
 
 **Trust the tool's self-correction.** A wrong type surfaces

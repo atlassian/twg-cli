@@ -7,6 +7,14 @@ description: Query Assets and CMDB schemas with AQL, including a person and devi
 Use AQL only after inspecting the site's Assets schema, object types, and
 attributes. Names are site-specific.
 
+When identifiers are known, call the native command directly: object reads accept
+object keys or supported Assets object URLs; schema reads accept exact names;
+type get accepts an exact type name with `--schema-id` (ID or exact schema name).
+Pass the selected site and all known bounds in that call. Native name lookup is
+bounded and rejects incomplete or ambiguous results. Attribute IDs and write
+payload fields retain their documented contracts; do not rewrite raw AQL/JSON.
+Discover schemas/attributes only when that information is actually missing.
+
 Discovery sequence:
 
 ```bash

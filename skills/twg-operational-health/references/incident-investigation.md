@@ -12,6 +12,19 @@ Use this reference before a PIR is complete, or when the user asks what is
 happening, who should investigate, how to reproduce, what changed, what is
 affected, or how to mitigate.
 
+## Contents
+
+- [Incident phase model](#incident-phase-model)
+- [Directional investigation mode](#directional-investigation-mode)
+- [First pass](#first-pass)
+- [Sparse anchor expansion](#sparse-anchor-expansion)
+- [Investigation surfaces](#investigation-surfaces)
+- [Four-signal evidence matrix](#four-signal-evidence-matrix)
+- [Working theories](#working-theories)
+- [Mitigation is not root cause](#mitigation-is-not-root-cause)
+- [Answer](#answer)
+- [Anti-patterns](#anti-patterns)
+
 ## Incident Phase Model
 
 Use industry phase names rather than local shorthand. There is no universal
@@ -59,7 +72,7 @@ field`, `responder observation`, `change correlation`, `observability signal`,
 ## First Pass
 
 Start from the incident key, alert, service, customer, team, or time window.
-Resolve the user's incident-management system, site/cloud/workspace, and issue
+Identify the user's incident-management system, site/cloud/workspace, and issue
 or incident key before querying. Infer missing site/cloud/workspace inputs from
 strong evidence before asking: a pasted incident URL, a product-native link, a
 search result that carries a single canonical host, prior command output for
@@ -137,22 +150,24 @@ severity, ownership, reproduction, mitigation, or next action.
 
 ## Four-Signal Evidence Matrix
 
-Produce a compact matrix before the theory table. Use it even when some
-dimensions are sparse:
+Track each signal family's source, implication, confirming check, confidence,
+and rerun trigger. This matrix is a working-notes aid; include it in the answer
+when requested or useful for comparing evidence:
 
-| Dimension | Signal or hint | Source | What it suggests | Check to confirm | Confidence | Rerun trigger |
-| --- | --- | --- | --- | --- | --- | --- |
-| Change | PR/deploy/flag/config near impact | ticket, PR, release, flag, comms | candidate trigger or rollback path | compare deploy time, owner, rollback result | low/med/high | new deploy/rollback/flag result |
-| Service/impact | upstream/downstream or infra boundary | incident fields, topology, traces, service registry | blast radius and likely owner | inspect topology, caller/callee, affected tenants | low/med/high | new impacted service/customer |
-| Observability | metric/log/trace/error fingerprint | dashboard, alert, pasted query, customer report | failure mode and correlation window | query baseline, compare similar events | low/med/high | new spike, alert, trace, log sample |
-| Resources/history | runbook, SME, past incident, current thread | docs, on-call, chat, incident/postmortem history | known mitigation or similar cause | read matched runbook/postmortem, ask SME | low/med/high | new expert update or similar match |
+| Dimension         | Signal or hint                              | Source                                              | What it suggests                    | Check to confirm                                  | Confidence   | Rerun trigger                       |
+| ----------------- | ------------------------------------------- | --------------------------------------------------- | ----------------------------------- | ------------------------------------------------- | ------------ | ----------------------------------- |
+| Change            | PR/deploy/flag/config near impact           | ticket, PR, release, flag, comms                    | candidate trigger or rollback path  | compare deploy time, owner, rollback result       | low/med/high | new deploy/rollback/flag result     |
+| Service/impact    | upstream/downstream or infra boundary       | incident fields, topology, traces, service registry | blast radius and likely owner       | inspect topology, caller/callee, affected tenants | low/med/high | new impacted service/customer       |
+| Observability     | metric/log/trace/error fingerprint          | dashboard, alert, pasted query, customer report     | failure mode and correlation window | query baseline, compare similar events            | low/med/high | new spike, alert, trace, log sample |
+| Resources/history | runbook, SME, past incident, current thread | docs, on-call, chat, incident/postmortem history    | known mitigation or similar cause   | read matched runbook/postmortem, ask SME          | low/med/high | new expert update or similar match  |
 
 Do not require all four dimensions before advising responders. Missing
 dimensions become targeted next checks.
 
 ## Working Theories
 
-Maintain a theory table. Each row should include:
+Track concrete hypotheses and their evidence. A theory table can help compare
+candidates, but its format is optional. For each hypothesis, keep:
 
 - Hypothesis: concrete failure mechanism, not just an area.
 - Evidence for and against.
@@ -190,28 +205,30 @@ Turning off a feature flag, rolling back, or scaling out is usually mitigation.
 It is root cause only when the evidence explains why that change caused the
 failure and why the mitigation removes the causal mechanism.
 
-## Output Shape
+## Answer
+
+Answer the incident question directly rather than reproducing every
+investigation note. Preserve explicitly requested formats and fields.
 
 For an active incident:
 
-- Current read: severity, status, impact, affected customers/products, owner.
-- Probe coverage: which golden-signal families were checked, what each added,
-  and which remain missing or need user/tool context.
-- Four-signal evidence matrix with source, confidence, next check, and rerun
-  trigger.
-- Timeline: event/impact start, detection/logging, triage, investigation,
-  mitigation, and recovery, with unknowns called out.
-- Working theory table.
-- Reproduction/confirmation plan.
-- Mitigation options ranked by speed, confidence, blast radius, and reversibility.
-- Escalation map and next 30/60 minute checks.
-- Root-cause status: `unknown`, `candidate`, `confirmed`, or `not needed yet`.
-- Evidence provenance for each claim: `conversation hint`, `incident comms`,
-  `incident field`, `dashboard/link`, `change correlation`, `topology/impact
-  evidence`, `responder comment`, `historical similarity`, `post-incident
-  review`, or `post-incident action item`. In pre-PIR work, prefer `hint`,
-  `supported`, or `candidate` unless the incident evidence itself confirms the
-  fact.
+- Explain the current read and decision-relevant severity, status, impact,
+  affected customers/products, and owner. Keep root-cause status explicit:
+  `unknown`, `candidate`, `confirmed`, or `not needed yet`.
+- Make material probe coverage and gaps visible: which signal families were
+  checked, what they added, and what still needs user/tool context. Include
+  confidence, next checks, and rerun triggers where they guide the response.
+- Cite evidence for each claim and make its provenance clear. In pre-PIR work,
+  prefer `hint`, `supported`, or `candidate` unless incident evidence itself
+  confirms the fact. The provenance examples in Directional Investigation Mode
+  are aids, not required answer labels or headings.
+- Use a matrix, timeline, theory table, reproduction/confirmation plan, or
+  escalation map when requested or when it clarifies the evidence or response.
+  A timeline should distinguish impact start, detection, triage, investigation,
+  mitigation, and recovery, with unknowns called out. Suggest next 30/60 minute
+  checks when a near-term response plan is needed.
+- When proposing mitigation options, rank them by speed, confidence, blast
+  radius, and reversibility; keep mitigation distinct from causal proof.
 
 For a newly mitigated incident:
 

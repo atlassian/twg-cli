@@ -4,28 +4,38 @@ description: Handle agent JSON envelopes, compact summaries, output files, and l
 
 # Agent Output
 
-Agent invocations should call the installed `twg` binary directly:
+## Agent Mode
 
-```bash
-twg <command>
-```
+For coding-agent invocations, set `TWG_AGENT_DEFAULTS=1`. If the host already
+sets it, no command prefix is needed. Otherwise run
+`TWG_AGENT_DEFAULTS=1 twg <command>`. If environment assignments are unavailable
+or blocked by host permissions, pass `--mode agent` instead.
+Do not change host permissions to add an environment prefix.
 
-When the host sets `TWG_AGENT_DEFAULTS=1` in the process environment, the CLI
-treats non-help commands as agent-mode calls, defaults missing output to JSON,
-and writes large payloads to files while keeping stdout compact. Do not prefix
-individual commands with `TWG_AGENT_DEFAULTS=1` unless the host explicitly asks
-for that shape; env-prefixed shell commands can bypass command-specific
-authorization in some agent runtimes.
+The environment opt-in defaults unspecified non-help output to JSON and enables
+compact summaries and file-backed payloads. `--mode agent` explicitly selects
+agent mode; retain explicit output flags when using that alternative.
+Native agent detection identifies the caller for tracking and does not select
+interaction or output behavior. `--mode user` overrides the environment opt-in.
 
-The CLI core applies the same file-backed protection for direct structured
-agent calls such as `twg --mode agent --output json work query`. It only applies
-when the caller has not explicitly chosen `--output-summary`, `--output-file`, or
-`--output text`. Use `--output-summary none` when a script needs structured output
-directly on stdout inside an agent runtime.
+Agent mode writes large structured reads to files unless you explicitly set
+`--output-summary`, `--output-file`, or `--output text`.
+Use `--output-summary none` to get structured output directly on stdout.
+The hidden `--mode agent` option supports agent hosts; ordinary help does not show it.
+
+## CLI Mismatch Recovery
+
+If `help-map` or `help describe` is unavailable, check command resolution once
+(`type -a twg` on macOS/Linux; `Get-Command -All twg` on PowerShell).
+Use the selected CLI's `--help` and `<command> --help`; run `twg doctor` if
+supported to compare CLI and skill provenance. Report the mismatch and use
+supported commands. A `tsx` IPC permission error occurs before TWG starts;
+check whether a development launcher shadows the installed CLI. Respect host
+permissions; do not retry unchanged or escalate permissions to bypass it.
 
 ## Envelope Shape
 
-Large direct agent invocations usually print a YAML summary like:
+A large agent call usually prints a YAML summary like this:
 
 ```yaml
 output_files:
@@ -47,23 +57,17 @@ stdout_stats:
 ---END---
 ```
 
-`collections` maps each array in the payload to its element count, primary
-collection first, so "where are the rows and how many are there?" is answered
-without opening the file. `"[]"` means the payload itself is the array. A payload
-with more arrays than the envelope reports keeps the primary and contract-declared
-ones and adds `collections_omitted: <n>` for the remainder.
+- `collections` gives the number of elements in each array, primary collection first.
+  `"[]"` means that the payload itself is an array. A count of `0` means no rows returned.
+- If an array is absent from `collections`, the payload does not have it, unless `collections_omitted` is present.
+  `collections_omitted: <n>` means the list has reached its limit; `n` more arrays exist.
+  Use `stdout_shape` or `jq` to locate those arrays.
+- A small payload can include the full JSON in `stdout_inline`. A large payload includes `stdout_stats`.
+  The CLI omits `stdout_shape` only when `collections` locates the rows and `agent_output.fields` describes their contents.
+- `agent_output.fields_unresolved` lists advertised fields absent from the payload when their container is present.
+  It excludes paths for response types that do not apply. Empty results report no unresolved fields.
 
-Small payloads may include `stdout_inline` with the full JSON payload. Large
-payloads include `stdout_stats`, and `stdout_shape` whenever the envelope
-cannot otherwise describe the rows - it is omitted only when `collections`
-locates them _and_ `agent_output.fields` says what they contain.
-
-`agent_output.fields_unresolved` lists advertised fields whose container was
-present but which the payload did not carry - a field the contract promised and
-the response did not deliver. Paths from a response dialect that does not apply
-are not reported, and an empty result reports nothing.
-
-A failed command puts the diagnosis first, at every summary level:
+A failed command shows the error first, at every summary level:
 
 ```yaml
 ok: false
@@ -80,137 +84,114 @@ output_files:
 ---END---
 ```
 
-Act on `error.repair` and `error.retry.guidance` directly. Bulk diagnostics
-(`backendFailure`, `traceId`, `feedback`) stay in `output_files.stdout`.
+Follow `error.repair`. Follow `error.retry.guidance` before you retry.
+Full diagnostics, such as `backendFailure`, `traceId`, and `feedback`, stay in `output_files.stdout`.
+
+## Site And Profile Errors
+
+Before you declare a site inaccessible or switch to another tool:
+
+1. Read the error code and full recovery guidance. Do not truncate error envelopes with `head`.
+2. For an unknown command, check `twg help`. Use `twg auth profile list` for profiles.
+3. For a profile selection error, compare the target site and environment with `twg auth profile list`.
+4. If one profile matches, retry a read against the same target with `--profile <name> --site <site>`.
+5. For unresolved access diagnostics, use `twg doctor --profile <name> --site <site>` with the selected profile.
+
+Preserve the user's explicit profile choice. Ask if several profiles remain plausible.
+Do not change the saved default for one task.
+Profile names alone do not prove site access or the active auth method.
+
+Do not try every profile or probe other sites.
+Do not retry a policy denial with another identity.
+Follow the reported scope or permission repair for a denied request.
+
+An unsupported URL is an input error, not proof of an authentication failure.
+A different profile does not repair an unsupported URL.
+Use a documented resource ID and the same explicit site when that command supports them.
+Keep the original target; do not remove site scope or guess another host.
+Report failed access with its selected site and profile.
 
 ## Reading Rule
 
-The YAML summary is a pointer, not the answer.
+Answer from facts already visible in `stdout_inline` or output that you read before.
+Read more output or refetch only when that evidence does not contain or support a fact the answer needs.
 
-- If `stdout_inline` is present, you may answer from it.
-- If `output_files.compact` is present, inspect that compact JSON first. It is
-  generated from the command's advertised output contract and is usually enough
-  for routing, titles, owners, statuses, URLs, and dates.
-- If `stdout_stats` or `stdout_shape` is present and `output_files.compact` is
-  absent or insufficient, filter `output_files.stdout` with targeted `jq`.
-- For answers that require item names, URLs, owners, statuses, blockers, dates, or
-  evidence, read the JSON file even when the summary looks plausible.
+- Choose the smallest view that supplies the fact: the compact file, a targeted projection, or full text.
+  Extract currently known related facts together where practical. Keep each source and version identifiable.
+- Returned fields describe the returned records, not whether the command covered every relevant source or row.
+  Metadata and previews support only the facts they show. Current-state claims need evidence for the requested time.
+- Keep relevant counts, partial-result signals, failures, and pagination data. Report unknown coverage as unknown.
+- Inspect only output files from the same command invocation, if the host permits access.
+  On restricted hosts, use supported output options or permitted file readers. Report inaccessible evidence as a gap.
+  This permission excludes arbitrary host files, credentials, and output from other agent runs.
 
-**`stdout_shape` samples are statistical, not exhaustive.** The shape shows a
-merged schema with a small number of example string values per field — it is not a
-complete inventory. For `context` commands this matters most: external artifact links
-(Figma, GitHub, Google Docs, and other third-party app URLs) appear toward the
-**tail** of relationship arrays and are the entries most likely to be absent from
-`stdout_shape` samples. If the goal is relationship or URL discovery, always read
-`output_files.stdout` rather than treating shape samples as the full result. The
-related workflow guidance lives in `twg-context-discovery/SKILL.md`.
+`stdout_shape` is a sample schema, not a full inventory. It includes only a few example string values per field.
+For `context` commands, external links often appear near the end of relationship arrays and can be absent from samples.
+For relationship or URL discovery, use sufficient inline or compact records, or a permitted projection of `output_files.stdout`.
+See the [context discovery skill](../../twg-context-discovery/SKILL.md) for the
+related workflow.
 
-## Output Budget Controls
+## Output Size Controls
 
-Use these flags to keep agent stdout manageable:
+| Option                    | Result                                                                                                                  |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `--output-summary stats`  | Smallest stdout. Use for broad discovery.                                                                               |
+| `--output-summary auto`   | Shows small results inline and summarizes large results.                                                                |
+| `--output-summary inline` | Requests inline selected data. In agent mode, oversized results fall back to a file summary.                            |
+| `--output-summary none`   | Prints the selected structured format directly on stdout, without a summary envelope.                                   |
+| `--agent-fields <paths>`  | Selects summary fields and creates a compact file. The full JSON file retains the payload.                              |
+| `--select <paths>`        | Selects payload fields before serialization, in `output_files.stdout`, `--output-file`, JSON stdout, and JSONL records. |
 
-```bash
-twg <cmd> --output-summary stats
-twg <cmd> --output-summary auto
-twg <cmd> --output-summary none
-twg <cmd> --agent-fields data.items.key,data.items.status
-twg <cmd> --select data.items.key,data.items.status
-```
+Use `--select` when you know the required fields.
+Use `--agent-fields` when you might need more detail later; the full artifact remains available.
+Neither option necessarily reduces backend retrieval.
 
-- `--output-summary stats` - smallest stdout; best for broad discovery.
-- `--output-summary auto` - inline small results, summarize large results.
-- `--output-summary inline` - force inline selected data; in agent mode very
-  large inline payloads are capped and fall back to file-backed summary output.
-- `--output-summary none` - disable automatic summary envelopes and emit the
-  selected structured format directly on stdout.
-- `--agent-fields` - narrow the summary while preserving the full JSON file.
-  Presets such as `@rows`, `@compact`, and `@evidence` are command-scoped when
-  advertised by help; on commands without a preset contract they safely fall
-  back to the normal summary envelope. Literal field paths remain supported for
-  custom projections.
-- `--select` - narrow the **payload itself**. Unlike `--agent-fields`, which only
-  adds a compact sidecar next to the full JSON, `--select` applies before
-  serialization, so `output_files.stdout`, `--output-file`, plain
-  `--output json` stdout, and streaming `--output jsonl` records all carry only
-  the selected paths. Accepts the same literal paths and `@preset` names. Prefer
-  it over piping raw output through `jq`. A selection that matches nothing emits
-  the full payload and a `runtime_advisories.selectUnmatched` entry rather than
-  an empty envelope; on routes with no envelope slot for advisories the same
-  warning goes to stderr. A selection that is part literal paths and part
-  presets the command does not advertise projects the paths that resolved and
-  names the dropped presets under `runtime_advisories.selectUnresolved` - a
-  separate key from `selectUnmatched`, because the payload _was_ projected.
-  A top-level array payload stays an array.
-  Failed commands are never projected - the `ok: false` recovery envelope is
-  returned whole, because `error.code`, `error.repair`, and `error.retry` are
-  the actionable content and none of them sit under a selected data path.
+Both options accept literal field paths and presets advertised for that command, such as `@rows`, `@compact`, and `@evidence`.
+Without a preset contract, `--agent-fields` falls back to the normal summary envelope.
+Use `@rows` or `@compact` for broad scans before custom filters. Use `@evidence` for selected artifacts that need fuller detail.
 
-Use `@rows` or `@compact` before writing custom JSON filters for broad scans.
-Use `@evidence` after narrowing to the few artifacts that need fuller detail.
+### Selection Fallbacks
 
-If `output_files.compact` is present, use it instead of probing the raw JSON.
-If field paths are unknown, run `twg help describe "<exact command>"` and use
-the advertised output view or jq snippet.
+- If no `--select` path matches, the CLI returns the full payload and reports `runtime_advisories.selectUnmatched`.
+- If only some selection specs resolve, the CLI projects resolved paths and reports dropped presets under `runtime_advisories.selectUnresolved`.
+- Routes without a summary envelope send these warnings to stderr.
+- A top-level array stays an array.
+- Failed commands retain the whole `ok: false` recovery envelope, including `error.code`, `error.repair`, and `error.retry`.
 
-For structured JSON, inspect the top-level shape once and then write a targeted
-projection. Do not retry multiple incompatible `.data.*`, `.result.*`, or
-array-vs-object guesses. Combine related facts in one `jq` projection per output
-file instead of running repeated `jq .` or one-field probes.
+## Projections
 
-If a local `jq` command fails, stop probing nearby paths. Re-read the compact
-file or the command's help-described view, then use at most one exact projection.
-A collection reported as `0` means "no rows returned". A collection absent from
-`stdout_stats.collections` means the payload holds no such array at all - not
-that the output contract changed. The exception is `collections_omitted`: when
-that key is present the list was capped, so `n` further arrays exist that the
-envelope did not name, and absence proves nothing. Use `stdout_shape` or `jq`
-to locate them.
-
-Before opening another large output file, run a sufficiency check: do you already
-have the names/keys, owners, statuses, dates, risks/blockers, and evidence URLs
-needed for the requested answer? If yes, synthesize. Only inspect another raw
-file when it will change a ranking, owner, risk, blocker, relationship, or next
-action.
-
-When comparing many compact files, avoid a sequence of one-file filters such as
-`jq '{Alice:.}' file`. Use one combined projection with `jq -n`/slurp inputs, or
-read the compact summaries directly and only filter the few raw files that will
-change the answer.
-
-## When To Pass `--output-file`
-
-Default: do not pass it. Agent defaults already write a full JSON payload and report
-the path in `output_files.stdout`.
-
-Pass `--output-file` only when stable filenames make a recipe easier, for example
-a parallel context batch:
-
-```bash
-twg jira workitem get PROJ-123 --output-file "$TMPDIR/PROJ-123.json"
-twg context jira workitem PROJ-123 --output-file "$TMPDIR/ctx_PROJ-123.json"
-```
-
-Use `$TMPDIR`, not hard-coded `/tmp`, because agent sandboxes vary.
-
-## Large Payload Strategy
-
-| Payload size         | What to do                                                        |
-| -------------------- | ----------------------------------------------------------------- |
-| Small / inline       | Read `stdout_inline` directly                                     |
-| Compact file present | Read `output_files.compact` first                                 |
-| Under about 50 KiB   | Open `output_files.stdout` directly                               |
-| Large                | Use `jq` or another targeted filter against `output_files.stdout` |
-
-Examples:
+For unknown field paths, use `twg help describe "<exact command>"` to find the advertised view or `jq` filter.
+Use `jq` for structured JSON. Text search with `rg` can expose hundreds of KiB of raw payload.
 
 ```bash
 jq '.data.edges[].node | {key, title, status, url}' "$OUT"
 jq '.data.items[] | {name, owner, updatedAt}' "$OUT"
 ```
 
-Do not use `rg` to inspect TWG JSON. It treats structured data like text and
-can re-expose hundreds of KiB of raw payload. Use `jq` with the paths from
-`twg help describe "<exact command>"`.
+- Correct a failed projection from the advertised schema or facts already in context.
+  A projection failure does not mean the source returned no matching rows.
+- Combine known facts across batch files with `jq -n` and inputs or slurp where practical.
+  Keep source and version identities in the result.
 
-Do not paste giant JSON into the final answer. Extract the facts and cite the
-artifact URLs or keys that support them.
+## Output Files
+
+Agent defaults already write a JSON payload and show its path in `output_files.stdout`.
+Use `--output-file` only when stable filenames simplify a recipe, for example a parallel context batch:
+
+```bash
+twg jira workitem get PROJ-123 --output-file "$TMPDIR/PROJ-123.json"
+twg context jira workitem PROJ-123 --output-file "$TMPDIR/ctx_PROJ-123.json"
+```
+
+Use `$TMPDIR`, not a fixed `/tmp` path, because agent sandboxes use different temporary directories.
+
+## Sandboxed Pipeline Logs
+
+Pipeline logs can redirect to S3.
+For sandboxed `twg bb pipeline get`, `wait`, `grep`, or `tail`, these signals indicate sandbox restrictions, not auth failure:
+
+- Network blocks or S3 hostnames.
+- HTTP 403 for logs when the metadata read succeeds.
+
+Request approval to retry only that command unsandboxed, or provide its exact terminal command.
+Do not request credentials.

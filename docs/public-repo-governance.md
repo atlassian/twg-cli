@@ -11,7 +11,7 @@ engineering decisions.
 ## Intent
 
 - Help users install, update, and troubleshoot TWG CLI.
-- Publish public-safe TWG CLI skills and plugin notes for agent hosts.
+- Publish release-ready TWG CLI skills and link to plugin installation.
 - Provide a public changelog and release communication surface.
 - Accept public bugs, docs gaps, command requests, feature ideas, and skill or
   plugin requests.
@@ -33,9 +33,10 @@ engineering decisions.
 Allowed public content includes:
 
 - Install, setup, update, authentication, troubleshooting, and recipe docs.
-- Public command examples from the release build profile.
-- Public TWG agent skills and supported plugin packaging notes.
-- Public changelog and release summaries.
+- Public command examples for generally available commands in the release build.
+- Fully materialized public TWG agent skills available without gated access.
+- Plugin installation links to the dedicated public plugin repository.
+- Public changelog and release summaries, including labeled public beta notes.
 - GitHub issue templates, PR template, support policy, security policy, and
   contribution guidance.
 - Public CDN links, public installer links, and public release metadata.

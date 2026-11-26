@@ -15,7 +15,12 @@ space, or a repository, and write the space's instructions — load
 
 ## Space Operations
 
-- Resolve the site and space key before acting.
+- Identify the site and space key before acting. For the authenticated user's
+  personal space, run `twg confluence space me --site <site> -o json`; use
+  `data.space.key` for key-based commands and `data.space.spaceId` when a numeric
+  space ID is required.
+- Never construct a personal-space key from `accountId` or infer it by listing
+  or searching personal spaces. Get it with `confluence space me`.
 - Read a space before archive, unarchive, or update.
 - Distinguish the human-readable key from the numeric space ID required by some
   content creation commands.
@@ -26,7 +31,7 @@ space, or a repository, and write the space's instructions — load
 
 - Use folders for navigation-only containers.
 - Use pages or live docs for nodes that should carry content.
-- Resolve parent IDs before creating or moving children.
+- Get parent IDs before creating or moving children.
 - Verify that the parent belongs to the destination space.
 - Bound tree depth for discovery; hydrate only branches relevant to the task.
 
@@ -74,8 +79,11 @@ them is already in the flow.
 - **Direct** — `confluence space instructions get --key <spaceKey>` (`-s <site>`
   selects the site; `--body-format` defaults to markdown). Use `--id <spaceId>`
   for a numeric space ID. A bare positional key remains available as the legacy
-  form. When using `--key`, resolve the space key first; a personal space key
-  looks like `~<accountid>`.
+  form. These flags take only an exact space key or a numeric ID. For a space
+  URL or a name, run `confluence space get <URL or name>` first and pass the
+  returned key or ID. For personal spaces,
+  use the key returned by `confluence space me`; do not derive it from the
+  account ID.
 
 ### Applying them
 

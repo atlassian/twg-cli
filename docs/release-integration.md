@@ -1,115 +1,42 @@
 # Release Integration
 
-This repo is updated through reviewed public changes that originate from the TWG
-CLI release process. Bitbucket remains the source of truth for implementation,
-release scripts, tests, and internal builds. GitHub is the public engagement and
-distribution surface.
+This repository is updated through reviewed public pull requests. The
+[published changelog](https://developer.atlassian.com/cloud/twg-cli/changelog/)
+covers stable and public beta releases. The
+[stable release manifest](https://teamwork-graph.atlassian.com/cli/manifest.json)
+lists published CLI artifacts and checksums.
 
-Automation is not approved by this document. Any automated sync from the private
-repo needs a separate decision record, leak-check design, permission review, and
-implementation PR.
+The [GitHub Pages documentation mirror](https://atlassian.github.io/twg-cli/)
+is published from the `gh-pages` branch. Plugin packages, versions, and
+marketplace installation instructions are maintained in
+[atlassian-labs/twg-plugins](https://github.com/atlassian-labs/twg-plugins).
 
-## Private Release Boundary
+## Prepare a public refresh
 
-The private release process is responsible for versioning, building, signing,
-validating, and publishing TWG CLI artifacts. This public repo should only show
-release-ready information that is safe for users:
+1. Identify the generally available CLI release for the refresh. Verify the
+   public artifact and checksum. Use release-profile outputs from that version.
+2. For command examples, verify the commands against the released CLI's help
+   and confirm general availability in public documentation. Link to the
+   [stable command catalog](https://developer.atlassian.com/cloud/twg-cli/commands/commands-catalog/)
+   for the full list.
+3. Stage fully materialized public skills in a temporary directory. Use the
+   release profile's bundle policy and static-export filter for workflow skills.
+   Verify the offline essentials with an isolated local install from the
+   verified CLI with no saved profiles. Include publicly released packages
+   available without feature flags, experiments, or restricted grants, along
+   with their references, assets, and license notices. Omit local installation
+   metadata and cached state.
+4. Compare the staged packages with `skills/`. List the included packages in
+   `skills/README.md` and record the version used to materialize them. Review
+   removed or renamed paths so existing references can be updated.
+5. Link to the published changelog and label public beta summaries. Keep
+   beta-only commands and skills out of the stable examples and skill export.
+6. Run leak checks and verify links, required community files, referenced skill
+   files, and licenses. Submit the diff for public review.
 
-- public install and update instructions
-- public changelog and GitHub Release notes
-- public CDN, manifest, and checksum links
-- public skills and plugin package notes
-- public issue and support links
+## Leak checks
 
-## GitHub Pages Mirror
-
-GitHub Pages for TWG CLI docs is published from this repo:
-
-- Pages URL: `https://atlassian.github.io/twg-cli/`
-- Source repo: `atlassian/twg-cli`
-- Source branch: `gh-pages`
-
-The private `twg-cli` publishing flow should keep the GitHub Pages publish
-target pointed at `atlassian/twg-cli`, use a dedicated `GITHUB_PAGES_TOKEN`, and
-avoid token-bearing remote URLs. That token needs **Contents: read and write**
-and **Pages: read-only** on `atlassian/twg-cli`.
-
-## Manual Public Repo Update Checklist
-
-Until automation is approved, public repo updates should be made through reviewed
-PRs. For each release or docs update:
-
-- Update only public-safe docs, skills, plugin notes, changelog, issue
-  templates, or release metadata.
-- Confirm every copied path is allowlisted.
-- Review the diff for private links, customer data, internal command docs,
-  private build output, local paths, and credentials.
-- Keep GitHub Release content human-readable and adoption-focused.
-- Do not add scripts, scheduled jobs, publish credentials, or private-system
-  access as part of a manual update.
-
-## Release Flow
-
-1. Prepare and validate the release in the private source-of-truth workflow.
-2. Prepare public changelog text and GitHub Release notes from release-ready
-   information only.
-3. Prepare a reviewed public PR with docs, skills, plugins, changelog, and
-   release metadata for the candidate version.
-4. Validate the public installer, manifest, checksums, and plugin package
-   references.
-5. Promote the public release through the approved private release workflow.
-6. Merge the GitHub public repo PR and create/update the GitHub Release for the
-   same version.
-
-## Non-Release Docs Updates
-
-DAC documentation changes should also be reflected in GitHub, even when no
-binary release is cut. In that case:
-
-- Export only docs, issue templates, and public metadata.
-- Do not create a GitHub Release.
-- Do not move installer, manifest, plugin, or stable release pointers.
-
-## Leak Checks
-
-Manual review and any future approved automation should block GitHub changes if
-they find:
-
-- Tokens, API keys, cookies, `.env` files, auth stores, or session logs.
-- Internal Bitbucket, Jira, Confluence, private infrastructure, or pipeline URLs
-  not explicitly approved for public docs.
-- Internal build-profile command catalogs.
-- Internal-only commands, dev-only commands, or private graph/debug surfaces.
-- Customer data, private cloud IDs, ARIs, or site-specific examples.
-- Private benchmark/eval artifacts.
-- Generated files that reference local developer paths.
-
-Authentication for any future GitHub sync must avoid putting tokens in clone
-URLs, process arguments, logs, or stored remotes.
-
-## Future Public Repo Sync Design
-
-A later design may introduce an export, leak-check, and GitHub update workflow,
-but that workflow is intentionally not part of this repo today. Before
-implementation, the design must define:
-
-- allowlisted source paths
-- public/private denylist and review ownership
-- release and non-release sync behavior
-- GitHub permissions and token handling
-- failure and rollback behavior
-- evidence required before public publishing
-
-## GitHub Release Content
-
-Each public GitHub Release should be generated from the release changelog but
-rewritten for adoption:
-
-- What changed.
-- Why users or agents should care.
-- Install/update command.
-- Candidate validation status.
-- Checksums and manifest links.
-- Plugin package links for Codex and Claude.
-- Known issues or migration notes.
-- Links to docs and the relevant public issue tracker entry when applicable.
+Review the staged changes for credentials, private URLs and identifiers,
+customer data, local machine paths, unpublished commands, unresolved templates,
+and internal build outputs. Run the repository's public validation workflow.
+Keep automated sync and publishing subject to a separate approved design.

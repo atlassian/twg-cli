@@ -22,6 +22,8 @@ Run `twg <command>`. On shell `command not found`, use `$HOME/.local/bin/twg`
 tell user to add that directory to PATH. Do not treat auth or command errors as
 PATH failures.
 
+Agents: use host-set `TWG_AGENT_DEFAULTS=1` or `TWG_AGENT_DEFAULTS=1 twg <command>`. If assignments are blocked, pass `--mode agent` with explicit output flags. Respect host permissions. `--mode user` overrides the opt-in.
+
 ## Guiding principle
 
 Build a navigable space, not an object quota. Favor useful hubs, ask only
@@ -29,7 +31,7 @@ material questions, and show cost before substantial work.
 
 ## Workflow
 
-1. **Resolve.** Infer target, source, purpose, audiences, and workflows. Existing
+1. **Identify.** Infer target, source, purpose, audiences, and workflows. Existing
    spaces are same-site only; reject mismatches before source reads or writes.
 2. **Configure.** Load `references/proposal-flow.md`. Ask one compact batch only
    for missing identity/access, scale/richness, truth-boundary, or plan/build choices.

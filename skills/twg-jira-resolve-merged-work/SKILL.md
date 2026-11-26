@@ -11,8 +11,9 @@ description: >
 Resolve stale Jira workitems only when merged PR evidence is strong. Plan first;
 mutate only after approval.
 
-Use exact command grammar from live `twg help` / `twg help describe <path>`; do not
-guess board, sprint, transition, workspace, repo, PR, or field syntax.
+Use root `twg`: plan from `twg help-map` and reuse its batched describe contracts.
+Use `twg help describe <path>` only when required details are missing. Never guess board,
+sprint, transition, workspace, repo, PR, or field syntax.
 
 ## CLI launcher fallback
 
@@ -20,6 +21,8 @@ Run `twg <command>`. On shell `command not found`, use `$HOME/.local/bin/twg`
 (macOS/Linux) / `$env:LOCALAPPDATA\Programs\twg\bin\twg.exe` (PowerShell), then
 tell user to add that directory to PATH. Do not treat auth or command errors as
 PATH failures.
+
+Agents: use host-set `TWG_AGENT_DEFAULTS=1` or `TWG_AGENT_DEFAULTS=1 twg <command>`. If assignments are blocked, pass `--mode agent` with explicit output flags. Respect host permissions. `--mode user` overrides the opt-in.
 
 ## Scope
 

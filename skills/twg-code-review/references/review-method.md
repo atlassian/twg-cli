@@ -6,10 +6,21 @@ description: Review areas, evidence requirements, severities, outcomes, and test
 
 ## Execution
 
-Read the entire diff before concluding. Adapt the depth to risk and change size.
-Use parallel review passes or subagents when independent checks can run safely;
-use sequential passes when later analysis depends on earlier findings. Reconcile
-all candidate findings against the actual code before reporting them.
+Perform two passes within one review run, then consolidate findings before
+posting. Read the entire diff, including lockfiles and generated changes.
+
+1. Trace changed contracts and boundaries: inputs, outputs, callers, consumers,
+   state transitions, configuration, persistence, and failure handling. Record
+   the changed paths reviewed and any required evidence that could not be read.
+2. Independently challenge the first pass: try to disprove candidate findings
+   and verify claimed fixes at the reviewed revision. Inspect unexamined edge
+   cases and sibling paths, including empty/multiple values, failures, retries,
+   cancellation, compatibility, and partial results where relevant. Do not merely
+   reread the candidate list. A second model session is not required.
+
+Reconcile candidates against source evidence; remove disproven or duplicate
+findings. Record both passes and evidence gaps in the artifact. A checklist is
+not evidence that a contract was tested; name the paths and checks actually used.
 
 The destination/base revision owns repository policy. Read its `AGENTS.md`,
 contributor rules, architecture references, generated-file policy, and local
@@ -33,6 +44,23 @@ Trace important call sites and consumers beyond the changed file. Prefer a few
 high-confidence findings over speculative breadth. A finding needs an exact
 anchor, evidence, impact, a practical fix, proof of the fix, and confidence.
 
+For repositories that require explicit human authorization for MCP input
+contract changes, enforce that destination/base policy as a readiness condition.
+Inspect tools with `mcp` metadata in either revision, including disabled metadata,
+and trace shared schemas/constants and host adaptation. Distinguish permitted
+description-only edits from changes to argument structure, accepted values,
+defaults, or MCP identity/publication. CLI-only tools do not inherit an MCP-only
+restriction merely by sharing a file. **Do not accept an unapproved breaking
+change to an MCP tool definition.** Verify explicit approval for the exact
+change and its compatibility impact from a human authorized by that policy;
+where it names approvers, approval from an unlisted person cannot satisfy it.
+Agent approval, a general refactor request, passing CI, or ordinary PR approval
+without explicit acknowledgment of the contract change does not supply it.
+When a protected change lacks required authorization evidence, raise a blocking
+merge prerequisite, request the evidence or restoration, and do not mark the
+review `ready`. Report missing evidence without claiming that
+authorization never occurred or inventing an implementation defect.
+
 ## Severity and re-review status
 
 - `blocker`: merging can cause incorrect behavior, security exposure, data
@@ -41,13 +69,19 @@ anchor, evidence, impact, a practical fix, proof of the fix, and confidence.
   should be fixed before or immediately after merge.
 - `suggestion`: useful improvement that does not block readiness.
 
+Account for every earlier finding; omission does not mean resolved. Preserve
+its fingerprint and cite the current code or discussion that supports its new
+status. Challenge author claims of fixes; do not blindly retain disproven issues.
 Use `new`, `still_open`, `partially_fixed`, `resolved`,
 `accepted_tradeoff`, or `invalid` on re-review. Report at most five suggestions
-and at most three specific strengths.
+and at most three specific strengths. Leave strengths empty unless the review
+finds a concrete, nontrivial positive choice with an exact reference and clear
+benefit; passing checks, routine correctness, and no blockers do not qualify.
 
 ## Outcomes
 
-- `ready`: no blocker remains and evidence is sufficient for the stated scope.
+- `ready`: no blockers found in this review and evidence is sufficient for the
+  stated scope. This is not approval or a guarantee that all defects were found.
 - `not_ready`: at least one concrete issue prevents readiness.
 - `incomplete`: required evidence is missing or keeps changing, so the review
   cannot choose `ready` or `not_ready`.

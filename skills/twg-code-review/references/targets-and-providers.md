@@ -18,6 +18,11 @@ clean, or switch the user's checkout.
 
 ## Snapshot
 
+Pin all supplemental source, dependency, and caller reads to the recorded head
+(or recorded base for before/after evidence). Do not use default-branch files
+as evidence of PR behavior. Keep the trusted reviewer revision separate from
+the source revision and record both when the caller supplies them.
+
 Record the base SHA, head SHA, diff hash, conversation hash, and read time before
 analysis. Read them again immediately before finalizing. If they changed, fetch
 the new snapshot once and repeat the review. If they change again, stop with

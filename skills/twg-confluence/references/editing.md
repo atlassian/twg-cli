@@ -12,16 +12,23 @@ read -> save to file -> edit locally -> update from file -> verify
 
 ## Safe Workflow
 
-1. Fetch the current content at full detail in the format you will edit, with
-   `--include-metadata` so `data.metadata.hasSpaceInstructions` tells you
-   whether a space-instructions read is needed (see `spaces.md`).
-2. Save `data.body.value` to a local file.
-3. Capture the response's snapshot token.
+1. Fetch full detail in the intended body format. For edits to classic pages
+   (`type=page`), add `--draft` and use that draft body and its returned
+   snapshot token. Include
+   `--body-only --output-file <path> -o json --include-metadata`. One call
+   writes the body to the file and returns the envelope;
+   `data.metadata.hasSpaceInstructions` tells you whether a space-instructions
+   read is needed (see `spaces.md`).
+2. Use the local file at `data.body.outputFile` when present; otherwise save
+   `data.body.value` to a local file.
+3. Capture the response's snapshot token (`data.snapshotToken`). Without
+   `-o json`, `--body-only` output omits it.
 4. Modify the file without reconstructing unrelated content.
 5. Update with the body file, matching format, and snapshot token; use
    `--dry-run` first only for explicit preview or validation requests, or for
    unusually risky edits where direct execution was not requested.
-6. Read back the result.
+6. Update `--draft` saves the draft; omit it to publish, according to user intent.
+   Read back the result.
 
 HTML is the safest round-trip format for macros and exact storage content.
 Markdown is easier for prose but may not preserve every Confluence construct.
@@ -39,8 +46,11 @@ body content.
 
 - A dry run validates one snapshot; it neither reserves nor refreshes it. For
   body-changing dry runs, add `-o json --output-file <path>` and read
-  `data.body.value` for the computed body.
-- On `snapshot_stale`, refetch the latest body and token, then rebase the
+  `data.body.value`. For targeted edits, this is the resulting HTML. For
+  full-body replacement, it echoes the input; it does not preview converted or
+  persisted content.
+- On a missing, published-base or stale token, refetch the body and token
+  (the draft for classic pages, `type=page`), then rebase the
   intended change. Never retry the stale payload with
   `data.currentSnapshot.token`; that defeats the concurrency guard.
 - For targeted edits, revalidate targets and anchors against the latest body.

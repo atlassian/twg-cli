@@ -4,7 +4,15 @@ description: Build a bounded leadership reliability review from representative J
 
 # Leadership Reliability Review
 
-Resolve platform and window, then start with the native operational records:
+Identify platform and window. For a current open-incident handoff, query
+`twg jsm incident query --jql 'issuetype = "[System] Incident" AND statusCategory != Done ORDER BY updated DESC' --limit 20`
+first: `--after <window>` filters by creation date, so it misses older still-open
+incidents. Use `--after` separately for the newly created cohort. Check
+`isLast` and continue with the returned pagination cursor before declaring either
+inventory complete; an empty new cohort does not mean there are no open
+incidents. Open ticket status alone does not verify a live production outage or
+service ownership: check service links and update recency before escalation.
+For a windowed reliability review, start with the native operational records:
 `twg jsm incident query --after <window> --limit 20` and
 `twg jsm post-incident-review query --after <window> --limit 20`. Connect the
 bounded results to the platform through service, owner, linked work, or record
@@ -12,7 +20,7 @@ content; do not assume its name appears in incident or PIR titles. These
 commands accept natural search text when an incident-specific alias is known;
 use `--jql` only for a structured JQL query.
 Run without `--site` unless the user or runtime explicitly selects another
-tenant. Use semantic `twg rovo search "<platform name>"` only to resolve an ambiguous platform name,
+tenant. Use semantic `twg rovo search "<platform name>"` only to identify an ambiguous platform name,
 not as the incident inventory.
 
 If structured JSM records are unavailable or do not expose the verified

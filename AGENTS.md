@@ -15,12 +15,12 @@ It is not the private implementation source tree.
 ## Repo Map
 
 - `README.md` - public overview, install commands, and support entrypoints.
-- `CHANGELOG.md` - public release notes synced from the private release process.
+- `CHANGELOG.md` - published release history and public release highlights.
 - `docs/public-repo-governance.md` - public repo intent, boundaries, and
   pre-automation operating model.
 - `docs/release-integration.md` - release and changelog integration notes.
-- `plugins/` - Codex and Claude marketplace packaging notes.
-- `skills/` - public TWG agent skills and shared `twg` wrapper.
+- `plugins/` - links to marketplace installation instructions.
+- `skills/` - fully materialized public TWG agent skill packages.
 - `.github/ISSUE_TEMPLATE/` - public issue intake forms.
 - `.github/pull_request_template.md` - public-safety checklist for changes.
 
@@ -52,7 +52,8 @@ public-safe artifacts:
 - README/support/security/contributing docs when changed.
 - `CHANGELOG.md` and GitHub Release notes.
 - public release metadata and CDN links.
-- Codex and Claude plugin metadata or release attachments.
+- fully materialized public skills and examples for generally available commands.
+- links to marketplace instructions in `atlassian-labs/twg-plugins`.
 - issue templates or PR template changes.
 
 Future automation and Pages migration require a separate approved design. Do not
