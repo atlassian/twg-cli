@@ -18,6 +18,8 @@ Run `twg <command>`. On shell `command not found`, use `$HOME/.local/bin/twg`
 tell user to add that directory to PATH. Do not treat auth or command errors as
 PATH failures.
 
+Agents: use host-set `TWG_AGENT_DEFAULTS=1` or `TWG_AGENT_DEFAULTS=1 twg <command>`. If assignments are blocked, pass `--mode agent` with explicit output flags. Respect host permissions. `--mode user` overrides the opt-in.
+
 ## Classify The Role
 
 Keep these roles distinct:
@@ -31,7 +33,7 @@ Keep these roles distinct:
   organization or can route an unresolved ask.
 - **Informed stakeholder**: affected by the decision but not responsible for it.
 
-## Resolve Scope Before People
+## Identify Scope Before People
 
 For a fuzzy topic or area, compare one bounded
 `twg rovo search "<topic>" --app confluence` pass with one bounded
@@ -46,7 +48,14 @@ use that reference directly.
 ## Find Responsibility And Authority
 
 - Use `twg responsibility get <reference>` for declared owners, teams,
-  maintainers, approvers, reviewers, or escalation roles.
+  maintainers, approvers, reviewers, or escalation roles. It takes an ARI, URL,
+  or key, not a person's name.
+- For a person's manager, run `twg user manager --identifier "<exact name or email>"`.
+  Pass `data.managerIdentifier.ari` (a third-party manager) downstream if present,
+  otherwise `data.manager.accountId`. `org-tree` covers first-party positions
+  only, so empty ancestors do not prove that there is no manager.
+  Never infer reporting lines from
+  tickets or documents.
 - Use `twg responsibility infer <reference>` only when declared responsibility
   is missing or the user asks for evidence-based candidates. Preserve confidence,
   reason codes, evidence window, and declared-versus-observed status.
@@ -58,6 +67,11 @@ use that reference directly.
   cross-surface breadth, `workitem-tree` for Jira work, or `pr-tree` for PR
   authorship/review. Tree counts help validate reach and organizational scope;
   they do not by themselves prove expertise, ownership, or approval authority.
+- Load `../twg/references/USER-IDENTIFIERS.md` for selector boundaries. Use
+  `user manager-chain --identifier --depth` for bounded mixed-identity chains
+  when advertised and enabled; `org-tree --account-id --up-only` remains a
+  first-party tree. Preserve returned identities for artifact queries.
+  Reporting relationships identify contacts, not approval authority.
 - For an approval ask, inspect the artifact that defines the decision: project or
   goal ownership, Jira workflow/approver fields, charter, decision record, or
   accountable team. State separately who can recommend, who must be consulted,

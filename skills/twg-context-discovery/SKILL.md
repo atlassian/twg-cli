@@ -1,15 +1,15 @@
 ---
 name: twg-context-discovery
 description: >
-  Use with root `twg` for deep context, dependency maps, related entities,
-  project-to-repo discovery, OOO catch-ups, and
+  Use with root `twg` for dependency maps, related entities, project-to-repo
+  discovery, person conversations and mentions, OOO catch-ups, and
   "catch me up" requests around a concrete anchor.
 ---
 
 # twg-context-discovery
 
-Use the root `twg` skill. Get command grammar from live `twg help`,
-`twg help <terms>`, or `twg help describe <path>`.
+Use root `twg`: plan from `twg help-map` and reuse its batched describe contracts.
+Use `twg help describe <path>` only when required details are missing.
 
 ## CLI launcher fallback
 
@@ -18,21 +18,29 @@ Run `twg <command>`. On shell `command not found`, use `$HOME/.local/bin/twg`
 tell user to add that directory to PATH. Do not treat auth or command errors as
 PATH failures.
 
+Agents: use host-set `TWG_AGENT_DEFAULTS=1` or `TWG_AGENT_DEFAULTS=1 twg <command>`. If assignments are blocked, pass `--mode agent` with explicit output flags. Respect host permissions. `--mode user` overrides the opt-in.
+
 ## First Move
 
-Resolve the anchor before widening:
+Identify the anchor before widening:
 
 - Stable key, URL, or ARI: use directly when the family is clear.
-- Fuzzy topic or name: classify scope; hydrate 2-5 anchors before ranking.
+- Named project/service: retain qualifiers; hydrate and verify
+  identity before synthesis. Use an alias/successor only with source evidence;
+  report missing named evidence as a scoped gap. Broad or ambiguous topics may
+  explore plausible scopes.
+- Fuzzy topic/name: classify scope; compare plausible anchors before ranking,
+  hydrating only those whose evidence can resolve the scope. Keep the set small,
+  but do not use a fixed anchor count when a material ambiguity remains.
 - Multiple same-kind anchors: batch them in one context call when supported.
 - Unknown command shape: inspect focused help before calling data.
 
-For fuzzy topics, group high-signal candidates by scope using explicit charter,
-roadmap, project, product, or service evidence. Keep same-named feature,
-platform, domain, team, and initiative clusters separate. Compare scope fit,
-centrality, breadth, and recency before selecting one. If ambiguity remains,
-show alternatives or ask. Set the boundary before inferring experts or
-ownership; nearby authorship or activity does not prove broader responsibility.
+For fuzzy topics, group candidates by charter, roadmap, project, product, or
+service scope; keep same-named clusters separate. Compare scope, centrality,
+breadth, and recency before selecting. If unclear, show alternatives or ask
+before inferring ownership. Parent/program, component/subproject, sibling, and
+successor candidates require charters or relationships; reopen comparison when
+evidence contradicts a provisional anchor. Exact keys and URLs keep the fast path.
 
 If context is not advertised for an anchor type, use product-native hydration
 and search evidence instead of inventing paths.
@@ -43,18 +51,21 @@ when that workflow needs relationship or dependency expansion.
 
 ## Route Selection
 
+- Person anchors: load `../twg/references/USER-IDENTIFIERS.md` for context,
+  collaborators, reporting peers, and activity routes. Check live help for 3P
+  support; conversations/mentions do not imply full 1P coverage.
 - Known Jira work items usually need native workitem details plus relationship
   context.
 - Projects and goals need native details plus Jira, docs, search, PR, and
   meeting evidence.
-- For topic onboarding, search knowledge and product-native work once. Compare
-  formal epic, project, goal, and page anchors across same-named scopes;
-  source-defined hierarchy distinguishes the central program/platform from a
-  feature, migration, or adoption effort. Prefer the anchor linking current
-  delivery work and code. Hydrate it, then use context and responsibility once
-  each only if they add dependencies or people. Hydrate at most three items. Never
-  refetch a source with another projection or try more synonyms after resolution.
-  Target 6-10 calls; stop once the categories are supported.
+- For topic onboarding, start with one knowledge search and one native-work
+  search; compare formal epic, project, goal, and page anchors by source-defined
+  hierarchy. Prefer the anchor linking current delivery/code; use context or
+  responsibility only for dependencies or people. Reuse returned output before
+  another projection and add a focused read whenever it can resolve a material
+  scope, relationship, owner, freshness, or delivery gap. Do not retry synonyms
+  or continue once those claims are supported or the remaining evidence is
+  unavailable.
 - For restart, handoff, or OOO catch-up, load
   `../twg-status-rollups/references/personal-work-summary.md` and follow its
   restart guidance. Infer priority across connected evidence and hydrate only
@@ -67,19 +78,11 @@ when that workflow needs relationship or dependency expansion.
 
 ## Evidence Policy
 
-For central candidates, use a bounded source and relationship fan-out:
-
-- Source fetch: fields, owner, status, body, comments, and URLs.
-- Context: graph edges, formal external links, related people, teams, projects,
-  goals, docs, PRs, commits, and branches.
-
-Use summary detail first. Escalate to full only for the central anchor or up to
-3 high-signal related anchors when URLs, comments, body content, or provenance
-are missing.
-
-Treat third-party URLs as graph nodes. Collect remote links, context edges,
-descriptions, comments, ADF links, bare URLs, and linked bodies; retain
-provenance for relationship direction.
+Use inline or compact output first. Fetch central candidates' fields, owner,
+status, body, comments, URLs, and context edges. Escalate to full output or
+targeted native follow-ups only for material evidence or coverage gaps within
+the established scope. Do not stop at a numeric count while such a gap remains.
+Treat third-party URLs as nodes and retain relationship direction.
 
 ## Expansion Rules
 
@@ -92,28 +95,22 @@ provenance for relationship direction.
 - Use strong query variants rather than many synonyms.
 - After the first source fetch plus context/search pass, pause and compare the
   evidence against the requested output. If owner, status, relation, recency,
-  and evidence URL/key are present, synthesize instead of widening.
+  evidence URL/key, and the requested source roles/content are present,
+  synthesize instead of widening. Otherwise continue only for a candidate that
+  can close the material gap.
 - If a context or graph-backed command returns the same backend/coverage error
   twice, do not keep probing adjacent graph paths. Record the coverage gap and
   continue with product-native hydrated evidence.
 - Stop when the next candidate would not add new entities, links, contributors,
   teams, decisions, ownership, risk, or next action.
 
-## Graph Visualization
+## Answer
 
-For graph requests, pipe typed context output to `twg visualize`. Keep entities
-that change direction, ownership, risk, or next action; collapse duplicates.
-
-## Output Shape
-
-- Anchor snapshot: what it is and why it matters.
-- For OOO catch-ups, synthesize by priority workstream and next action; do not
-  add a relationship table. For other context work, include entity,
-  relationship, owner, importance, and evidence.
-- Risks and dependencies, separating confirmed edges from inferred relationships.
-- Suggested next actions.
-- Confidence and gaps when evidence is incomplete, access-limited, stale, or
-  sampled.
+Explain the anchor and the relationships that answer the question, with
+sources. For a catch-up, focus on priorities and next actions; for a dependency
+map, make edge direction and ownership clear. Distinguish confirmed links from
+inferences and note material risks or evidence gaps. Use a relationship table
+only when it clarifies a multi-entity map.
 
 ## Anti-Patterns
 
@@ -122,4 +119,3 @@ that change direction, ownership, risk, or next action; collapse duplicates.
 - Do not skip peer expansion for graph/dependency prompts because peers look
   "Done".
 - Do not dismiss a 1-hop candidate by title alone.
-- Do not hand-roll graph HTML.

@@ -95,7 +95,7 @@ twg confluence content create \
 ```
 
 Use `live_doc` for ordinary collaboration and `page` when the contract requires
-classic or customer-help content. Resolve every parent ID. If lookup fails,
+classic or customer-help content. Get every parent ID. If the lookup fails,
 stop that branch; never fall back to the root. Use Markdown import only for an
 approved faithful copy, and never copy secrets.
 
@@ -114,7 +114,7 @@ do not turn them into permanent space-design rules.
 
 ## Mirror or adapt an existing space
 
-Resolve and compare source and target sites without reading source content.
+Identify and compare source and target sites without reading source content.
 Reject mismatches before any source read or target write. This path is same-site
 only. When they match, use bounded structural discovery:
 

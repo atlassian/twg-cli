@@ -58,10 +58,16 @@ Read the target with the native Jira workitem read. Do not request or inspect
 comments or issue links. Record its created time, project, issue type, summary,
 description, status, and URL.
 
-Project every native read with `--agent-fields` or an equivalent output filter
-so only key, summary, description, created time, project, issue type, status,
-and URL become model visible. Do not rely on a requested field list alone
-because the native response can include relationship fields outside that list.
+Pass workitem keys positionally to native `get`; project every read with
+`-o json --select` before inspecting its payload or output artifact. For a
+single `get`, select
+`data.key,data.summary,data.description,data.created,data.project,data.issuetype,data.status,data.url`.
+For batched `get` or `bulk-get`, select the same fields under
+`data.items.data.<field>` instead. Verify that issue fields matched for every
+item and that no `--select` warning reports a full-payload fallback; discard
+unprojected results. `--agent-fields` narrows inline summaries only, not the
+JSON payload or full output artifact. A requested Jira field list alone does
+not exclude relationship fields from the native response.
 
 Classify the target as one of these types:
 
@@ -211,9 +217,15 @@ no duplicate only when every result fails a gate or has confidence below 0.50.
 
 ## Output
 
-When duplicate detection is the user's requested result, return exactly one raw
-JSON object. Do not wrap it in a code block or add text before or after it. Use
-no trailing commas.
+When the user requests JSON or a caller requires a machine-readable result,
+return exactly one raw JSON object. Do not wrap it in a code block or add text
+before or after it. Use no trailing commas. If the caller contract is unclear,
+preserve JSON.
+
+For a clearly conversational request without a machine-readable contract,
+answer briefly in prose: identify the matching issue with its link and reason,
+or explain that no duplicate was confirmed. State incomplete search coverage
+rather than claiming no match.
 
 When a broader workflow consults this reference, provide the same object to the
 calling workflow without ending or replacing its broader response.
@@ -242,7 +254,8 @@ When the workflow completes and no candidate passes, return:
 }
 ```
 
-Do not expose comparison details, confidence scores, JQL, semantic result keys,
-or internal reasoning. Do not report a permission gap or failed search as a
-completed no match. If the workflow cannot complete, return `duplicate` as null
-and set `message` to `Could not complete duplicate search: <brief reason>.`.
+Do not add comparison details, confidence scores, JQL, semantic result keys,
+or internal reasoning to the JSON object. Do not report a permission gap or
+failed search as a completed no match. For machine-readable results, if the
+workflow cannot complete, return `duplicate` as null and set `message` to
+`Could not complete duplicate search: <brief reason>.`.

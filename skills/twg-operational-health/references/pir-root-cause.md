@@ -120,28 +120,18 @@ Good action items name the control being added or changed:
 Avoid vague actions like "monitor more" or "improve testing" unless the concrete
 signal, test, owner, and success criterion are named.
 
-## Output Shape
+## Answer
 
-For one incident/PIR:
+For one PIR, explain what restored service, what the evidence establishes about
+the causal chain, and which contributing factors and prevention actions matter.
+Distinguish confirmed cause from partial, conflicting, or missing evidence;
+attribute claims to the incident, PIR, actions, or active-investigation hints
+without requiring provenance labels as headings. Tie prioritized actions to
+causal or control gaps, with owner and status when known.
 
-- Mitigation summary and evidence that service recovered.
-- Root-cause status: confirmed, partial, conflicting, or missing.
-- Evidence provenance: separate `confirmed by incident comms`,
-  `confirmed by post-incident review`, `confirmed by action item`, `candidate
-  from incident evidence`, `directional hint from active investigation`, and
-  `missing from incident evidence`.
-- Causal chain with 5-why branches and confidence.
-- Contributing factors by category.
-- Action items grouped P0/P1/P2 with owner/status when available.
-- PIR gaps: missing evidence, conflicting text, draft/canceled status, or weak
-  action specificity.
-
-For portfolio analysis:
-
-- Incident-to-learning table with mitigation, root-cause category, prevention
-  theme, action quality, and confidence.
-- Repeated systemic patterns across incidents.
-- Accuracy readout against actual post-incident review/action-item evidence.
+For a portfolio, compare recurring causes, mitigation, prevention themes, and
+action quality against PIR evidence. Use a table when it helps compare
+incidents, not by default for a single PIR.
 
 ## Anti-Patterns
 
